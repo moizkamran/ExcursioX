@@ -112,17 +112,17 @@ export default function App() {
         <div className={classes.formContainer}>
         <img className={classes.logo} src={LogoImage} alt="Logo" />
           <Paper className={classes.form} radius={0} p={30}>
-            <Title order={2} className={classes.title} align="center" x mb={50}>
-              Welcome back
-              <Text c="dimmed">please enter your credentials</Text>
+            <Title order={2} className={classes.title} align="left" x mb={50}>
+              Welcome Back
+              <Text c="dimmed">Please enter your credentials</Text>
             </Title>
             <TextInput
               label="Email address"
-              placeholder="hello@gmail.com"
+              placeholder="hello@yourcompany.com"
               size="md"
             />
             <Text c="dimmed" fz="xs">
-              please enter your company's mail
+              Please enter your company's email address
             </Text>
             <PasswordInput
               label="Password"
@@ -140,7 +140,7 @@ export default function App() {
                 Forgot password?
               </Anchor>
             </Group>
-            <Button className={classes.button}> Sign In</Button>
+            <Button className={classes.button}>Sign In</Button>
             <Button
               className={classes.root}
               component="a"

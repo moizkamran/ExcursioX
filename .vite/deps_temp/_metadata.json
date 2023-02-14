@@ -1,0 +1,23 @@
+{
+  "hash": "73faa036",
+  "browserHash": "891f0f91",
+  "optimized": {
+    "react/jsx-runtime": {
+      "src": "../../node_modules/react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "4a61060a",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "028a9bb9",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-4V4IBHWY": {
+      "file": "chunk-4V4IBHWY.js"
+    }
+  }
+}
