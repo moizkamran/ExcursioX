@@ -20,25 +20,24 @@ import {
 const useStyles = createStyles((theme) => ({
   container: {
     display: "flex",
-    height: "100vh",
+    height: "100%",
   },
   formContainer: {
     width: "50%",
     display: "flex",
-    
 
     flexDirection: "column",
     alignItems: "center",
   },
   imageContainer: {
     width: "50%",
-    
+
     backgroundImage: `url(${LoginImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
   form: {
-    marginTop : "120px",
+    marginTop: "120px",
 
     maxWidth: 450,
     paddingTop: 80,
@@ -110,7 +109,7 @@ export default function App() {
     <>
       <div className={classes.container}>
         <div className={classes.formContainer}>
-        <img className={classes.logo} src={LogoImage} alt="Logo" />
+          <img className={classes.logo} src={LogoImage} alt="Logo" />
           <Paper className={classes.form} radius={0} p={30}>
             <Title order={2} className={classes.title} align="left" x mb={50}>
               Welcome Back
