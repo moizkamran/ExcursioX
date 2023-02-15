@@ -1,14 +1,16 @@
 import LoginImage from "./assets/Image.png";
 import LogoImage from "./assets/Logo.png";
-import { IconBrandApple, IconBrandTwitter } from "@tabler/icons";
-import Popup from './components/forgot-password'
+import Popup from "./components/forgot-password";
+import { IconBrandApple } from "@tabler/icons";
 import { useState } from "react";
 
 import {
   Paper,
   Center,
   Image,
+  Modal,
   createStyles,
+  Grid,
   TextInput,
   Anchor,
   PasswordInput,
@@ -19,6 +21,7 @@ import {
   Text,
   Box,
 } from "@mantine/core";
+
 const useStyles = createStyles((theme) => ({
   container: {
     display: "flex",
@@ -27,20 +30,19 @@ const useStyles = createStyles((theme) => ({
   formContainer: {
     width: "50%",
     display: "flex",
-    
 
     flexDirection: "column",
-    alignItems: "center",
+    aligns: "center",
   },
   imageContainer: {
     width: "50%",
-    
+
     backgroundImage: `url(${LoginImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
   form: {
-    marginTop : "120px",
+    marginTop: "120px",
 
     maxWidth: 450,
     paddingTop: 80,
@@ -107,13 +109,13 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function App() {
+  const [opened, setOpened] = useState(false);
   const { classes } = useStyles();
-  const [buttonPopup, setButtonPopup] = useState(false);
   return (
     <>
       <div className={classes.container}>
         <div className={classes.formContainer}>
-        <img className={classes.logo} src={LogoImage} alt="Logo" />
+          <img className={classes.logo} src={LogoImage} alt="Logo" />
           <Paper className={classes.form} radius={0} p={30}>
             <Title order={2} className={classes.title} align="left" x mb={100}>
               Welcome Back
@@ -135,10 +137,7 @@ export default function App() {
             />
             <Group position="apart" mt="lg">
               <Checkbox label="Remember me for a day" sx={{ lineHeight: 1 }} />
-              <Anchor
-                onClick={() => setButtonPopup(true)}
-                size="sm"
-              >
+              <Anchor onClick={() => setOpened(true)} size="sm">
                 Forgot password?
               </Anchor>
             </Group>
@@ -161,10 +160,35 @@ export default function App() {
               </Anchor>
             </Text>
           </Paper>
-          <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-              <h1 align="center" >Forgot Password?</h1>
-              <h3 align="center" >Don't worry we will help you recover it.</h3>
-              </Popup>
+          <Modal
+            styles={{ modal: { backgroundColor: "#07399E" } }}
+            opened={opened}
+            onClose={() => setOpened(false)}
+          >
+            <h1 style={{ color: "white" }} align="center">
+              Forgot Password?
+            </h1>
+            <h3 style={{ color: "white" }} align="center">
+              Don't worry we will help you recover it.
+            </h3>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <div>
+                <Button variant="contained" color="primary">
+                  Button 1
+                </Button>
+              </div>
+              <div>
+                <Button variant="contained" color="primary">
+                  Button 2
+                </Button>
+              </div>
+            </div>
+          </Modal>
         </div>
         <div className={classes.imageContainer} />
       </div>
