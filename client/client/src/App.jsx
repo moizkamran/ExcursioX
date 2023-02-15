@@ -1,6 +1,8 @@
 import LoginImage from "./assets/Image.png";
 import LogoImage from "./assets/Logo.png";
 import { IconBrandApple, IconBrandTwitter } from "@tabler/icons";
+import Popup from './components/forgot-password'
+import { useState } from "react";
 
 import {
   Paper,
@@ -50,7 +52,7 @@ const useStyles = createStyles((theme) => ({
 
   title: {
     color: theme.colorScheme === "dark" ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Roboto, ${theme.fontFamily}`,
     justifyContent: "start",
     alignItems: "center",
   },
@@ -106,13 +108,14 @@ const useStyles = createStyles((theme) => ({
 
 export default function App() {
   const { classes } = useStyles();
+  const [buttonPopup, setButtonPopup] = useState(false);
   return (
     <>
       <div className={classes.container}>
         <div className={classes.formContainer}>
         <img className={classes.logo} src={LogoImage} alt="Logo" />
           <Paper className={classes.form} radius={0} p={30}>
-            <Title order={2} className={classes.title} align="left" x mb={50}>
+            <Title order={2} className={classes.title} align="left" x mb={100}>
               Welcome Back
               <Text c="dimmed">Please enter your credentials</Text>
             </Title>
@@ -131,10 +134,9 @@ export default function App() {
               size="md"
             />
             <Group position="apart" mt="lg">
-              <Checkbox label="Remember me" sx={{ lineHeight: 1 }} />
+              <Checkbox label="Remember me for a day" sx={{ lineHeight: 1 }} />
               <Anchor
-                onClick={(event) => event.preventDefault()}
-                href="#"
+                onClick={() => setButtonPopup(true)}
                 size="sm"
               >
                 Forgot password?
@@ -159,6 +161,10 @@ export default function App() {
               </Anchor>
             </Text>
           </Paper>
+          <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+              <h1 align="center" >Forgot Password?</h1>
+              <h3 align="center" >Don't worry we will help you recover it.</h3>
+              </Popup>
         </div>
         <div className={classes.imageContainer} />
       </div>
