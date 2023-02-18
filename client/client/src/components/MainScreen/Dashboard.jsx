@@ -1,5 +1,5 @@
 import "./Dashboard.css";
-import Nav from "./Nav";
+import HeaderComponent from "./HeaderComponent";
 import React from "react";
 import { Card, useMantineTheme } from "@mantine/core";
 
@@ -7,7 +7,9 @@ import { Card, useMantineTheme } from "@mantine/core";
 const Dashboard = () => {
   return (
     <>
-      <Nav />
+      <div style={{ backgroundColor: "#121927" }}>
+        <HeaderComponent />
+      </div>
     </>
   );
 };
