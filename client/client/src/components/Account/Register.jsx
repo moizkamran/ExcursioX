@@ -15,7 +15,6 @@ import {
   Group,
   Box,
   PasswordInput,
-  PasswordInputProps,
   Anchor,
 } from "@mantine/core";
 
