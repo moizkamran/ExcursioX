@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const propertyRoutes = require('./route/property')
+const userRoutes = require('./route/user')
 
 
 //Express App
@@ -16,7 +17,8 @@ app.use((req, res, next) => {
 })
 
 //routes
-app.use('/api/property',propertyRoutes)
+app.use('/api/property', propertyRoutes)
+app.use('/api/user', userRoutes)
 
 //Connect to DB
 mongoose.set('strictQuery', false);
