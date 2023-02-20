@@ -1,3 +1,24 @@
 .picture{
     background-image: url('../../assets/image2.png');
 }
+
+.formFloatContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .formFloatContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form{
+    border-radius: 35px;
+  }

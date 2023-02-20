@@ -2,6 +2,7 @@ import LogoImage from "../../assets/AMToursLogo.svg";
 import Popup from "../Popovers/forgot-password";
 import { IconKey } from "@tabler/icons";
 import { useState } from "react";
+import YouTube from 'react-youtube';
 
 
 //register stylesheet import
@@ -47,12 +48,35 @@ const Register = () => {
     <>
     <div className="picture">
       <div className='container'>
-        <div className='formContainer'>
+        <div className='formFloatContainer'>
           <img className='logo' src={LogoImage} alt="Logo" />
           <Paper className='form' radius={0} p={30}>
             <Title order={2} className='title' align="left" x mb={100}>
               Let's get you all set-up!
               <Text className="subTitle">Please enter your credentials</Text>
+              <YouTube
+  videoId="NcBjx_eyvxc"
+  opts={{
+    playerVars: {
+      // See https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+      disablekb: 0,
+      controls: 0,
+      modestbranding: 1,
+      loop: 1,
+      mute: 1,
+      start: 10,
+      iv_load_policy: 0,
+      fs: 0,
+      playsinline: 0,
+      rel:0,
+    },
+  }}
+  onReady={(event) => {
+    event.target.playVideo();
+  }}
+/>
+
               
             </Title>
             <form onSubmit={form.onSubmit((values) => console.log(values))}>
