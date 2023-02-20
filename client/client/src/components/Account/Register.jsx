@@ -46,15 +46,8 @@ const Register = () => {
   };
   return (
     <>
-    <div className="picture">
-      <div className='container'>
-        <div className='formFloatContainer'>
-          <img className='logo' src={LogoImage} alt="Logo" />
-          <Paper className='form' radius={0} p={30}>
-            <Title order={2} className='title' align="left" x mb={100}>
-              Let's get you all set-up!
-              <Text className="subTitle">Please enter your credentials</Text>
-              <YouTube
+    <YouTube
+    className="video-background"
   videoId="NcBjx_eyvxc"
   opts={{
     playerVars: {
@@ -65,7 +58,6 @@ const Register = () => {
       modestbranding: 1,
       loop: 1,
       mute: 1,
-      start: 10,
       iv_load_policy: 0,
       fs: 0,
       playsinline: 0,
@@ -76,6 +68,14 @@ const Register = () => {
     event.target.playVideo();
   }}
 />
+      <div className='container'>
+        <div className='formFloatContainer'>
+          <img className='logo' src={LogoImage} alt="Logo" />
+          <Paper className='form' radius={0} p={30}>
+            <Title order={2} className='title' align="left" x mb={100}>
+              Let's get you all set-up!
+              <Text className="subTitle">Please enter your credentials</Text>
+              
 
               
             </Title>
@@ -101,7 +101,6 @@ const Register = () => {
             </form>
           </Paper>
         </div>
-      </div>
       </div>
     </>
   );
