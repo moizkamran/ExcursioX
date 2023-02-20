@@ -1,5 +1,119 @@
+/* Hammersmith One font on cloud, please make it local during deployement*/
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+/* Fredoka font on cloud, please make it local during deployement*/
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500&display=swap');
+
 .links{
   color:"#07399E";
   text-decoration: none;
   margin-left: 5px;
 }
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.formContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageContainer {
+  width: 50%;
+  background-image: url(./assets/Image.png);
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 767px) {
+  .imageContainer {
+    display: none;
+  }
+}
+
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 600px) {
+  .formContainer {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.title {
+  color: #000000;
+  font-family: 'Hammersmith One', sans-serif;
+  justify-content: start;
+  align-items: center;
+  font-size: 47px;
+}
+
+
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 25px;
+  }
+}
+
+.subTitle{
+  color:rgba(0, 0, 0, 0.5);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 400;
+  justify-content: start;
+  align-items: center;
+  font-size: 1.7rem;
+}
+
+
+
+.button {
+  background-color: #07399E;
+  width: 100%;
+  max-width: 400px;
+  height: 50px;
+  font-size: 1rem;
+  border-radius: 35px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.sso {
+  background-color: #000000;
+  border: none;
+  border-radius: 35px;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 387px;
+  height: 50px;
+  font-size: 1rem;
+}
+
+.sso:hover {
+  background-color: #1a1a1a;
+}
+
+.leftIcon {
+  margin-right: 15px;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 160px;
+  height: 68px;
+}
+

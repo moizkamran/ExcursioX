@@ -1,4 +1,4 @@
-import LoginImage from "../../assets/Image.png";
+import LoginImage from "../../assets/image2.png";
 import LogoImage from "../../assets/Logo.png";
 import Popup from "../Popovers/forgot-password";
 import { IconKey } from "@tabler/icons";
@@ -116,8 +116,26 @@ const Register = () => {
               Let's get you all set up!
               <Text c="dimmed">Please fill in the details correclty</Text>
             </Title>
-            <Box sx={{ maxWidth: 300 }} mx="auto">
+  
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+          withAsterisk
+          label="Company ID"
+          placeholder="Please enter the coresponding ID"
+          {...form.getInputProps('companyID')}
+        />
+      <TextInput
+          withAsterisk
+          label="First Name"
+          placeholder=""
+          {...form.getInputProps('firstName')}
+        />
+        <TextInput
+          withAsterisk
+          label="Last Name"
+          placeholder=""
+          {...form.getInputProps('lastName')}
+        />
         <TextInput
           withAsterisk
           label="Email"
@@ -131,14 +149,21 @@ const Register = () => {
           {...form.getInputProps('termsOfService', { type: 'checkbox' })}
         />
 
+        <PasswordInput
+              label="Password"
+              placeholder="Your password"
+              mt="md"
+              size="md"
+              {...form.getInputProps('password')}
+            />
+
         <Group position="right" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
 
         
       </form>
-    </Box>
-          </Paper>
+    </Paper>
           
         </div>
         <div className={classes.imageContainer} />
