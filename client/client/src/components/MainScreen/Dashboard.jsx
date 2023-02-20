@@ -7,7 +7,7 @@ import { Card, useMantineTheme } from "@mantine/core";
 const Dashboard = () => {
   return (
     <>
-      <div style={{ backgroundColor: "#121927" }}>
+      <div>
         <HeaderComponent />
       </div>
     </>

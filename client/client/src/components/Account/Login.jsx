@@ -1,5 +1,4 @@
-import LoginImage from "../../assets/Image.png";
-import LogoImage from "../../assets/Logo.png";
+import LogoImage from "../../assets/AMToursLogo.svg";
 import Popup from "../Popovers/forgot-password";
 import { IconKey } from "@tabler/icons";
 import { useState } from "react";

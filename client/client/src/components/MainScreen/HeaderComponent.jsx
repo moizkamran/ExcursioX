@@ -54,7 +54,7 @@ export default function HeaderComponent() {
       </header>
       <div
         style={{
-          marginLeft: 130, // leave space for the navbar
+          marginLeft: 100, // leave space for the navbar
           marginTop: 20, // add some margin to the card
           borderRadius: "100px 0 0 0", // border radius on top left corner
           backgroundColor: "white",
@@ -70,8 +70,7 @@ export default function HeaderComponent() {
             padding: "100px",
           }}
         >
-          <Text>Hello</Text>
-          {/* Content of the card */}
+          <Text>Hello, moiz has been here</Text>
         </Card>
       </div>
     </div>
