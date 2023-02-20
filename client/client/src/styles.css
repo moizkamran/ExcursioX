@@ -3,6 +3,7 @@
 /* Fredoka font on cloud, please make it local during deployement*/
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500&display=swap');
 
+
 .links{
   color:"#07399E";
   text-decoration: none;
@@ -11,7 +12,7 @@
 
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .formContainer {

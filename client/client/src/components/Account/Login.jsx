@@ -26,7 +26,6 @@ import {
 
 import { useForm } from '@mantine/form';
 
-
 const Login = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
 
