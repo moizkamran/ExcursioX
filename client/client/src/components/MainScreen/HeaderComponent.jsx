@@ -117,6 +117,6 @@ export default function HeaderComponent() {
 
         <Body />
       </div>
-    </div>
+    </>
   );
 }

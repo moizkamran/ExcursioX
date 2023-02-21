@@ -1,7 +1,8 @@
 import LogoImage from "../../assets/AMToursLogo.svg";
-import Popup from "../Popovers/forgot-password";
-import { IconKey } from "@tabler/icons";
+import { IconAt, IconAlertCircle } from "@tabler/icons";
 import { useState } from "react";
+import InputMask from 'react-input-mask';
+
 
 
 //register stylesheet import
@@ -11,7 +12,9 @@ import {
   Paper,
   Center,
   Image,
+  Input,
   createStyles,
+  Tooltip,
   TextInput,
   Anchor,
   PasswordInput,
@@ -45,29 +48,81 @@ const Register = () => {
   };
   return (
     <>
-    <div className="picture">
+      <div className='picture'>
       <div className='container'>
-        <div className='formContainer'>
+        <div className='formFloatContainer'>
           <img className='logo' src={LogoImage} alt="Logo" />
-          <Paper className='form' radius={0} p={30}>
+          <Paper className='form3' radius={0} p={30}>
             <Title order={2} className='title' align="left" x mb={100}>
               Let's get you all set-up!
-              <Text className="subTitle">Please enter your credentials</Text>
+              <Text className="subTitle">Please fill in the details</Text>
+              
+
               
             </Title>
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form className="input-area" onSubmit={form.onSubmit((values) => console.log(values))}>
+              <TextInput
+            withAsterisk
+            label="Company ID"
+            mask="aaa - 9999" 
+            placeholder=""
+            component={InputMask} 
+            icon={<IconAt size={18} />}
+            rightSection={
+        <Tooltip label="This will be provided to you by the company you are trying to register to" position="top-end" withArrow>
+          <div>
+            <IconAlertCircle size={18} style={{ display: 'block', opacity: 0.5 }} />
+          </div>
+        </Tooltip>
+      }
+            size="md"
+                radius="lg"
+            className='inputs'
+            {...form.getInputProps('companyID')}
+            />
+              <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+              }}
+            >
+                <div>
             <TextInput
             withAsterisk
-            label="Email"
-            placeholder="your@email.com"
-            {...form.getInputProps('email')}
+            label="First Name"
+              size="md"
+              radius="lg"
+            placeholder=""
+            className='inputs'
+            {...form.getInputProps('firstName')}
             />
+                  </div>
+                <div>
+              <TextInput
+                radius="lg"
+            label="Last Name"
+                size="md"
+            placeholder=""
+            className='inputs'
+            {...form.getInputProps('lastName')}
+            /> </div>
+                </div>
+
+              <TextInput 
+                label="Number"
+                component={InputMask} 
+                mask="+\92 (999) 999-9999" 
+                
+                placeholder="Your phone"
+                size="md"
+                radius="lg"
+                />
 
             <PasswordInput
               label="Password"
               placeholder="Your password"
-              mt="md"
               size="md"
+              radius="lg"
               {...form.getInputProps('password')}
             />
             
