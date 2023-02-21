@@ -423,10 +423,10 @@
     "@mantine/utils" "5.10.3"
     react-dropzone "14.2.3"
 
-"@mantine/form@^5.10.3":
-  version "5.10.3"
-  resolved "https://registry.npmjs.org/@mantine/form/-/form-5.10.3.tgz"
-  integrity sha512-BvE0X1twmC9KfxdFH5lGCA42fCcNcTmqq8H5grzjCFSl6LP2S7FR8/zzQYhVxfK0bqQEyitp1aiq2EptNeJgig==
+"@mantine/form@^5.10.4":
+  version "5.10.4"
+  resolved "https://registry.npmjs.org/@mantine/form/-/form-5.10.4.tgz"
+  integrity sha512-gf/aNwvWzJwqo1C98yxLK0nJJxYIxYTI7nVQ/spFlaWY+arvXgybwPsdphxdo0j3aM4xJXjC52gDMme3gQrwNw==
   dependencies:
     fast-deep-equal "^3.1.3"
     klona "^2.0.5"
