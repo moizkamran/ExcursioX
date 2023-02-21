@@ -1,5 +1,5 @@
 .picture{
-    background-image: url('../../assets/image2.png');
+  background-image: url('../../assets/image2.png');
 }
 
 
@@ -30,6 +30,7 @@
     width: 50%;
     max-width: 500px;
     margin: 0 auto;
+  
   }
 
   .formFloatContainer {
@@ -39,6 +40,36 @@
     align-items: center;
   }
 
-  .form{
-    border-radius: 35px;
-  }
+.form3 {
+  border-radius: 35px;
+  align-items: center;
+  background-color: #ffffff50;
+  box-shadow: 0 15px 25px rgba(129, 124, 124, 0.2);
+  backdrop-filter: blur(10px);
+  color: #18181890;
+  
+  transition: background-color 0.5s ease;
+}
+
+.form3:hover {
+  background-color: #ffffff;
+}
+
+
+.title {
+  color: black;
+  font-family: 'Hammersmith One', sans-serif;
+  justify-content: start;
+  align-items: center;
+  font-size: 47px;
+}
+
+.input-area{
+  margin-top: -80px;
+}
+
+.input-area > *{
+  margin-top: 10px;
+}
+
+
