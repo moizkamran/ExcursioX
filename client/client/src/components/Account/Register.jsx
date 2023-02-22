@@ -35,7 +35,6 @@ const Register = () => {
   const form = useForm({
     initialValues: {
       email: '',
-      rememberMe: false,
     },
 
     validate: {
@@ -43,9 +42,6 @@ const Register = () => {
     },
   });
   
-  const togglePopup = () => {
-    setButtonPopup(!buttonPopup);
-  };
   return (
     <>
       <div className='picture'>
@@ -78,7 +74,7 @@ const Register = () => {
             size="md"
                 radius="lg"
             className='inputs'
-            {...form.getInputProps('companyID')}
+            {...form.getInputProps('companyId')}
             />
               <div
               style={{
@@ -116,7 +112,17 @@ const Register = () => {
                 placeholder="Your phone"
                 size="md"
                 radius="lg"
+                {...form.getInputProps('phone')}
                 />
+
+              <TextInput
+          withAsterisk
+                size="md"
+                radius="lg"
+          label="Email"
+          placeholder="your@email.com"
+          {...form.getInputProps('email')}
+        />
 
             <PasswordInput
               label="Password"
@@ -125,9 +131,6 @@ const Register = () => {
               radius="lg"
               {...form.getInputProps('password')}
             />
-            
-            <Group position="apart" mt="lg">
-            </Group>
             <Button className='button' type='submit'>Sign In</Button>
             </form>
           </Paper>

@@ -19,7 +19,7 @@ export default function HeaderComponent() {
           display: "flex",
           justifyContent: "space-between",
           padding: "20px",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <img src={logoImage} alt="logo" style={{ height: "50px" }} />
@@ -77,7 +77,6 @@ export default function HeaderComponent() {
             justifyContent: "center",
             position: "relative",
             alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Link path="/home">
@@ -117,6 +116,6 @@ export default function HeaderComponent() {
 
         <Body />
       </div>
-    </>
+      </div>
   );
 }

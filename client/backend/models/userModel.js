@@ -4,6 +4,23 @@ const Schema = mongoose.Schema
 const validator = require('validator')
 
 const userSchema = new Schema({
+    companyId: {
+        type: String,
+        required: true, 
+    },
+    firstName: {
+        type: String,
+        required: true, 
+    },
+    lastName: {
+        type: String,
+        required: false, 
+    },
+    phone: {
+        type: Number,
+        required: false,
+        unique: true,
+    },
     email: {
         type: String,
         required: true, 
@@ -19,7 +36,7 @@ const userSchema = new Schema({
 userSchema.statics.register = async function (email, password){
 
     //validation
-    if(!email || !password){
+    if(!email || !password || !companyId){
         throw Error('Please make sure that all fields are complete!')
     }
     if (!validator.isEmail(email)){

@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/sortable": "^7.0.2",
     "@emotion/react": "^11.10.5",
     "@mantine/carousel": "^5.10.3",
     "@mantine/core": "^5.10.3",
@@ -27,6 +29,7 @@
     "@tiptap/react": "^2.0.0-beta.217",
     "@tiptap/starter-kit": "^2.0.0-beta.217",
     "dayjs": "^1.11.7",
+    "dnd-kit": "^0.0.0",
     "embla-carousel-react": "^7.0.9",
     "i": "^0.3.7",
     "react": "^18.2.0",

@@ -8,10 +8,10 @@ export function Testdata(props) {
     useSortable({ id: props.id });
 
   const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
     display: "inline-flex",
     margin: "0 10px 10px 0",
+    transform: CSS.Transform.toString(transform),
+    transition,
   };
 
   return (

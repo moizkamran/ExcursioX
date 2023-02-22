@@ -6,7 +6,7 @@ import { Testdata } from "./Testdata";
 import {
   arrayMove,
   SortableContext,
-  verticalListSortingStrategy,
+  horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
 function Test() {
@@ -29,7 +29,7 @@ function Test() {
       >
         <SortableContext
           items={languages}
-          strategy={verticalListSortingStrategy}
+          strategy={horizontalListSortingStrategy}
         >
           {/* We need components that use the useSortable hook */}
           {languages.map((language) => (
