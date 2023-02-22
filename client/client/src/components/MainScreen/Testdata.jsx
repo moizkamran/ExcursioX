@@ -19,12 +19,10 @@ export function Testdata(props) {
       <Card
         style={{
           width: 250,
-
-          borderRadius: 10,
-          backgroundColor: "#66bb6a",
+          backgroundColor: "#9E05C4",
+          borderRadius: 15,
         }}
       >
-        <div style={{ display: "flex" }}></div>
 
         <Text>
           {10} {props.id}

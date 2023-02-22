@@ -1,7 +1,10 @@
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, closestCenter} from "@dnd-kit/core";
 import { Box } from "@mantine/core";
 import { useState } from "react";
 import { Testdata } from "./Testdata";
+import {
+  restrictToHorizontalAxis,
+} from '@dnd-kit/modifiers';
 
 import {
   arrayMove,
@@ -18,18 +21,21 @@ function Test() {
   ]);
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext 
+      collisionDetection={closestCenter} 
+      onDragEnd={handleDragEnd}
+      modifiers={[restrictToHorizontalAxis]}
+      >
       <Box
-        className="p-4"
         style={{
           marginTop: "30px",
-
           width: "auto",
         }}
       >
         <SortableContext
           items={languages}
           strategy={horizontalListSortingStrategy}
+          
         >
           {/* We need components that use the useSortable hook */}
           {languages.map((language) => (

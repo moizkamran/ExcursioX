@@ -230,12 +230,20 @@
   dependencies:
     "tslib" "^2.0.0"
 
-"@dnd-kit/core@^6.0.7", "@dnd-kit/core@^6.0.8":
+"@dnd-kit/core@^6.0.6", "@dnd-kit/core@^6.0.7", "@dnd-kit/core@^6.0.8":
   "integrity" "sha512-lYaoP8yHTQSLlZe6Rr9qogouGUz9oRUj4AHhDQGQzq/hqaJRpFo65X+JKsdHf8oUFBzx5A+SJPUvxAwTF2OabA=="
   "resolved" "https://registry.npmjs.org/@dnd-kit/core/-/core-6.0.8.tgz"
   "version" "6.0.8"
   dependencies:
     "@dnd-kit/accessibility" "^3.0.0"
+    "@dnd-kit/utilities" "^3.2.1"
+    "tslib" "^2.0.0"
+
+"@dnd-kit/modifiers@^6.0.1":
+  "integrity" "sha512-rbxcsg3HhzlcMHVHWDuh9LCjpOVAgqbV78wLGI8tziXY3+qcMQ61qVXIvNKQFuhj75dSfD+o+PYZQ/NUk2A23A=="
+  "resolved" "https://registry.npmjs.org/@dnd-kit/modifiers/-/modifiers-6.0.1.tgz"
+  "version" "6.0.1"
+  dependencies:
     "@dnd-kit/utilities" "^3.2.1"
     "tslib" "^2.0.0"
 
