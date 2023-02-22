@@ -22,9 +22,14 @@ import {
   IconMessageDots,
   IconBusinessplan,
   IconBell,
+  IconMaximize,
 } from "@tabler/icons";
 
+
+
 export default function HeaderComponent() {
+  
+  
   return (
     <div style={{ backgroundColor: "#121927" }}>
       <div
@@ -68,6 +73,7 @@ export default function HeaderComponent() {
           </Menu>
           <UnstyledButton className='headerIcon'><IconMessageDots /></UnstyledButton>
           <UnstyledButton className='headerIcon'><IconBell /></UnstyledButton>
+          <UnstyledButton className='headerIcon'><IconMaximize /></UnstyledButton>
           <div
             style={{
               borderRadius: "20px",
