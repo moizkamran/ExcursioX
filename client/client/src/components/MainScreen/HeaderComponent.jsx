@@ -1,8 +1,10 @@
 import Body from "./Body";
 import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/Logo1.png";
-import { Button, Input, Menu, UnstyledButton } from "@mantine/core";
+import { Button, Input, Menu, UnstyledButton, Avatar, Tooltip} from "@mantine/core";
 import { Link } from "react-router-dom";
+
+import avatar from '../../assets/avatar.png'
 
 
 //stylesheet import
@@ -13,6 +15,9 @@ import hotelIcon from '../../assets/icons/bed.svg'
 import busIcon from '../../assets/icons/bus.svg'
 import planeIcon from '../../assets/icons/plane.svg'
 import passportIcon from '../../assets/icons/passport.svg'
+import dashboardIcon from '../../assets/icons/dashboard.svg'
+import coinsIcon from '../../assets/icons/coins.svg'
+
 
 import {
   IconLayout2,
@@ -100,26 +105,54 @@ export default function HeaderComponent() {
             justifyContent: "center",
             position: "relative",
             alignItems: "center",
+            
           }}
         >
-          <Link path="/home">
-            <IconLayout2 size={40} strokeWidth={2} color="white" />
+          <div style={{
+          display:'flex',
+          height: '70%',
+          position: "relative",
+          flexDirection: "column",
+        }}>
+            
+          <Tooltip label="Dashboard" color="dark" position="right" transition="scale" transitionDuration={300}>
+            
+          <Link path="/home" style={{marginTop: "auto", marginBottom: "auto"}}>
+              <div style={{
+          background: 'rgba(255, 255, 255, 0.2)',
+          borderRadius:'11px',
+          display: 'flex',
+              }}>
+            <img src={dashboardIcon}/>
+              </div>
           </Link>
-          <Link path="/home">
-            <img src={passportIcon}/>
+            </Tooltip>
+          <Tooltip label="Passports & Visas" color="dark" position="right" transition="scale" transitionDuration={300}>
+          <Link style={{marginTop: "auto", marginBottom: "auto"}} path="/home">
+            <img src={passportIcon} className='navbar-icon-visa'/>
           </Link>
-          <Link path="/home">
-            <img src={busIcon}/>
+            </Tooltip>
+          <Tooltip label="Transport" color="dark" position="right" transition="scale" transitionDuration={300}>
+          <Link style={{marginTop: "auto", marginBottom: "auto"}} path="/home">
+            <img src={busIcon} className='navbar-icon-bus'/>
           </Link>
-          <Link path="/home">
+            </Tooltip>
+          <Tooltip label="Hotel & Bookings" color="dark" position="right" transition="scale" transitionDuration={300}>
+          <Link style={{marginTop: "auto", marginBottom: "auto"}} path="/home">
             <img src={hotelIcon}/>
           </Link>
-          <Link path="/home">
+            </Tooltip>
+          <Tooltip label="Flights & Tickets" color="dark" position="right" transition="scale" transitionDuration={300}>
+          <Link style={{marginTop: "auto", marginBottom: "auto"}} path="/home">
             <img src={planeIcon}/>
           </Link>
-          <Link path="/home">
-            <IconBusinessplan size={40} strokeWidth={2} color="white" />
+            </Tooltip>
+          <Tooltip label="Accounts & Ledger" color="dark" position="right" transition="scale" transitionDuration={300}>
+          <Link style={{marginTop: "auto", marginBottom: "auto"}} path="/home">
+            <img src={coinsIcon}/>
           </Link>
+            </Tooltip>
+            </div>
 
           <div
             style={{
@@ -129,14 +162,8 @@ export default function HeaderComponent() {
               textAlign: "center",
             }}
           >
-            <Link
-              style={{
-                marginBottom: "50px",
-              }}
-              path="/home"
-            >
-              <IconLayout2 size={40} strokeWidth={2} color="white" />
-            </Link>
+              <Avatar component="a" target="_blank" variant="outline" radius="xl" size="lg" color="green" src={avatar}/>
+            
           </div>
         </div>
 

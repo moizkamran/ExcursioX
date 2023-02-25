@@ -1,3 +1,21 @@
 .headerIcon{
   color: white;
 }
+
+.navbar-icon-visa {
+  transition: filter 0.3s ease-in-out;
+}
+
+.navbar-icon-visa:hover {
+  filter: brightness(85%) sepia(100%) saturate(300%) hue-rotate(60deg);
+}
+
+.navbar-icon-bus {
+  transition: filter 0.3s ease-in-out;
+}
+
+.navbar-icon-bus:hover {
+  filter: brightness(85%) sepia(100%) saturate(300%) hue-rotate(300deg);
+}
+
+
