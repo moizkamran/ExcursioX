@@ -26,4 +26,19 @@
 	border-bottom: 35px solid #40FF21;
 }
 
+.userHover{
+  transition: background-color 0.3s ease-in-out;
+}
+.userHover:hover{
+  color: #0237F1;
+}
+
+
+.userHoverRed{
+  transition: background-color 0.3s ease-in-out;
+}
+
+.userHoverRed:hover{
+  color: #f10202;
+}
 

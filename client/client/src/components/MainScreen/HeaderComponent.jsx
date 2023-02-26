@@ -1,7 +1,7 @@
 import Body from "./Body";
 import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/Logo1.png";
-import { Button, Input, Menu, UnstyledButton, Avatar, Tooltip} from "@mantine/core";
+import { Button, Input, Menu, UnstyledButton, Avatar, Tooltip, HoverCard, TextInput, Text, Textarea, Switch} from "@mantine/core";
 import { Link } from "react-router-dom";
 
 import avatar from '../../assets/avatar.png'
@@ -28,6 +28,15 @@ import {
   IconBusinessplan,
   IconBell,
   IconMaximize,
+  IconMoon,
+  IconSun,
+  IconMoonStars,
+  IconActivityHeartbeat,
+  IconSettings,
+  IconUsers,
+  IconBinaryTree,
+  IconTicket,
+  IconLogout,
 } from "@tabler/icons";
 
 
@@ -35,6 +44,7 @@ import {
 export default function HeaderComponent() {
 
   const [userOpened, setUserOpened] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   
   return (
     <div style={{ backgroundColor: "#121927" }}>
@@ -167,13 +177,10 @@ export default function HeaderComponent() {
 >
 
   {/* Logout and Avatar Component*/}
-  <Tooltip opened={userOpened} label={<Button variant="outline">Logout</Button>}
-  position="bottom"
-  withArrow
-  interactive
-  gutter={10}
-  >
-  <Avatar
+
+  <HoverCard shadow="md">
+        <HoverCard.Target>
+        <Avatar
     onClick={() => setUserOpened((o) => !o)}
     component="a"
     target="_blank"
@@ -185,7 +192,59 @@ export default function HeaderComponent() {
     style={{ marginLeft: '20px', marginBottom: '20px', }}
     
   />
-  </Tooltip>
+        </HoverCard.Target>
+        <HoverCard.Dropdown style={{ border: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingBottom: 20 }}>
+    <Avatar radius="xl" size="lg" src={avatar} />
+    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 10 }}>
+      <Text fw={700}>Abdulmoiz Kamran</Text>
+      <Text size='sm' color='dimmed'>moiz.kamran28@gmail.com</Text>
+    </div>
+  </div>
+  <div style={{ borderTop: '1px solid #E2E8F0', width: '100%', display: 'flex', alignItems: 'center', padding: '20px 0' }}>
+    <IconMoon size={25} color="black" style={{ marginRight: 10 }} />
+    <Text style={{ flex: 1 }}>Dark Mode</Text>
+    <Switch
+      color="dark"
+      size="md"
+      onLabel={<IconSun size={16} stroke={2.5} />}
+      offLabel={<IconMoonStars size={16} stroke={2.5} />}
+      style={{ marginLeft: 'auto' }}
+    />
+  </div>
+  
+  <UnstyledButton className='userHover' style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+    <IconActivityHeartbeat size={25} style={{ marginRight: 10 }} />
+    <Text style={{ flex: 1 }}>Activity Log</Text>
+  </UnstyledButton>
+
+  <UnstyledButton className='userHover' style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+    <IconSettings size={25} style={{ marginRight: 10 }} />
+    <Text style={{ flex: 1 }}>Settings</Text>
+  </UnstyledButton>
+
+  <UnstyledButton className='userHover' style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+    <IconBinaryTree size={25} style={{ marginRight: 10 }} />
+    <Text style={{ flex: 1 }}>HR System</Text>
+  </UnstyledButton>
+
+  <UnstyledButton className='userHover' style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+    <IconTicket size={25} style={{ marginRight: 10 }} />
+    <Text style={{ flex: 1 }}>Helpdesk</Text>
+  </UnstyledButton>
+
+  <div  style={{ borderTop: '1px solid #E2E8F0', width: '100%', display: 'flex', alignItems: 'center', padding: '15px 0' }}>
+  <UnstyledButton className='userHoverRed' style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+    <IconLogout size={25} style={{ marginRight: 10 }} />
+    <Text style={{ flex: 1 }}>Logout</Text>
+  </UnstyledButton>
+  </div>
+<Text size='xs' color='dimmed'>Version 1.2 Alpha Phase NFR</Text>
+</HoverCard.Dropdown>
+
+
+      </HoverCard>
+  
 </div>
 
         </div>
