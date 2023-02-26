@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/Logo1.png";
 import { Button, Input, Menu, UnstyledButton, Avatar, Tooltip, HoverCard, TextInput, Text, Textarea, Switch} from "@mantine/core";
 import { Link } from "react-router-dom";
+import { useLogout } from "../../hooks/useLogout";
 
 import avatar from '../../assets/avatar.png'
 
@@ -42,9 +43,10 @@ import {
 
 
 export default function HeaderComponent() {
-
-  const [userOpened, setUserOpened] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
+  const { logout } = useLogout()
+  const handleLogout = () =>{
+    logout()
+  }
   
   return (
     <div style={{ backgroundColor: "#121927" }}>
@@ -234,7 +236,7 @@ export default function HeaderComponent() {
   </UnstyledButton>
 
   <div  style={{ borderTop: '1px solid #E2E8F0', width: '100%', display: 'flex', alignItems: 'center', padding: '15px 0' }}>
-  <UnstyledButton className='userHoverRed' style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+  <UnstyledButton className='userHoverRed' style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '10px 0'}} onClick={handleLogout}>
     <IconLogout size={25} style={{ marginRight: 10 }} />
     <Text style={{ flex: 1 }}>Logout</Text>
   </UnstyledButton>
