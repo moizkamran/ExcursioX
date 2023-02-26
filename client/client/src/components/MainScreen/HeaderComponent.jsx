@@ -33,7 +33,8 @@ import {
 
 
 export default function HeaderComponent() {
-  
+
+  const [userOpened, setUserOpened] = useState(true);
   
   return (
     <div style={{ backgroundColor: "#121927" }}>
@@ -164,7 +165,16 @@ export default function HeaderComponent() {
     width: "100%",
   }}
 >
+
+  {/* Logout and Avatar Component*/}
+  <Tooltip opened={userOpened} label={<Button variant="outline">Logout</Button>}
+  position="bottom"
+  withArrow
+  interactive
+  gutter={10}
+  >
   <Avatar
+    onClick={() => setUserOpened((o) => !o)}
     component="a"
     target="_blank"
     variant="outline"
@@ -172,9 +182,10 @@ export default function HeaderComponent() {
     size="lg"
     color="green"
     src={avatar}
-    style={{ marginLeft: '20px', marginBottom: '20px', }} // Add this line
+    style={{ marginLeft: '20px', marginBottom: '20px', }}
     
   />
+  </Tooltip>
 </div>
 
         </div>

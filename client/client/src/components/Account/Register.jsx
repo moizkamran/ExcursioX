@@ -1,5 +1,5 @@
 import LogoImage from "../../assets/AMToursLogo.svg";
-import { IconAt, IconAlertCircle } from "@tabler/icons";
+import { IconAt, IconAlertCircle, IconCheck, IconX } from "@tabler/icons";
 import { useState } from "react";
 import InputMask from 'react-input-mask';
 import { useSignup } from "../../hooks/useSignup";
@@ -19,6 +19,8 @@ import {
   TextInput,
   Anchor,
   PasswordInput,
+  Popover,
+  Progress,
   Checkbox,
   Group,
   Button,
@@ -28,8 +30,46 @@ import {
   MantineProvider,
 } from "@mantine/core";
 
-import { useForm } from '@mantine/form';
 
+
+function PasswordRequirement({ meets, label }) {
+  return (
+  <Text
+  color={meets ? "teal" : "red"}
+  sx={{ display: "flex", alignItems: "center" }}
+  mt={7}
+  size="sm"
+  >
+  {meets ? <IconCheck size={14} /> : <IconX size={14} />}{" "}
+  <Box ml={10}>{label}</Box>
+  </Text>
+  );
+  }
+  
+  const requirements = [
+  { re: /[0-9]/, label: "Includes number" },
+  { re: /[a-z]/, label: "Includes lowercase letter" },
+  { re: /[A-Z]/, label: "Includes uppercase letter" },
+  {
+  re: /[$&+,:;=?@#|'<>.^*()%!-]/,
+  label: "Includes special symbol",
+  },
+  ];
+  
+  function getStrength(password) {
+  let multiplier = password.length > 5 ? 0 : 1;
+  
+  requirements.forEach((requirement) => {
+  if (!requirement.re.test(password)) {
+  multiplier += 1;
+  }
+  });
+  
+  return Math.max(100 - (100 / (requirements.length + 1)) * multiplier, 10);
+  }
+  
+
+  
 const Register = () => {
 
 const [email, setEmail] = useState('')
@@ -38,8 +78,17 @@ const [companyId, setCompanyId] = useState('')
 const [firstName, setFirstName] = useState('')
 const [lastName, setLastName] = useState('')
 const [phone, setPhone] = useState('')
+const [popoverOpened, setPopoverOpened] = useState(false);
+const [value, setValue] = useState('');
+const checks = requirements.map((requirement, index) => (
+    <PasswordRequirement key={index} label={requirement.label} meets={requirement.re.test(value)} />
+  ));
+
+const strength = getStrength(value);
+const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
 const {signup, error, isLoading} = useSignup()
+
 
 const handleSubmit = async (e) => {
   e.preventDefault()
@@ -131,15 +180,35 @@ const handleSubmit = async (e) => {
           onChange={(e) => setEmail(e.target.value)} 
         />
 
+<div>
+      <Popover opened={popoverOpened} position="bottom" width="target" transition="pop" >
+        <Popover.Target>
+          <div
+            onFocusCapture={() => setPopoverOpened(true)}
+            onBlurCapture={() => setPopoverOpened(false)}
+          >
             <PasswordInput
               label="Password"
               placeholder="Your password"
               size="md"
               radius="lg"
-              onChange={(e) => setPassword(e.target.value)} 
+              value={value}
+              onChange={(event) => {
+                setValue(event.currentTarget.value);
+                setPassword(event.target.value); }}
             />
+          </div>
+        </Popover.Target>
+        <Popover.Dropdown style={{borderRadius: 15, border: 0}}>
+          <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
+          <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
+          {checks}
+        </Popover.Dropdown>
+      </Popover>
+    </div>
+
             <Button disabled={isLoading} className='button' type='submit'>Sign In</Button>
-            {error && <div className="error">{error}</div>}
+            {error && <Text>{error}</Text>}
             </form>
           </Paper>
         </div>
