@@ -109,9 +109,8 @@ const Body = () => {
       </div>
       <Text style={{ fontSize: 34.22, marginTop: -20, color: 'white', fontFamily:'Hammersmith One' }}>Income</Text>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button color="gray" radius="xl">
-          + Add Payment
-        </Button>
+      <Text style={{ fontSize: 20, color: 'white', fontFamily: 'Fredoka',}}>+9.2%</Text>
+      <div className="triangle-up"></div>
       </div>
   
     </Card>

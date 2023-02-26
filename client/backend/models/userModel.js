@@ -17,7 +17,7 @@ const userSchema = new Schema({
         required: false, 
     },
     phone: {
-        type: Number,
+        type: String,
         required: false,
         unique: true,
     },
@@ -33,10 +33,10 @@ const userSchema = new Schema({
 })
 
 //Static Register Method
-userSchema.statics.register = async function (email, password){
+userSchema.statics.register = async function (email, password, companyId, firstName, lastName, phone){
 
     //validation
-    if(!email || !password || !companyId){
+    if(!email || !password){
         throw Error('Please make sure that all fields are complete!')
     }
     if (!validator.isEmail(email)){
@@ -55,7 +55,7 @@ userSchema.statics.register = async function (email, password){
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const user = await this.create({email, password: hash})
+    const user = await this.create({email, password: hash, companyId, firstName, lastName, phone})
 
     return user
 

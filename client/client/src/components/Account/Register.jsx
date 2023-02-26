@@ -2,6 +2,7 @@ import LogoImage from "../../assets/AMToursLogo.svg";
 import { IconAt, IconAlertCircle } from "@tabler/icons";
 import { useState } from "react";
 import InputMask from 'react-input-mask';
+import { useSignup } from "../../hooks/useSignup";
 
 
 
@@ -30,17 +31,23 @@ import {
 import { useForm } from '@mantine/form';
 
 const Register = () => {
-  const [buttonPopup, setButtonPopup] = useState(false);
 
-  const form = useForm({
-    initialValues: {
-      email: '',
-    },
+const [email, setEmail] = useState('')
+const [password, setPassword] = useState('')
+const [companyId, setCompanyId] = useState('')
+const [firstName, setFirstName] = useState('')
+const [lastName, setLastName] = useState('')
+const [phone, setPhone] = useState('')
 
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    },
-  });
+const {signup, error, isLoading} = useSignup()
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
+
+  await signup(email, password, companyId, firstName, lastName, phone)
+}
+  
+
   
   return (
     <>
@@ -56,7 +63,7 @@ const Register = () => {
 
               
             </Title>
-            <form className="input-area" onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form className="input-area" onSubmit={handleSubmit}>
               <TextInput
             withAsterisk
             label="Company ID"
@@ -74,7 +81,7 @@ const Register = () => {
             size="md"
                 radius="lg"
             className='inputs'
-            {...form.getInputProps('companyId')}
+            onChange={(e) => setCompanyId(e.target.value)} 
             />
               <div
               style={{
@@ -90,7 +97,7 @@ const Register = () => {
               radius="lg"
             placeholder=""
             className='inputs'
-            {...form.getInputProps('firstName')}
+            onChange={(e) => setFirstName(e.target.value)} 
             />
                   </div>
                 <div>
@@ -100,7 +107,7 @@ const Register = () => {
                 size="md"
             placeholder=""
             className='inputs'
-            {...form.getInputProps('lastName')}
+            onChange={(e) => setLastName(e.target.value)} 
             /> </div>
                 </div>
 
@@ -112,7 +119,7 @@ const Register = () => {
                 placeholder="Your phone"
                 size="md"
                 radius="lg"
-                {...form.getInputProps('phone')}
+                onChange={(e) => setPhone(e.target.value)} 
                 />
 
               <TextInput
@@ -121,7 +128,7 @@ const Register = () => {
                 radius="lg"
           label="Email"
           placeholder="your@email.com"
-          {...form.getInputProps('email')}
+          onChange={(e) => setEmail(e.target.value)} 
         />
 
             <PasswordInput
@@ -129,9 +136,10 @@ const Register = () => {
               placeholder="Your password"
               size="md"
               radius="lg"
-              {...form.getInputProps('password')}
+              onChange={(e) => setPassword(e.target.value)} 
             />
-            <Button className='button' type='submit'>Sign In</Button>
+            <Button disabled={isLoading} className='button' type='submit'>Sign In</Button>
+            {error && <div className="error">{error}</div>}
             </form>
           </Paper>
         </div>

@@ -25,16 +25,15 @@ import {
 const Login = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
 
-  const form = useForm({
-    initialValues: {
-      email: "",
-      rememberMe: false,
-    },
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-    },
-  });
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    console.log(email, password)
+  }
+
 
   const togglePopup = () => {
     setButtonPopup(!buttonPopup);
@@ -49,12 +48,14 @@ const Login = () => {
               Welcome Back
               <Text className="subTitle">Please enter your credentials</Text>
             </Title>
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form onSubmit={handleSubmit}>
               <TextInput
                 withAsterisk
                 label="Email"
                 placeholder="your@email.com"
-                {...form.getInputProps("email")}
+                type="email" 
+                onChange={(e) => setEmail(e.target.value)} 
+                value={email}
               />
 
               <PasswordInput
@@ -62,7 +63,9 @@ const Login = () => {
                 placeholder="Your password"
                 mt="md"
                 size="md"
-                {...form.getInputProps("password")}
+                type="password" 
+                onChange={(e) => setPassword(e.target.value)} 
+                value={password}
               />
 
               <Group position="apart" mt="lg">
@@ -97,7 +100,7 @@ const Login = () => {
                   }}
                 >
                   <Checkbox
-                    {...form.getInputProps("rememberMe", { type: "checkbox" })}
+                    
                     label="Remember me for a day"
                     sx={{ lineHeight: 1 }}
                     color="theme-blue"

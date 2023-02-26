@@ -41,7 +41,7 @@ export default function HeaderComponent() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          padding: "20px",
+          padding: "15px",
           alignItems: "center"
         }}
       >
@@ -110,9 +110,10 @@ export default function HeaderComponent() {
         >
           <div style={{
           display:'flex',
-          height: '70%',
+          height: '50%',
           position: "relative",
           flexDirection: "column",
+          alignItems: 'center',
         }}>
             
           <Tooltip label="Dashboard" color="dark" position="right" transition="scale" transitionDuration={300}>
@@ -154,17 +155,28 @@ export default function HeaderComponent() {
             </Tooltip>
             </div>
 
-          <div
-            style={{
-              position: "absolute",
-              bottom: "0",
-              width: "100%",
-              textAlign: "center",
-            }}
-          >
-              <Avatar component="a" target="_blank" variant="outline" radius="xl" size="lg" color="green" src={avatar}/>
-            
-          </div>
+            <div
+  style={{
+    position: "absolute",
+    bottom: "0",
+    display: 'flex',
+    justifyContent: 'flex-start',
+    width: "100%",
+  }}
+>
+  <Avatar
+    component="a"
+    target="_blank"
+    variant="outline"
+    radius="xl"
+    size="lg"
+    color="green"
+    src={avatar}
+    style={{ marginLeft: '20px', marginBottom: '20px', }} // Add this line
+    
+  />
+</div>
+
         </div>
 
         <Body />

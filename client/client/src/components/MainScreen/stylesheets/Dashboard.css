@@ -18,4 +18,12 @@
   filter: brightness(85%) sepia(100%) saturate(300%) hue-rotate(300deg);
 }
 
+.triangle-up {
+	width: 0;
+	height: 0;
+	border-left: 30px solid transparent;
+	border-right: 30px solid transparent;
+	border-bottom: 35px solid #40FF21;
+}
+
 
