@@ -1,8 +1,9 @@
-import LogoImage from "../../assets/AMToursLogo.svg";
+import LogoImage from "../../assets/LogoWhite.svg";
 import { IconAt, IconAlertCircle, IconCheck, IconX } from "@tabler/icons";
 import { useState } from "react";
 import InputMask from 'react-input-mask';
 import { useSignup } from "../../hooks/useSignup";
+import { showNotification } from '@mantine/notifications';
 
 
 
@@ -22,6 +23,7 @@ import {
   Popover,
   Progress,
   Checkbox,
+  Notification,
   Group,
   Button,
   Title,
@@ -108,9 +110,7 @@ const handleSubmit = async (e) => {
             <Title order={2} className='title' align="left" x mb={100}>
               Let's get you all set-up!
               <Text className="subTitle">Please fill in the details</Text>
-              
-
-              
+            
             </Title>
             <form className="input-area" onSubmit={handleSubmit}>
               <TextInput
