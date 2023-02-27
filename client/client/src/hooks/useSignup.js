@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
+import { showNotification } from '@mantine/notifications'
 
 export const useSignup = () => {
   const [error, setError] = useState(null)
@@ -20,6 +21,12 @@ export const useSignup = () => {
     if (!response.ok) {
       setIsLoading(false)
       setError(json.error)
+
+      showNotification ({ message: json.error, 
+        title: 'Oh no! Something went wrong.', 
+        color: 'red',
+        radius: 'lg',
+      })
     }
     if (response.ok) {
       // save the user to local storage

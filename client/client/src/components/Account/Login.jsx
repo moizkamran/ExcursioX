@@ -108,6 +108,7 @@ const Login = () => {
                 component="a"
                 target="_blank"
                 leftIcon={<IconKey size={25} className="leftIcon" />}
+                
               >
                 SSO
               </Button>

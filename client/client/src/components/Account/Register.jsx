@@ -12,24 +12,16 @@ import '../Account/Register.css'
 
 import {
   Paper,
-  Center,
-  Image,
-  Input,
-  createStyles,
   Tooltip,
   TextInput,
-  Anchor,
   PasswordInput,
   Popover,
   Progress,
-  Checkbox,
-  Notification,
-  Group,
   Button,
+  Stepper,
   Title,
   Text,
   Box,
-  MantineProvider,
 } from "@mantine/core";
 
 
@@ -207,8 +199,7 @@ const handleSubmit = async (e) => {
       </Popover>
     </div>
 
-            <Button disabled={isLoading} className='button' type='submit'>Sign In</Button>
-            {error && <Text>{error}</Text>}
+            <Button disabled={isLoading} className='button' style={{marginTop: 30}} type='submit'>Register</Button>
             </form>
           </Paper>
         </div>
