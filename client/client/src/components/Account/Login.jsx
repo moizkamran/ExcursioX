@@ -1,11 +1,11 @@
 import "../../styles.css";
 import LogoImage from "../../assets/AMToursLogo.svg";
 import Popup from "../Popovers/forgot-password";
-import { useForm } from "@mantine/form";
+
 import { IconKey } from "@tabler/icons";
 import { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
-import { showNotification } from '@mantine/notifications';
+
 
 //main stylesheet import
 
@@ -26,7 +26,6 @@ import {
 
 
 const Login = () => {
-  const [buttonPopup, setButtonPopup] = useState(false);
   const {login, error, isLoading} = useLogin()
 
   const [email, setEmail] = useState('')
@@ -38,10 +37,6 @@ const Login = () => {
     await login(email, password)
   }
 
-
-  const togglePopup = () => {
-    setButtonPopup(!buttonPopup);
-  };
   return (
     <>
       <div className="container">
@@ -88,18 +83,6 @@ const Login = () => {
                         "#001a4c",
                         "#00091e",
                       ],
-                      "bright-pink": [
-                        "#F0BBDD",
-                        "#ED9BCF",
-                        "#EC7CC3",
-                        "#ED5DB8",
-                        "#F13EAF",
-                        "#F71FA7",
-                        "#FF00A1",
-                        "#E00890",
-                        "#C50E82",
-                        "#AD1374",
-                      ],
                     },
                   }}
                 >
@@ -112,7 +95,6 @@ const Login = () => {
                 </MantineProvider>
                 <Anchor
                   style={{ textDecoration: "none", color: "#07399E" }}
-                  onClick={() => setButtonPopup(true)}
                   size="sm"
                 >
                   Forgot password?
@@ -121,7 +103,6 @@ const Login = () => {
               <Button className="button" type="submit" disabled={isLoading}>
                 Sign In
               </Button>
-              
               <Button
                 className="sso"
                 component="a"
@@ -140,30 +121,6 @@ const Login = () => {
             </Text>
             
           </Paper>
-          <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-            <h1 align="center">Forgot Password?</h1>
-            <h3 align="center">Don't worry we will help you recover it.</h3>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-              }}
-            >
-              <div>
-                <Button variant="contained" color="primary">
-                  Button 1
-                </Button>
-              </div>
-              <div>
-                <Button variant="contained" color="primary">
-                  Button 2
-                </Button>
-              </div>
-            </div>
-            <button className="close-btn" onClick={togglePopup}>
-              X
-            </button>
-          </Popup>
         </div>
         <div className="imageContainer" />
       </div>

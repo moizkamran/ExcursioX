@@ -2,10 +2,10 @@ import Test from "./Test";
 import { Text, Title, Card, Button } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight, IconBusinessplan } from "@tabler/icons";
 import { useState } from "react";
-
-import coinsIcon from '../../assets/icons/coins.svg'
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Body = () => {
+  const { user } = useAuthContext()
   const [count, setCount] = useState(0);
   return (
     <>
@@ -26,7 +26,7 @@ const Body = () => {
           }}
         >
           <Text style={{ marginBottom: 10 }}>Home {'>'} Dashboard</Text>
-          <Title order={2}>Welcome Back, Moiz!</Title>
+          <Title order={2}>Welcome Back, {user.firstName}!</Title>
           <div style={{ display: "flex", alignItems: "center", marginTop: 20 }}>
             <Title order={4} style={{ marginRight: 10 }}>
               Today's Overview
