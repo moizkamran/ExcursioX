@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/Logo1.png";
 import { Button, Input, Menu, UnstyledButton, Avatar, Tooltip, HoverCard, TextInput, Text, Textarea, Switch} from "@mantine/core";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import { useLogout } from "../../hooks/useLogout";
 
 import avatar from '../../assets/avatar.png'
@@ -39,10 +40,12 @@ import {
   IconTicket,
   IconLogout,
 } from "@tabler/icons";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 
 
 export default function HeaderComponent() {
+  const { user } = useAuthContext()
   const { logout } = useLogout()
   const handleLogout = () =>{
     logout()
@@ -200,7 +203,7 @@ export default function HeaderComponent() {
     <Avatar radius="xl" size="lg" src={avatar} />
     <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 10 }}>
       <Text fw={700}>Abdulmoiz Kamran</Text>
-      <Text size='sm' color='dimmed'>moiz.kamran28@gmail.com</Text>
+      { user && (<Text size='sm' color='dimmed'>{user.email}</Text>) }
     </div>
   </div>
   <div style={{ borderTop: '1px solid #E2E8F0', width: '100%', display: 'flex', alignItems: 'center', padding: '20px 0' }}>

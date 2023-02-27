@@ -4,6 +4,8 @@ import Popup from "../Popovers/forgot-password";
 import { useForm } from "@mantine/form";
 import { IconKey } from "@tabler/icons";
 import { useState } from "react";
+import { useLogin } from "../../hooks/useLogin";
+import { showNotification } from '@mantine/notifications';
 
 //main stylesheet import
 
@@ -22,8 +24,10 @@ import {
   MantineProvider,
 } from "@mantine/core";
 
+
 const Login = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
+  const {login, error, isLoading} = useLogin()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -31,7 +35,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log(email, password)
+    await login(email, password)
   }
 
 
@@ -114,9 +118,10 @@ const Login = () => {
                   Forgot password?
                 </Anchor>
               </Group>
-              <Button className="button" type="submit">
+              <Button className="button" type="submit" disabled={isLoading}>
                 Sign In
               </Button>
+              
               <Button
                 className="sso"
                 component="a"
@@ -133,6 +138,7 @@ const Login = () => {
                 Sign up now
               </a>
             </Text>
+            
           </Paper>
           <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
             <h1 align="center">Forgot Password?</h1>
