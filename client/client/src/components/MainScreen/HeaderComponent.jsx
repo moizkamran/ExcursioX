@@ -1,4 +1,5 @@
 import Body from "./Body";
+import Hotel from "../Pages/Hotel & Property/Hotel"
 import React, { useEffect, useState } from "react";
 import logoImage from "../../assets/Logo1.png";
 import { Button, Input, Menu, UnstyledButton, Avatar, Tooltip, HoverCard, TextInput, Text, Textarea, Switch} from "@mantine/core";
@@ -254,7 +255,8 @@ export default function HeaderComponent() {
 
         </div>
 
-        <Body />
+
+        <Hotel/>
       </div>
       </div>
   );
