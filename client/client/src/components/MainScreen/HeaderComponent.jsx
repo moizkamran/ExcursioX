@@ -155,7 +155,7 @@ export default function HeaderComponent() {
           </Link>
             </Tooltip>
           <Tooltip label="Hotel & Bookings" color="dark" position="right" transition="scale" transitionDuration={300}>
-          <Link style={{marginTop: "auto", marginBottom: "auto"}} path="/home">
+          <Link style={{marginTop: "auto", marginBottom: "auto"}} path="/hotel">
             <img src={hotelIcon}/>
           </Link>
             </Tooltip>
