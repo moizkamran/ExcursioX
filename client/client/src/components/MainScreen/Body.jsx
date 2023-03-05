@@ -1,8 +1,9 @@
-import Test from "./Test";
 import { Text, Title, Card, Button } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight, IconBusinessplan } from "@tabler/icons";
 import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
+
+import GlobeIcon from '../../assets/icons/globe.svg'
 
 const Body = () => {
   const [count, setCount] = useState(0);
@@ -46,9 +47,104 @@ const Body = () => {
               style={{ marginRight: 10 }}
             />
           </div>
-          <Test />
         </div>
 
+          {/* Overview Card Area*/}
+          <div style={{display: 'flex', flexDirection: 'row', alignItems: 'flex-start', position: 'relative'}}>
+
+            {/* VISA CARD */}
+
+            <div style={{width: 350, height: 180, backgroundColor: '#18A11D', borderRadius: 13, position: 'relative', zIndex: 1}}>
+
+            {/* Title */}
+
+            <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
+              <Title style={{color: 'white', 
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>8 Visas</Title></div>
+            {/* ICON */}
+            <img src={GlobeIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none'}} draggable="false"/>
+
+            {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 10}}>
+
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+            <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>0</Text>
+          </div>
+
+          <Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Rejected</Text>
+
+              </div>
+              
+              {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>8</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>New Visas Process</Text>
+
+    </div>
+    {/* Subs */}
+    <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>12</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Attestations</Text>
+
+    </div>
+
+            </div>
+
+            {/* BOOKING CARD */}
+
+            <div style={{marginLeft: 20,width: 350, height: 180, backgroundColor: '#FFA113', borderRadius: 13, position: 'relative', zIndex: 1}}>
+
+            {/* Title */}
+
+            <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
+              <Title style={{color: 'white', 
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>12 Bookings</Title></div>
+            {/* ICON */}
+            <img src={GlobeIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none'}} draggable="false"/>
+
+            {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 10}}>
+
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+            <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>0</Text>
+          </div>
+
+          <Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Rejected</Text>
+
+              </div>
+              
+              {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>8</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>New Visas Process</Text>
+
+    </div>
+    {/* Subs */}
+    <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>12</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Attestations</Text>
+
+    </div>
+
+            </div>
+
+          </div>
 {/* Payments Module Start */}
         <div style={{padding: 20, }}>
 

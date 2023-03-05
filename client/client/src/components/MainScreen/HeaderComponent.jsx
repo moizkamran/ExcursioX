@@ -254,8 +254,10 @@ export default function HeaderComponent() {
 
         </div>
 
+        {/* Interactive Component */}
+        <Body/>
 
-        <Hotel/>
+
       </div>
       </div>
   );
