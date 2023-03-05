@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 import GlobeIcon from '../../assets/icons/globe.svg'
+import HotelIcon from '../../assets/icons/bed.svg'
+import BusIcon from '../../assets/icons/bus.svg'
+import PlaneIcon from '../../assets/icons/plane.svg'
+import GavelIcon from '../../assets/icons/gavel.svg'
 
 const Body = () => {
   const [count, setCount] = useState(0);
@@ -98,9 +102,9 @@ const Body = () => {
 
             </div>
 
-            {/* BOOKING CARD */}
+            {/* -----------------------BOOKING CARD------------------------- */}
 
-            <div style={{marginLeft: 20,width: 350, height: 180, backgroundColor: '#FFA113', borderRadius: 13, position: 'relative', zIndex: 1}}>
+            <div style={{marginLeft: 20,width: 350, height: 180, backgroundColor: '#DC8400', borderRadius: 13, position: 'relative', zIndex: 1}}>
 
             {/* Title */}
 
@@ -108,7 +112,7 @@ const Body = () => {
               <Title style={{color: 'white', 
             fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>12 Bookings</Title></div>
             {/* ICON */}
-            <img src={GlobeIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none'}} draggable="false"/>
+            <img src={HotelIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none', height: 160, opacity: '10%', filter: 'invert(100%)'}} draggable="false"/>
 
             {/* Subs */}
             <div style={{display: 'flex', marginLeft: 10, marginTop: 10}}>
@@ -117,7 +121,7 @@ const Body = () => {
             <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>0</Text>
           </div>
 
-          <Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Rejected</Text>
+          <Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>New Bookings</Text>
 
               </div>
               
@@ -125,26 +129,165 @@ const Body = () => {
             <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
 
 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
-  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>8</Text>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>34</Text>
 </div>
 
-<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>New Visas Process</Text>
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Check-ins</Text>
 
     </div>
     {/* Subs */}
     <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
 
 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
-  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>12</Text>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>42</Text>
 </div>
 
-<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Attestations</Text>
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Check-outs</Text>
 
     </div>
 
             </div>
 
+            {/* -----------------------Transport CARD------------------------- */}
+
+            <div style={{marginLeft: 20,width: 350, height: 180, backgroundColor: '#662178', borderRadius: 13, position: 'relative', zIndex: 1}}>
+
+            {/* Title */}
+
+            <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
+              <Title style={{color: 'white', 
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>19 Passengers</Title></div>
+            {/* ICON */}
+            <img src={BusIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none', height: 160, opacity: '10%', filter: 'invert(100%)'}} draggable="false"/>
+
+            {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 10}}>
+
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+            <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>16</Text>
           </div>
+
+          <Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>New Passenger Bookings</Text>
+
+              </div>
+              
+              {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>42</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Transport Pickups Today</Text>
+
+    </div>
+    {/* Subs */}
+    <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>10</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Active Routes</Text>
+
+    </div>
+
+            </div>
+
+            {/* -----------------------Plane CARD------------------------- */}
+
+            <div style={{marginLeft: 20,width: 350, height: 180, backgroundColor: '#0059DF', borderRadius: 13, position: 'relative', zIndex: 1}}>
+
+            {/* Title */}
+
+            <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
+              <Title style={{color: 'white', 
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>62 Flights</Title></div>
+            {/* ICON */}
+            <img src={PlaneIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none', height: 160, opacity: '10%', filter: 'invert(100%)'}} draggable="false"/>
+
+            {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 10}}>
+
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+            <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>112</Text>
+          </div>
+
+          <Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Arrivals</Text>
+
+              </div>
+              
+              {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>147</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Depatures</Text>
+
+    </div>
+    {/* Subs */}
+    <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>25</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>New Bookings</Text>
+
+    </div>
+
+            </div>
+
+            {/* -----------------------Requests CARD------------------------- */}
+
+            <div style={{marginLeft: 20,width: 225, height: 180, backgroundColor: '#112A5E', borderRadius: 13, position: 'relative', zIndex: 1}}>
+
+            {/* Title */}
+
+            <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
+              <Title style={{color: 'white', 
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>4 Requests</Title></div>
+            {/* ICON */}
+            <img src={GavelIcon} style={{position: 'absolute', top: 10, right: 5, zIndex: -1, userSelect: 'none', height: 160, opacity: '10%', filter: 'invert(100%)'}} draggable="false"/>
+
+            {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 10}}>
+
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+            <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>16</Text>
+          </div>
+
+          <Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Open Tickets</Text>
+
+              </div>
+              
+              {/* Subs */}
+            <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>7</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Urgent Tickets</Text>
+
+    </div>
+    {/* Subs */}
+    <div style={{display: 'flex', marginLeft: 10, marginTop: 4}}>
+
+<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', width: 30, height: 30, borderRadius: 35, backgroundColor: '#121927'}}>
+  <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>2</Text>
+</div>
+
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Closed Tickets</Text>
+
+    </div>
+
+            </div>
+
+          {/*END OVERVIEW DIV */} </div>
+
 {/* Payments Module Start */}
         <div style={{padding: 20, }}>
 
