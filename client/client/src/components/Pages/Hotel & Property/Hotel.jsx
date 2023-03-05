@@ -13,17 +13,18 @@ const Hotel = () => {
   const formattedDate = today.toLocaleDateString('en-US', options);
 
   const chartData = {
-    labels: ['Occupancy', 'Vacancy', 'Out of Order', 'Off Market'],
+    labels: ['Out of Order', 'Off Market', 'Occupancy', 'Vacancy'],
     datasets: [
       {
         label: 'Yesterday',
         backgroundColor: '#8F00FF',
         hoverBackgroundColor: '#BF6EFE',
         data: [
-          UserData[0].occupancy,
-          UserData[0].vacancy,
           UserData[0].outOfOrder,
           UserData[0].offMarket,
+          UserData[0].occupancy,
+          UserData[0].vacancy,
+          
         ],
       },
       {
@@ -31,10 +32,11 @@ const Hotel = () => {
         backgroundColor: '#6EB0FE',
         hoverBackgroundColor: '#3782DB',
         data: [
-          UserData[1].occupancy,
-          UserData[1].vacancy,
           UserData[1].outOfOrder,
           UserData[1].offMarket,
+          UserData[1].occupancy,
+          UserData[1].vacancy,
+          
         ],
       },
     ],
@@ -48,14 +50,27 @@ const Hotel = () => {
     },
     scales: {
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        ticks:{
+          display: false
+        }
+      },
+      x: {
+        beginAtZero: true,
+        grid : {
+          display: false
+        },
       }
+
     },
     elements: {
       bar: {
         borderRadius: 10
-      }
-    }
+      },
+    },
+    barThickness: 35, // set the thickness of each bar to 25 pixels
+
+  
   };
   
   {/*Doughnut Chart*/}
@@ -116,19 +131,39 @@ const Hotel = () => {
            
            <div style={{ display: "flex", alignItems: "center" }}>
               <Title fw="xl" style={{ marginRight: "auto" }}>Hotel Board</Title>
-              <Title style={{fontFamily:"Fredoka", fontWeight: 400}}>{formattedDate}</Title>
+              <Title style={{fontFamily:"Fredoka", fontWeight: 400, fontSize: 20}}>{formattedDate}</Title>
           </div>
-          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20}}>
 
-          <div style={{width: 1000, height: 400}}>
-            <Title fw={20} fz="xl" style={{marginTop: 20, marginBottom: 20 }}>Daily Statistics</Title>
-          <Bar
-      data={chartData}
-      options={optionsBar}
-    />
+          {/* Bar Chart */}
+          <div style={{backgroundColor: "#F8F8F8", borderRadius: 20, padding: 30}}>
 
-        
+          <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left", paddingBottom: 20}}>
+
+          <Title style={{fontFamily: "Fredoka", color: "black", fontWeight: 400, fontSize: 27}}>Daily Statistics</Title>
+
+      <div style={{display: "flex", alignItems: "center"}}>
+        <div style={{ borderRadius: '50%', width: '15px', height: '15px', backgroundColor: '#6EB0FE' }}> </div>
+        <Text style={{color: "black", fontFamily: "Fredoka", fontSize: 20, marginLeft: "10px"}}>Today</Text>
+      </div>
+
+      <div style={{display: "flex", alignItems: "center"}}>
+        <div style={{ borderRadius: '50%', width: '15px', height: '15px', backgroundColor: '#8F00FF' }}> </div>
+        <Text style={{color: "black", fontFamily: "Fredoka", fontSize: 20, marginLeft: "10px"}}>Yesterday</Text>
+      </div>
+
     </div>
+          <div style={{width: 600, height: 300}}>
+            
+                  <Bar
+              data={chartData}
+              options={optionsBar}
+            />  
+    </div>
+    </div>
+
+
+    {/* Reservations Module */}
     <div style={{display: "flex", flexDirection: "column", backgroundColor: "#07399E", height: "350px", width: "500px", borderRadius: "15px", padding: "20px"}}>
   <div style={{alignSelf: "flex-start"}}>
     <Title style={{fontFamily: "Fredoka", display: "flex", color: "white", fontWeight: 400}}>Reservations</Title>
@@ -155,7 +190,7 @@ const Hotel = () => {
       </div>
     </div> 
 
-    <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left"}}>
+    <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left", marginRight: 45}}>
       <div style={{display: "flex", alignItems: "center"}}>
         <div style={{ borderRadius: '50%', width: '15px', height: '15px', backgroundColor: 'white' }}> </div>
         <Text style={{color: "#FFFFFF", fontFamily: "Fredoka", fontSize: 20, marginLeft: "10px"}}>Checked In</Text>

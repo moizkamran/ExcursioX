@@ -23,12 +23,10 @@ import coinsIcon from '../../assets/icons/coins.svg'
 
 
 import {
-  IconLayout2,
   IconCloudFog,
   IconPlus,
   IconSearch,
   IconMessageDots,
-  IconBusinessplan,
   IconBell,
   IconMaximize,
   IconMoon,
@@ -36,10 +34,10 @@ import {
   IconMoonStars,
   IconActivityHeartbeat,
   IconSettings,
-  IconUsers,
   IconBinaryTree,
   IconTicket,
   IconLogout,
+  IconWallet,
 } from "@tabler/icons";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
@@ -96,6 +94,7 @@ export default function HeaderComponent() {
           <UnstyledButton className='headerIcon'><IconMessageDots /></UnstyledButton>
           <UnstyledButton className='headerIcon'><IconBell /></UnstyledButton>
           <UnstyledButton className='headerIcon'><IconMaximize /></UnstyledButton>
+          <UnstyledButton className='headerIcon'><IconWallet /></UnstyledButton>
           <div
             style={{
               borderRadius: "20px",
