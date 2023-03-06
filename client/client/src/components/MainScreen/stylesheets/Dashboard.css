@@ -1,4 +1,4 @@
-.headerIcon{
+.headerIcon {
   color: white;
 }
 
@@ -19,26 +19,25 @@
 }
 
 .triangle-up {
-	width: 0;
-	height: 0;
-	border-left: 20px solid transparent;
-	border-right: 20px solid transparent;
-	border-bottom: 25px solid #40FF21;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 25px solid #40ff21;
 }
 
-.userHover{
+.userHover {
   transition: background-color 0.3s ease-in-out;
 }
-.userHover:hover{
-  color: #0237F1;
+.userHover:hover {
+  color: #0237f1;
 }
 
-
-.userHoverRed{
+.userHoverRed {
   transition: background-color 0.3s ease-in-out;
 }
 
-.userHoverRed:hover{
+.userHoverRed:hover {
   color: #f10202;
 }
 
@@ -92,4 +91,53 @@
   transform: scale(0.95);
 }
 
+/*  */
+.cssbuttons2-io-button {
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+  font-family: Fredoka;
+  padding-left: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 1.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  height: 2.3em;
+  padding-right: 3.3em;
+}
 
+.cssbuttons2-io-button .icon {
+  background: #000000;
+
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 1.9em;
+  right: 0em;
+  transition: all 0.3s;
+}
+
+.cssbuttons2-io-button:hover .icon {
+  width: calc(100%);
+}
+
+.cssbuttons2-io-button .icon svg {
+  width: 1.2em;
+  transition: transform 0.3s;
+  color: #ffffff;
+}
+
+.cssbuttons2-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons2-io-button:active .icon {
+  transform: scale(0.95);
+}
