@@ -98,7 +98,7 @@ const Body = () => {
   <Text style={{color: 'white', fontFamily: 'Hammersmith One'}}>12</Text>
 </div>
 
-<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Attestations</Text>
+<Text style={{color: 'white', marginLeft: 10, fontFamily: 'Fredoka', fontSize: 18}}>Visa Approved</Text>
 
     </div>
 
@@ -112,7 +112,7 @@ const Body = () => {
 
             <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
               <Title style={{color: 'white', 
-            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>12 Bookings</Title></div>
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>12 Hotel Bookings</Title></div>
             {/* ICON */}
             <img src={HotelIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none', height: 160, opacity: '10%', filter: 'invert(100%)'}} draggable="false"/>
 
@@ -158,7 +158,7 @@ const Body = () => {
 
             <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
               <Title style={{color: 'white', 
-            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>19 Passengers</Title></div>
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>19 Transport</Title></div>
             {/* ICON */}
             <img src={BusIcon} style={{position: 'absolute', top: 10, right: 10, zIndex: -1, userSelect: 'none', height: 160, opacity: '10%', filter: 'invert(100%)'}} draggable="false"/>
 
@@ -250,7 +250,7 @@ const Body = () => {
 
             <div style={{display: 'flex', height: 60, backgroundColor: '#121927', borderRadius: 13, alignItems: 'center', zIndex: 1}}>
               <Title style={{color: 'white', 
-            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>4 Requests</Title></div>
+            fontFamily: 'Hammersmith One', fontWeight: 400, marginLeft: 20, fontSize: 30}}>4 Vouchers</Title></div>
             {/* ICON */}
             <img src={GavelIcon} style={{position: 'absolute', top: 10, right: 5, zIndex: -1, userSelect: 'none', height: 160, opacity: '10%', filter: 'invert(100%)'}} draggable="false"/>
 
