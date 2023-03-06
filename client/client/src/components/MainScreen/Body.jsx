@@ -1,5 +1,5 @@
 import { Text, Title, Card, Button } from "@mantine/core";
-import { IconArrowLeft, IconArrowRight, IconBusinessplan } from "@tabler/icons";
+import { IconArrowLeft, IconArrowRight, IconBusinessplan, IconDoorEnter, IconDoorExit, IconMapPin, IconPlaneArrival, IconPlaneDeparture, IconWorld } from "@tabler/icons";
 import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
@@ -8,6 +8,8 @@ import HotelIcon from '../../assets/icons/bed.svg'
 import BusIcon from '../../assets/icons/bus.svg'
 import PlaneIcon from '../../assets/icons/plane.svg'
 import GavelIcon from '../../assets/icons/gavel.svg'
+import MakkahIcon from '../../assets/icons/makkah.svg'
+import MedinaIcon from '../../assets/icons/medina.svg'
 
 const Body = () => {
   const [count, setCount] = useState(0);
@@ -288,74 +290,292 @@ const Body = () => {
 
           {/*END OVERVIEW DIV */} </div>
 
-{/* Payments Module Start */}
-        <div style={{padding: 20, }}>
+<div style={{display: 'flex', flexDirection: 'row'}}>
+{/* Finance Module Start */}
 
-  <div style={{display:'flex', marginBottom: 10,}}>
+<div style={{ marginTop:20, flex: 1}}>
+
+  <div style={{ display:'flex', marginBottom: 10 }}>
     <IconBusinessplan
       size={30}
       strokeWidth={2}
       color="black"
       style={{ marginRight: 10 }}
     />
-    <Title >Payments</Title> 
+    <Title style={{fontSize: 25, fontFamily: 'Fredoka', fontWeight: 400}}>Finance</Title> 
   </div>
 
 {/* Payments to collect START */}
           
-  <div style={{ display: 'flex'}}>
+  <div style={{ display: 'flex', flexDirection: "row"}}>
   
     <Card style={{
-      width: 350,
-      backgroundColor: "#210E6C",
+      width: 297,
+      height: 144,
+      backgroundColor: "#2C02D3",
       borderRadius: 20,
       marginRight: 20
     }}>
   
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Text style={{ fontSize: 69, color: 'white', fontFamily:'Hammersmith One', marginTop: -20, }}>1,487</Text>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative',}}>
-          <Text style={{ fontSize: 20, color: 'white', fontFamily:'Hammersmith One'}}>.67</Text>
-          <Text style={{ fontSize: 20, color: 'white', fontFamily: 'Fredoka',}}>SAR</Text>
+        <Text style={{ fontSize: 53, color: 'white', fontFamily:'Hammersmith One', marginTop: -20, }}>1,487</Text>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative', marginBottom: 25, marginLeft: 10}}>
+          <Text style={{ fontSize: 14, color: 'white', fontFamily:'Hammersmith One'}}>.67</Text>
+          <Text style={{ fontSize: 14, color: 'white', fontFamily: 'Fredoka',}}>SAR</Text>
         </div>
       </div>
-      <Text style={{ fontSize: 34.22, marginTop: -20, color: 'white', fontFamily:'Hammersmith One' }}>to collect</Text>
+      <Text style={{ fontSize: 27.19, marginTop: -20, color: 'white', fontFamily:'Hammersmith One' }}>to collect</Text>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button color="gray" radius="xl">
-          + Add Payment
-        </Button>
+      <button class="cssbuttons-io-button" > Add Payment
+  <div class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+  </div>
+</button>
       </div>
   
     </Card>
 {/* Payments to collect END */}
-  
-{/* Income Today START */}
-    
-    <Card style={{
-      width: 350,
+{/* Income Today Start */}
+<Card style={{
+      width: 297,
+      height: 144,
       backgroundColor: "#1B1A20",
       borderRadius: 20,
-      marginLeft: 20
+      marginRight: 20
     }}>
   
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Text style={{ fontSize: 69, color: 'white', fontFamily:'Hammersmith One', marginTop: -20, }}>257</Text>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative',}}>
-          <Text style={{ fontSize: 20, color: 'white', fontFamily:'Hammersmith One'}}>.29</Text>
-          <Text style={{ fontSize: 20, color: 'white', fontFamily: 'Fredoka',}}>SAR</Text>
+        <Text style={{ fontSize: 53, color: 'white', fontFamily:'Hammersmith One', marginTop: -20, }}>1,487</Text>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative', marginBottom: 25, marginLeft: 10}}>
+          <Text style={{ fontSize: 14, color: 'white', fontFamily:'Hammersmith One'}}>.67</Text>
+          <Text style={{ fontSize: 14, color: 'white', fontFamily: 'Fredoka',}}>SAR</Text>
         </div>
       </div>
-      <Text style={{ fontSize: 34.22, marginTop: -20, color: 'white', fontFamily:'Hammersmith One' }}>Income</Text>
+      <Text style={{ fontSize: 27.19, marginTop: -20, color: 'white', fontFamily:'Hammersmith One' }}>Income</Text>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Text style={{ fontSize: 20, color: 'white', fontFamily: 'Fredoka',}}>+9.2%</Text>
+      <Text style={{ fontSize: 15, color: 'white', fontFamily: 'Hammersmith One',}}>+9.2%</Text>
       <div className="triangle-up"></div>
       </div>
   
     </Card>
-    {/* Income today END */}
-    
+{/* Income Today END */}
   </div>
-{/* Payments Module END */}
+</div> {/* Finance Module END */}
+
+{/* Country Status Module START */}
+<div style={{display: 'flex', flex:100}}>
+
+<div style={{ marginTop:20}}>
+
+  <div style={{ display:'flex', marginBottom: 10 }}>
+    <IconWorld
+      size={30}
+      strokeWidth={2}
+      color="black"
+      style={{ marginRight: 10 }}
+    />
+    <Title style={{fontSize: 25, fontFamily: 'Fredoka', fontWeight: 400}}>Country Status</Title> 
+  </div>
+
+{/* Country START */}
+<div style={{width: '450px', fontFamily: 'Fredoka'}}>
+  <div style={{color: '#FFFFFF'}}>
+    <div style={{backgroundColor: '#FF1E1E', display: 'flex', justifyContent: 'end', height: '30px', borderTopRightRadius: '15px', borderTopLeftRadius: '15px'}}>
+      <span style={{marginTop: 'auto', marginBottom: 'auto', paddingRight: '20px'}}>Kingdom of Saudia Arabia</span>
+    </div>
+    <div style={{paddingLeft: '15px', paddingRight: '15px', display: 'flex', backgroundColor: '#000000', borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px', height: '90px', justifyContent: 'space-between'}}>
+
+  <div style={{display: 'flex', marginTop: '5px'}}>
+    <div style={{paddingRight: '5px', paddingTop: '10px'}}><IconPlaneArrival size={35} style={{color: '#FF1E1E'}}/></div>
+    <div>
+      <div><span style={{fontSize: '45px', fontFamily:'Hammersmith One'}}>24</span></div>
+      <div style={{marginTop: '-6px'}}><span style={{fontSize: '18px'}}>Arrivals</span></div>
+    </div>
+  </div>
+
+  <div style={{display: 'flex', marginTop: '5px'}}>
+    <div style={{paddingRight: '5px', paddingTop: '10px'}}><IconPlaneDeparture size={35} style={{color: '#FF1E1E'}}/></div>
+    <div>
+      <div><span style={{fontSize: '45px', fontFamily:'Hammersmith One'}}>65</span></div>
+      <div style={{marginTop: '-6px'}}><span style={{fontSize: '18px'}}>Departure</span></div>
+    </div>
+  </div>
+
+  <div style={{display: 'flex', marginTop: '5px'}}>
+    <div style={{paddingRight: '5px', paddingTop: '10px'}}><IconMapPin size={35} style={{color: '#FF1E1E'}}/></div>
+    <div>
+      <div><span style={{fontSize: '45px', fontFamily:'Hammersmith One'}}>620</span></div>
+      <div style={{marginTop: '-6px'}}><span style={{fontSize: '18px'}}>In Country</span></div>
+    </div>
+  </div>
+</div>
+  </div>
+</div> {/* IN KSA END */}  
+
+{/* Makkah Start */}
+<div style={{ color: "#ffffff", fontFamily: 'Fredoka', marginTop: 10}}>
+  <div
+    style={{
+      backgroundColor: "#FFB800",
+      display: "flex",
+      borderTopRightRadius: "15px",
+      borderTopLeftRadius: "15px",
+      height: "30px",
+      justifyContent: "space-between"
+    }}
+  >
+    <div style={{ paddingLeft: "20px", marginTop: "6px" }}>
+      <img src={MakkahIcon} draggable="false" style={{userSelect: 'none'}} />
+    </div>
+    <div style={{ color: "#000000", marginTop: "auto", marginBottom: "auto" }}>
+      <span style={{ marginTop: "auto", marginBottom: "auto", paddingRight: "20px" }}>
+        Makkah
+      </span>
+    </div>
+  </div>
+
+  <div
+    style={{
+      paddingLeft: "15px",
+      paddingRight: "15px",
+      paddingTop: "5px",
+      display: "flex",
+      backgroundColor: "#000000",
+      borderBottomLeftRadius: "15px",
+      borderBottomRightRadius: "15px",
+      height: "90px",
+      justifyContent: "space-between"
+    }}
+  >
+    <div style={{ display: "flex", marginTop: "5px" }}>
+      <div style={{ paddingRight: "5px", paddingTop: "10px" }}>
+      <IconDoorEnter size={35} style={{color: '#FFB800'}}/>
+      </div>
+      <div>
+        <div>
+          <span style={{ fontSize: "45px" , fontFamily: 'Hammersmith One' }}>125</span>
+        </div>
+        <div style={{ marginTop: "-6px" }}>
+          <span style={{ fontSize: "18px"}}>Check-ins</span>
+        </div>
+      </div>
+    </div>
+
+    <div style={{ display: "flex", marginTop: "5px" }}>
+      <div style={{ paddingRight: "5px", paddingTop: "10px" }}>
+      <IconDoorExit size={35} style={{color: '#FFB800'}}/>
+      </div>
+      <div>
+        <div>
+          <span style={{ fontSize: "45px", fontFamily: 'Hammersmith One' }}>59</span>
+        </div>
+        <div style={{ marginTop: "-6px" }}>
+          <span style={{ fontSize: "18px" }}>Check-outs</span>
+        </div>
+      </div>
+    </div>
+
+    <div style={{ display: "flex", marginTop: "5px" }}>
+      <div style={{ paddingRight: "5px", paddingTop: "10px" }}>
+      <IconMapPin size={35} style={{color: '#FFB800'}}/>
+      </div>
+      <div>
+        <div>
+          <span style={{ fontSize: "45px", fontFamily: 'Hammersmith One' }}>184</span>
+        </div>
+        <div style={{ marginTop: "-6px" }}>
+          <span style={{ fontSize: "18px" }}>In CIty</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> {/* Makkah END */}
+
+{/* Medina Start */}
+<div style={{ color: "#ffffff", fontFamily: 'Fredoka', marginTop: 10}}>
+  <div
+    style={{
+      backgroundColor: "#2AD100",
+      display: "flex",
+      borderTopRightRadius: "15px",
+      borderTopLeftRadius: "15px",
+      height: "30px",
+      justifyContent: "space-between"
+    }}
+  >
+    <div style={{ paddingLeft: "20px", marginTop: "6px" }}>
+      <img src={MedinaIcon} draggable="false" style={{userSelect: 'none'}}/>
+    </div>
+    <div style={{ color: "#000000", marginTop: "auto", marginBottom: "auto" }}>
+      <span style={{ marginTop: "auto", marginBottom: "auto", paddingRight: "20px" }}>
+        Medina
+      </span>
+    </div>
+  </div>
+
+  <div
+    style={{
+      paddingLeft: "15px",
+      paddingRight: "15px",
+      paddingTop: "5px",
+      display: "flex",
+      backgroundColor: "#000000",
+      borderBottomLeftRadius: "15px",
+      borderBottomRightRadius: "15px",
+      height: "90px",
+      justifyContent: "space-between"
+    }}
+  >
+    <div style={{ display: "flex", marginTop: "5px" }}>
+      <div style={{ paddingRight: "5px", paddingTop: "10px" }}>
+      <IconDoorEnter size={35} style={{color: '#2AD100'}}/>
+      </div>
+      <div>
+        <div>
+          <span style={{ fontSize: "45px" , fontFamily: 'Hammersmith One' }}>125</span>
+        </div>
+        <div style={{ marginTop: "-6px" }}>
+          <span style={{ fontSize: "18px"}}>Check-ins</span>
+        </div>
+      </div>
+    </div>
+
+    <div style={{ display: "flex", marginTop: "5px" }}>
+      <div style={{ paddingRight: "5px", paddingTop: "10px" }}>
+      <IconDoorExit size={35} style={{color: '#2AD100'}}/>
+      </div>
+      <div>
+        <div>
+          <span style={{ fontSize: "45px", fontFamily: 'Hammersmith One' }}>59</span>
+        </div>
+        <div style={{ marginTop: "-6px" }}>
+          <span style={{ fontSize: "18px" }}>Check-outs</span>
+        </div>
+      </div>
+    </div>
+
+    <div style={{ display: "flex", marginTop: "5px" }}>
+      <div style={{ paddingRight: "5px", paddingTop: "10px" }}>
+      <IconMapPin size={35} style={{color: '#2AD100'}}/>
+      </div>
+      <div>
+        <div>
+          <span style={{ fontSize: "45px", fontFamily: 'Hammersmith One' }}>184</span>
+        </div>
+        <div style={{ marginTop: "-6px" }}>
+          <span style={{ fontSize: "18px" }}>In CIty</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> {/* Medina END */}
+
+
+</div>
+
+</div> {/* Country Status Module END */}
+
+
   
 </div>
 
