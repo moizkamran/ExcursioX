@@ -1035,7 +1035,7 @@ const Body = () => {
                   >
                     Visa
                     Declined
-                  </Text>
+                      </Text>
                   <Text style={{
                     fontWeight: "500",
                     fontSize: 40, color: "white"
@@ -1100,8 +1100,6 @@ const Body = () => {
               </div>
             </div>
           </div> {/* Country Status Module END */}
-
-
 
         </div>
       </div>
