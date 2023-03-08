@@ -112,7 +112,7 @@ export default function HeaderComponent() {
           </div>
         </div>
       </div>
-      <div style={{ display: "flex", height: "calc(100vh - 70px)" }}>
+      <div style={{ display: "flex", height: "calc(100vh - 80px)", overflowY: "hidden" }}>
         <div
           style={{
             width: "5%",
