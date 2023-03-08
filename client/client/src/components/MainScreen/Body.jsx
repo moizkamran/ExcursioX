@@ -5,8 +5,7 @@ import HotelIcon from "../../assets/icons/bed.svg";
 import MakkahIcon from "../../assets/icons/makkah.svg";
 import MedinaIcon from "../../assets/icons/medina.svg";
 import PlaneIcon from "../../assets/icons/plane.svg";
-import { Box, Button, Card, Progress, Text, Title } from "@mantine/core";
-import { fontSize, fontWeight } from "@mui/system";
+import { Box, Button, Card, Progress, ScrollArea, Text, Title } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight, IconBusinessplan, IconDoorEnter, IconDoorExit, IconMapPin, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconSwitch2, IconWorld } from "@tabler/icons";
 import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -15,6 +14,7 @@ const Body = () => {
   const [count, setCount] = useState(0);
   return (
     <>
+      
       <div
         style={{
           borderRadius: "50px 0 0 0",
@@ -23,7 +23,7 @@ const Body = () => {
           padding: "20px",
           flex: 1,
         }}
-      >
+      > <ScrollArea.Autosize mah={"100%"} mx="auto">
         <div
           style={{
             padding: 20,
@@ -31,6 +31,7 @@ const Body = () => {
             flexDirection: "column",
           }}
         >
+          
           <Text style={{ marginBottom: 10 }}>Home {'>'} Dashboard</Text>
           <Title order={2}>Welcome Back,!</Title>
           <div style={{ display: "flex", alignItems: "center", marginTop: 20 }}>
@@ -1101,9 +1102,9 @@ const Body = () => {
             </div>
           </div> {/* Country Status Module END */}
 
-        </div>
-      </div>
-    </>
+        </div> </ScrollArea.Autosize>
+      </div> 
+     </>
   );
 };
 
