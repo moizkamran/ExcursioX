@@ -1,5 +1,6 @@
 import "./stylesheets/Dashboard.css";
 import Body from "./Body";
+import AddBooking from "../Pages/Hotel & Property/Add Booking/AddBooking"
 import MenuItems from "./MenuItems";
 import NavbarItems from "./NavbarItems";
 import React from "react";
