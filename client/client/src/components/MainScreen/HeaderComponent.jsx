@@ -6,6 +6,7 @@ import { Button, Input, Menu, UnstyledButton, Avatar, Tooltip, HoverCard, TextIn
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useLogout } from "../../hooks/useLogout";
+import { AddBooking } from "../Pages/Hotel & Property/Add Booking/AddBooking";
 
 import avatar from '../../assets/avatar.png'
 
@@ -39,6 +40,7 @@ import {
   IconLogout,
   IconWallet,
 } from "@tabler/icons";
+
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 
