@@ -30,7 +30,7 @@ export default function HeaderComponent() {
       >
         <NavbarItems />
         {/* Interactive Component */}
-        <Body />
+        <AddBooking />
       </div>
     </div>
   );

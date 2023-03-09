@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import { ScrollArea, Text, Title, Radio, Group, Tooltip, TextInput } from '@mantine/core'
+import { ScrollArea, Text, Title, Radio, Group, Tooltip, TextInput, Popover, Button} from '@mantine/core'
 import { DatePicker } from '@mantine/dates';
 import { IconQuestionCircle } from '@tabler/icons';
 
@@ -7,7 +7,7 @@ import { IconQuestionCircle } from '@tabler/icons';
 export const AddBooking = () => {
   const [firstNameFocused, setFirstNameFocused] = useState(false);
   const [lastNameFocused, setLastNameFocused] = useState(false);
-  const [isExistingCustomer, setIsExistingCustomer] = useState(undefined);
+  const [ourCustomer, setOurCustomer] = useState(true);
 
 
   return (
@@ -86,58 +86,72 @@ date by entering their flight departure date</Text> </div>
       multiline
       width={220}
       position="right"
-      withArrow                                                                                                                 ><a><IconQuestionCircle style={{marginLeft: 10, opacity: "75%"}}/></a></Tooltip>
+      withArrow><a><IconQuestionCircle style={{marginLeft: 10, opacity: "75%"}}/></a></Tooltip>
                       </div>
-             <Radio.Group
-        name="existing-cx"
-        withAsterisk
-        color="dark"
-        value={isExistingCustomer || ""}
-        onChange={(e) => setIsExistingCustomer(e.target.value)}
-      >
-        <Group mt="xs">
-          <Radio value="cx-yes" label="Yes" />
-          <Radio value="cx-no" label="No" />
-        </Group>
-      </Radio.Group>
-            
-             {isExistingCustomer === "no" && (
-            <div style={{display: 'flex', flexDirection: 'row', width: 500}}>
-  <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-              }}
-            >
-    <div style={{marginTop: 10}}>
-      <Text style={{fontFamily: 'Fredoka', fontWeight: 400, marginBottom: 5}}>First Name</Text>
-    <TextInput
-      radius="xl"
-      onFocus={() => setFirstNameFocused(true)}
-      onBlur={() => setFirstNameFocused(false)}
-      inputContainer={(children) => (
-        <Tooltip label="Enter First Name as on Passport/ID Card" position="top-start" opened={firstNameFocused}>
-          {children}
-        </Tooltip>
-      )}
-    />
-      </div>
-    <div style={{marginTop: 10}}>
-      <Text style={{fontFamily: 'Fredoka', fontWeight: 400, marginBottom: 5}}>Last Name</Text>
-    <TextInput
-      radius="xl"
-      onFocus={() => setLastNameFocused(true)}
-      onBlur={() => setLastNameFocused(false)}
-      inputContainer={(children) => (
-        <Tooltip label="Enter Last/Family Name as on Passport/ID Card" position="top-start" opened={lastNameFocused}>
-          {children}
-        </Tooltip>
-      )}
-    />
-      </div>
+          <div style={{display: 'flex', marginTop: 10, }}>
+          <Radio
+          label="Yes"
+          value="yes"
+          name='customer'
+          onChange={() => setOurCustomer(true)}
+          style={{marginTop: 10}}
+          />
+          <Radio
+          label="No"
+          value="no"
+          name='customer'
+          onChange={() => setOurCustomer(false)}
+          style={{marginTop: 10, marginLeft: 10}}
+          />
+          </div>
 
-    </div>
-              </div> )}
+          {!ourCustomer && (
+            <div style={{display: 'flex', flexDirection: 'row', width: 400}}>
+            <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
+              <div style={{marginTop: 10}}>
+                <Text style={{fontFamily: 'Fredoka', fontWeight: 400, marginBottom: 5}}>First Name</Text>
+              <TextInput
+                radius="xl"
+                onFocus={() => setFirstNameFocused(true)}
+                onBlur={() => setFirstNameFocused(false)}
+                inputContainer={(children) => (
+                  <Tooltip label="Enter First Name as on Passport/ID Card" position="top-start" opened={firstNameFocused}>
+                    {children}
+                  </Tooltip>
+                )}
+              />
+                </div>
+              <div style={{marginTop: 10}}>
+                <Text style={{fontFamily: 'Fredoka', fontWeight: 400, marginBottom: 5}}>Last Name</Text>
+              <TextInput
+                radius="xl"
+                onFocus={() => setLastNameFocused(true)}
+                onBlur={() => setLastNameFocused(false)}
+  
+                inputContainer={(children) => (
+                  <Tooltip label="Enter Last/Family Name as on Passport/ID Card" position="top-start" opened={lastNameFocused}>
+                    {children}
+                  </Tooltip>
+                )}
+              />
+                </div>
+          
+              </div>
+                        </div>
+          )}
+          
+          
+                      
+                      
+
+                      
+                      
+
           
           </div> {/* END */}
         </div> </ScrollArea.Autosize>
