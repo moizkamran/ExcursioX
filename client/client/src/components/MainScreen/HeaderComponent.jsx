@@ -42,7 +42,7 @@ export default function HeaderComponent() {
         }}
       >
         <ScrollArea.Autosize mah={"100%"} mx="auto">
-        <Body/>
+        <AddRoom/>
         </ScrollArea.Autosize> </div>
       </div>
     </div>
