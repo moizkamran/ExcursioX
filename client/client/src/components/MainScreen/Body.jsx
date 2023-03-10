@@ -15,15 +15,7 @@ const Body = () => {
   return (
     <>
       
-      <div
-        style={{
-          borderRadius: "50px 0 0 0",
-          backgroundColor: "white",
-          marginLeft: "0px",
-          padding: "20px",
-          flex: 1,
-        }}
-      > <ScrollArea.Autosize mah={"100%"} mx="auto">
+       
         <div
           style={{
             padding: 20,
@@ -1102,8 +1094,8 @@ const Body = () => {
             </div>
           </div> {/* Country Status Module END */}
 
-        </div> </ScrollArea.Autosize>
-      </div> 
+        </div> 
+      
      </>
   );
 };

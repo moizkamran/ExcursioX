@@ -5,6 +5,8 @@ import MenuItems from "./MenuItems";
 import NavbarItems from "./NavbarItems";
 import React from "react";
 import logoImage from "../../assets/Logo1.png";
+import { AddRoom } from "../Pages/Hotel & Property/AddRoom/AddRoom";
+import { ScrollArea } from "@mantine/core";
 
 export default function HeaderComponent() {
   return (
@@ -26,11 +28,22 @@ export default function HeaderComponent() {
           display: "flex",
           height: "calc(100vh - 80px)",
           overflowY: "hidden",
-        }}
+        }} 
       >
         <NavbarItems />
         {/* Interactive Component */}
-        <AddBooking />
+        <div
+        style={{
+          borderRadius: "50px 0 0 0",
+          backgroundColor: "white",
+          marginLeft: "0px",
+          padding: "20px",
+          flex: 1,
+        }}
+      >
+        <ScrollArea.Autosize mah={"100%"} mx="auto">
+        <Body/>
+        </ScrollArea.Autosize> </div>
       </div>
     </div>
   );
