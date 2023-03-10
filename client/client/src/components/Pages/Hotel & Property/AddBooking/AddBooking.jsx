@@ -144,13 +144,6 @@ date by entering their flight departure date</Text> </div>
               </div>
                         </div>
           )}
-          
-          
-                      
-                      
-
-                      
-                      
 
           
           </div> {/* END */}
