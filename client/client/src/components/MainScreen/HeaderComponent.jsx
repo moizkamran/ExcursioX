@@ -1,6 +1,6 @@
 import "./stylesheets/Dashboard.css";
+import AddBooking from "../Pages/Hotel & Property/AddBooking/AddBooking";
 import Body from "./Body";
-import AddBooking from "../Pages/Hotel & Property/Add Booking/AddBooking"
 import MenuItems from "./MenuItems";
 import NavbarItems from "./NavbarItems";
 import React from "react";
@@ -8,8 +8,8 @@ import logoImage from "../../assets/Logo1.png";
 
 export default function HeaderComponent() {
   return (
- 
-      <div style={{ backgroundColor: "#121927" }}>
+
+    <div style={{ backgroundColor: "#121927" }}>
       <div
         style={{
           display: "flex",
