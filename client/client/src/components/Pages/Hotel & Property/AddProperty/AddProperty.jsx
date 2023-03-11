@@ -1,4 +1,3 @@
-import Image1 from "../../../../assets/apartment.png";
 import React, { useState } from "react";
 
 import {
@@ -11,7 +10,10 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+
+//  COMPONENTS IMPORTS
 import PropertySelection from "./components/PropertySelection";
+import PropertyDetails from "./components/PropertyDetails";
 
 
 
@@ -53,76 +55,35 @@ import PropertySelection from "./components/PropertySelection";
 
 // }
 
-// // Proceed to next step
-// nextStep = () => {
-//   const { step } = this.state;
-//   this.setState({
-//     step: step + 1
-//   });
-// }
-
-// // Back a steps
-// prevStep = () => {
-//   const { step } = this.state;
-//   this.setState({
-//     step: step - 1
-//   });
-// }
-
-// // Handle change
-// handleChange = input => e => {
-//   this.setState({[input]: e.target.value});
-// }
 
 const AddProperty = () => {
+  const [page, setCurrentPage] = useState(0);
+  const handleButtonClick = () => {
+    setCurrentPage(currentPage => currentPage + 1);
+  };
+  const PageDisplay =  () => {
+    if (page === 0) {
+      return <PropertySelection onButtonClick={handleButtonClick} />;
+    } else if (page === 1) {
+      return <PropertyDetails />;
+    } else if (page === 2) {
+      return <h1>Property Layout</h1>;
+    } else if (page === 3) {
+      return <h1>Property House Rules</h1>;
+    } else if (page === 4) {
+      return <h1>Property Photos</h1>;
+    } else if (page === 5) {
+      return <h1>Property Pricing</h1>;
+    } else if (page === 6) {
+      return <h1>Property Availability</h1>;
+    } else {
+      return <h1>Property Info</h1>;
+    }
+  };
+  
 
-  // // destruction of step
-  // const { step } = this.state;
-  // const { propertyType, propertyName, propertyContactPerson, propertyContactNumber, 
-  //   isCompanyOwned, useChannelManager, propertyAddress1, propertyAddress2, country, 
-  //   city, customName, bedrooms, livingRoom, bathroom, bed1, bed1Q, guestsStay, enSuite, pernight, 
-  //   parking, parkingType, parkingSite, parkingReservation, parkingPerDay, breakfast, breakfastType, 
-  //   breakfastPrice, language, language2, wifi, bar, airCondition, pool } = this.state;
-  // const values = { propertyType, propertyName, propertyContactPerson, propertyContactNumber, 
-  //   isCompanyOwned, useChannelManager, propertyAddress1, propertyAddress2, country, 
-  //   city, customName, bedrooms, livingRoom, bathroom, bed1, bed1Q, guestsStay, enSuite, pernight, 
-  //   parking, parkingType, parkingSite, parkingReservation, parkingPerDay, breakfast, breakfastType, 
-  //   breakfastPrice, language, language2, wifi, bar, airCondition, pool }
+  const titles = [ "Property Details", "Property Facilities", "Property Layout", "Property House Rules", "Property Photos", "Property Pricing", "Property Availability" ];
 
-  //   switch(step){
-  //     case 1:
-  //       return (
-  //         <PropertyDetails
-  //         nextStep={this.nextStep}
-  //         handleChange={this.handleChange}
-  //         values={values} />
-  //       )
-  //     case 2:
-  //       return (
-  //         <h1>Property Facilites</h1>
-  //       )
-  //     case 3:
-  //       return (
-  //         <h1>Property Layout</h1>
-  //       )
-  //     case 4:
-  //       return (
-  //         <h1>Property House Rules</h1>
-  //       )
-  //     case 5:
-  //       return (
-  //         <h1>Property Photos</h1>
-  //       )
-  //     case 6:
-  //       return (
-  //         <h1>Property Facilites</h1>
-  //       )
-  //     case 7:
-  //       return (
-  //         <h1>Property Facilites</h1>
-  //       )
-
-  //   }
   const [active, setActive] = useState(1);
   const nextStep = () =>
     setActive((current) => (current < 3 ? current + 1 : current));
@@ -141,31 +102,25 @@ const AddProperty = () => {
         }}
       >
         <div>
-          <h1 style={{ margin: 0, fontFamily: 'Hammersmith One', fontWeight: 400}}>Add New Property Wizard</h1>
+          <h1 style={{ margin: 0, fontFamily: 'Hammersmith One', fontWeight: 400}}>{titles[page]}</h1>
           <p style={{ margin: 0,fontFamily: 'Fredoka', fontWeight: 400 }}>
             Please choose the type of property you would like to add
           </p>
         </div>
-        <Stepper active={active} onStepClick={setActive} breakpoint="sm">
-          <Stepper.Step
-            label="First step"
-            description="Create an account"
-          ></Stepper.Step>
-          <Stepper.Step
-            label="Second step"
-            description="Verify email"
-          ></Stepper.Step>
-          <Stepper.Step
-            label="Final step"
-            description="Get full access"
-          ></Stepper.Step>
-          <Stepper.Completed></Stepper.Completed>
-        </Stepper>
+        <Stepper active={active} onStepClick={setActive} breakpoint="sm" allowNextStepsSelect={false}>
+        <Stepper.Step label="First step" description="Create an account">
+        </Stepper.Step>
+        <Stepper.Step label="Second step" description="Verify email">
+        </Stepper.Step>
+        <Stepper.Step label="Final step" description="Get full access">
+        </Stepper.Step>
+        <Stepper.Completed>
+        </Stepper.Completed>
+      </Stepper>
       </div>
       
       <div>
-        
-            <PropertySelection/>
+      {PageDisplay()}
       </div>
     </>
   );

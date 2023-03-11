@@ -18,7 +18,7 @@ import {
 } from "@mantine/core";
 import { IconRotate2 } from "@tabler/icons";
 
-const PropertySelection = () => {
+const PropertySelection = ({ onButtonClick }) => {
   return (
     <>
     <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
@@ -83,7 +83,10 @@ const PropertySelection = () => {
     
   </Card>
   <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',  height: '50px'}}>
-  <Button leftIcon={<IconRotate2/>} style={{borderRadius: 35, backgroundColor: 'green'}}>Quick Start</Button>
+  <Button onClick={onButtonClick} leftIcon={<IconRotate2/>} style={{borderRadius: 35, backgroundColor: 'green'}}>Quick Start</Button>
+
+
+
 </div>
   </div> {/* END OF APARTMENT QS */}
   <div style={{ borderRight: "1px solid black" }} />
