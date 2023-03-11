@@ -16,8 +16,6 @@ export default function App() {
           <Route path="/hotel" element={<Hotel />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          
-
         </Routes>
       </BrowserRouter>
     </div>
