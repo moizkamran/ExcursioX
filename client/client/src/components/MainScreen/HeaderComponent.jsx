@@ -8,6 +8,7 @@ import React from "react";
 import logoImage from "../../assets/Logo1.png";
 import { AddRoom } from "../Pages/Hotel & Property/AddRoom/AddRoom";
 import { ScrollArea } from "@mantine/core";
+import Hotel from "../../components/Pages/Hotel & Property/Hotel";
 
 export default function HeaderComponent() {
   return (
