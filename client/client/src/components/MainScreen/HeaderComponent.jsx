@@ -1,5 +1,6 @@
 import "./stylesheets/Dashboard.css";
 import AddBooking from "../Pages/Hotel & Property/AddBooking/AddBooking";
+import AddProperty from "../Pages/Hotel & Property/AddProperty/AddProperty";
 import Body from "./Body";
 import MenuItems from "./MenuItems";
 import NavbarItems from "./NavbarItems";
@@ -42,7 +43,7 @@ export default function HeaderComponent() {
         }}
       >
         <ScrollArea.Autosize mah={"100%"} mx="auto">
-        <AddRoom/>
+        <AddProperty/>
         </ScrollArea.Autosize> </div>
       </div>
     </div>
