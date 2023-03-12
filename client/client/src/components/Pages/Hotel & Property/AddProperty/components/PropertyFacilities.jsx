@@ -1,14 +1,14 @@
-import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Container, ActionIcon, NativeSelect} from '@mantine/core'
-import { IconAlertCircle, IconArrowBadgeLeft, IconArrowBadgeRight, IconQuestionCircle, IconSearch, IconMoon, IconArrowLeft, IconArrowRight, IconBread, IconParking, IconPlus } from '@tabler/icons'
+import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Container, ActionIcon, NativeSelect, Checkbox} from '@mantine/core'
+import { IconAlertCircle, IconArrowBadgeLeft, IconArrowBadgeRight, IconQuestionCircle, IconSearch, IconMoon, IconArrowLeft, IconArrowRight, IconBread, IconParking, IconPlus, IconLanguageHiragana, IconApps, IconWifi, IconGlass, IconBrightnessHalf, IconLeaf, IconFence, IconSmokingNo, IconBath, IconAirConditioning, IconHorseToy, IconPool, IconMessage } from '@tabler/icons'
 import React from 'react'
 
 export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
   
   return (
     <>
-    <div style={{ display: "flex", flexDirection:'row', padding: 20}}> 
+    <div style={{ display: "flex", flexDirection:'row', padding: 20, justifyContent: 'space-between'}}> 
     
-    <div style={{ margin: "0", padding: "0", display: 'flex', gap: 20}}> 
+    <div style={{ margin: "0", padding: "0", display: 'flex', gap: 20, justifyContent: 'space-between'}}> 
  
 
         <div> 
@@ -149,7 +149,7 @@ export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
                           <IconPlus size={15} className="IconBed" />
                         </div>
                         <Text ml={10} bold size={"md"}>
-                          Add Another Bed
+                          Add Another Breakfast Type
                         </Text>
                       </Flex>
             </div>
@@ -162,117 +162,98 @@ export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
 
       <div>
 
-        <div style={{ display : 'flex', flexDirection: 'column'}}>
-            <Title>Property Address</Title>
-            <div style={{marginTop: 10}}>
-                <Text style={{ fontFamily: 'Fredoka', fontSize: 15 }}>Street Address</Text>
-            <Input
-      radius={'md'}
-      size="sm"
-      style={{ width: 300, marginTop: 10 }}
-      rightSection={
-          <Tooltip label="This is public" position="top-end" withArrow>
-          <div>
-            <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
-          </div>
-        </Tooltip>
-      }
-      />
-      </div>
-      <div style={{marginTop: 10}}>
-                <Text style={{ fontFamily: 'Fredoka', fontSize: 15 }}>Address Line 2</Text>
-            <Input
-      radius={'md'}
-      size="sm"
-      style={{ width: 300, marginTop: 10 }}
-      rightSection={
-          <Tooltip label="This is public" position="top-end" withArrow>
-          <div>
-            <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
-          </div>
-        </Tooltip>
-      }
-      />
-      </div>
-      <div style={{display: 'flex', flexDirection: 'row', gap: 10}}>
-
-      <div style={{marginTop: 10}}>
-                <Text style={{ fontFamily: 'Fredoka', fontSize: 15 }}>Country</Text>
-            <Input
-      radius={'md'}
-      size="sm"
-      style={{ width: 150, marginTop: 10 }}
-      rightSection={
-        <Tooltip label="This is public" position="top-end" withArrow>
-          <div>
-            <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
-          </div>
-        </Tooltip>
-      }
-      />
-      </div>
-      <div style={{marginTop: 10}}>
-                <Text style={{ fontFamily: 'Fredoka', fontSize: 15 }}>Country</Text>
-            <Input
-      radius={'md'}
-      size="sm"
-      style={{ width: 150, marginTop: 10 }}
-      rightSection={
-        <Tooltip label="This is public" position="top-end" withArrow>
-          <div>
-            <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
-          </div>
-        </Tooltip>
-      }
-      />
-      </div>
-
-      </div>
-
-        </div>
-        <div style={{backgroundColor: '#FFFFFF', height: 150, width: 400, borderRadius: 20, marginTop: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: 20, border: '2px dashed #07399E'}}>
-  <div>
-    <div style={{borderRadius: '50%', width: '100px', height: '100px', backgroundColor: '#F0F0F0', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <span style={{fontSize: '50px', fontWeight: 'bold', fontFamily: 'Fredoka'}}>!</span>
-    </div>
-  </div>
-  <div style={{display: 'flex'}}>
-    <div style={{display: 'flex', flexDirection: 'column', width: 'inherit', marginLeft: 10}}>
-      <Text style={{fontSize: '24px'}}>We care about you!</Text>
-      <Text fz="sm">Please make sure that everything that you are entering is to the best of your knowledge, as this will help avoid any errors in the future.</Text>
-    </div>
-  </div>
-</div>
-
-      
-      </div>
-
-      <div style={{display: 'flex'}}>
-
-        <div style={{ display : 'flex', flexDirection: 'column'}}>
-          <div style={{display: 'flex', flexDirection: 'column',width: '300px', height: 'auto', backgroundColor: '#07399E', borderRadius: 35, color: 'white', padding: 45 }}>
-            <Text style={{fontSize: 25}}>Step 1 out of 5</Text> 
-            
-              <div style={{display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center', marginTop: 30}}>
-              <IconSearch size={100} color={'#00194B'}/>
-              <Text align='center' style={{ marginTop: 30 }}>Let’s get to know a bit more about this amazing property of yours so that we can understand what we are working with</Text>
-              <Button style={{backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 30}} leftIcon={<IconQuestionCircle/>}>Need Help?</Button>
-
+        <div style={{ display : 'flex', flexDirection: 'column' }}>
+                <div style={{flexDirection: 'row', display: 'flex', alignContent: 'center', alignItems: 'center', gap: 5 }}>
+                    <IconLanguageHiragana size={'50'}/>
+                    <Title mt={5}>Languages</Title>
+                </div>
+                <div style={{ marginTop: 15}}>
+            <Text fw={500}>What languages do you or your staff speak?</Text>
+            <NativeSelect
+                data={["English", "Urdu", "Arabic", "Hindi", "Chinese", "Spanish", "French", "German", "Italian", "Japanese", "Korean", "Portuguese", "Russian", "Turkish", "Other"]}
+                radius="md"
+                size="md"
+                style={{width: 150, marginTop: 10}}
+                />
+              <Flex
+                        mt={10}
+                        alignItems="center"
+                        justifyContent="center"
+                        gap={2}
+                        
+                        >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "white",
+                            backgroundColor: "#07399E",
+                            borderRadius: "40px",
+                            height: "25px",
+                            width: "25px",
+                            cursor: "pointer",
+                          }}
+                          >
+                          <IconPlus size={15} className="IconBed" />
+                        </div>
+                        <Text ml={10} bold size={"md"}>
+                          Add Another Language
+                        </Text>
+                      </Flex>
+            </div>
+      <div style={{marginTop: 20}}>
+            <div style={{flexDirection: 'row', display: 'flex', alignContent: 'center', alignItems: 'center', gap: 5 }}>
+                    <IconApps size={'50'}/>
+                    <Title mt={5}>Facilites</Title>
               </div>
-
-          </div>
-            
-        </div>
+                  <div style={{display: 'flex', gap: 50}}>
+                    <div style={{gap: 15, display: 'flex', flexDirection: 'column', marginTop: 20}}>
+                      <Checkbox label="Free Wifi" icon={IconWifi} size="md" color="dark" />
+                      <Checkbox label="Bar" icon={IconGlass} size="md" color="dark" />
+                      <Checkbox label="Sauna" icon={IconBrightnessHalf} size="md" color="dark" />
+                      <Checkbox label="Garden" icon={IconLeaf} size="md" color="dark" />
+                      <Checkbox label="Terrance" icon={IconFence} size="md" color="dark" />
+                    </div>
+                    <div style={{gap: 15, display: 'flex', flexDirection: 'column', marginTop: 20}}>
+                      <Checkbox label="No Smoking Rooms" icon={IconSmokingNo} size="md" color="dark" />
+                      <Checkbox label="Family Rooms" icon={IconHorseToy} size="md" color="dark" />
+                      <Checkbox label="Hot tub/Jacuzzi" icon={IconBath} size="md" color="dark" />
+                      <Checkbox label="Air Conditioning" icon={IconAirConditioning} size="md" color="dark" />
+                      <Checkbox label="Swimming Pool" icon={IconPool} size="md" color="dark" />
+                    </div>
+                  </div>
       </div>
+      </div>
+      </div>
+
       
-      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20}}>
+      
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20}}>
+            
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#07399E',
+            width: '240px',
+            marginBottom: 10,
+            borderRadius: 25,
+            padding: 15,
+            color: 'white',
+          }}>
+            <Text>Step 3 out of 5</Text>
+            <Button style={{backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 10}} leftIcon={<IconMessage/>}>Need Help?</Button>
+          </div>
+          <div style={{flexDirection: 'row', display: 'flex'}}> 
       <ActionIcon onClick={onBackClick} radius="xl" variant="filled" style={{backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10}}>
       <IconArrowLeft size="1.5rem" />
     </ActionIcon>
         <Button onClick={onButtonClick} rightIcon={<IconArrowRight/>} style={{backgroundColor: '#07399E', height: '50px', width: '200px'}}>Next Step</Button>
+          </div>
       </div>
       
-    </div> </div>
+    </div> 
+    </div>
       </>
   )
 }
