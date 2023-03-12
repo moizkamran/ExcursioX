@@ -3,13 +3,12 @@ import "./styles.css";
 import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { AuthContextProvider } from "./context/AuthContext";
 import { MantineProvider } from "@mantine/core";
-
+import { AuthContextProvider } from "./context/AuthContext";
 
 //main stylesheet import
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvider>
   <React.StrictMode>
   <MantineProvider
@@ -41,4 +40,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </MantineProvider>
   </React.StrictMode>
   </AuthContextProvider>
-)
+);

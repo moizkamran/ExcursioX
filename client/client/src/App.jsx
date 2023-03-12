@@ -5,6 +5,7 @@ import React from "react";
 import Register from "./components/Account/Register";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
+import PropertyLayoutAndPricing from "./components/Pages/Hotel & Property/AddProperty/components/PropertyLayoutAndPricing";
 
 export default function App() {
   const {user} = useAuthContext()
@@ -16,6 +17,8 @@ export default function App() {
           <Route path="/hotel" element={<Hotel />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/AddProperty2" element={<PropertyLayoutAndPricing/>}></Route>
+
         </Routes>
       </BrowserRouter>
     </div>
