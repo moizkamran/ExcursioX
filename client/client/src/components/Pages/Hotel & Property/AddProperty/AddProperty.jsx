@@ -15,6 +15,7 @@ import {
 import PropertySelection from "./components/PropertySelection";
 import PropertyDetails from "./components/PropertyDetails";
 import PropertyLayoutAndPricing from "./components/PropertyLayoutAndPricing";
+import PropertyFacilities from "./components/PropertyFacilities";
 
 
 
@@ -73,7 +74,7 @@ const AddProperty = () => {
     } else if (page === 2) {
       return <PropertyLayoutAndPricing onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
     } else if (page === 3) {
-      return <h1>Property House Rules</h1>;
+      return <PropertyFacilities onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
     } else if (page === 4) {
       return <h1>Property Photos</h1>;
     } else if (page === 5) {
@@ -86,7 +87,7 @@ const AddProperty = () => {
   };
   
 
-  const titles = [ "Select Property Type", "Property Details", "Property Layout", "Property House Rules", "Property Photos", "Property Pricing", "Property Availability" ];
+  const titles = [ "Select Property Type", "Property Details", "Property Layout", "Facilities & Services", "Property Photos", "Property Pricing", "Property Availability" ];
 
   const [active, setActive] = useState(1);
   const nextStep = () =>

@@ -450,49 +450,6 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
               </Text>
             </div>
 
-            {/* Two Containers */}
-              
-
-              {/* <Flex>
-                <Container
-                  bg={"black"}
-                  style={{
-                    marginTop: "10px",
-                    height: "50px",
-                    borderRadius: "20px",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <IconArrowBadgeLeft
-                    style={{ marginTop: "12px" }}
-                    color="white"
-                    size={25}
-                    className="IconBed"
-                  />
-                </Container>
-                <Container
-                  bg={"#07399E"}
-                  style={{
-                    marginTop: "10px",
-                    height: "50px",
-                    borderRadius: "20px",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Flex mt={10}>
-                    <Text color="white">Next Step </Text>
-                    <IconArrowBadgeRight
-                      color="   white"
-                      size={25}
-                      className="IconBed"
-                    />
-                  </Flex>
-                </Container>
-              </Flex> */}
-
-
           </Flex>
           <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20}}>
             
@@ -509,11 +466,6 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
             <Text>Step 2 out of 5</Text>
             <Button style={{backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 10}} leftIcon={<IconMessage/>}>Need Help?</Button>
           </div>
-           
-
-
-       
-
           <div style={{flexDirection: 'row', display: 'flex'}}> 
       <ActionIcon onClick={onBackClick} radius="xl" variant="filled" style={{backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10}}>
       <IconArrowLeft size="1.5rem" />
