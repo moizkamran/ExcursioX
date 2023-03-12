@@ -6,7 +6,11 @@ import {
   NativeSelect,
   Container,
   Radio,
+  TextInput,
   Divider,
+  ScrollArea,
+  ActionIcon,
+  Button,
 } from "@mantine/core";
 import React from "react";
 import {
@@ -18,10 +22,16 @@ import {
   IconMoon,
   IconArrowBadgeRight,
   IconArrowBadgeLeft,
+  IconLamp,
+  IconBath,
+  IconArrowLeft,
+  IconArrowRight,
+  IconQuestionCircle,
+  IconMessage,
 } from "@tabler/icons";
 import { useState } from "react";
 
-const PropertyLayoutAndPricing = () => {
+const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
     const [bedCount, setBedCount] = useState(1);
 
     const handleAddBed = () => {
@@ -39,14 +49,11 @@ const PropertyLayoutAndPricing = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-start",
           gap: "20px",
-          margin: "120px 0 0 40px",
+          padding: "20px",
         }}
       >
-        <Container style={{ margin: "0", padding: "0" }}>
-          <Title>Layout & Pricing</Title>
-          <Text>Please fill the details property</Text>
+        <div style={{ margin: "0", padding: "0" }}>
           <Flex>
             <div>
               <Title>Details</Title>
@@ -61,9 +68,8 @@ const PropertyLayoutAndPricing = () => {
               </Text>
               <div style={{ marginTop: "10px" }}>
                 <Text size={"lg"}>Custom Name (Optional)</Text>
-                <NativeSelect
+                <TextInput
                   mt={10}
-                  data={["React", "Vue", "Angular", "Svelte"]}
                   radius="md"
                   size="md"
                 />
@@ -75,7 +81,7 @@ const PropertyLayoutAndPricing = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Flex>
+                  <Flex gap={10}>
                     <IconBed size={40} className="IconBed" />
                     <Text bold size={"xl"}>
                       Bedrooms
@@ -92,7 +98,7 @@ const PropertyLayoutAndPricing = () => {
                       }}
                     >
                       {/* clickable icons  */}
-                      <Flex>
+                      <Flex style={{ userSelect: 'none'}}>
                         <IconPlus
                           style={{
                             marginTop: "10px",
@@ -114,7 +120,7 @@ const PropertyLayoutAndPricing = () => {
                             alignItems: "center",
                           }}
                         >
-                        <Text style={{ fontSize: "30px" }}>{bedCount !== null ? bedCount : 1}</Text>
+                        <Text style={{ fontSize: "30px", userSelect: 'none' }}>{bedCount !== null ? bedCount : 1}</Text>
 
                         </div>
 
@@ -140,10 +146,10 @@ const PropertyLayoutAndPricing = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Flex>
-                    <IconBed size={40} className="IconBed" />
+                  <Flex gap={10}>
+                    <IconLamp size={40} className="IconBed" />
                     <Text bold size={"xl"}>
-                      Bedrooms
+                      Living Rooms
                     </Text>
                   </Flex>
                   <Flex style={{ alignItems: "center", gap: "10px" }}>
@@ -201,10 +207,10 @@ const PropertyLayoutAndPricing = () => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <Flex>
-                  <IconBed size={40} className="IconBed" />
+                <Flex gap={10}>
+                  <IconBath size={40} className="IconBed" />
                   <Text bold size={"xl"}>
-                    Bedrooms
+                    Bathrooms
                   </Text>
                 </Flex>
                 <Flex style={{ alignItems: "center", gap: "10px" }}>
@@ -254,13 +260,15 @@ const PropertyLayoutAndPricing = () => {
                 </Flex>
               </Flex>
             </div>
+            <ScrollArea.Autosize mah={"100vh"} mx="auto" maw={'auto'} >
+
             <Container ml={10}>
               <div>
             
                 {Array.from({ length: bedCount }).map((_, index) => (
                   <Container key={index} ml={10}>
                     <div>
-                      <Text>Bedroom {index + 1}</Text>
+                      <Text fw={500}>Bedroom {index + 1}</Text>
                       <Text>
                         What Kind of beds are available in this room?{" "}
                       </Text>
@@ -271,7 +279,7 @@ const PropertyLayoutAndPricing = () => {
                           label="Apartment Type"
                           radius="md"
                           size="md"
-                        />
+                          />
                         <NativeSelect
                           style={{ width: "140px" }}
                           data={["React", "Vue", "Angular", "Svelte"]}
@@ -285,7 +293,7 @@ const PropertyLayoutAndPricing = () => {
                         alignItems="center"
                         justifyContent="center"
                         gap={2}
-                      >
+                        >
                         <div
                           style={{
                             display: "flex",
@@ -294,22 +302,22 @@ const PropertyLayoutAndPricing = () => {
                             color: "white",
                             backgroundColor: "#07399E",
                             borderRadius: "40px",
-                            height: "35px",
-                            width: "35px",
+                            height: "25px",
+                            width: "25px",
                           }}
-                        >
-                          <IconPlus size={25} className="IconBed" />
+                          >
+                          <IconPlus size={15} className="IconBed" />
                         </div>
                         <Text ml={10} bold size={"md"}>
                           Add Another Bed
                         </Text>
                       </Flex>
-                      <Text>How many guests can stay in this room?</Text>
+                      <Text mt={10}>How many guests can stay in this room?</Text>
                       <Flex gap={50} direction={"row"}>
                         <Flex
                           mt={10}
                           style={{ alignItems: "center", gap: "10px" }}
-                        >
+                          >
                           <div
                             style={{
                               display: "flex",
@@ -318,7 +326,7 @@ const PropertyLayoutAndPricing = () => {
                               gap: "10px",
                               textAlign: "center",
                             }}
-                          >
+                            >
                             <Flex>
                               <IconPlus
                                 style={{
@@ -327,7 +335,7 @@ const PropertyLayoutAndPricing = () => {
                                 }}
                                 size={25}
                                 className="IconBed"
-                              />
+                                />
                               <div
                                 style={{
                                   display: "flex",
@@ -340,7 +348,7 @@ const PropertyLayoutAndPricing = () => {
                                   alignItems: "center",
                                 }}
                               >
-                                <Text style={{ fontSize: "30px" }}>1</Text>
+                                <Text style={{ fontSize: "20px" }}>1</Text>
                               </div>
 
                               <IconMinus
@@ -350,7 +358,7 @@ const PropertyLayoutAndPricing = () => {
                                 }}
                                 size={25}
                                 className="IconBed"
-                              />
+                                />
 
                               <IconUsers
                                 style={{
@@ -364,7 +372,7 @@ const PropertyLayoutAndPricing = () => {
                           </div>
                         </Flex>
                       </Flex>
-                      <Flex>
+                      <Flex mt={10}>
                         <Text>Does it have an en-suite?</Text>
                         <IconQuestionMark
                           style={{
@@ -372,103 +380,80 @@ const PropertyLayoutAndPricing = () => {
                           }}
                           size={25}
                           className="IconBed"
-                        />
+                          />
                       </Flex>
-                      <Flex gap={20}>
+                      <Flex gap={20} mt={10}>
                         <Radio size={"md"} value="Yes" label="Yes" />
                         <Radio size={"md"} value="No" label="No" />
                       </Flex>
 
-                      <Divider size={"lg"} my="lg" />
+                      <Divider size={"lg"} my="lg" opacity={'40%'} />
                     </div>
                   </Container>
                 ))}
               </div>
             </Container>
+                </ScrollArea.Autosize>
 
-            <Container w={"100%"} ml={10}>
+            <div style={{width: 350}}>
               <Title>Apartment Setting </Title>
-              <Container
-                bg={"black"}
+              <div
                 style={{
                   height: "100px",
+                  padding: "10px",
+                  width: "100%",
+                  backgroundColor: "black",
                   borderRadius: "20px",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Flex alignItems="center" justifyContent="center">
+                <div style={{alignItems:"center", display: 'flex',justifyContent:"center" }}>
                   <IconMoon color="   white" size={25} className="IconBed" />
-                  <Text color="  white">Base Price /Night</Text>
-                </Flex>
-                <Container
-                  style={{
-                    width: "150px",
-                    height: "50px",
-                    marginTop: "10px  ",
-                    backgroundColor: "#07399E",
-                    borderRadius: "20px",
-                    display: "flex",
+                  <Text style={{marginLeft: 10}} color="white">Base Price /Night</Text>
+                </div>
+                <div style={{display: 'flex', alignContent: 'center', justifyContent:'center'}}>
+
+                <TextInput
+                variant="unstyled"
+                rightSection={<Text>PKR</Text>}
+                styles={{
+                  input : {
+                    color: "white",
+                    fontSize: "20px",
                     alignItems: "center",
-                    justifyContent: "flex-end",
-                    paddingRight: "20px",
-                  }}
-                >
-                  <Text>Pkr</Text>
-                </Container>
-              </Container>
-              <Text bold size={"md"}>
+                    justifyContent: "center",
+                    textAlign: "center",
+                  }
+                }}
+                style={{
+                  width: "150px",
+                  height: "50px",
+                  marginTop: "10px  ",
+                  backgroundColor: "#07399E",
+                  borderRadius: "20px",
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  paddingRight: "20px",
+                }}
+                />
+                </div>
+              </div>
+              <Text bold size={"md"} align={'center'} mt={10}>
                 This is the lowest price that we
-                <br />
                 automatically apply to this room for
-                <br />
                 all dates. Before your property goes
-                <br />
                 live, you can set seasonal pricing on
-                <br />
                 your property dashboard.
               </Text>
-            </Container>
+            </div>
 
             {/* Two Containers */}
-            <Container
-              style={{
-                position: "absolute",
-                right: 0,
-                bottom: 0,
-              }}
-            >
-              <Container
-                bg={"#07399E"}
-                style={{
-                  height: "100px",
-                  borderRadius: "20px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Flex ml={45}>
-                  <Text color="  white">Step 2 out of 5</Text>
-                </Flex>
-                <Container
-                  style={{
-                    width: "150px",
-                    height: "50px",
+              
 
-                    backgroundColor: "black ",
-                    borderRadius: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Flex>
-                    <IconMoon color="   white" size={25} className="IconBed" />
-                    <Text>Need Help</Text>
-                  </Flex>
-                </Container>
-              </Container>
-
-              <Flex>
+              {/* <Flex>
                 <Container
                   bg={"black"}
                   style={{
@@ -505,10 +490,38 @@ const PropertyLayoutAndPricing = () => {
                     />
                   </Flex>
                 </Container>
-              </Flex>
-            </Container>
+              </Flex> */}
+
+
           </Flex>
-        </Container>
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20}}>
+            
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#07399E',
+            width: '240px',
+            marginBottom: 10,
+            borderRadius: 25,
+            padding: 15,
+            color: 'white',
+          }}>
+            <Text>Step 2 out of 5</Text>
+            <Button style={{backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 10}} leftIcon={<IconMessage/>}>Need Help?</Button>
+          </div>
+           
+
+
+       
+
+          <div style={{flexDirection: 'row', display: 'flex'}}> 
+      <ActionIcon onClick={onBackClick} radius="xl" variant="filled" style={{backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10}}>
+      <IconArrowLeft size="1.5rem" />
+    </ActionIcon>
+        <Button onClick={onButtonClick} rightIcon={<IconArrowRight/>} style={{backgroundColor: '#07399E', height: '50px', width: '200px'}}>Next Step</Button>
+          </div>
+      </div>
+        </div>
       </div>
     </>
   );

@@ -1,11 +1,12 @@
-import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button} from '@mantine/core'
-import { IconAlertCircle, IconQuestionCircle, IconSearch } from '@tabler/icons'
+import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Container, ActionIcon} from '@mantine/core'
+import { IconAlertCircle, IconArrowBadgeLeft, IconArrowBadgeRight, IconQuestionCircle, IconSearch, IconMoon, IconArrowLeft, IconArrowRight } from '@tabler/icons'
 import React from 'react'
 
-export const PropertyDetails = () => {
+export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
   
   return (
-    <div style={{ display: "flex", flexDirection: "row", gap: "20px"}}>
+    <>
+    <div style={{ display: "flex", flexDirection: "row", gap: "20px", justifyContent: 'space-between', padding: 20}}>
 
         <div>
 
@@ -213,10 +214,16 @@ export const PropertyDetails = () => {
             
         </div>
       </div>
-
-
-
+      
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20}}>
+      <ActionIcon onClick={onBackClick} radius="xl" variant="filled" style={{backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10}}>
+      <IconArrowLeft size="1.5rem" />
+    </ActionIcon>
+        <Button onClick={onButtonClick} rightIcon={<IconArrowRight/>} style={{backgroundColor: '#07399E', height: '50px', width: '200px'}}>Next Step</Button>
+      </div>
+      
     </div>
+      </>
   )
 }
 
