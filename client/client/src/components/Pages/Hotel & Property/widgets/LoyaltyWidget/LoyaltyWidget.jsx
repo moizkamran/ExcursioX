@@ -4,56 +4,57 @@ import "./LoyaltyWidget.css"
 
 function LoyalCustomer({ ytdPercentage, ytdBgColor, ytdIndicatorPercentage, mtdPercentage, mtdBgColor, mtdIndicatorPercentage }) {
   return (
-<div>
-            <div style="margin-bottom: 5px;">
-                <span style="font-size: 22px; font-weight: normal;">Loyal Customer Rate</span>
-            </div>
-
-            <div style="display: flex;">
-                <div>
-                    <div style="background-color: #FF8A00; width: 150px; height: 150px; display: flex; flex-direction: column; justify-content: center; border-top-left-radius: 17.5px; border-bottom-left-radius: 17.5px;">
-                            <div  style="margin-left: auto; margin-right: auto;">
-                                <div style="margin-bottom: 5px;">
-                                    <div><span style="font-size: 35px; font-weight: bold;">25.2%</span></div>
-                                    <div style="display: flex;">
-                                        <div><span style="padding-right: 5px;font-weight: normal;">YTD</span></div>
-                                        <div style="margin-top: auto; margin-bottom: auto; display: flex; justify-content: center; width: 42px; height: 12px; background-color: #5FA02B; color: #FFFFFF; border-radius: 7px; font-size: 8px;">
-                                            <div style=" margin-top: auto; margin-bottom: auto; padding-right: 1.15px;"><img src="images/uparrow.svg"/></div>
-                                            <div style=" margin-top: auto; margin-bottom: auto;">10.2%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div><span style="font-size: 35px; font-weight: bold;">12.5%</span></div>
-                                    <div style="display: flex;">
-                                        <div><span style="padding-right: 5px;font-weight: normal;">MTD</span></div>
-                                        <div style="margin-top: auto; margin-bottom: auto; display: flex; justify-content: center; width: 42px; height: 12px; background-color: #FF0000; color: #FFFFFF; border-radius: 7px; font-size: 8px;">
-                                            <div style=" margin-top: auto; margin-bottom: auto; padding-right: 1.15px;"><img src="images/downarrow.svg"/></div>
-                                            <div style=" margin-top: auto; margin-bottom: auto;">1.7%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
+    <div className="loyal-customer-container">
+      <div className="loyal-customer-heading">
+        <span className="heading-text">Loyal Customer Rate</span>
+      </div>
+      <div className="loyal-customer-content">
+        <div className="loyal-customer-chart-container">
+          <div className="loyal-customer-chart loyal-customer-chart-ytd">
+            <div className="loyal-customer-chart-data">
+              <span className="chart-data-value" style={{ backgroundColor: ytdBgColor }}>{ytdPercentage}</span>
+              <div className="chart-data-subtext">
+                <span className="subtext-text">YTD</span>
+                <div className={`subtext-indicator ${ytdIndicatorPercentage > 0 ? 'subtext-indicator-up' : 'subtext-indicator-down'}`}>
+                  <img src={ytdIndicatorPercentage > 0 ? 'images/uparrow.svg' : 'images/downarrow.svg'} alt={ytdIndicatorPercentage > 0 ? 'Up arrow' : 'Down arrow'} />
+                  <span className="subtext-indicator-value">{ytdIndicatorPercentage}%</span>
                 </div>
-                <div style="background-color: #5C1640; width: 150px; height: 150px; display: flex; flex-direction: column; justify-content: center; color: #FFFFFF; border-top-right-radius: 17.5px; border-bottom-right-radius: 17.5px;">
-                    <div style="margin-left: auto; margin-right: auto;">
-                        <div>
-                            <div><span style="font-size: 35px; font-weight: bold;">15%</span></div>
-                            <div style="display: flex;">
-                                <div><span style="font-weight: normal;">Previous Year</span></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div><span style="font-size: 35px; font-weight: bold;">14.2%</span></div>
-                            <div style="display: flex;">
-                                <div><span style="font-weight: normal;">Previous Month</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
+          <div className="loyal-customer-chart loyal-customer-chart-mtd">
+            <div className="loyal-customer-chart-data">
+              <span className="chart-data-value" style={{ backgroundColor: mtdBgColor }}>{mtdPercentage}</span>
+              <div className="chart-data-subtext">
+                <span className="subtext-text">MTD</span>
+                <div className={`subtext-indicator ${mtdIndicatorPercentage > 0 ? 'subtext-indicator-up' : 'subtext-indicator-down'}`}>
+                  <img src={mtdIndicatorPercentage > 0 ? 'images/uparrow.svg' : 'images/downarrow.svg'} alt={mtdIndicatorPercentage > 0 ? 'Up arrow' : 'Down arrow'} />
+                  <span className="subtext-indicator-value">{mtdIndicatorPercentage}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div className="loyal-customer-metrics-container">
+          <div className="loyal-customer-metric loyal-customer-metric-previous-year">
+            <div className="metric-data">
+              <span className="metric-value">15%</span>
+              <div className="metric-subtext">
+                <span className="subtext-text">Previous Year</span>
+              </div>
+            </div>
+          </div>
+          <div className="loyal-customer-metric loyal-customer-metric-previous-month">
+            <div className="metric-data">
+              <span className="metric-value">14.2%</span>
+              <div className="metric-subtext">
+                <span className="subtext-text">Previous Month</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -66,38 +67,4 @@ LoyalCustomer.propTypes = {
   mtdIndicatorPercentage: PropTypes.number.isRequired,
 };
 
-
-    function LoyalCustomer({}) {
-      return (<div class="loyal-customer-rate">
-  <div class="loyal-customer-rate-title">Loyal Customer Rate</div>
-  <div class="loyal-customer-rate-container">
-    <div class="loyal-customer-rate-box loyal-customer-rate-box-ytd">
-      <div class="loyal-customer-rate-box-content">
-        <div class="loyal-customer-rate-box-value">25.2%</div>
-        <div class="loyal-customer-rate-box-label">YTD</div>
-        <div class="loyal-customer-rate-box-indicator loyal-customer-rate-box-indicator-up">10.2%</div>
-      </div>
-    </div>
-    <div class="loyal-customer-rate-box loyal-customer-rate-box-mtd">
-      <div class="loyal-customer-rate-box-content">
-        <div class="loyal-customer-rate-box-value">12.5%</div>
-        <div class="loyal-customer-rate-box-label">MTD</div>
-        <div class="loyal-customer-rate-box-indicator loyal-customer-rate-box-indicator-down">1.7%</div>
-      </div>
-    </div>
-    <div class="loyal-customer-rate-box loyal-customer-rate-box-previous-year">
-      <div class="loyal-customer-rate-box-content">
-        <div class="loyal-customer-rate-box-value">15%</div>
-        <div class="loyal-customer-rate-box-label">Previous Year</div>
-      </div>
-    </div>
-    <div class="loyal-customer-rate-box loyal-customer-rate-box-previous-month">
-      <div class="loyal-customer-rate-box-content">
-        <div class="loyal-customer-rate-box-value">14.2%</div>
-        <div class="loyal-customer-rate-box-label">Previous Month</div>
-      </div>
-    </div>
-  </div>
-</div>);
-    }
-  export default LoyalCustomer;
+export default LoyalCustomer;
