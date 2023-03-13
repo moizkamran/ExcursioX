@@ -1,0 +1,66 @@
+.hb-notifications-container {
+  display: flex;
+  justify-content: start;
+  background-color: #DB771A;
+  width: 420px;
+  height: 72px;
+  border-radius: 13.5px;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  font-family: 'Fredoka';
+}
+
+.hb-notifications-icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 15px;
+  margin-left: 50px;
+}
+
+.hb-notifications-icon {
+  width: 43.5px;
+  height: 42.5px;
+  background-color: #ffffff3a;
+  border-radius: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hb-notifications-details-container {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.hb-notifications-title {
+  font-size: 20.5px;
+  font-family: 'Hammersmith One';
+}
+
+.hb-notifications-subtitle {
+  display: flex;
+  margin-top: 5px;
+}
+
+.hb-notifications-subtitle-text {
+  margin-top: auto;
+  font-size: 17.5px;
+}
+
+.hb-notifications-view-button {
+  background-color: #000000;
+  border-radius: 39.5px;
+  display: flex;
+  justify-content: center;
+  width: 67px;
+  height: 23px;
+  margin-left: 12px;
+}
+
+.hb-notifications-view-button span {
+  font-size: 11px;
+  margin-top: auto;
+  margin-bottom: auto;
+}

@@ -3,7 +3,9 @@ import BarChart from '../../Graphs/BarChart';
 import { Bar, Doughnut  } from 'react-chartjs-2';
 import { UserData } from '../../../FakeData/Data';
 import { Text, Title, Card, Button } from "@mantine/core";
-
+import HBNotification from './widgets/NotificationsHotel/hotelBoardNotifications';
+import { Icon24Hours, IconAlertCircle, IconArmchair, IconBroadcast, IconBucketDroplet, IconBuildingEstate, IconCurrencyDollar, IconGhost2, IconNewSection } from '@tabler/icons';
+import LoyalCustomer from './widgets/LoyaltyWidget/LoyaltyWidget';
 
 
 
@@ -111,15 +113,6 @@ const Hotel = () => {
   return (
     
     <>
-      <div
-        style={{
-          borderRadius: "50px 0 0 0",
-          backgroundColor: "white",
-          marginLeft: "0px",
-          padding: "20px",
-          flex: 1,
-        }}
-      >
          <div
           style={{
             padding: 20,
@@ -133,7 +126,8 @@ const Hotel = () => {
               <Title fw="xl" style={{ marginRight: "auto" }}>Hotel Board</Title>
               <Title style={{fontFamily:"Fredoka", fontWeight: 400, fontSize: 20}}>{formattedDate}</Title>
           </div>
-          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20}}>
+
+          <div style={{display: "flex", flexDirection: 'row', justifyContent: "space-between", alignItems: "center", marginTop: 20}}>
 
           {/* Bar Chart */}
           <div style={{backgroundColor: "#F8F8F8", borderRadius: 20, padding: 30}}>
@@ -153,7 +147,7 @@ const Hotel = () => {
       </div>
 
     </div>
-          <div style={{width: 600, height: 300}}>
+          <div style={{width: 400, height: 200}}>
             
                   <Bar
               data={chartData}
@@ -161,7 +155,42 @@ const Hotel = () => {
             />  
     </div>
     </div>
+          <div style={{alignItems: 'flex-start'}}>
 
+          <HBNotification 
+          title="Maintenance Required"
+          subtitle="25 Rooms"
+          viewText="View"
+          icon={<IconBucketDroplet/>}
+          altText="Tap Icon"
+          backgroundColor="#DB771A"
+          />
+          <HBNotification 
+          title="Complaints & Bad Reviews"
+          subtitle="12 New Concerns"
+          viewText="View"
+          icon={<IconAlertCircle/>}
+          altText="Tap Icon"
+          backgroundColor="#DB000D"
+          />
+          <HBNotification 
+          title="Workorders"
+          subtitle="54 Total Requests"
+          viewText="View"
+          icon={<IconArmchair/>}
+          altText="Tap Icon"
+          backgroundColor="#7600AD"
+          />
+          <HBNotification 
+          title="No Shows"
+          subtitle="9 Expected Check-ins"
+          viewText="View"
+          icon={<IconGhost2/>}
+          altText="Tap Icon"
+          backgroundColor="#0084BD"
+          />
+
+          </div>
 
     {/* Reservations Module */}
     <div style={{display: "flex", flexDirection: "column", backgroundColor: "#07399E", height: "350px", width: "500px", borderRadius: "15px", padding: "20px"}}>
@@ -214,8 +243,33 @@ const Hotel = () => {
 
 
            </div>
+           <div style={{display: 'flex', gap: 50}}>
+            <div>
+              <Title>Quick Tasks</Title>
+              <div>
+                <div style={{marginTop: 10, gap: 15, display: 'flex'}}>
+
+              <Button leftIcon={<IconNewSection/>} size={'md'} style={{maxWidth: 200, width: 200}}>Initiate Booking</Button>
+              <Button leftIcon={<IconBuildingEstate/>} size={'md'} style={{maxWidth: 200, width: 200}}>Add Property</Button>
+                
+                </div>
+                <div style={{marginTop: 10, gap: 15, display: 'flex'}}>
+
+              <Button leftIcon={<IconCurrencyDollar/>} size={'md'} style={{maxWidth: 200, width: 200}}>Manage Prices</Button>
+              <Button leftIcon={<IconBroadcast/>} size={'md'} style={{maxWidth: 200, width: 200}}>Update RmS</Button>
+              
+                </div>
+              </div>
+            </div>
+            <div>
+              <Title>Reports</Title>
+              <div>
+                <LoyalCustomer/>
+              </div>
+            </div>
            </div>
-        </div>
+           </div>
+
     </>
   );
 };

@@ -1,0 +1,59 @@
+.loyal-customer-rate {
+    margin-bottom: 5px;
+  }
+  
+  .loyal-customer-rate-title {
+    font-size: 22px;
+    font-weight: normal;
+  }
+  
+  .loyal-customer-rate-container {
+    display: flex;
+  }
+  
+  .loyal-customer-rate-box {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .loyal-customer-rate-box-content {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  
+  .loyal-customer-rate-box-value {
+    font-size: 35px;
+    font-weight: bold;
+  }
+  
+  .loyal-customer-rate-box-label {
+    padding-right: 5px;
+    font-weight: normal;
+  }
+  
+  .loyal-customer-rate-box-indicator {
+    display: flex;
+    justify-content: center;
+    width: 42px;
+    height: 12px;
+    border-radius: 7px;
+    font-size: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-right: 1.15px;
+  }
+  
+  .loyal-customer-rate-box-indicator-up {
+    background-color: #5FA02B;
+    color: #FFFFFF;
+  }
+  
+  .loyal-customer-rate-box-indicator-down {
+    background-color: #FF0000;
+    color: #FFFFFF
+  }
+  
