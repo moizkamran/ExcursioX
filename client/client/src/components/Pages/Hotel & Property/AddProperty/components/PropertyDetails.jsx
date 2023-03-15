@@ -1,8 +1,12 @@
 import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Container, ActionIcon} from '@mantine/core'
 import { IconAlertCircle, IconArrowBadgeLeft, IconArrowBadgeRight, IconQuestionCircle, IconSearch, IconMoon, IconArrowLeft, IconArrowRight } from '@tabler/icons'
-import React from 'react'
+import React, { useState } from 'react'
+
+
 
 export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
+  const [isCompanyOwned, setIsCompanyOwned] = useState(false);
+  const [hasChannelManager, setHasChannelManager] = useState(false);
   
   return (
     <>
@@ -71,13 +75,15 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
         <div style={{display:'flex', flexDirection: 'row', alignContent: 'center', gap: 20, marginTop: 10}}> 
         <Radio
       label="Yes"
-      color="dark"
       value="yes"
+      name='company-owned'
+      onChange={() => setIsCompanyOwned(true)}
     />
     <Radio
-      label="No"
-      color="dark"
-      value="no"
+      label="Yes"
+      value="yes"
+      name='company-owned'
+      onChange={() => setIsCompanyOwned(false)}
     />
         </div>
       </div>
@@ -95,13 +101,15 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
         <div style={{display:'flex', flexDirection: 'row', alignContent: 'center', gap: 20, marginTop: 10}}> 
         <Radio
       label="Yes"
-      color="dark"
       value="yes"
+      name='channel-mananger'
+      onChange={() => setHasChannelManager(true)}
     />
     <Radio
       label="No"
-      color="dark"
       value="no"
+      name='channel-mananger'
+      onChange={() => setHasChannelManager(false)}
     />
         </div>
       </div>

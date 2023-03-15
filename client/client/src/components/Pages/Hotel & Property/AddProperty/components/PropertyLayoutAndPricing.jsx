@@ -31,6 +31,8 @@ import {
 } from "@tabler/icons";
 import { useState } from "react";
 
+const ApartmentType = [ 'Apartment', 'Apartment - Groundfloor',  ];
+
 const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
     const [bedCount, setBedCount] = useState(1);
 
@@ -58,7 +60,7 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
             <div>
               <Title>Details</Title>
               <NativeSelect
-                data={["React", "Vue", "Angular", "Svelte"]}
+                data={ApartmentType}
                 label="Apartment Type"
                 radius="md"
                 size="md"

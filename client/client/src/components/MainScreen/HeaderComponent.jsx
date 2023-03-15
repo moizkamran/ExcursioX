@@ -9,6 +9,7 @@ import logoImage from "../../assets/Logo1.png";
 import { AddRoom } from "../Pages/Hotel & Property/AddRoom/AddRoom";
 import { ScrollArea } from "@mantine/core";
 import Hotel from "../../components/Pages/Hotel & Property/Hotel";
+import SeatView  from "../Flight/components/seatView/SeatView";
 
 export default function HeaderComponent() {
   return (
@@ -44,7 +45,7 @@ export default function HeaderComponent() {
         }}
       >
         <ScrollArea.Autosize mah={"100%"} mx="auto">
-        <AddProperty/>
+        <Hotel/>
         </ScrollArea.Autosize> </div>
       </div>
     </div>
