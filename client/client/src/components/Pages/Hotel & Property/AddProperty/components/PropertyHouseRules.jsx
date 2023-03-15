@@ -4,7 +4,7 @@ import React from 'react'
 
 // Configure marks to match step
 const MARKS = [
-    { value: 0, label: 'Flexible' },
+    { value: 0, label: 'Nope' },
     { value: 25, label: '30 Days' },
     { value: 50, label: '14 Days' },
     { value: 75, label: '7 Days' },
@@ -25,10 +25,10 @@ export const PropertyHouseRules = () => {
                 <Title>Cancellation</Title>
                 <Text>When can your guests cancel their booking for free?</Text>
                 <NativeSelect
-                data={["Yes", "No"]}
+                data={["No Free Cancelations", "30 Days", "14 Days", "7 Days", "1 Day"]}
                 radius="md"
                 size="md"
-                style={{width: 150}}
+                style={{width: 'max-content'}}
                 />
                 <Text>Don't worry you can make changes later</Text>
                 

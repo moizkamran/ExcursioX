@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
 import {
+  ActionIcon,
   Box,
+  Button,
   Card,
   Group,
   Image,
@@ -18,6 +20,7 @@ import PropertyLayoutAndPricing from "./components/PropertyLayoutAndPricing";
 import PropertyFacilities from "./components/PropertyFacilities";
 import PropertyPhotos from "./components/PropertyPhotos";
 import PropertyHouseRules from "./components/PropertyHouseRules"
+import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
 
 
 
@@ -74,13 +77,13 @@ const AddProperty = () => {
     } else if (page === 1) {
       return <PropertyDetails onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
     } else if (page === 2) {
-      return <PropertyLayoutAndPricing onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
+      return <PropertyLayoutAndPricing />;
     } else if (page === 3) {
-      return <PropertyFacilities onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
+      return <PropertyFacilities />;
     } else if (page === 4) {
-      return <PropertyPhotos onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
+      return <PropertyPhotos />;
     } else if (page === 5) {
-      return <PropertyHouseRules onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
+      return <PropertyHouseRules />;
     } else if (page === 6) {
       return <h1>Property Availability</h1>;
     } else {
@@ -129,6 +132,28 @@ const AddProperty = () => {
       <div>
       {PageDisplay()}
       </div>
+      { page >= 2 && <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20}}>
+            
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#07399E',
+            width: '240px',
+            marginBottom: 10,
+            borderRadius: 25,
+            padding: 15,
+            color: 'white',
+          }}>
+            <Text>Step {page} out of 5</Text>
+            <Button style={{backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 10}} leftIcon={<IconMessage/>}>Need Help?</Button>
+          </div>
+          <div style={{flexDirection: 'row', display: 'flex'}}> 
+      <ActionIcon onClick={handleButtonClickBack} radius="xl" variant="filled" disabled={page === 0} style={{backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10}}>
+      <IconArrowLeft size="1.5rem" />
+    </ActionIcon>
+        <Button onClick={handleButtonClick} rightIcon={<IconArrowRight/>} disabled={page > 6} style={{backgroundColor: '#07399E', height: '50px', width: '200px'}}>Next Step</Button>
+          </div>
+      </div>}
     </>
   );
 };

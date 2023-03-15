@@ -229,28 +229,6 @@ export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
 
       
       
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20}}>
-            
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: '#07399E',
-            width: '240px',
-            marginBottom: 10,
-            borderRadius: 25,
-            padding: 15,
-            color: 'white',
-          }}>
-            <Text>Step 3 out of 5</Text>
-            <Button style={{backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 10}} leftIcon={<IconMessage/>}>Need Help?</Button>
-          </div>
-          <div style={{flexDirection: 'row', display: 'flex'}}> 
-      <ActionIcon onClick={onBackClick} radius="xl" variant="filled" style={{backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10}}>
-      <IconArrowLeft size="1.5rem" />
-    </ActionIcon>
-        <Button onClick={onButtonClick} rightIcon={<IconArrowRight/>} style={{backgroundColor: '#07399E', height: '50px', width: '200px'}}>Next Step</Button>
-          </div>
-      </div>
       
     </div> 
     </div>
