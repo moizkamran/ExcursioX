@@ -118,3 +118,26 @@
   height: 68px;
 }
 
+
+.popover-enter {
+  opacity: 0;
+  max-height: 0;
+}
+
+.popover-enter-active {
+  opacity: 1;
+  max-height: 300px;
+  transition: opacity 1.5s ease-out, max-height 1.5s ease-out;
+}
+
+.popover-exit {
+  opacity: 1;
+  max-height: 300px;
+}
+
+.popover-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 300ms ease-out, max-height 300ms ease-out;
+}
+
