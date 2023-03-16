@@ -1,7 +1,6 @@
 import {
   Title,
   Flex,
-  Group,
   Text,
   NativeSelect,
   Container,
@@ -9,8 +8,7 @@ import {
   TextInput,
   Divider,
   ScrollArea,
-  ActionIcon,
-  Button,
+  NumberInput,
 } from "@mantine/core";
 import React from "react";
 import {
@@ -20,29 +18,45 @@ import {
   IconUsers,
   IconQuestionMark,
   IconMoon,
-  IconArrowBadgeRight,
-  IconArrowBadgeLeft,
   IconLamp,
   IconBath,
-  IconArrowLeft,
-  IconArrowRight,
-  IconQuestionCircle,
-  IconMessage,
 } from "@tabler/icons";
 import { useState } from "react";
 
 const ApartmentType = [ 'Apartment', 'Apartment - Groundfloor',  ];
 
-const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
-    const [bedCount, setBedCount] = useState(1);
+function addBedType() {
+  const newBedTypes = [...bedTypes];
+  newBedTypes.push("");
+  newBedTypes(newBedTypes);
+}
 
-    const handleAddBed = () => {
-      setBedCount(bedCount + 1);
+const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
+    const bedTypes = [ "Twin Beds / 90-130 cm wide", "Queen Beds / 151-180 cm wide", "King Beds / 181-210 cm wide","Full Beds / 131-150 cm wide", "Bunk Beds / Variable size", "Sofa Beds / Variable size", "Crib / Variable size", "Air Mattress / Variable size", "Double Beds / Variable size"  ];
+    const [bedroomCount, setBedRoomCount] = useState(1);
+    const [beds, setBeds] = useState({ 0: [{ type: bedTypes[0], count: 1 }] });
+
+    const handleAddBedroom = () => {
+      if (bedroomCount < 9) {
+        setBedRoomCount(bedroomCount + 1);
+      }
     };
   
-    const handleRemoveBed = () => {
-      if (bedCount > 1) {
-        setBedCount(bedCount - 1);
+    const handleRemoveBedroom = () => {
+      if (bedroomCount > 1) {
+        setBedRoomCount(bedroomCount - 1);
+      }
+    };
+
+    const addBed = () => {
+      if (numBeds < 3) {
+        setNumBeds(numBeds + 1);
+      }
+    };
+
+    const removeBed = () => {
+      if (numBeds > 1) {
+        setNumBeds(numBeds - 1);
       }
     };
     
@@ -108,7 +122,7 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                           }}
                           size={25}
                           className="IconBed"
-                          onClick={handleAddBed}
+                          onClick={handleAddBedroom}
                         />
                         <div
                           style={{
@@ -122,7 +136,7 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                             alignItems: "center",
                           }}
                         >
-                        <Text style={{ fontSize: "30px", userSelect: 'none' }}>{bedCount !== null ? bedCount : 1}</Text>
+                        <Text style={{ fontSize: "30px", userSelect: 'none' }}>{bedroomCount !== null ? bedroomCount : 1}</Text>
 
                         </div>
 
@@ -133,7 +147,7 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                           }}
                           size={25}
                           className="IconBed"
-                          onClick={handleRemoveBed}
+                          onClick={handleRemoveBedroom}
                         />
                       </Flex>
 
@@ -264,32 +278,49 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
             </div>
             <ScrollArea.Autosize mah={"100vh"} mx="auto" maw={'auto'} >
 
-            <Container ml={10}>
+            <Container ml={10} key={bedroomCount}>
               <div>
             
-                {Array.from({ length: bedCount }).map((_, index) => (
+                {Array.from({ length: bedroomCount }).map((_, index) => (
+                  
                   <Container key={index} ml={10}>
                     <div>
                       <Text fw={500}>Bedroom {index + 1}</Text>
                       <Text>
                         What Kind of beds are available in this room?{" "}
                       </Text>
-                      <Flex gap={10}>
-                        <NativeSelect
-                          style={{ width: "250px" }}
-                          data={["React", "Vue", "Angular", "Svelte"]}
-                          label="Apartment Type"
-                          radius="md"
-                          size="md"
-                          />
-                        <NativeSelect
-                          style={{ width: "140px" }}
-                          data={["React", "Vue", "Angular", "Svelte"]}
-                          label="Apartment Type"
-                          radius="md"
-                          size="md"
-                        />
-                      </Flex>
+                      {Array.from({ length: numBeds }).map((_, bedIndex) => (
+                <Flex key={bedIndex} gap={10} alignItems="center" mt={10}>
+                  <NativeSelect
+                    style={{ width: "250px" }}
+                    data={bedTypes}
+                    radius="md"
+                    size="md"
+                  />
+                  <Text>X</Text>
+                  <NumberInput max={12} min={1} radius="md" size="md" />
+                  {bedIndex === numBeds - 1 && (
+                    <Flex >
+                    {numBeds > 1 &&
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          backgroundColor: "red",
+                          borderRadius: "40px",
+                          height: "25px",
+                          width: "25px",
+                        }}
+                        onClick={removeBed}
+                      >
+                         <IconMinus size={15} className="IconBed" cursor={'pointer'} />
+                      </div> }
+                    </Flex>
+                  )}
+                </Flex>
+              ))}
                       <Flex
                         mt={10}
                         alignItems="center"
@@ -308,7 +339,7 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                             width: "25px",
                           }}
                           >
-                          <IconPlus size={15} className="IconBed" />
+                          <IconPlus size={15} className="IconBed" onClick={addBed} cursor={'pointer'}/>
                         </div>
                         <Text ml={10} bold size={"md"}>
                           Add Another Bed

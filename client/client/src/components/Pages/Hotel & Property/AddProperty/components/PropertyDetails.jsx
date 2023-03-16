@@ -1,12 +1,74 @@
-import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Container, ActionIcon} from '@mantine/core'
+import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Container, ActionIcon, NativeSelect, Select, Avatar} from '@mantine/core'
 import { IconAlertCircle, IconArrowBadgeLeft, IconArrowBadgeRight, IconQuestionCircle, IconSearch, IconMoon, IconArrowLeft, IconArrowRight } from '@tabler/icons'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid';
 
 
+const data = Array(50).fill(0).map((_, index) => `Item ${index}`);
 
 export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
   const [isCompanyOwned, setIsCompanyOwned] = useState(false);
   const [hasChannelManager, setHasChannelManager] = useState(false);
+
+  const [countryState, setCountryState] = useState({
+    loading: false,
+    countries: [],
+    errorMessage: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // fetch spinner
+        setCountryState({
+          ...countryState,
+          loading: true,
+        });
+
+        //  fetch data
+        const dataUrl = `https://restcountries.com/v3.1/all`;
+        const response = await axios.get(dataUrl);
+        setCountryState({
+          ...countryState,
+          countries: response.data,
+          loading: false,
+        });
+      } catch (error) {
+        setCountryState({
+          ...countryState,
+          loading: false,
+          errorMessage: "Sorry Something went wrong",
+        });
+      }
+    };
+
+    fetchData();
+  }, []);
+  const { loading, errorMessage, countries } = countryState;
+  console.log("loading", loading);
+  console.log("countries", countries);
+  console.log("errorMessage", errorMessage);
+
+  const [selectedCountry, setSelectedCountry] = useState();
+  console.log("selectedCountry", selectedCountry);
+
+  //   find selected country data
+  //search selected country
+  const searchSelectedCountry = countries.find((obj) => {
+    if (obj.name.common === selectedCountry) {
+      return true;
+    }
+    return false;
+  });
+
+  const countryOptions = countries.map((country) => ({
+    value: country.name.common,
+    label: country.name.common,
+  }));
+
+  console.log("searchSelectedCountry", searchSelectedCountry);
+  console.log('RENDERED')
   
   return (
     <>
@@ -156,33 +218,16 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
 
       <div style={{marginTop: 10}}>
                 <Text style={{ fontFamily: 'Fredoka', fontSize: 15 }}>Country</Text>
-            <Input
-      radius={'md'}
-      size="sm"
-      style={{ width: 150, marginTop: 10 }}
-      rightSection={
-        <Tooltip label="This is public" position="top-end" withArrow>
-          <div>
-            <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
-          </div>
-        </Tooltip>
-      }
-      />
-      </div>
-      <div style={{marginTop: 10}}>
-                <Text style={{ fontFamily: 'Fredoka', fontSize: 15 }}>Country</Text>
-            <Input
-      radius={'md'}
-      size="sm"
-      style={{ width: 150, marginTop: 10 }}
-      rightSection={
-        <Tooltip label="This is public" position="top-end" withArrow>
-          <div>
-            <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
-          </div>
-        </Tooltip>
-      }
-      />
+                <Flex gap={10}>
+
+                <Select 
+                data={countryOptions} 
+                value={selectedCountry} 
+                searchable
+                onChange={(value) => setSelectedCountry(value)}
+                />
+      {searchSelectedCountry && <Avatar src={searchSelectedCountry.flags.svg} radius="xs"/>} 
+                </Flex>
       </div>
 
       </div>

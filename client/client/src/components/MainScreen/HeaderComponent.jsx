@@ -45,7 +45,7 @@ export default function HeaderComponent() {
         }}
       >
         <ScrollArea.Autosize mah={"100%"} mx="auto">
-        <Hotel/>
+        <AddProperty/>
         </ScrollArea.Autosize> </div>
       </div>
     </div>
