@@ -34,7 +34,7 @@ function addBedType() {
 const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
     const bedTypes = [ "Twin Beds / 90-130 cm wide", "Queen Beds / 151-180 cm wide", "King Beds / 181-210 cm wide","Full Beds / 131-150 cm wide", "Bunk Beds / Variable size", "Sofa Beds / Variable size", "Crib / Variable size", "Air Mattress / Variable size", "Double Beds / Variable size"  ];
     const [bedroomCount, setBedRoomCount] = useState(1);
-    const [beds, setBeds] = useState({ 0: [{ type: bedTypes[0], count: 1 }] });
+    const [numBeds, setNumBeds] = useState(1);
 
     const handleAddBedroom = () => {
       if (bedroomCount < 9) {
