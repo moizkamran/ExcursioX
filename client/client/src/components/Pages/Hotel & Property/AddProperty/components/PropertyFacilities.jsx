@@ -2,7 +2,7 @@ import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Con
 import { IconAlertCircle, IconArrowBadgeLeft, IconArrowBadgeRight, IconQuestionCircle, IconSearch, IconMoon, IconArrowLeft, IconArrowRight, IconBread, IconParking, IconPlus, IconLanguageHiragana, IconApps, IconWifi, IconGlass, IconBrightnessHalf, IconLeaf, IconFence, IconSmokingNo, IconBath, IconAirConditioning, IconHorseToy, IconPool, IconMessage } from '@tabler/icons'
 import React from 'react'
 
-export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
+export const PropertyFacilites = () => {
   
   return (
     <>
@@ -24,20 +24,20 @@ export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
             <div style={{display: 'flex', flexDirection: 'row', gap: 20,  marginTop: 10}}>
 
             <NativeSelect
-                data={["React", "Vue", "Angular", "Svelte"]}
-                label="Apartment Type"
+                data={["No", "Yes - Free", "Yes - Paid" ]}
+                label="Is Parking avaiable to guests?"
                 radius="md"
                 size="md"
                 />
             <NativeSelect
-                data={["React", "Vue", "Angular", "Svelte"]}
-                label="Apartment Type"
+                data={["Private", "Public"]}
+                label="Type of Parking"
                 radius="md"
                 size="md"
                 />
             <NativeSelect
-                data={["React", "Vue", "Angular", "Svelte"]}
-                label="Apartment Type"
+                data={["On-Site", "Off-site"]}
+                label="Parking Space"
                 radius="md"
                 size="md"
                 />
@@ -45,10 +45,10 @@ export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
             <div>
             <Text>Do guests need to reserve a parking space?</Text>
             <NativeSelect
-                data={["Yes", "No"]}
+                data={["Reservations not required", "Reservations required"]}
                 radius="md"
                 size="md"
-                style={{width: 150}}
+                style={{width: 'max-content'}}
                 />
             </div>
             <div>
@@ -57,13 +57,13 @@ export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
                 variant="unstyled"
                 rightSection={<Text>PKR</Text>}
                 styles={{
-                    input : {
-                        fontSize: "20px",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        textAlign: "center",
-                    }
-                }}
+                  input : {
+                      fontSize: "15px",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textAlign: "left",
+                      marginLeft: 10,
+                  }}}
                 style={{
                     width: "150px",
                     height: "40px",
