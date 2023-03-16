@@ -2,7 +2,7 @@ import { Group, Input, TextInput, Title, Tooltip, Text, Radio, Flex, Button, Con
 import { IconAlertCircle, IconArrowBadgeLeft, IconArrowBadgeRight, IconQuestionCircle, IconSearch, IconMoon, IconArrowLeft, IconArrowRight, IconBread, IconParking, IconPlus, IconLanguageHiragana, IconApps, IconWifi, IconGlass, IconBrightnessHalf, IconLeaf, IconFence, IconSmokingNo, IconBath, IconAirConditioning, IconHorseToy, IconPool, IconMessage } from '@tabler/icons'
 import React from 'react'
 
-export const PropertyFacilites = ({ onButtonClick, onBackClick }) => {
+export const PropertyFacilites = () => {
   
   return (
     <>
