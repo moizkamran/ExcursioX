@@ -31,6 +31,7 @@ const PropertySelection = ({ onButtonClick }) => {
         justifyContent: "center",
         alignItems: "center",
         width: 300,
+        height: 470,
         backgroundColor: "#07399E",
         mt: "md",
         mb: "md",
@@ -40,6 +41,7 @@ const PropertySelection = ({ onButtonClick }) => {
       <Image
         style={{
           maxWidth: 240,
+          maxHeight: 240,
           objectFit: 'cover',
           marginTop: 10
         }}
@@ -55,6 +57,8 @@ const PropertySelection = ({ onButtonClick }) => {
           flexDirection: "column",
           justifyContent: "center",
           padding: 20,
+          height: 470,
+          maxHeight: 470,
           alignItems: "center",
           borderRadius: '35px',
           borderTopLeftRadius: 50,
@@ -99,6 +103,7 @@ const PropertySelection = ({ onButtonClick }) => {
         justifyContent: "center",
         alignItems: "center",
         width: 300,
+        height: 470,
         backgroundColor: "#07399E",
         mt: "md",
         mb: "md",
@@ -108,6 +113,7 @@ const PropertySelection = ({ onButtonClick }) => {
       <Image
         style={{
           maxWidth: 240,
+          maxHeight: 240,
           objectFit: 'cover',
           marginTop: 10
         }}
@@ -139,6 +145,8 @@ const PropertySelection = ({ onButtonClick }) => {
             mt: "md",
             mb: "md",
             width: 250,
+            height: 'max-content',
+            paddingBottom: 10,
             textAlign: 'center'
           }}
         >
@@ -164,6 +172,7 @@ villas, etc.
         justifyContent: "center",
         alignItems: "center",
         width: 300,
+        height: 470,
         backgroundColor: "#07399E",
         mt: "md",
         mb: "md",
@@ -229,6 +238,7 @@ hostels, condo hotels, etc.
         justifyContent: "center",
         alignItems: "center",
         width: 300,
+        height: 470,
         backgroundColor: "#07399E",
         mt: "md",
         mb: "md",

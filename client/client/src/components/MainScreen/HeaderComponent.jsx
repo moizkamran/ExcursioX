@@ -8,6 +8,7 @@ import NavbarItems from "./NavbarItems";
 import React from "react";
 import logoImage from "../../assets/Logo1.png";
 import { ScrollArea } from "@mantine/core";
+
 import { AddRoom } from "../Pages/Hotel & Property/AddRoom/AddRoom";
 
 export default function HeaderComponent() {

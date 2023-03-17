@@ -13,16 +13,6 @@ export const AddBooking = () => {
   return (
     
     <>
-    <div
-        style={{
-          borderRadius: "50px 0 0 0",
-          backgroundColor: "white",
-          marginLeft: "0px",
-          padding: "20px",
-          flex: 1,
-        }}
-      >
-        <ScrollArea.Autosize mah={"100%"} mx="auto">
         <div
           style={{
             padding: 20,
@@ -147,8 +137,7 @@ date by entering their flight departure date</Text> </div>
 
           
           </div> {/* END */}
-        </div> </ScrollArea.Autosize>
-    </div>
+        </div>
     </>
   )
 }
