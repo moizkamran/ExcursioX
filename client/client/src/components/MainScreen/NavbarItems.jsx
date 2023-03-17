@@ -10,6 +10,7 @@ import planeIcon from "../../assets/icons/plane.svg";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLogout } from "../../hooks/useLogout";
+import { CustomLink } from "./Dashboard";
 
 import {
   IconMoon,
@@ -57,17 +58,15 @@ function NavbarItems() {
           alignItems: "center",
         }}
       >
-        <Tooltip
-          label="Dashboard"
-          color="dark"
-          position="right"
-          transition="scale"
-          transitionDuration={300}
-        >
-          <Link
-            path="/home"
-            style={{ marginTop: "auto", marginBottom: "auto" }}
+        <CustomLink to="/">
+          <Tooltip
+            label="Dashboard"
+            color="dark"
+            position="right"
+            transition="scale"
+            transitionDuration={300}
           >
+
             <div
               style={{
                 background: "rgba(255, 255, 255, 0.2)",
@@ -77,8 +76,9 @@ function NavbarItems() {
             >
               <img src={dashboardIcon} />
             </div>
-          </Link>
-        </Tooltip>
+
+          </Tooltip>
+        </CustomLink>
         <Tooltip
           label="Passports & Visas"
           color="dark"
@@ -107,20 +107,20 @@ function NavbarItems() {
             <img src={busIcon} className="navbar-icon-bus" />
           </Link>
         </Tooltip>
-        <Tooltip
-          label="Hotel & Bookings"
-          color="dark"
-          position="right"
-          transition="scale"
-          transitionDuration={300}
-        >
-          <Link
-            style={{ marginTop: "auto", marginBottom: "auto" }}
-            path="/hotel"
+        <CustomLink to="/hotel">
+
+          <Tooltip
+            label="Hotel & Bookings"
+            color="dark"
+            position="right"
+            transition="scale"
+            transitionDuration={300}
           >
+
             <img src={hotelIcon} />
-          </Link>
-        </Tooltip>
+
+          </Tooltip>
+        </CustomLink>
         <Tooltip
           label="Flights & Tickets"
           color="dark"
