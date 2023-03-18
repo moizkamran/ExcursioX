@@ -1,5 +1,5 @@
 import "./stylesheets/Dashboard.css";
-import React from "react";
+import React, { useState } from "react";
 import avatar from "../../assets/avatar.png";
 import busIcon from "../../assets/icons/bus.svg";
 import coinsIcon from "../../assets/icons/coins.svg";
@@ -21,9 +21,21 @@ import {
   IconBinaryTree,
   IconTicket,
   IconLogout,
+  IconLayoutDashboard,
+  IconEPassport,
+  IconArrowRight,
+  IconChevronRight,
+  IconBusStop,
+  IconBed,
+  IconPlaneTilt,
+  IconCoin,
+  IconCircle,
 } from "@tabler/icons";
 import {
+  ActionIcon,
   Avatar,
+  Button,
+  Flex,
   HoverCard,
   Switch,
   Text,
@@ -38,143 +50,85 @@ function NavbarItems() {
   const handleLogout = () => {
     logout();
   };
+
+  const [open, setOpen] = useState(false);
+
   return (
     <div
       style={{
-        width: "5%",
+        width: open ? "15%" : "5%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         position: "relative",
         alignItems: "center",
+        color: "white",
+        transitionDuration: "0.5s",
+        fontSize: "1.2rem",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          height: "50%",
-          position: "relative",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <CustomLink to="/">
-          <Tooltip
-            label="Dashboard"
-            color="dark"
-            position="right"
-            transition="scale"
-            transitionDuration={300}
-          >
+      {/* {open && (
+        <div style={{textAlign: 'left', display: 'flex', alignItems: 'flex-start'}}> 
+            <Text c="dimmed">Menu</Text>
+        </div>
+      )} */}
 
-            <div
-              style={{
-                background: "rgba(255, 255, 255, 0.2)",
-                borderRadius: "11px",
-                display: "flex",
-              }}
-            >
-              <img src={dashboardIcon} />
-            </div>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', gap: 10}}>
+<CustomLink to="/">
+  <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
+    <IconLayoutDashboard  size={'2.5rem'} color="white" />
+    <Text className="slide-in-left" style={{display: !open && 'none', transformOrigin: 'left'}}>Dashboard</Text>
+  </div>
+</CustomLink>
+  <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
+    <IconEPassport  size={'2.5rem'} color="white" />
+    <Text className="slide-in-left" style={{display: !open && 'none', transformOrigin: 'left'}}>Passports</Text>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
+    <IconBusStop  size={'2.5rem'} color="white" />
+    <Text className="slide-in-left" style={{display: !open && 'none', transformOrigin: 'left'}}>Transport</Text>
+  </div>
+  <CustomLink to="/hotel">
 
-          </Tooltip>
-        </CustomLink>
-        <Tooltip
-          label="Passports & Visas"
-          color="dark"
-          position="right"
-          transition="scale"
-          transitionDuration={300}
-        >
-          <Link
-            style={{ marginTop: "auto", marginBottom: "auto" }}
-            path="/home"
-          >
-            <img src={passportIcon} className="navbar-icon-visa" />
-          </Link>
-        </Tooltip>
-        <Tooltip
-          label="Transport"
-          color="dark"
-          position="right"
-          transition="scale"
-          transitionDuration={300}
-        >
-          <Link
-            style={{ marginTop: "auto", marginBottom: "auto" }}
-            path="/home"
-          >
-            <img src={busIcon} className="navbar-icon-bus" />
-          </Link>
-        </Tooltip>
-        <CustomLink to="/hotel">
+  <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
+    <IconBed  size={'2.5rem'} color="white" />
+    <Text className="slide-in-left" style={{display: !open && 'none', transformOrigin: 'left'}}>Hotel</Text>
+  </div>
+  
+  </CustomLink>
+  <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
+    <IconPlaneTilt  size={'2.5rem'} color="white" />
+    <Text style={{display: !open && 'none', transformOrigin: 'left'}} className="slide-in-left">Flights</Text>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
+    <IconCoin  size={'2.5rem'} color="white" />
+    <Text className="slide-in-left" style={{display: !open && 'none', transformOrigin: 'left'}}>Finance</Text>
+  </div>
+</div>
 
-          <Tooltip
-            label="Hotel & Bookings"
-            color="dark"
-            position="right"
-            transition="scale"
-            transitionDuration={300}
-          >
-
-            <img src={hotelIcon} />
-
-          </Tooltip>
-        </CustomLink>
-        <Tooltip
-          label="Flights & Tickets"
-          color="dark"
-          position="right"
-          transition="scale"
-          transitionDuration={300}
-        >
-          <Link
-            style={{ marginTop: "auto", marginBottom: "auto" }}
-            path="/home"
-          >
-            <img src={planeIcon} />
-          </Link>
-        </Tooltip>
-        <Tooltip
-          label="Accounts & Ledger"
-          color="dark"
-          position="right"
-          transition="scale"
-          transitionDuration={300}
-        >
-          <Link
-            style={{ marginTop: "auto", marginBottom: "auto" }}
-            path="/home"
-          >
-            <img src={coinsIcon} />
-          </Link>
-        </Tooltip>
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          bottom: "0",
-          display: "flex",
-          justifyContent: "flex-start",
-          width: "100%",
-        }}
-      >
-        {/* Logout and Avatar Component*/}
-
-        <HoverCard shadow="md">
+<HoverCard shadow="md">
           <HoverCard.Target>
+            <Flex  style={{ cursor: "pointer", position: "absolute", bottom: 20, gap: 10}}>
+
             <Avatar
               onClick={() => setUserOpened((o) => !o)}
               component="a"
               target="_blank"
               variant="outline"
+              style={{transitionDuration: "0.5s"}}
               radius="xl"
               size="lg"
               color="green"
               src={avatar}
-              style={{ marginLeft: "20px", marginBottom: "20px" }}
-            />
+              />
+              {open && (<div className="animate-text">
+              <Text fz={16} className="animate-text">Wassup, Moiz!</Text>
+              <Text fz={12} color="dimmed">Developer</Text>
+              <Flex direction={'row'} gap={5} align={'center'} mt={5} >
+              <div className="glowing-circle"></div> <Text fz={14} style={{transformOrigin: 'left'}}>Offline</Text>
+              </Flex>
+              </div>)}
+            </Flex>
           </HoverCard.Target>
           <HoverCard.Dropdown
             style={{
@@ -308,7 +262,25 @@ function NavbarItems() {
             </Text>
           </HoverCard.Dropdown>
         </HoverCard>
-      </div>
+
+
+        <ActionIcon 
+  size="lg" 
+  radius="xl" 
+  variant="filled" 
+  style={{
+    position: 'absolute', 
+    top: 0, 
+    backgroundColor: 'black',
+    right: 0,
+    transition: 'transform 0.2s ease-in-out',
+    transform: open ? 'rotate(180deg)' : 'rotate(0deg)'
+  }} 
+  onClick={() => setOpen(!open)}
+>
+  <IconChevronRight/>
+</ActionIcon>
+
     </div>
   );
 }
