@@ -93,7 +93,7 @@ const AddProperty = () => {
   };
   
 
-  const titles = [ "Select Property Type", "Property Details", "Property Layout", "Facilities & Services", "Amenities & Photos", "House Rules", "Payments & Agreement" ];
+  const titles = [ "Select Property Type", "Property Details", "Property Layout", "Facilities & Services", "Amenities & Photos", "House Rules", "Payments & Agreement", "Preview" ];
 
   const [active, setActive] = useState(1);
   const nextStep = () =>
