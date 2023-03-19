@@ -42,7 +42,7 @@ const Dashboard = () => {
               flex: 1,
             }}
           >  <ScrollArea.Autosize mah={"100%"} mx="auto">
-              <Body />
+              <AddProperty />
             </ScrollArea.Autosize>
           </div>
         </div>

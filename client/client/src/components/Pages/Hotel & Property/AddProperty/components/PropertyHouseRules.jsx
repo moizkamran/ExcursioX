@@ -85,7 +85,7 @@ export const PropertyHouseRules = () => {
                                 <div style={{backgroundColor: '#07399E', width: 'inherit', height: 'max-content', borderTopRightRadius: 20, borderTopLeftRadius: 20, padding: 5}}>
                                     <div style={{alignContent: 'center', alignItems: 'center', display: 'flex', gap: 5, marginLeft: 10}}><IconDoorEnter color='white'/><Text style={{fontSize: 20, color:'white' }}> Guest’s arrival time</Text></div>
                                 </div>
-                                <div style={{backgroundColor: '#F3F3F3', width: 'max-content', height: 'max-content', borderBottomRightRadius: 20, borderBottomLeftRadius: 20, padding: 15 }}> 
+                                <div style={{backgroundColor: '#F3F3F3', width: 'inherit', height: 'max-content', borderBottomRightRadius: 20, borderBottomLeftRadius: 20, padding: 15 }}> 
                                     <Text>from</Text>
                                     <Flex gap={10}>
                                     <Chip.Group position="center">

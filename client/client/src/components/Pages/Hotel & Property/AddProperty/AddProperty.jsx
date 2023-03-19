@@ -21,6 +21,7 @@ import PropertyFacilities from "./components/PropertyFacilities";
 import PropertyPhotos from "./components/PropertyPhotos";
 import PropertyHouseRules from "./components/PropertyHouseRules"
 import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
+import PropertyPayments from "./components/PropertyPayments";
 
 
 
@@ -85,14 +86,14 @@ const AddProperty = () => {
     } else if (page === 5) {
       return <PropertyHouseRules />;
     } else if (page === 6) {
-      return <h1>Property Availability</h1>;
+      return <PropertyPayments/>;
     } else {
       return <h1>Property Info</h1>;
     }
   };
   
 
-  const titles = [ "Select Property Type", "Property Details", "Property Layout", "Facilities & Services", "Amenities & Photos", "House Rules", "Property Availability" ];
+  const titles = [ "Select Property Type", "Property Details", "Property Layout", "Facilities & Services", "Amenities & Photos", "House Rules", "Payments & Agreement" ];
 
   const [active, setActive] = useState(1);
   const nextStep = () =>

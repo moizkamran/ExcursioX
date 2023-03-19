@@ -12,6 +12,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvider>
     <MantineProvider
       theme={{
+        colors : {
+          brand: [  '#e3eeff',  '#b4cdff',  '#84acfb',  '#548af7',  '#2669f4',  '#104fdb',  '#083eab',  '#022c7b',  '#001a4c',  '#00091e']
+        }, 
+        primaryColor: 'brand',
         headings: {
           // properties for all headings
           fontWeight: 400,
