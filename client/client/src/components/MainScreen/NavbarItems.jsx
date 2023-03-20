@@ -115,7 +115,7 @@ function NavbarItems() {
               component="a"
               target="_blank"
               variant="outline"
-              style={{transitionDuration: "0.5s"}}
+              style={{transitionDuration: "0.5s", transition: 'position'}}
               radius="xl"
               size="lg"
               color="green"
