@@ -3,22 +3,29 @@ import HouseIcon from "../../../../../assets/propertyArtwork/house.png";
 import hotelIcon from "../../../../../assets/propertyArtwork/hotel.png";
 import TentIcon from "../../../../../assets/propertyArtwork/circus-tent.png";
 
+// Redux
+import { useDispatch } from 'react-redux';
+
 import React, { useState } from "react";
 
+//Slice Import
+import { setPropertyType } from "../../../../../Redux/Slicers/propertySlice";
+
 import {
-  Box,
   Button,
   Card,
-  Group,
   Image,
-  ScrollArea,
-  Stepper,
   Text,
-  Title,
 } from "@mantine/core";
 import { IconRotate2 } from "@tabler/icons";
 
 const PropertySelection = ({ onButtonClick }) => {
+  const dispatch = useDispatch();
+
+  const handlePropertyTypeChange = (event) => {
+    dispatch(setPropertyType(event.target.value));
+  };
+
   return (
     <>
     <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
@@ -87,7 +94,12 @@ const PropertySelection = ({ onButtonClick }) => {
     
   </Card>
   <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',  height: '50px'}}>
-  <Button onClick={onButtonClick} leftIcon={<IconRotate2/>} style={{borderRadius: 35, backgroundColor: 'green'}}>Quick Start</Button>
+  <Button onClick={onButtonClick} leftIcon={<IconRotate2/>} 
+  style={{borderRadius: 35, backgroundColor: 'green'}}
+  name="propertyType"
+  value="Apartment"
+  onChange={handlePropertyTypeChange}
+  >Quick Start</Button>
 
 
 
