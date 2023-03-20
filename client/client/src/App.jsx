@@ -22,6 +22,7 @@ export default function App() {
           <Route path="/AddProperty2" element={<PropertyLayoutAndPricing />}></Route>
           <Route path="/AddProperty3" element={<PropertyView />}></Route>
           <Route path="/booking" element={<Booking />}></Route>
+          <Route path="/propertyview" element={<PropertyView />}></Route>
 
 
 
