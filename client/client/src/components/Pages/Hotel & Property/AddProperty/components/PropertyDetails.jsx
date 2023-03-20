@@ -1,58 +1,60 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
+import { propertyForm } from "../../../../../Redux/Slicers/propertySlice";
 
 import {
-  Group,
   Input,
-  TextInput,
   Title,
   Tooltip,
   Text,
   Radio,
   Flex,
   Button,
-  Container,
   ActionIcon,
-  NativeSelect,
   Select,
   Avatar,
 } from "@mantine/core";
 import {
   IconAlertCircle,
-  IconArrowBadgeLeft,
-  IconArrowBadgeRight,
-  IconQuestionCircle,
   IconSearch,
-  IconMoon,
   IconArrowLeft,
   IconArrowRight,
+  IconQuestionCircle,
 } from "@tabler/icons";
-
-const data = Array(50)
-  .fill(0)
-  .map((_, index) => `Item ${index}`);
 
 export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
   const [form, setForm] = useState({
     propertyName: "",
     propertyContact: "",
-    contact: "",
+    contactName: "",
     company: "",
     channel: " ",
     streetAddress: "",
     addressLine2: "",
     country: "",
   });
-  const [isCompanyOwned, setIsCompanyOwned] = useState(false);
-  const [hasChannelManager, setHasChannelManager] = useState(false);
 
+  const [setIsCompanyOwned] = useState(false);
+  const [setHasChannelManager] = useState(false);
   const [countryState, setCountryState] = useState({
     loading: false,
     countries: [],
     errorMessage: "",
   });
+  const { countries } = countryState;
+  const [selectedCountry] = useState();
 
+  const propertyDetails = useSelector(
+    (state) => state.property.propertyDetails
+  );
+  const dispatch = useDispatch();
+
+  const handleButtonClick = () => {
+    console.log(form);
+    dispatch(propertyForm(form));
+    onButtonClick();
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,11 +83,8 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
 
     fetchData();
   }, []);
-  const { loading, errorMessage, countries } = countryState;
 
-  const [selectedCountry, setSelectedCountry] = useState();
-
-  //   find selected country data
+  //find selected country data
   //search selected country
   const searchSelectedCountry = countries.find((obj) => {
     if (obj.name.common === selectedCountry) {
@@ -98,7 +97,12 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
     value: country.name.common,
     label: country.name.common,
   }));
-
+  const handleInputChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleSelectChange = (value) => {
+    setForm({ ...form, country: value });
+  }
   return (
     <>
       <div
@@ -118,10 +122,9 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Property Name
               </Text>
               <Input
-                onChange={(e) => {
-                  setForm({ ...form, PropertyName: e.target.value });
-
-                }}
+                name="propertyName"
+                onChange={handleInputChange}
+                value={form.propertyName}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -145,10 +148,9 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
-                onChange={(e) => {
-                  setForm({ ...form, propertyContact: e.target.value });
-
-                }}
+                name="propertyContact"
+                onChange={handleInputChange}
+                value={form.propertyContact}
                 rightSection={
                   <Tooltip label="This is public" position="top-end" withArrow>
                     <div>
@@ -167,10 +169,9 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
               </Text>
               <Input
                 radius={"md"}
-                onChange={(e) => {
-                  setForm({ ...form, company: e.target.value });
-
-                }}
+                name="contactName"
+                onChange={handleInputChange}
+                value={form.contactName}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
                 rightSection={
@@ -218,22 +219,14 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 <Radio
                   label="Yes"
                   value="yes"
-                  name="company-owned"
-                  onClick={(e) => {
-                    setForm({ ...form, contact: e.target.value });
-                    console.log(form)
-                  }}
-                  onChange={() => setIsCompanyOwned(true)}
+                  name="company"
+                  onChange={handleInputChange}
                 />
                 <Radio
-                  label="Yes"
-                  value="yes"
-                  name="company-owned"
-                  onChange={() => setIsCompanyOwned(false)}
-                  onClick={(e) => {
-                    setForm({ ...form, contact: e.target.value });
-                    console.log(form)
-                  }}
+                  label="No"
+                  value="no"
+                  name="company"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -270,22 +263,14 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 <Radio
                   label="Yes"
                   value="yes"
-                  name="channel-mananger"
-                  onClick={(e) => {
-                    setForm({ ...form, channel: e.target.value });
-                    console.log(form)
-                  }}
-                  onChange={() => setHasChannelManager(true)}
+                  name="channel"
+                  onChange={handleInputChange}
                 />
                 <Radio
                   label="No"
                   value="no"
-                  onClick={(e) => {
-                    setForm({ ...form, channel: e.target.value });
-                    console.log(form)
-                  }}
-                  name="channel-mananger"
-                  onChange={() => setHasChannelManager(false)}
+                  name="channel"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -300,10 +285,9 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Street Address
               </Text>
               <Input
-                onChange={(e) => {
-                  setForm({ ...form, streetAddress: e.target.value });
-
-                }}
+                name="streetAddress"
+                onChange={handleInputChange}
+                value={form.streetAddress}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -324,10 +308,9 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Address Line 2
               </Text>
               <Input
-                onChange={(e) => {
-                  setForm({ ...form, addressLine2: e.target.value });
-
-                }}
+                name="addressLine2"
+                onChange={handleInputChange}
+                value={form.addressLine2}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -351,15 +334,10 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 <Flex gap={10}>
                   <Select
                     data={countryOptions}
-                    value={selectedCountry}
+                    value={form.country}
                     searchable
-                    onChange={(value) => {
-                      setForm(value)
-                      console.log(form)
-                    }
-
-                    }
-
+                    name="country"
+                    onChange={handleSelectChange}
                   />
                   {searchSelectedCountry && (
                     <Avatar src={searchSelectedCountry.flags.svg} radius="xs" />
@@ -499,8 +477,9 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
           >
             <IconArrowLeft size="1.5rem" />
           </ActionIcon>
+
           <Button
-            onClick={onButtonClick}
+            onClick={handleButtonClick}
             rightIcon={<IconArrowRight />}
             style={{
               backgroundColor: "#07399E",
