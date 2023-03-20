@@ -5,10 +5,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { MantineProvider } from "@mantine/core";
 import { AuthContextProvider } from "./context/AuthContext";
+import { Provider } from "react-redux";
+
+//REDUX STORE
+import store from "./Redux/Store/store"
 
 //main stylesheet import
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+<Provider store={store}>
   <AuthContextProvider>
     <MantineProvider
       theme={{
@@ -39,7 +44,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
       }}
     >
+
       <App />
+      
     </MantineProvider>
   </AuthContextProvider>
+      </Provider>
 );
