@@ -22,46 +22,7 @@ import PropertyPhotos from "./components/PropertyPhotos";
 import PropertyHouseRules from "./components/PropertyHouseRules"
 import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
 import PropertyPayments from "./components/PropertyPayments";
-
-
-
-// state = {
-//   step: 1,
-//   propertyType: '',
-//   propertyName: '',
-//   propertyContactPerson: '',
-//   propertyContactNumber: '',
-//   isCompanyOwned: false,
-//   useChannelManager: false,
-//   propertyAddress1: '',
-//   propertyAddress2: '',
-//   country: '',
-//   city: '',
-//   customName: '',
-//   bedrooms: 1,
-//   livingRoom: 0,
-//   bathroom: 1,
-//   bed1: '',
-//   bed1Q: 1,
-//   guestsStay: 1,
-//   enSuite: true,
-//   pernight: 0,
-//   parking: true,
-//   parkingType: '',
-//   parkingSite: '',
-//   parkingReservation: true,
-//   parkingPerDay: 0,
-//   breakfast: true,
-//   breakfastType: '',
-//   breakfastPrice: 0,
-//   language: '',
-//   language2: '',
-//   wifi: false,
-//   bar: false,
-//   airCondition: false,
-//   pool: false,
-
-// }
+import PropertyPreview from "./components/PropertyPreview";
 
 
 const AddProperty = () => {
@@ -88,7 +49,7 @@ const AddProperty = () => {
     } else if (page === 6) {
       return <PropertyPayments/>;
     } else {
-      return <h1>Property Info</h1>;
+      return <PropertyPreview/>;
     }
   };
   
