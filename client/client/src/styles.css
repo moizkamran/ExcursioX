@@ -1,5 +1,331 @@
+/* Hammersmith One font on cloud, please make it local during deployement*/
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+/* Fredoka font on cloud, please make it local during deployement*/
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500&display=swap');
+
+
+:root{
+  /* Colors */
+  --primary-color: #07399E;
+}
+
+a {
+  text-decoration: none;
+}
+
 .links{
   color:"#07399E";
   text-decoration: none;
   margin-left: 5px;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.formContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageContainer {
+  width: 50%;
+  background-image: url(./assets/Image.png);
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 767px) {
+  .imageContainer {
+    display: none;
+  }
+}
+
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 600px) {
+  .formContainer {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.title {
+  color: #000000;
+  font-family: 'Hammersmith One', sans-serif;
+  justify-content: start;
+  align-items: center;
+  font-size: 47px;
+}
+
+
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 25px;
+  }
+}
+
+.subTitle{
+  color:rgba(0, 0, 0, 0.5);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 400;
+  justify-content: start;
+  align-items: center;
+  font-size: 1.7rem;
+}
+
+
+
+.button {
+  background-color: #07399E;
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  font-size: 1rem;
+  border-radius: 35px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.sso {
+  background-color: #000000;
+  border: none;
+  border-radius: 35px;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 387px;
+  height: 50px;
+  font-size: 1rem;
+}
+
+.sso:hover {
+  background-color: #1a1a1a;
+}
+
+.leftIcon {
+  margin-right: 15px;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 160px;
+  height: 68px;
+}
+
+
+.popover-enter {
+  opacity: 0;
+  max-height: 0;
+}
+
+.popover-enter-active {
+  opacity: 1;
+  max-height: 300px;
+  transition: opacity 1.5s ease-out, max-height 1.5s ease-out;
+}
+
+.popover-exit {
+  opacity: 1;
+  max-height: 300px;
+}
+
+.popover-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 300ms ease-out, max-height 300ms ease-out;
+}
+
+
+.button-Nav-Coll{
+  position: relative;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 7px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.button-Nav{
+  position: relative;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 7px;
+  font-size: 14px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 400;
+  letter-spacing: 2px;
+  background: transparent;
+  width: 200px;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.button-Nav:hover, .button-Nav-Coll:hover {
+background: rgb(76, 114, 236);
+  box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.438);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.button-Nav:hover::before, .button-Nav-Coll:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+.button-Nav:active, .button-Nav-Coll:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+
+/* Define the keyframe animation */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-text {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideIn 0.5s ease forwards;
+}
+
+
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.slide-in-left {
+  animation-name: slide-in-left;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;;
+}
+
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.glowing-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: red;
+  box-shadow: 0 0 10px red;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px red;
+    background-color: rgb(236, 127, 76);
+  }
+  100% {
+    box-shadow: 0 0 20px red;
+  }
+}
+
+.gradient1{
+  background: linear-gradient(277.73deg, #9D0026 16.41%, #FF0D0D 91.77%);
+}
+
+.gradient2{
+  background: linear-gradient(277.73deg, #009D77 16.41%, #00D215 91.77%);
+}
+
+.slide-bottom {
+	animation: slide-bottom 0.5s both;
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2023-3-19 6:11:38
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation slide-bottom
+ * ----------------------------------------
+ */
+ @keyframes slide-bottom {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100px);
+  }
 }

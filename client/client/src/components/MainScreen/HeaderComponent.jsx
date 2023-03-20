@@ -1,78 +1,52 @@
+import "./stylesheets/Dashboard.css";
+import AddBooking from "../Pages/Hotel & Property/AddBooking/AddBooking";
+import AddProperty from "../Pages/Hotel & Property/AddProperty/AddProperty";
+import Body from "./Body";
+import Hotel from "../../components/Pages/Hotel & Property/Hotel";
+import MenuItems from "./MenuItems";
+import NavbarItems from "./NavbarItems";
+import React from "react";
 import logoImage from "../../assets/Logo1.png";
-import { Header } from "@mantine/core";
+import { ScrollArea } from "@mantine/core";
 
-import {
-  Center,
-  Navbar,
-  Stack,
-  Card,
-  Button,
-  Text,
-  Tooltip,
-  UnstyledButton,
-  createStyles,
-} from "@mantine/core";
+import { AddRoom } from "../Pages/Hotel & Property/AddRoom/AddRoom";
 
-const useStyles = createStyles((theme) => ({
-  logo: {
-    height: 20,
-    marginLeft: 10,
-  },
-  header: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#121927",
-    color: "white",
-    height: 40,
-  },
-  headerRight: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    width: "100%",
-  },
-}));
 export default function HeaderComponent() {
-  const { classes, cx } = useStyles();
   return (
-    <div
-      style={{
-        backgroundColor: "#121927",
-        minHeight: "100vh",
-      }}
-    >
-      <header className={classes.header}>
-        <div className={classes.logo}>
-          <img src={logoImage} alt="Logo" />
-        </div>
-        <div className={classes.headerRight}>
-          <Button variant="outline" color="white">
-            Logout
-          </Button>
-        </div>
-      </header>
+
+    <div style={{ backgroundColor: "#121927" }}>
       <div
         style={{
-          marginLeft: 130, // leave space for the navbar
-          marginTop: 20, // add some margin to the card
-          borderRadius: "100px 0 0 0", // border radius on top left corner
-          backgroundColor: "white",
-          height: "100vh",
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "15px",
+          alignItems: "center",
         }}
       >
-        <Card
+        <img src={logoImage} alt="logo" style={{ height: "50px" }} />
+        <MenuItems />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          height: "calc(100vh - 80px)",
+          overflowY: "hidden",
+        }}
+      >
+        <NavbarItems />
+        {/* Interactive Component */}
+        <div
           style={{
-            overflowY: "auto",
-            width: "100%",
-            height: "calc(100vh - 60px - 20px - 100px)",
-            borderRadius: "100px 0 0 0", // border radius on top left corner
-            padding: "100px",
+            borderRadius: "50px 0 0 0",
+            backgroundColor: "white",
+            marginLeft: "0px",
+            padding: "20px",
+            flex: 1,
           }}
         >
-          <Text>Hello</Text>
-          {/* Content of the card */}
-        </Card>
+          <ScrollArea.Autosize mah={"100%"} mx="auto">
+            <Hotel />
+          </ScrollArea.Autosize> </div>
       </div>
     </div>
   );
