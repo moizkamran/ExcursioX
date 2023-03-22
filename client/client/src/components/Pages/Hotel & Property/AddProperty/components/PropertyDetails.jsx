@@ -23,7 +23,12 @@ import {
   IconQuestionCircle,
 } from "@tabler/icons";
 
-export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) => {
+export const PropertyDetails = ({
+  form,
+  setForm,
+  onButtonClick,
+  onBackClick,
+}) => {
   const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
@@ -31,8 +36,6 @@ export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) =
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
-  const [setIsCompanyOwned] = useState(false);
-  const [setHasChannelManager] = useState(false);
   const [countryState, setCountryState] = useState({
     loading: false,
     countries: [],
@@ -95,7 +98,7 @@ export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) =
 
   const handleSelectChange = (value) => {
     setForm({ ...form, country: value });
-  }
+  };
   return (
     <>
       <div

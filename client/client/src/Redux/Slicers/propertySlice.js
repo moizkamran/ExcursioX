@@ -11,6 +11,13 @@ export const initialState = {
     addressLine2: " ",
     country: " ",
   },
+  propertyLayout: {
+    apartment: "",
+    nameOptional: "",
+    bedroom: "",
+    bedroomCount: "",
+    suite: "",
+  },
 };
 
 const propertySlice = createSlice({
@@ -20,8 +27,17 @@ const propertySlice = createSlice({
     propertyForm: (state, { payload }) => {
       state.propertyDetails = payload;
     },
+    updatePropertyLayout: (state, action) => {
+      return {
+        ...state,
+        propertyLayout: {
+          ...state.propertyLayout,
+          ...action.payload,
+        },
+      };
+    },
   },
 });
 
-export const { propertyForm } = propertySlice.actions;
+export const { propertyForm, updatePropertyLayout } = propertySlice.actions;
 export default propertySlice.reducer;
