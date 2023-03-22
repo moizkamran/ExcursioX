@@ -7,7 +7,15 @@ import PropertyPhotos from "./components/PropertyPhotos";
 import PropertyPreview from "./components/PropertyPreview";
 import PropertySelection from "./components/PropertySelection";
 import React, { useState } from "react";
+<<<<<<< Updated upstream
 import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
+=======
+<<<<<<< Updated upstream
+=======
+import { initialState } from "../../../../Redux/Slicers/propertySlice"
+import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 import {
   ActionIcon,
@@ -28,11 +36,12 @@ import {
 const AddProperty = () => {
   const [page, setCurrentPage] = useState(0);
   const handleButtonClick = () => {
-    setCurrentPage(currentPage => currentPage + 1);
+    setCurrentPage((currentPage) => currentPage + 1);
   };
   const handleButtonClickBack = () => {
-    setCurrentPage(currentPage => currentPage - 1);
+    setCurrentPage((currentPage) => currentPage - 1);
   };
+<<<<<<< Updated upstream
   const [propertyDetailsForm, setPropertyDetailsForm] = useState({
     propertyName: "",
     propertyContact: "",
@@ -52,6 +61,31 @@ const AddProperty = () => {
         form={propertyDetailsForm}
         setForm={setPropertyDetailsForm}
         onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} />;
+=======
+<<<<<<< Updated upstream
+  const PageDisplay =  () => {
+    if (page === 0) {
+      return <PropertySelection onButtonClick={handleButtonClick} />;
+    } else if (page === 1) {
+      return <PropertyDetails onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack}/>;
+=======
+  const [propertyDetailsForm, setPropertyDetailsForm] = useState(
+    initialState.propertyDetails
+  );
+  const PageDisplay = () => {
+    if (page === 0) {
+      return <PropertySelection onButtonClick={handleButtonClick} />;
+    } else if (page === 1) {
+      return (
+        <PropertyDetails
+          form={propertyDetailsForm}
+          setForm={setPropertyDetailsForm}
+          onButtonClick={handleButtonClick}
+          onBackClick={handleButtonClickBack}
+        />
+      );
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     } else if (page === 2) {
       return <PropertyLayoutAndPricing />;
     } else if (page === 3) {
@@ -63,7 +97,15 @@ const AddProperty = () => {
     } else if (page === 6) {
       return <PropertyPayments />;
     } else {
+<<<<<<< Updated upstream
       return <PropertyPreview />;
+=======
+<<<<<<< Updated upstream
+      return <h1>Property Info</h1>;
+=======
+      return <PropertyPreview form={propertyDetailsForm} />;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
   };
 
