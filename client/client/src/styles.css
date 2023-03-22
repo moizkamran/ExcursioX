@@ -329,3 +329,23 @@ background: rgb(76, 114, 236);
     transform: translateY(100px);
   }
 }
+
+.facilityPill{
+  width: 9rem;
+  background-color: #F3F3F3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 10px;
+  border-radius: 25px;
+  gap: 5px;
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+}
+
+.facilityPill:hover {
+  background-color: #07399E;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
