@@ -9,6 +9,8 @@ import PropertySelection from "./components/PropertySelection";
 import React, { useState } from "react";
 import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
 
+import { initialState } from "../../../../Redux/Slicers/propertySlice"
+
 import {
   ActionIcon,
   Box,
@@ -33,25 +35,23 @@ const AddProperty = () => {
   const handleButtonClickBack = () => {
     setCurrentPage(currentPage => currentPage - 1);
   };
-  const [propertyDetailsForm, setPropertyDetailsForm] = useState({
-    propertyName: "",
-    propertyContact: "",
-    contactName: "",
-    company: "",
-    channel: " ",
-    streetAddress: "",
-    addressLine2: "",
-    country: "",
-  });
+  
+  const [propertyDetailsForm, setPropertyDetailsForm] = useState(
+    initialState.propertyDetails
+  );
+
   const PageDisplay = () => {
     if (page === 0) {
       return <PropertySelection onButtonClick={handleButtonClick} />;
     } else if (page === 1) {
-      return <PropertyDetails
-
-        form={propertyDetailsForm}
-        setForm={setPropertyDetailsForm}
-        onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} />;
+      return (
+        <PropertyDetails
+          form={propertyDetailsForm}
+          setForm={setPropertyDetailsForm}
+          onButtonClick={handleButtonClick}
+          onBackClick={handleButtonClickBack}
+        />
+      );
     } else if (page === 2) {
       return <PropertyLayoutAndPricing />;
     } else if (page === 3) {

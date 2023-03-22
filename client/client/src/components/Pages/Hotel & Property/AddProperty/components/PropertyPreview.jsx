@@ -1,8 +1,12 @@
 import { Flex, Text, Title } from '@mantine/core'
 import { IconBed, IconBrandSupernova, IconBus, IconChevronRight, IconCornerDownRight, IconGeometry, IconHeart, IconHome2, IconHomeCancel, IconIroning1, IconMapPin, IconPlane, IconPlant, IconPool, IconRulerMeasure, IconSmoking, IconSpace, IconStar, IconSteeringWheel, IconToolsKitchen, IconWalk, IconWashMachine, IconWifi } from '@tabler/icons'
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 export const PropertyPreview = () => {
+
+    const propertyName = useSelector((state) => state.property.propertyDetails.propertyName);
+    
 
     const facilities = [
         { name: 'Free Wi-Fi', icon: <IconWifi /> },
@@ -21,7 +25,7 @@ export const PropertyPreview = () => {
     <>
     <Flex p={20} direction={'column'}>
         <Flex gap={10} align='center'>
-            <Title>Skyline Serviced Apartments - Brixton</Title> <IconHeart cursor={'pointer'}/>
+            <Title>{propertyName}</Title> <IconHeart cursor={'pointer'}/>
         </Flex>
         <Flex gap={10}> 
             <Flex gap={10}>

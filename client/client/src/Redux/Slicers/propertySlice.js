@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export const initialState = {
   propertyDetails: {
     propertyName: " ",
     propertyContact: "",

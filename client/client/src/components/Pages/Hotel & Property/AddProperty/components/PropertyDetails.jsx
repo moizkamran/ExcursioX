@@ -23,17 +23,13 @@ import {
   IconQuestionCircle,
 } from "@tabler/icons";
 
-export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
-  const [form, setForm] = useState({
-    propertyName: "",
-    propertyContact: "",
-    contactName: "",
-    company: "",
-    channel: " ",
-    streetAddress: "",
-    addressLine2: "",
-    country: "",
-  });
+export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) => {
+  const dispatch = useDispatch();
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  };
 
   const [setIsCompanyOwned] = useState(false);
   const [setHasChannelManager] = useState(false);
@@ -48,7 +44,6 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
   const propertyDetails = useSelector(
     (state) => state.property.propertyDetails
   );
-  const dispatch = useDispatch();
 
   const handleButtonClick = () => {
     console.log(form);
@@ -97,9 +92,7 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
     value: country.name.common,
     label: country.name.common,
   }));
-  const handleInputChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+
   const handleSelectChange = (value) => {
     setForm({ ...form, country: value });
   }
@@ -221,11 +214,13 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                   value="yes"
                   name="company"
                   onChange={handleInputChange}
+                  checked={form.company === "yes"}
                 />
                 <Radio
                   label="No"
                   value="no"
                   name="company"
+                  checked={form.company === "no"}
                   onChange={handleInputChange}
                 />
               </div>
@@ -265,12 +260,14 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                   value="yes"
                   name="channel"
                   onChange={handleInputChange}
+                  checked={form.channel === "yes"}
                 />
                 <Radio
                   label="No"
                   value="no"
                   name="channel"
                   onChange={handleInputChange}
+                  checked={form.channel === "no"}
                 />
               </div>
             </div>
