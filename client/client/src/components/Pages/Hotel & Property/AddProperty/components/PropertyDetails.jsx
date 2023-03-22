@@ -23,14 +23,6 @@ import {
   IconQuestionCircle,
 } from "@tabler/icons";
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-const data = Array(50)
-  .fill(0)
-  .map((_, index) => `Item ${index}`);
-
->>>>>>> Stashed changes
 export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
   const [form, setForm] = useState({
     propertyName: "",
@@ -42,15 +34,6 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
     addressLine2: "",
     country: "",
   });
-<<<<<<< Updated upstream
-=======
-  const [isCompanyOwned, setIsCompanyOwned] = useState(false);
-  const [hasChannelManager, setHasChannelManager] = useState(false);
-=======
-export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) => {
-  const dispatch = useDispatch();
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
   const [setIsCompanyOwned] = useState(false);
   const [setHasChannelManager] = useState(false);
@@ -62,26 +45,16 @@ export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) =
   const { countries } = countryState;
   const [selectedCountry] = useState();
 
-<<<<<<< Updated upstream
   const propertyDetails = useSelector(
     (state) => state.property.propertyDetails
   );
   const dispatch = useDispatch();
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 
   const handleButtonClick = () => {
     console.log(form);
     dispatch(propertyForm(form));
     onButtonClick();
   };
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
->>>>>>> Stashed changes
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -124,28 +97,12 @@ export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) =
     value: country.name.common,
     label: country.name.common,
   }));
-<<<<<<< Updated upstream
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   const handleSelectChange = (value) => {
     setForm({ ...form, country: value });
   }
-=======
-<<<<<<< Updated upstream
-=======
-  
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prevForm) => ({ ...prevForm, [name]: value }));
-  };
-
-  const handleSelectChange = (value) => {
-    setForm({ ...form, country: value });
-  }
->>>>>>> Stashed changes
-
->>>>>>> Stashed changes
   return (
     <>
       <div
@@ -262,45 +219,14 @@ export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) =
                 <Radio
                   label="Yes"
                   value="yes"
-<<<<<<< Updated upstream
                   name="company"
                   onChange={handleInputChange}
                 />
                 <Radio
-=======
-<<<<<<< Updated upstream
-                  name="company-owned"
-                  onClick={(e) => {
-                    setForm({ ...form, contact: e.target.value });
-                    console.log(form)
-                  }}
-                  onChange={() => setIsCompanyOwned(true)}
-                />
-                <Radio
-                  label="Yes"
-                  value="yes"
-                  name="company-owned"
-                  onChange={() => setIsCompanyOwned(false)}
-                  onClick={(e) => {
-                    setForm({ ...form, contact: e.target.value });
-                    console.log(form)
-                  }}
-=======
-                  name="company"
-                  onChange={handleInputChange}
-                  checked={form.company === "yes"}
-                />
-                <Radio
->>>>>>> Stashed changes
                   label="No"
                   value="no"
                   name="company"
                   onChange={handleInputChange}
-<<<<<<< Updated upstream
-=======
-                  checked={form.company === "no"}
->>>>>>> Stashed changes
->>>>>>> Stashed changes
                 />
               </div>
             </div>
@@ -337,44 +263,14 @@ export const PropertyDetails = ({ form, setForm, onButtonClick, onBackClick }) =
                 <Radio
                   label="Yes"
                   value="yes"
-<<<<<<< Updated upstream
                   name="channel"
                   onChange={handleInputChange}
-=======
-<<<<<<< Updated upstream
-                  name="channel-mananger"
-                  onClick={(e) => {
-                    setForm({ ...form, channel: e.target.value });
-                    console.log(form)
-                  }}
-                  onChange={() => setHasChannelManager(true)}
-=======
-                  name="channel"
-                  onChange={handleInputChange}
-                  checked={form.channel === "yes"}
->>>>>>> Stashed changes
->>>>>>> Stashed changes
                 />
                 <Radio
                   label="No"
                   value="no"
-<<<<<<< Updated upstream
                   name="channel"
                   onChange={handleInputChange}
-=======
-<<<<<<< Updated upstream
-                  onClick={(e) => {
-                    setForm({ ...form, channel: e.target.value });
-                    console.log(form)
-                  }}
-                  name="channel-mananger"
-                  onChange={() => setHasChannelManager(false)}
-=======
-                  name="channel"
-                  onChange={handleInputChange}
-                  checked={form.channel === "no"}
->>>>>>> Stashed changes
->>>>>>> Stashed changes
                 />
               </div>
             </div>

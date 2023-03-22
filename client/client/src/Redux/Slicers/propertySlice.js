@@ -1,15 +1,6 @@
-<<<<<<< Updated upstream
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-=======
-<<<<<<< Updated upstream
-import { createSlice } from '@reduxjs/toolkit';
-=======
-import { createSlice } from "@reduxjs/toolkit";
-
-export const initialState = {
->>>>>>> Stashed changes
   propertyDetails: {
     propertyName: " ",
     propertyContact: "",
@@ -21,10 +12,6 @@ export const initialState = {
     country: " ",
   },
 };
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 const propertySlice = createSlice({
   name: "property",
