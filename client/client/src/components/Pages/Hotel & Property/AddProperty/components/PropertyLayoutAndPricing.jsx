@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePropertyLayout } from "../../../../../Redux/Slicers/propertySlice";
 
 import {
   Title,
@@ -23,22 +25,25 @@ import {
   IconLamp,
   IconBath,
 } from "@tabler/icons";
-
-const ApartmentType = ['Apartment', 'Apartment - Groundfloor',];
-
-function addBedType() {
-  const newBedTypes = [...bedTypes];
-  newBedTypes.push("");
-  newBedTypes(newBedTypes);
-}
+const ApartmentType = ["Hello", "Apartment - Groundfloor"];
 
 const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
-  const bedTypes = ["Twin Beds / 90-130 cm wide", "Queen Beds / 151-180 cm wide", "King Beds / 181-210 cm wide", "Full Beds / 131-150 cm wide", "Bunk Beds / Variable size", "Sofa Beds / Variable size", "Crib / Variable size", "Air Mattress / Variable size", "Double Beds / Variable size"];
-  const [bedroomCount, setBedRoomCount] = useState(1);
+  const bedTypes = [
+    "Twin Beds / 90-130 cm wide",
+    "Queen Beds / 151-180 cm wide",
+    "King Beds / 181-210 cm wide",
+    "Full Beds / 131-150 cm wide",
+    "Bunk Beds / Variable size",
+    "Sofa Beds / Variable size",
+    "Crib / Variable size",
+    "Air Mattress / Variable size",
+    "Double Beds / Variable size",
+  ];
   const [numBeds, setNumBeds] = useState(1);
+  const [bedroomCount, setBedRoomCount] = useState(1);
 
   const handleAddBedroom = () => {
-    if (bedroomCount < 9) {
+    if (bedroomCount < 5) {
       setBedRoomCount(bedroomCount + 1);
     }
   };
@@ -61,8 +66,18 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
     }
   };
 
+  const { propertyLayout } = useSelector((state) => state.property);
+  const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState(propertyLayout.suite);
+
+  const handleRadioChange = (event) => {
+    setSelectedValue(event.target.value);
+    dispatch(updatePropertyLayout({ suite: event.target.value }));
+  };
   return (
     <>
+
+
       <div
         style={{
           display: "flex",
@@ -75,20 +90,30 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
             <div>
               <Title>Details</Title>
               <NativeSelect
+                defaultValue={propertyLayout.apartment}
                 data={ApartmentType}
+                onChange={(v) => {
+                  console.log(v.target.value);
+                  dispatch(updatePropertyLayout({ apartment: v.target.value }));
+                }}
                 label="Apartment Type"
                 radius="md"
                 size="md"
               />
+
               <Text fontSize="xs">
                 This is the name guests will see on the website.
               </Text>
               <div style={{ marginTop: "10px" }}>
                 <Text size={"lg"}>Custom Name (Optional)</Text>
                 <TextInput
-                  mt={10}
-                  radius="md"
-                  size="md"
+                  defaultValue={propertyLayout.nameOptional}
+                  onChange={(v) => {
+                    console.log(v.target.value);
+                    dispatch(
+                      updatePropertyLayout({ nameOptional: v.target.value })
+                    );
+                  }}
                 />
               </div>
               <Flex gap={50} direction={"row"}>
@@ -115,7 +140,7 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                       }}
                     >
                       {/* clickable icons  */}
-                      <Flex style={{ userSelect: 'none' }}>
+                      <Flex style={{ userSelect: "none" }}>
                         <IconPlus
                           style={{
                             marginTop: "10px",
@@ -137,8 +162,11 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                             alignItems: "center",
                           }}
                         >
-                          <Text style={{ fontSize: "30px", userSelect: 'none' }}>{bedroomCount !== null ? bedroomCount : 1}</Text>
-
+                          <Text
+                            style={{ fontSize: "30px", userSelect: "none" }}
+                          >
+                            {bedroomCount !== null ? bedroomCount : 1}
+                          </Text>
                         </div>
 
                         <IconMinus
@@ -277,13 +305,10 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                 </Flex>
               </Flex>
             </div>
-            <ScrollArea.Autosize mah={"100vh"} mx="auto" maw={'auto'} >
-
+            <ScrollArea.Autosize mah={"100vh"} mx="auto" maw={"auto"}>
               <Container ml={10} key={bedroomCount}>
                 <div>
-
                   {Array.from({ length: bedroomCount }).map((_, index) => (
-
                     <Container key={index} ml={10}>
                       <div>
                         <Text fw={500}>Bedroom {index + 1}</Text>
@@ -291,18 +316,43 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                           What Kind of beds are available in this room?{" "}
                         </Text>
                         {Array.from({ length: numBeds }).map((_, bedIndex) => (
-                          <Flex key={bedIndex} gap={10} alignItems="center" mt={10}>
+                          <Flex
+                            key={bedIndex}
+                            gap={10}
+                            alignItems="center"
+                            mt={10}
+                          >
                             <NativeSelect
+                              defaultValue={propertyLayout.bedroom}
+                              onChange={(v) => {
+                                dispatch(
+                                  updatePropertyLayout({
+                                    bedroom: v.target.value,
+                                  })
+                                );
+                                console.log(propertyLayout);
+                              }}
                               style={{ width: "250px" }}
                               data={bedTypes}
                               radius="md"
                               size="md"
                             />
                             <Text>X</Text>
-                            <NumberInput max={12} min={1} radius="md" size="md" />
+                            <NumberInput
+                              max={12}
+                              min={1}
+                              radius="md"
+                              size="md"
+                              defaultValue={propertyLayout.bedroomCount}
+                              onChange={(v) => {
+                                console.log(v);
+                                dispatch(updatePropertyLayout({ bedroomCount: v }));
+                                console.log(propertyLayout);
+                              }}
+                            />
                             {bedIndex === numBeds - 1 && (
-                              <Flex >
-                                {numBeds > 1 &&
+                              <Flex>
+                                {numBeds > 1 && (
                                   <div
                                     style={{
                                       display: "flex",
@@ -316,8 +366,13 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                                     }}
                                     onClick={removeBed}
                                   >
-                                    <IconMinus size={15} className="IconBed" cursor={'pointer'} />
-                                  </div>}
+                                    <IconMinus
+                                      size={15}
+                                      className="IconBed"
+                                      cursor={"pointer"}
+                                    />
+                                  </div>
+                                )}
                               </Flex>
                             )}
                           </Flex>
@@ -340,13 +395,20 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                               width: "25px",
                             }}
                           >
-                            <IconPlus size={15} className="IconBed" onClick={addBed} cursor={'pointer'} />
+                            <IconPlus
+                              size={15}
+                              className="IconBed"
+                              onClick={addBed}
+                              cursor={"pointer"}
+                            />
                           </div>
                           <Text ml={10} bold size={"md"}>
                             Add Another Bed
                           </Text>
                         </Flex>
-                        <Text mt={10}>How many guests can stay in this room?</Text>
+                        <Text mt={10}>
+                          How many guests can stay in this room?
+                        </Text>
                         <Flex gap={50} direction={"row"}>
                           <Flex
                             mt={10}
@@ -417,11 +479,23 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                           />
                         </Flex>
                         <Flex gap={20} mt={10}>
-                          <Radio size={"md"} value="Yes" label="Yes" />
-                          <Radio size={"md"} value="No" label="No" />
+                          <Radio
+                            onChange={handleRadioChange}
+                            size={"md"}
+                            value="Yes"
+                            label="Yes"
+                            checked={selectedValue === "Yes"}
+                          />
+                          <Radio
+                            onChange={handleRadioChange}
+                            size={"md"}
+                            value="No"
+                            label="No"
+                            checked={selectedValue === "No"}
+                          />
                         </Flex>
 
-                        <Divider size={"lg"} my="lg" opacity={'40%'} />
+                        <Divider size={"lg"} my="lg" opacity={"40%"} />
                       </div>
                     </Container>
                   ))}
@@ -442,12 +516,25 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                   justifyContent: "center",
                 }}
               >
-                <div style={{ alignItems: "center", display: 'flex', justifyContent: "center" }}>
+                <div
+                  style={{
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
                   <IconMoon color="   white" size={25} className="IconBed" />
-                  <Text style={{ marginLeft: 10 }} color="white">Base Price /Night</Text>
+                  <Text style={{ marginLeft: 10 }} color="white">
+                    Base Price /Night
+                  </Text>
                 </div>
-                <div style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}>
-
+                <div
+                  style={{
+                    display: "flex",
+                    alignContent: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <TextInput
                     variant="unstyled"
                     rightSection={<Text>PKR</Text>}
@@ -458,7 +545,7 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                         alignItems: "center",
                         justifyContent: "center",
                         textAlign: "center",
-                      }
+                      },
                     }}
                     style={{
                       width: "150px",
@@ -475,15 +562,12 @@ const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
                   />
                 </div>
               </div>
-              <Text bold size={"md"} align={'center'} mt={10}>
-                This is the lowest price that we
-                automatically apply to this room for
-                all dates. Before your property goes
-                live, you can set seasonal pricing on
-                your property dashboard.
+              <Text bold size={"md"} align={"center"} mt={10}>
+                This is the lowest price that we automatically apply to this
+                room for all dates. Before your property goes live, you can set
+                seasonal pricing on your property dashboard.
               </Text>
             </div>
-
           </Flex>
         </div>
       </div>
