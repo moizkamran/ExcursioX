@@ -7,6 +7,7 @@ import React from "react";
 import logoImage from "../../assets/Logo1.png";
 import { ScrollArea } from "@mantine/core";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { HotelType } from "../Pages/Hotel & Property/AddProperty/Hotel/HotelType/HotelType";
 
 // Dashboard component
 const Dashboard = () => {
@@ -42,7 +43,7 @@ const Dashboard = () => {
               flex: 1,
             }}
           >  <ScrollArea.Autosize mah={"100%"} mx="auto">
-              <AddProperty />
+              <HotelType />
             </ScrollArea.Autosize>
           </div>
         </div>
