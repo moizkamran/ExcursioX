@@ -1,4 +1,4 @@
-import FunctionsComponent from "./Functions/FunctionsComponent";
+import PhotosComponent from "./Functions/PhotosComponent";
 import React, { useState } from "react";
 
 import {
@@ -89,94 +89,11 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
       label: "Accessible rooms and facilities for guests with disabilities",
     },
   ]);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const fileTypes = ["image/png", "image/jpeg", "image/gif"];
-
-  const handleFileInput = (e) => {
-    const files = Array.from(e.target.files);
-
-    if (files.length > 12) {
-      setErrorMessage("Maximum 12 images can be uploaded at a time.");
-      return;
-    }
-
-    const selected = [];
-    let errors = "";
-    files.forEach((file) => {
-      if (fileTypes.indexOf(file.type) === -1) {
-        errors += `${file.name} is not a supported format.\n`;
-        return;
-      }
-      if (file.size > 1024 * 1024) {
-        errors += `${file.name} is too large, please pick a smaller file.\n`;
-        return;
-      }
-      selected.push(file);
-    });
-
-    if (errors !== "") {
-      setErrorMessage(errors);
-      return;
-    }
-
-    setSelectedFiles(selectedFiles.concat(selected));
-  };
-
-  const deleteFile = (fileToDelete) => {
-    const filteredFiles = selectedFiles.filter((file) => file !== fileToDelete);
-    setSelectedFiles(filteredFiles);
-  };
-
-  const renderPhotos = (photos) => {
-    const numPhotos = photos.length;
-    const numRows = Math.ceil(numPhotos / 4);
-    const cellWidth = 100 / 4; // Adjust to your preference
-    const cellHeight = 100 / numRows; // Adjust to your preference
-
-    const photoStyle = {
-      width: `${cellWidth}%`,
-      height: `${cellHeight}%`,
-      position: "relative",
-      boxSizing: "border-box",
-      padding: "5px",
-    };
-
-    const imgStyle = {
-      maxWidth: "100%",
-      maxHeight: "100%",
-      objectFit: "contain",
-    };
-
-    const deleteButtonStyle = {
-      position: "absolute",
-      top: "5px",
-      right: "5px",
-      border: "none",
-      backgroundColor: "transparent",
-      color: "white",
-      fontSize: "20px",
-      cursor: "pointer",
-    };
-
-    return photos.map((photo) => {
-      return (
-        <div key={photo.name} style={photoStyle}>
-          <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <img src={URL.createObjectURL(photo)} alt={photo.name} style={imgStyle} />
-            <button style={deleteButtonStyle} onClick={() => deleteFile(photo)}>
-              &times;
-            </button>
-          </div>
-        </div>
-      );
-    });
-  };
 
 
   return (
     <>
-      <FunctionsComponent />
+      
       <div
         style={{
           display: "flex",
@@ -403,55 +320,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                   <br /> property, so upload some high-resolution photos that{" "}
                   <br /> represent all your property has to offer.{" "}
                 </Text>
-                <div
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    height: 150,
-                    width: 400,
-                    borderRadius: 20,
-                    marginTop: 20,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    padding: 20,
-                    border: "2px dashed #07399E",
-                  }}
-                >
-                  <div>
-                    <div
-                      style={{
-                        borderRadius: "50%",
-                        width: "100px",
-                        height: "100px",
-                        backgroundColor: "#F0F0F0",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <FileInput
-                        variant={"unstyled"}
-                        icon={<IconUpload size={50} color={"black"} />}
-                        style={{ marginLeft: 3 }}
-                        accept="image/png,image/jpeg"
-                        multiple
-                      />
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", textAlign: "center" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "inherit",
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={{ fontSize: "24px" }}>Drag & Drop</Text>
-                      <Text fz="sm">.png or .jpeg (max 2 MB / Photo)</Text>
-                    </div>
-                  </div>
-                </div>
+                <PhotosComponent />
               </div>
             </div>
           </div>
