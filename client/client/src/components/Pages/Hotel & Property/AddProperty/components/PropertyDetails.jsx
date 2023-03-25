@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { propertyForm } from "../../../../../Redux/Slicers/propertySlice";
+import { updatePropertyDetails } from "../../../../../Redux/Slicers/propertySlice";
 
 import {
   Input,
@@ -23,36 +23,20 @@ import {
   IconQuestionCircle,
 } from "@tabler/icons";
 
-export const PropertyDetails = ({
-  form,
-  setForm,
-  onButtonClick,
-  onBackClick,
-}) => {
+export const PropertyDetails = ({onButtonClick, onBackClick}) => {
+  const { propertyDetails } = useSelector((state) => state.property);
   const dispatch = useDispatch();
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prevForm) => ({ ...prevForm, [name]: value }));
-  };
 
   const [countryState, setCountryState] = useState({
     loading: false,
     countries: [],
     errorMessage: "",
   });
+
   const { countries } = countryState;
   const [selectedCountry] = useState();
 
-  const propertyDetails = useSelector(
-    (state) => state.property.propertyDetails
-  );
 
-  const handleButtonClick = () => {
-    console.log(form);
-    dispatch(propertyForm(form));
-    onButtonClick();
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -99,6 +83,7 @@ export const PropertyDetails = ({
   const handleSelectChange = (value) => {
     setForm({ ...form, country: value });
   };
+
   return (
     <>
       <div
@@ -118,9 +103,13 @@ export const PropertyDetails = ({
                 Property Name
               </Text>
               <Input
-                name="propertyName"
-                onChange={handleInputChange}
-                value={form.propertyName}
+                 defaultValue={propertyDetails.propertyName}
+                 onChange={(v) => {
+                   console.log(v.target.value);
+                   dispatch(
+                     updatePropertyDetails({ propertyName: v.target.value })
+                   );
+                 }}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -145,8 +134,6 @@ export const PropertyDetails = ({
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
                 name="propertyContact"
-                onChange={handleInputChange}
-                value={form.propertyContact}
                 rightSection={
                   <Tooltip label="This is public" position="top-end" withArrow>
                     <div>
@@ -166,8 +153,6 @@ export const PropertyDetails = ({
               <Input
                 radius={"md"}
                 name="contactName"
-                onChange={handleInputChange}
-                value={form.contactName}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
                 rightSection={
@@ -216,15 +201,11 @@ export const PropertyDetails = ({
                   label="Yes"
                   value="yes"
                   name="company"
-                  onChange={handleInputChange}
-                  checked={form.company === "yes"}
                 />
                 <Radio
                   label="No"
                   value="no"
                   name="company"
-                  checked={form.company === "no"}
-                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -262,15 +243,11 @@ export const PropertyDetails = ({
                   label="Yes"
                   value="yes"
                   name="channel"
-                  onChange={handleInputChange}
-                  checked={form.channel === "yes"}
                 />
                 <Radio
                   label="No"
                   value="no"
                   name="channel"
-                  onChange={handleInputChange}
-                  checked={form.channel === "no"}
                 />
               </div>
             </div>
@@ -286,8 +263,6 @@ export const PropertyDetails = ({
               </Text>
               <Input
                 name="streetAddress"
-                onChange={handleInputChange}
-                value={form.streetAddress}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -309,8 +284,6 @@ export const PropertyDetails = ({
               </Text>
               <Input
                 name="addressLine2"
-                onChange={handleInputChange}
-                value={form.addressLine2}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -334,7 +307,6 @@ export const PropertyDetails = ({
                 <Flex gap={10}>
                   <Select
                     data={countryOptions}
-                    value={form.country}
                     searchable
                     name="country"
                     onChange={handleSelectChange}
@@ -479,7 +451,7 @@ export const PropertyDetails = ({
           </ActionIcon>
 
           <Button
-            onClick={handleButtonClick}
+            onClick={onButtonClick}
             rightIcon={<IconArrowRight />}
             style={{
               backgroundColor: "#07399E",

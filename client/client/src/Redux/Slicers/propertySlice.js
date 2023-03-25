@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   propertyDetails: {
+    type: "",
     propertyName: " ",
     propertyContact: "",
     contactName: " ",
@@ -24,8 +25,15 @@ const propertySlice = createSlice({
   name: "property",
   initialState,
   reducers: {
-    propertyForm: (state, { payload }) => {
-      state.propertyDetails = payload;
+
+    updatePropertyDetails: (state, action) => {
+      return {
+        ...state,
+        propertyDetails: {
+          ...state.propertyDetails,
+          ...action.payload,
+        },
+      };
     },
     updatePropertyLayout: (state, action) => {
       return {
@@ -39,5 +47,5 @@ const propertySlice = createSlice({
   },
 });
 
-export const { propertyForm, updatePropertyLayout } = propertySlice.actions;
+export const { updatePropertyDetails, updatePropertyLayout } = propertySlice.actions;
 export default propertySlice.reducer;

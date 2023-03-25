@@ -27,7 +27,7 @@ import {
 } from "@tabler/icons";
 const ApartmentType = ["Hello", "Apartment - Groundfloor"];
 
-const PropertyLayoutAndPricing = ({ onButtonClick, onBackClick }) => {
+const PropertyLayoutAndPricing = () => {
   const bedTypes = [
     "Twin Beds / 90-130 cm wide",
     "Queen Beds / 151-180 cm wide",
