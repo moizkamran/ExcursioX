@@ -25,6 +25,7 @@
   padding: 38px 15px 38px 15px;
   cursor: pointer;
   border-radius: 15px;
+  max-width: 400px;
   height: 100px;
   transition: all 0.2s ease-out;
   position: relative;
@@ -48,6 +49,11 @@
   animation: pulse 1s infinite;
 }
 
+.gridBox.selected{
+  background-color: #083eab;
+  color: white;
+}
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(14, 10, 231, 0.3);
@@ -58,4 +64,91 @@
   100% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
+}
+
+.delete{
+  display: flex;
+  gap: 5px;
+  min-height: 20px;
+  height: max-content;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  max-height: max-content;
+  padding: 5px 10px;
+  border-radius: 15px;
+  transition: all 0.2s ease-out;
+}
+
+.delete:hover{
+  transform: scale(0.95);
+  background-color: red;
+  color: white;
+}
+
+.buttonA{
+  display: flex;
+  gap: 5px;
+  min-height: 20px;
+  height: max-content;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  max-height: max-content;
+  padding: 5px 10px;
+  border-radius: 15px;
+  transition: all 0.2s ease-out;
+}
+
+.buttonA:hover{
+  transform: scale(0.95);
+  background-color: #083eab;
+  color: white;
+}
+
+.delete:active, .buttonA:active {
+  transform: scale(0.9);
+  transition: all 0.1s ease-in;
+}
+
+.roomBox{
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+  color: white;
+  width: 190px;
+  height: 210px;
+  border-radius: 25px;
+  transition: all 0.2s ease-out;
+}
+
+.roomBox:hover{
+  transform: scale(0.95);
+  background-color: #0a0a0a;
+}
+
+.moreRooms{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 5px 2px;
+gap: 10px;
+position: absolute;
+right: 0;
+margin-right: -23px;
+color: rgb(255, 255, 255);
+width: 20px;
+height: 200px;
+transition: all 0.2s ease-out;
+background: #000000;
+border-radius: 0px 10px 10px 0px;
+}
+
+.moreRooms:hover{
+  background: #313131;
+  color: white;
 }

@@ -471,48 +471,42 @@ export const PropertyDetails = ({ type }) => {
 
 export default PropertyDetails;
 
-function RatingModule({ }) {
-  return (
-    <div
-      style={{
-        flexDirection: "column",
-        height: 100,
-        width: 400,
-        paddingTop: 20,
-        paddingBottom: 20,
-        display: "flex",
-        alignContent: "center",
-        alignItems: "center",
-        backgroundColor: "#EAEAEA",
-        borderRadius: 16,
-        overflow: "hidden",
-        marginTop: 20,
-        position: "relative",
-      }}
-    >
-      <Text fz={20}>Star Rating</Text>
-      <Rating defaultValue={0} color="orange" size="lg" />
-      <div
-        style={{
-          marginTop: 10,
-          position: "absolute",
-          bottom: 0,
-          width: "100%",
-          display: "flex",
-          margin: 0,
-          padding: 3,
-          backgroundColor: "#07399E",
-          borderRadius: "12px 12px 17px 17px",
-          justifyContent: "center",
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text c={"white"} fz={15} fw={400} w={"60%"} align={"center"}>
-          You’ll be required to submit official documents later
-        </Text>
-      </div>
-    </div>
-  );
+
+function RatingModule({}) {
+  return (<div style={{
+flexDirection: 'column',
+height: 100,
+width: 400,
+paddingTop: 20,
+paddingBottom: 20,
+display: 'flex',
+alignContent: 'center',
+alignItems: 'center',
+backgroundColor: '#EAEAEA',
+borderRadius: 16,
+overflow: 'hidden',
+marginTop: 20,
+position: "relative"
+}}>
+<Text fz={20}>Star Rating</Text>
+<Rating defaultValue={0} color="orange" size="lg" />
+<div style={{
+marginTop: 10,
+position: "absolute",
+bottom: 0,
+width: '100%',
+display: 'flex',
+margin: 0,
+padding: 3,
+backgroundColor: '#07399E',
+borderRadius: '12px 12px 17px 17px',
+justifyContent: 'center',
+display: 'flex',
+alignContent: 'center',
+alignItems: 'center'
+}}>
+  <Text c={'white'} fz={15} fw={400} w={'60%'} align={'center'}>You’ll be required to submit official documents later</Text>
+</div>
+</div>);
 }
+  

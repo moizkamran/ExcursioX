@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   propertyDetails: {
-    type: "",
+    type: '',
+    propertyTypeOf: '',
     propertyName: "",
     propertyContact: "",
     contactNumber: "",
