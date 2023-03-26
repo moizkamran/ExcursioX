@@ -10,7 +10,6 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import { UserData } from "../../../FakeData/Data";
 
 import {
-  Icon24Hours,
   IconAlertCircle,
   IconArmchair,
   IconBroadcast,
@@ -20,8 +19,16 @@ import {
   IconGhost2,
   IconNewSection,
 } from "@tabler/icons";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Hotel = () => {
+
+  const navigate = useNavigate();
+
+  function handleAddPropertyClick() {
+    navigate('/addproperty');
+  }
+  
   const today = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -408,11 +415,13 @@ const Hotel = () => {
                       >
                         Initiate Booking
                       </Button>
+                    
                       <Button
                         leftIcon={<IconBuildingEstate />}
                         size={"md"}
                         style={{ maxWidth: 200, width: 200 }}
-                      >
+                        onClick={handleAddPropertyClick}
+                        >
                         Add Property
                       </Button>
                     </div>
