@@ -9,7 +9,6 @@ import PropertySelection from "./components/PropertySelection";
 import React, { useState } from "react";
 import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
 
-import { initialState } from "../../../../Redux/Slicers/propertySlice"
 
 import {
   ActionIcon,
@@ -59,10 +58,6 @@ const AddProperty = () => {
   const titles = ["Select Property Type", "Property Details", "Property Layout", "Facilities & Services", "Amenities & Photos", "House Rules", "Payments & Agreement", "Preview"];
 
   const [active, setActive] = useState(1);
-  const nextStep = () =>
-    setActive((current) => (current < 3 ? current + 1 : current));
-  const prevStep = () =>
-    setActive((current) => (current > 0 ? current - 1 : current));
   return (
     <>
       <div
