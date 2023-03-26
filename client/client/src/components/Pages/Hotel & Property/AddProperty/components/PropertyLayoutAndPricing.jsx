@@ -536,6 +536,9 @@ const PropertyLayoutAndPricing = () => {
                   }}
                 >
                   <TextInput
+                  onChange={(v) => {
+                    dispatch(updatePropertyLayout({ basePrice: v.target.value }));
+                  }}
                     variant="unstyled"
                     rightSection={<Text>PKR</Text>}
                     styles={{

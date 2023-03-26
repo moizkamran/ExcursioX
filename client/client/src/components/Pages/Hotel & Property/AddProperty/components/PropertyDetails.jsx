@@ -14,6 +14,7 @@ import {
   ActionIcon,
   Select,
   Avatar,
+  NativeSelect,
 } from "@mantine/core";
 import {
   IconAlertCircle,
@@ -24,8 +25,10 @@ import {
 } from "@tabler/icons";
 
 export const PropertyDetails = ({onButtonClick, onBackClick}) => {
-  const { propertyDetails } = useSelector((state) => state.property);
   const dispatch = useDispatch();
+  const { propertyDetails } = useSelector((state) => state.property);
+  const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
+  const hasChannelManeger = useSelector((state) => propertyDetails.hasChannelManeger);
 
   const [countryState, setCountryState] = useState({
     loading: false,
@@ -34,7 +37,6 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
   });
 
   const { countries } = countryState;
-  const [selectedCountry] = useState();
 
 
   useEffect(() => {
@@ -66,23 +68,11 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
     fetchData();
   }, []);
 
-  //find selected country data
-  //search selected country
-  const searchSelectedCountry = countries.find((obj) => {
-    if (obj.name.common === selectedCountry) {
-      return true;
-    }
-    return false;
-  });
-
   const countryOptions = countries.map((country) => ({
     value: country.name.common,
     label: country.name.common,
   }));
 
-  const handleSelectChange = (value) => {
-    setForm({ ...form, country: value });
-  };
 
   return (
     <>
@@ -130,6 +120,13 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
                 Property Contact Person Name
               </Text>
               <Input
+              defaultValue={propertyDetails.propertyContact}
+              onChange={(v) => {
+                console.log(v.target.value);
+                dispatch(
+                  updatePropertyDetails({ propertyContact: v.target.value })
+                );
+              }}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -151,6 +148,11 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
                 Contact Number
               </Text>
               <Input
+              onChange={(v) => {
+                dispatch(
+                  updatePropertyDetails({ contactNumber: v.target.value })
+                );
+              }}
                 radius={"md"}
                 name="contactName"
                 size="sm"
@@ -199,13 +201,21 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
               >
                 <Radio
                   label="Yes"
-                  value="yes"
-                  name="company"
+                   value="Yes"
+                   name="isCompanyOwned"
+                   defaultChecked={isCompanyOwned  === 'Yes'}
+                   onChange={(event) => {
+                     dispatch(updatePropertyDetails({ isCompanyOwned: event.target.value }));
+                   }}
                 />
                 <Radio
                   label="No"
-                  value="no"
-                  name="company"
+                   value="No"
+                   name="isCompanyOwned"
+                   defaultChecked={isCompanyOwned === 'No'}
+                   onChange={(event) => {
+                     dispatch(updatePropertyDetails({ isCompanyOwned: event.target.value }));
+                   }}
                 />
               </div>
             </div>
@@ -241,13 +251,21 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
               >
                 <Radio
                   label="Yes"
-                  value="yes"
-                  name="channel"
+                   value="Yes"
+                   name="hasChannelManeger"
+                   defaultChecked={hasChannelManeger === 'Yes'}
+                   onChange={(event) => {
+                     dispatch(updatePropertyDetails({ hasChannelManeger: event.target.value }));
+                   }}
                 />
                 <Radio
                   label="No"
-                  value="no"
-                  name="channel"
+                   value="No"
+                   name="hasChannelManeger"
+                   defaultChecked={hasChannelManeger === 'No'}
+                   onChange={(event) => {
+                     dispatch(updatePropertyDetails({ hasChannelManeger: event.target.value }));
+                   }}
                 />
               </div>
             </div>
@@ -262,6 +280,11 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
                 Street Address
               </Text>
               <Input
+              onChange={(v) => {
+                dispatch(
+                  updatePropertyDetails({ streetAddress: v.target.value })
+                );
+              }}
                 name="streetAddress"
                 radius={"md"}
                 size="sm"
@@ -283,6 +306,11 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
                 Address Line 2
               </Text>
               <Input
+              onChange={(v) => {
+                dispatch(
+                  updatePropertyDetails({ addressLine2: v.target.value })
+                );
+              }}
                 name="addressLine2"
                 radius={"md"}
                 size="sm"
@@ -305,15 +333,17 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
                   Country
                 </Text>
                 <Flex gap={10}>
-                  <Select
+                  <NativeSelect
+                  w={200}
+                  radius={"md"}
+                  onChange={(v) => {
+                    dispatch(
+                      updatePropertyDetails({ country: v.target.value })
+                    );
+                  }}
                     data={countryOptions}
-                    searchable
                     name="country"
-                    onChange={handleSelectChange}
                   />
-                  {searchSelectedCountry && (
-                    <Avatar src={searchSelectedCountry.flags.svg} radius="xs" />
-                  )}
                 </Flex>
               </div>
             </div>
