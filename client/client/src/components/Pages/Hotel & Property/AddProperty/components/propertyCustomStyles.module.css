@@ -25,6 +25,7 @@
   padding: 38px 15px 38px 15px;
   cursor: pointer;
   border-radius: 15px;
+  max-width: 400px;
   height: 100px;
   transition: all 0.2s ease-out;
   position: relative;
@@ -46,6 +47,11 @@
   border-radius: 15px;
   box-shadow: 0 0 0 0 rgba(97, 37, 236, 0.733);
   animation: pulse 1s infinite;
+}
+
+.gridBox.selected{
+  background-color: #083eab;
+  color: white;
 }
 
 @keyframes pulse {
