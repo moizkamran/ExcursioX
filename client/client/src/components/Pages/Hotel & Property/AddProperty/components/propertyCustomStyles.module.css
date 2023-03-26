@@ -113,13 +113,42 @@
 
 .roomBox{
   justify-content: center;
+  position: relative;
+  cursor: pointer;
   align-items: center;
-  padding: 15px;
+  padding: 20px;
   gap: 10px;
   color: white;
-  width: 154px;
-  height: 159px;
+  width: 190px;
+  height: 210px;
+  border-radius: 25px;
+  transition: all 0.2s ease-out;
+}
 
-  background: #07399E;
-  border-radius: 15px;
+.roomBox:hover{
+  transform: scale(0.95);
+  background-color: #0a0a0a;
+}
+
+.moreRooms{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 5px 2px;
+gap: 10px;
+position: absolute;
+right: 0;
+margin-right: -23px;
+color: rgb(255, 255, 255);
+width: 20px;
+height: 200px;
+transition: all 0.2s ease-out;
+background: #000000;
+border-radius: 0px 10px 10px 0px;
+}
+
+.moreRooms:hover{
+  background: #313131;
+  color: white;
 }
