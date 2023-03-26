@@ -7,6 +7,9 @@ import PropertyPhotos from "./components/PropertyPhotos";
 import PropertyPreview from "./components/PropertyPreview";
 import PropertySelection from "./components/PropertySelection";
 import React, { useState } from "react";
+
+import { useSelector } from "react-redux";
+
 import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
 
 
@@ -19,6 +22,10 @@ import {
 
 //  COMPONENTS IMPORTS
 const AddProperty = () => {
+  // FETCHING PROPERTY TYPE FROM REDUX STORE
+  const { propertyDetails: { type } } = useSelector((state) => state.property);
+  console.log(type);
+  
   const [page, setCurrentPage] = useState(0);
 
   const handleButtonClick = () => {
@@ -31,13 +38,18 @@ const AddProperty = () => {
 
   
 
-
+  // DISPLAYING THE CORRECT PAGE
   const PageDisplay = () => {
+
     if (page === 0) {
       return <PropertySelection onButtonClick={handleButtonClick}/>;
-    } else if (page === 1) {
+    } else if (page === 1 && type === "Apartment") {
       return (
-        <PropertyDetails onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} />
+        <PropertyDetails onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type}/>
+      );
+    } else if (page === 1 && type === "Hotel") {
+      return (
+        <PropertyDetails onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
       );
     } else if (page === 2) {
       return <PropertyLayoutAndPricing />;
@@ -50,7 +62,7 @@ const AddProperty = () => {
     } else if (page === 6) {
       return <PropertyPayments />;
     } else {
-      return <PropertyPreview />;
+      return <PropertySelection />;
     }
   };
 
