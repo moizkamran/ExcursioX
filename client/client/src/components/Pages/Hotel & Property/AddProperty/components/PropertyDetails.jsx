@@ -25,7 +25,7 @@ import {
   IconQuestionCircle,
 } from "@tabler/icons";
 
-export const PropertyDetails = ({onButtonClick, onBackClick, type}) => {
+export const PropertyDetails = ({type}) => {
   const dispatch = useDispatch();
   const { propertyDetails } = useSelector((state) => state.property);
   const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
@@ -234,7 +234,7 @@ export const PropertyDetails = ({onButtonClick, onBackClick, type}) => {
                 }}
               >
                 <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
-                  Do you use a channel manager?
+                  {type === 'Hotel' ? ('Do you own multiple hotels?') : ('Do you use a channel manager?')}
                 </Text>
                 <Tooltip label="This is public" position="top-end" withArrow>
                   <div>
@@ -458,45 +458,6 @@ export const PropertyDetails = ({onButtonClick, onBackClick, type}) => {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "flex-end",
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            marginRight: 20,
-            marginBottom: 20,
-          }}
-        >
-          <ActionIcon
-            onClick={onBackClick}
-            radius="xl"
-            variant="filled"
-            style={{
-              backgroundColor: "black",
-              height: "50px",
-              width: "50px",
-              marginRight: 10,
-            }}
-          >
-            <IconArrowLeft size="1.5rem" />
-          </ActionIcon>
-
-          <Button
-            onClick={onButtonClick}
-            rightIcon={<IconArrowRight />}
-            style={{
-              backgroundColor: "#07399E",
-              height: "50px",
-              width: "200px",
-            }}
-          >
-            Next Step
-          </Button>
-        </div>
       </div>
     </>
   );
