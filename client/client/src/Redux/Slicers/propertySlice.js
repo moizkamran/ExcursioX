@@ -3,21 +3,40 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   propertyDetails: {
     type: "",
-    propertyName: " ",
+    propertyName: "",
     propertyContact: "",
-    contactName: " ",
-    company: " ",
-    channel: " ",
-    streetAddress: " ",
-    addressLine2: " ",
-    country: " ",
+    contactNumber: "",
+    isCompanyOwned: "",
+    hasChannelManeger: "",
+    streetAddress: "",
+    addressLine2: "",
+    country: "",
+    city: ''
   },
   propertyLayout: {
     apartment: "",
     nameOptional: "",
-    bedroom: "",
-    bedroomCount: "",
+    bedrooms: 1,
+    beds: [],
     suite: "",
+    basePrice: '',
+  },
+
+  propertyFacilites: {
+    // PARKING
+    isParkingAvailable: "No",
+    parkingType: "",
+    parkingSpace: "",
+    isReservationRequired: "",
+    parkingPrice : '',
+    // BREAKFAST
+    isBreakfastAvailable: "",
+    breakfastType: [],
+    breakfastPrice: '',
+    // Languages
+    languages: [],
+    //Facilities
+    facilities: [],
   },
 };
 
@@ -44,8 +63,17 @@ const propertySlice = createSlice({
         },
       };
     },
+    updatePropertyFacilites: (state, action) => {
+      return {
+        ...state,
+        propertyFacilites: {
+          ...state.propertyFacilites,
+          ...action.payload,
+        },
+      };
+    },
   },
 });
 
-export const { updatePropertyDetails, updatePropertyLayout } = propertySlice.actions;
+export const { updatePropertyDetails, updatePropertyLayout, updatePropertyFacilites } = propertySlice.actions;
 export default propertySlice.reducer;

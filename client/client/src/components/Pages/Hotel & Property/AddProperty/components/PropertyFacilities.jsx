@@ -1,28 +1,13 @@
 import {
-  Group,
-  Input,
   TextInput,
   Title,
-  Tooltip,
   Text,
-  Radio,
   Flex,
-  Button,
-  Container,
   ActionIcon,
   NativeSelect,
   Checkbox,
-  Alert,
 } from "@mantine/core";
 import {
-  IconAlertCircle,
-  IconArrowBadgeLeft,
-  IconArrowBadgeRight,
-  IconQuestionCircle,
-  IconSearch,
-  IconMoon,
-  IconArrowLeft,
-  IconArrowRight,
   IconBread,
   IconParking,
   IconPlus,
@@ -45,7 +30,14 @@ import {
 } from "@tabler/icons";
 import React, { useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+import { updatePropertyFacilites } from "../../../../../Redux/Slicers/propertySlice";
+
 export const PropertyFacilites = () => {
+
+  const dispatch = useDispatch();
+  const { propertyFacilites } = useSelector((state) => state.property);
+  
   const [checkboxes, setCheckboxes] = useState({
     freeWifi: false,
     bar: false,
@@ -64,7 +56,6 @@ export const PropertyFacilites = () => {
     setCheckboxes({ ...checkboxes, [name]: checked });
   };
 
-  const [isParkingAvailable, setIsParkingAvailable] = useState("No");
   const [isBreakfastAvailable, setIsBreakfastAvailable] = useState("No");
   const [numBreakfastFields, setNumBreakfastFields] = useState(1);
   const [breakfastTypes, setBreakfastTypes] = useState([""]);
@@ -142,28 +133,47 @@ export const PropertyFacilites = () => {
                     label="Is Parking avaiable to guests?"
                     radius="md"
                     size="md"
-                    value={isParkingAvailable}
-                    onChange={(e) => setIsParkingAvailable(e.target.value)}
+                    defaultValue={propertyFacilites.isParkingAvailable}
+                    onChange={(v) => {
+                      console.log(v.target.value);
+                      dispatch(
+                        updatePropertyFacilites({ isParkingAvailable: v.target.value })
+                      );
+                    }}
                   />
 
-                  {isParkingAvailable !== "No" && (
+                  {propertyFacilites.isParkingAvailable !== "No" && (
                     <>
                       <NativeSelect
                         data={["Private", "Public"]}
                         label="Type of Parking"
                         radius="md"
                         size="md"
+                        defaultValue={propertyFacilites.parkingType}
+                    onChange={(v) => {
+                      console.log(v.target.value);
+                      dispatch(
+                        updatePropertyFacilites({ parkingType: v.target.value })
+                      );
+                    }}
                       />
                       <NativeSelect
                         data={["On-Site", "Off-site"]}
                         label="Parking Space"
                         radius="md"
                         size="md"
+                        defaultValue={propertyFacilites.parkingSpace}
+                    onChange={(v) => {
+                      console.log(v.target.value);
+                      dispatch(
+                        updatePropertyFacilites({ parkingSpace: v.target.value })
+                      );
+                    }}
                       />
                     </>
                   )}
                 </div>
-                {isParkingAvailable !== "No" && (
+                {propertyFacilites.isParkingAvailable !== "No" && (
                   <div>
                     <div>
                       <Text>Do guests need to reserve a parking space?</Text>
@@ -175,9 +185,16 @@ export const PropertyFacilites = () => {
                         radius="md"
                         size="md"
                         style={{ width: "max-content" }}
+                        defaultValue={propertyFacilites.isReservationRequired}
+                    onChange={(v) => {
+                      console.log(v.target.value);
+                      dispatch(
+                        updatePropertyFacilites({ isReservationRequired: v.target.value })
+                      );
+                    }}
                       />
                     </div>
-                    {isParkingAvailable === "Yes - Paid" && (
+                    {propertyFacilites.isParkingAvailable === "Yes - Paid" && (
                       <div>
                         <Text>Price for Parking Per Day</Text>
                         <TextInput
