@@ -1,0 +1,21 @@
+.card {
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+  
+.card:hover {
+transform: scale(0.95);
+}
+
+.card:active {
+  transform: scale(1);
+  transition: all 0.2s ease-in;
+}
