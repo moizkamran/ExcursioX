@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { IconAlertCircle, IconQuestionCircle, IconSearch } from "@tabler/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePropertyDetails } from "../../../../../Redux/Slicers/propertySlice";
 
@@ -11,25 +12,17 @@ import {
   Radio,
   Flex,
   Button,
-  ActionIcon,
-  Select,
-  Avatar,
   NativeSelect,
   Rating,
 } from "@mantine/core";
-import {
-  IconAlertCircle,
-  IconSearch,
-  IconArrowLeft,
-  IconArrowRight,
-  IconQuestionCircle,
-} from "@tabler/icons";
 
-export const PropertyDetails = ({type}) => {
+export const PropertyDetails = ({ type }) => {
   const dispatch = useDispatch();
   const { propertyDetails } = useSelector((state) => state.property);
   const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
-  const hasChannelManeger = useSelector((state) => propertyDetails.hasChannelManeger);
+  const hasChannelManeger = useSelector(
+    (state) => propertyDetails.hasChannelManeger
+  );
 
   const [countryState, setCountryState] = useState({
     loading: false,
@@ -38,7 +31,6 @@ export const PropertyDetails = ({type}) => {
   });
 
   const { countries } = countryState;
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,7 +66,6 @@ export const PropertyDetails = ({type}) => {
     label: country.name.common,
   }));
 
-
   return (
     <>
       <div
@@ -94,13 +85,13 @@ export const PropertyDetails = ({type}) => {
                 Property Name
               </Text>
               <Input
-                 defaultValue={propertyDetails.propertyName}
-                 onChange={(v) => {
-                   console.log(v.target.value);
-                   dispatch(
-                     updatePropertyDetails({ propertyName: v.target.value })
-                   );
-                 }}
+                defaultValue={propertyDetails.propertyName}
+                onChange={(v) => {
+                  console.log(v.target.value);
+                  dispatch(
+                    updatePropertyDetails({ propertyName: v.target.value })
+                  );
+                }}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -121,13 +112,13 @@ export const PropertyDetails = ({type}) => {
                 Property Contact Person Name
               </Text>
               <Input
-              defaultValue={propertyDetails.propertyContact}
-              onChange={(v) => {
-                console.log(v.target.value);
-                dispatch(
-                  updatePropertyDetails({ propertyContact: v.target.value })
-                );
-              }}
+                defaultValue={propertyDetails.propertyContact}
+                onChange={(v) => {
+                  console.log(v.target.value);
+                  dispatch(
+                    updatePropertyDetails({ propertyContact: v.target.value })
+                  );
+                }}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -149,11 +140,11 @@ export const PropertyDetails = ({type}) => {
                 Contact Number
               </Text>
               <Input
-              onChange={(v) => {
-                dispatch(
-                  updatePropertyDetails({ contactNumber: v.target.value })
-                );
-              }}
+                onChange={(v) => {
+                  dispatch(
+                    updatePropertyDetails({ contactNumber: v.target.value })
+                  );
+                }}
                 radius={"md"}
                 name="contactName"
                 size="sm"
@@ -170,9 +161,7 @@ export const PropertyDetails = ({type}) => {
                 }
               />
             </div>
-            <Flex>
-               {type === 'Hotel' ? (<RatingModule />) : null }
-            </Flex>
+            <Flex>{type === "Hotel" ? <RatingModule /> : null}</Flex>
 
             <div style={{ marginTop: 10 }}>
               <div
@@ -206,21 +195,29 @@ export const PropertyDetails = ({type}) => {
               >
                 <Radio
                   label="Yes"
-                   value="Yes"
-                   name="isCompanyOwned"
-                   defaultChecked={isCompanyOwned  === 'Yes'}
-                   onChange={(event) => {
-                     dispatch(updatePropertyDetails({ isCompanyOwned: event.target.value }));
-                   }}
+                  value="Yes"
+                  name="isCompanyOwned"
+                  defaultChecked={isCompanyOwned === "Yes"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        isCompanyOwned: event.target.value,
+                      })
+                    );
+                  }}
                 />
                 <Radio
                   label="No"
-                   value="No"
-                   name="isCompanyOwned"
-                   defaultChecked={isCompanyOwned === 'No'}
-                   onChange={(event) => {
-                     dispatch(updatePropertyDetails({ isCompanyOwned: event.target.value }));
-                   }}
+                  value="No"
+                  name="isCompanyOwned"
+                  defaultChecked={isCompanyOwned === "No"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        isCompanyOwned: event.target.value,
+                      })
+                    );
+                  }}
                 />
               </div>
             </div>
@@ -234,7 +231,9 @@ export const PropertyDetails = ({type}) => {
                 }}
               >
                 <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
-                  {type === 'Hotel' ? ('Do you own multiple hotels?') : ('Do you use a channel manager?')}
+                  {type === "Hotel"
+                    ? "Do you own multiple hotels?"
+                    : "Do you use a channel manager?"}
                 </Text>
                 <Tooltip label="This is public" position="top-end" withArrow>
                   <div>
@@ -256,21 +255,29 @@ export const PropertyDetails = ({type}) => {
               >
                 <Radio
                   label="Yes"
-                   value="Yes"
-                   name="hasChannelManeger"
-                   defaultChecked={hasChannelManeger === 'Yes'}
-                   onChange={(event) => {
-                     dispatch(updatePropertyDetails({ hasChannelManeger: event.target.value }));
-                   }}
+                  value="Yes"
+                  name="hasChannelManeger"
+                  defaultChecked={hasChannelManeger === "Yes"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        hasChannelManeger: event.target.value,
+                      })
+                    );
+                  }}
                 />
                 <Radio
                   label="No"
-                   value="No"
-                   name="hasChannelManeger"
-                   defaultChecked={hasChannelManeger === 'No'}
-                   onChange={(event) => {
-                     dispatch(updatePropertyDetails({ hasChannelManeger: event.target.value }));
-                   }}
+                  value="No"
+                  name="hasChannelManeger"
+                  defaultChecked={hasChannelManeger === "No"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        hasChannelManeger: event.target.value,
+                      })
+                    );
+                  }}
                 />
               </div>
             </div>
@@ -285,11 +292,11 @@ export const PropertyDetails = ({type}) => {
                 Street Address
               </Text>
               <Input
-              onChange={(v) => {
-                dispatch(
-                  updatePropertyDetails({ streetAddress: v.target.value })
-                );
-              }}
+                onChange={(v) => {
+                  dispatch(
+                    updatePropertyDetails({ streetAddress: v.target.value })
+                  );
+                }}
                 name="streetAddress"
                 radius={"md"}
                 size="sm"
@@ -311,11 +318,11 @@ export const PropertyDetails = ({type}) => {
                 Address Line 2
               </Text>
               <Input
-              onChange={(v) => {
-                dispatch(
-                  updatePropertyDetails({ addressLine2: v.target.value })
-                );
-              }}
+                onChange={(v) => {
+                  dispatch(
+                    updatePropertyDetails({ addressLine2: v.target.value })
+                  );
+                }}
                 name="addressLine2"
                 radius={"md"}
                 size="sm"
@@ -339,13 +346,13 @@ export const PropertyDetails = ({type}) => {
                 </Text>
                 <Flex gap={10}>
                   <NativeSelect
-                  w={200}
-                  radius={"md"}
-                  onChange={(v) => {
-                    dispatch(
-                      updatePropertyDetails({ country: v.target.value })
-                    );
-                  }}
+                    w={200}
+                    radius={"md"}
+                    onChange={(v) => {
+                      dispatch(
+                        updatePropertyDetails({ country: v.target.value })
+                      );
+                    }}
                     data={countryOptions}
                     name="country"
                   />
@@ -457,7 +464,6 @@ export const PropertyDetails = ({type}) => {
             </div>
           </div>
         </div>
-
       </div>
     </>
   );
@@ -465,42 +471,48 @@ export const PropertyDetails = ({type}) => {
 
 export default PropertyDetails;
 
-
-    function RatingModule({}) {
-      return (<div style={{
-  flexDirection: 'column',
-  height: 100,
-  width: 400,
-  paddingTop: 20,
-  paddingBottom: 20,
-  display: 'flex',
-  alignContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#EAEAEA',
-  borderRadius: 16,
-  overflow: 'hidden',
-  marginTop: 20,
-  position: "relative"
-}}>
-    <Text fz={20}>Star Rating</Text>
-    <Rating defaultValue={0} color="orange" size="lg" />
-    <div style={{
-    marginTop: 10,
-    position: "absolute",
-    bottom: 0,
-    width: '100%',
-    display: 'flex',
-    margin: 0,
-    padding: 3,
-    backgroundColor: '#07399E',
-    borderRadius: '12px 12px 17px 17px',
-    justifyContent: 'center',
-    display: 'flex',
-    alignContent: 'center',
-    alignItems: 'center'
-  }}>
-      <Text c={'white'} fz={15} fw={400} w={'60%'} align={'center'}>You’ll be required to submit official documents later</Text>
+function RatingModule({ }) {
+  return (
+    <div
+      style={{
+        flexDirection: "column",
+        height: 100,
+        width: 400,
+        paddingTop: 20,
+        paddingBottom: 20,
+        display: "flex",
+        alignContent: "center",
+        alignItems: "center",
+        backgroundColor: "#EAEAEA",
+        borderRadius: 16,
+        overflow: "hidden",
+        marginTop: 20,
+        position: "relative",
+      }}
+    >
+      <Text fz={20}>Star Rating</Text>
+      <Rating defaultValue={0} color="orange" size="lg" />
+      <div
+        style={{
+          marginTop: 10,
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          display: "flex",
+          margin: 0,
+          padding: 3,
+          backgroundColor: "#07399E",
+          borderRadius: "12px 12px 17px 17px",
+          justifyContent: "center",
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text c={"white"} fz={15} fw={400} w={"60%"} align={"center"}>
+          You’ll be required to submit official documents later
+        </Text>
+      </div>
     </div>
-  </div>);
-    }
-  
+  );
+}
