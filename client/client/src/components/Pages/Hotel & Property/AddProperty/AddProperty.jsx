@@ -13,44 +13,32 @@ import { initialState } from "../../../../Redux/Slicers/propertySlice"
 
 import {
   ActionIcon,
-  Box,
   Button,
-  Card,
-  Group,
-  Image,
-  ScrollArea,
   Stepper,
   Text,
-  Title,
 } from "@mantine/core";
 
 //  COMPONENTS IMPORTS
-
-
 const AddProperty = () => {
   const [page, setCurrentPage] = useState(0);
+
   const handleButtonClick = () => {
     setCurrentPage(currentPage => currentPage + 1);
   };
   const handleButtonClickBack = () => {
     setCurrentPage(currentPage => currentPage - 1);
   };
+
+
   
-  const [propertyDetailsForm, setPropertyDetailsForm] = useState(
-    initialState.propertyDetails
-  );
+
 
   const PageDisplay = () => {
     if (page === 0) {
-      return <PropertySelection onButtonClick={handleButtonClick} />;
+      return <PropertySelection onButtonClick={handleButtonClick}/>;
     } else if (page === 1) {
       return (
-        <PropertyDetails
-          form={propertyDetailsForm}
-          setForm={setPropertyDetailsForm}
-          onButtonClick={handleButtonClick}
-          onBackClick={handleButtonClickBack}
-        />
+        <PropertyDetails onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} />
       );
     } else if (page === 2) {
       return <PropertyLayoutAndPricing />;

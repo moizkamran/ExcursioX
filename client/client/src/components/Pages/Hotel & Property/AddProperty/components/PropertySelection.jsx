@@ -3,6 +3,8 @@ import Image1 from "../../../../../assets/apartment.png";
 import React, { useState } from "react";
 import TentIcon from "../../../../../assets/propertyArtwork/circus-tent.png";
 import hotelIcon from "../../../../../assets/propertyArtwork/hotel.png";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePropertyDetails } from "../../../../../Redux/Slicers/propertySlice";
 import { IconRotate2 } from "@tabler/icons";
 
 import {
@@ -10,15 +12,20 @@ import {
   Card,
   Image,
   Text,
+  UnstyledButton,
 } from "@mantine/core";
 
-const PropertySelection = ({ onButtonClick }) => {
 
+const PropertySelection = ({ onButtonClick, onPropertySelection }) => {
+
+  const { propertyDetails } = useSelector((state) => state.property);
+  const dispatch = useDispatch();
 
   return (
     <>
       <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
         {/* START OF APARTMENT QS */} <div>
+        <UnstyledButton data='Apartment' onClick={onButtonClick}>
           <Card style={{ borderRadius: "35px" }}>
             <Card.Section
               style={{
@@ -81,20 +88,20 @@ const PropertySelection = ({ onButtonClick }) => {
               </div>
             </Card.Section>
 
-          </Card>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }}>
-            <Button onClick={onButtonClick} leftIcon={<IconRotate2 />}
+          </Card> </UnstyledButton>
+          <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }}>
+            <Button 
+            onClick={onButtonClick}
+            leftIcon={<IconRotate2 />}
               style={{ borderRadius: 35, backgroundColor: 'green' }}
               name="propertyType"
               value="Apartment"
             >Quick Start</Button>
-
-
-
           </div>
         </div> {/* END OF APARTMENT QS */}
         <div style={{ borderRight: "1px solid black" }} />
         {/* START OF Homes QS */} <div>
+        <UnstyledButton value="Hotel">
           <Card style={{ borderRadius: "35px" }}>
             <Card.Section
               style={{
@@ -157,13 +164,14 @@ const PropertySelection = ({ onButtonClick }) => {
               </div>
             </Card.Section>
 
-          </Card>
+          </Card> </UnstyledButton>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }}>
 
           </div>
         </div> {/* END OF Homes QS */}
 
-        {/* START OF APARTMENT QS */} <div>
+        {/* START OF Hotel QS */} <div>
+          <UnstyledButton value="Hotel" onClick={(e) => { setPropertyType("Hotel"); }}>
           <Card style={{ borderRadius: "35px" }}>
             <Card.Section
               style={{
@@ -223,13 +231,14 @@ const PropertySelection = ({ onButtonClick }) => {
               </div>
             </Card.Section>
 
-          </Card>
+          </Card> </UnstyledButton>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }}>
 
           </div>
         </div> {/* END OF APARTMENT QS */}
 
-        {/* START OF APARTMENT QS */} <div>
+        {/* START OF Alternative QS */} <div>
+        <UnstyledButton value="Alt Places" >
           <Card style={{ borderRadius: "35px" }}>
             <Card.Section
               style={{
@@ -287,7 +296,7 @@ const PropertySelection = ({ onButtonClick }) => {
               </div>
             </Card.Section>
 
-          </Card>
+          </Card> </UnstyledButton>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }}>
 
           </div>
