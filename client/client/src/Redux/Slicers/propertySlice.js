@@ -12,7 +12,7 @@ export const initialState = {
     streetAddress: "",
     addressLine2: "",
     country: "",
-    city: ''
+    city: "",
   },
   propertyLayout: {
     apartment: "",
@@ -20,7 +20,7 @@ export const initialState = {
     bedrooms: 1,
     beds: [],
     suite: "",
-    basePrice: '',
+    basePrice: "",
   },
 
   propertyFacilites: {
@@ -29,11 +29,11 @@ export const initialState = {
     parkingType: "",
     parkingSpace: "",
     isReservationRequired: "",
-    parkingPrice : '',
+    parkingPrice: "",
     // BREAKFAST
     isBreakfastAvailable: "",
     breakfastType: [],
-    breakfastPrice: '',
+    breakfastPrice: "",
     // Languages
     languages: [],
     //Facilities
@@ -45,7 +45,6 @@ const propertySlice = createSlice({
   name: "property",
   initialState,
   reducers: {
-
     updatePropertyDetails: (state, action) => {
       return {
         ...state,
@@ -76,5 +75,9 @@ const propertySlice = createSlice({
   },
 });
 
-export const { updatePropertyDetails, updatePropertyLayout, updatePropertyFacilites } = propertySlice.actions;
+export const {
+  updatePropertyDetails,
+  updatePropertyLayout,
+  updatePropertyFacilites,
+} = propertySlice.actions;
 export default propertySlice.reducer;
