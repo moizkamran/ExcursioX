@@ -31,8 +31,8 @@ const Dashboard = () => {
             overflowY: "hidden",
           }}
         >
-          {/* hello */}
           <NavbarItems />
+          {/* hello */}
           {/* Interactive Component */}
           <div
             style={{
