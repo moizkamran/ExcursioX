@@ -15,6 +15,7 @@ import {
   Select,
   Avatar,
   NativeSelect,
+  Rating,
 } from "@mantine/core";
 import {
   IconAlertCircle,
@@ -24,7 +25,7 @@ import {
   IconQuestionCircle,
 } from "@tabler/icons";
 
-export const PropertyDetails = ({onButtonClick, onBackClick}) => {
+export const PropertyDetails = ({type}) => {
   const dispatch = useDispatch();
   const { propertyDetails } = useSelector((state) => state.property);
   const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
@@ -169,6 +170,10 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
                 }
               />
             </div>
+            <Flex>
+               {type === 'Hotel' ? (<RatingModule />) : null }
+            </Flex>
+
             <div style={{ marginTop: 10 }}>
               <div
                 style={{
@@ -229,7 +234,7 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
                 }}
               >
                 <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
-                  Do you use a channel manager?
+                  {type === 'Hotel' ? ('Do you own multiple hotels?') : ('Do you use a channel manager?')}
                 </Text>
                 <Tooltip label="This is public" position="top-end" withArrow>
                   <div>
@@ -453,48 +458,49 @@ export const PropertyDetails = ({onButtonClick, onBackClick}) => {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "flex-end",
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            marginRight: 20,
-            marginBottom: 20,
-          }}
-        >
-          <ActionIcon
-            onClick={onBackClick}
-            radius="xl"
-            variant="filled"
-            style={{
-              backgroundColor: "black",
-              height: "50px",
-              width: "50px",
-              marginRight: 10,
-            }}
-          >
-            <IconArrowLeft size="1.5rem" />
-          </ActionIcon>
-
-          <Button
-            onClick={onButtonClick}
-            rightIcon={<IconArrowRight />}
-            style={{
-              backgroundColor: "#07399E",
-              height: "50px",
-              width: "200px",
-            }}
-          >
-            Next Step
-          </Button>
-        </div>
       </div>
     </>
   );
 };
 
 export default PropertyDetails;
+
+
+    function RatingModule({}) {
+      return (<div style={{
+  flexDirection: 'column',
+  height: 100,
+  width: 400,
+  paddingTop: 20,
+  paddingBottom: 20,
+  display: 'flex',
+  alignContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#EAEAEA',
+  borderRadius: 16,
+  overflow: 'hidden',
+  marginTop: 20,
+  position: "relative"
+}}>
+    <Text fz={20}>Star Rating</Text>
+    <Rating defaultValue={0} color="orange" size="lg" />
+    <div style={{
+    marginTop: 10,
+    position: "absolute",
+    bottom: 0,
+    width: '100%',
+    display: 'flex',
+    margin: 0,
+    padding: 3,
+    backgroundColor: '#07399E',
+    borderRadius: '12px 12px 17px 17px',
+    justifyContent: 'center',
+    display: 'flex',
+    alignContent: 'center',
+    alignItems: 'center'
+  }}>
+      <Text c={'white'} fz={15} fw={400} w={'60%'} align={'center'}>You’ll be required to submit official documents later</Text>
+    </div>
+  </div>);
+    }
+  

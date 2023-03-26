@@ -1,0 +1,61 @@
+.card {
+    border: none;
+    color: white;
+    padding: 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+  
+.card:hover {
+  transform: scale(0.95);
+}
+
+.card:active {
+  transform: scale(1);
+  transition: all 0.2s ease-in;
+}
+
+.gridBox {
+  background-color: #F1F1F1;
+  padding: 38px 15px 38px 15px;
+  cursor: pointer;
+  border-radius: 15px;
+  height: 100px;
+  transition: all 0.2s ease-out;
+  position: relative;
+}
+
+.gridBox:hover {
+  transform: scale(0.95);
+  background-color: #083eab;
+  color: white;
+}
+
+.gridBox:hover::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border-radius: 15px;
+  box-shadow: 0 0 0 0 rgba(97, 37, 236, 0.733);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(14, 10, 231, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
