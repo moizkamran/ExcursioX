@@ -6,7 +6,7 @@ import NavbarItems from "./NavbarItems";
 import React from "react";
 import logoImage from "../../assets/Logo1.png";
 import { ScrollArea } from "@mantine/core";
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { Link, Outlet, useMatch, useResolvedPath } from "react-router-dom";
 
 // Dashboard component
 const Dashboard = () => {
@@ -42,7 +42,7 @@ const Dashboard = () => {
               flex: 1,
             }}
           >  <ScrollArea.Autosize mah={"100%"} mx="auto">
-              <AddProperty />
+              <Outlet />
             </ScrollArea.Autosize>
           </div>
         </div>

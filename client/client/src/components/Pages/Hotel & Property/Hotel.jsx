@@ -115,36 +115,6 @@ const Hotel = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: "#121927" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "15px",
-            alignItems: "center",
-          }}
-        >
-          <img src={logoImage} alt="logo" style={{ height: "50px" }} />
-          <MenuItems />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            height: "calc(100vh - 80px)",
-            overflowY: "hidden",
-          }}
-        >
-          <NavbarItems />
-          {/* Interactive Component */}
-          <div
-            style={{
-              borderRadius: "50px 0 0 0",
-              backgroundColor: "white",
-              marginLeft: "0px",
-              padding: "20px",
-              flex: 1,
-            }}
-          >
             <div
               style={{
                 padding: 20,
@@ -472,9 +442,6 @@ const Hotel = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
