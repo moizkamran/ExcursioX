@@ -1,3 +1,5 @@
+import AddProperty from "./components/Pages/Hotel & Property/AddProperty/AddProperty";
+import Body from "./components/MainScreen/Body";
 import Booking from "./components/MainScreen/Booking";
 import Dashboard from "./components/MainScreen/Dashboard";
 import Hotel from "./components/Pages/Hotel & Property/Hotel";
@@ -8,8 +10,6 @@ import React from "react";
 import Register from "./components/Account/Register";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
-import Body from "./components/MainScreen/Body";
-import AddProperty from "./components/Pages/Hotel & Property/AddProperty/AddProperty";
 
 export default function App() {
   const { user } = useAuthContext()
@@ -18,8 +18,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<Dashboard />}>
-            <Route path="/" element={<Body />}/>
-            <Route path="/hotel" element={<Hotel />}/>
+            <Route path="/" element={<Body />} />
+            <Route path="/hotel" element={<Hotel />} />
             <Route path="/AddProperty" element={<AddProperty />} />
           </Route>
 
