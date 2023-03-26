@@ -20,6 +20,7 @@ import {
   Stepper,
   Text,
 } from "@mantine/core";
+import HotelFloors from "./components/HotelFloors";
 
 //  COMPONENTS IMPORTS
 const AddProperty = () => {
@@ -54,7 +55,7 @@ const AddProperty = () => {
       );
     } else if (page === 2 && type === "Hotel") {
       return (
-        <PropertyDetails onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
+        <HotelFloors onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
       );
     } else if (page === 2 || page === 3 && type === "Hotel") {
       return <PropertyLayoutAndPricing />;

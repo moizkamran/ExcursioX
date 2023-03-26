@@ -8,7 +8,6 @@ import { updatePropertyDetails } from '../../../../../Redux/Slicers/propertySlic
 
 export const PropertyTypeOf = () => {
   const { propertyDetails } = useSelector((state) => state.property);
-  const selectedItem = useSelector(() => propertyDetails.propertyTypeOf);
   const [selectedTitle, setSelectedTitle] = useState(null);
   const dispatch = useDispatch();
 
