@@ -32,7 +32,6 @@ const Dashboard = () => {
           }}
         >
           <NavbarItems />
-          {/* hello */}
           {/* Interactive Component */}
           <div
             style={{

@@ -70,10 +70,11 @@ const PropertyLayoutAndPricing = () => {
   const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState(propertyLayout.suite);
 
-  const handleRadioChange = (event) => {
+  const handleRadioChange = (event, bedroomId) => {
     setSelectedValue(event.target.value);
-    dispatch(updatePropertyLayout({ suite: event.target.value }));
+    dispatch(updateBedroomLayout({ id: bedroomId, suite: event.target.value }));
   };
+
   return (
     <>
 
@@ -377,6 +378,7 @@ const PropertyLayoutAndPricing = () => {
                             )}
                           </Flex>
                         ))}
+                        {/*  */}
                         <Flex
                           mt={10}
                           alignItems="center"
@@ -480,6 +482,7 @@ const PropertyLayoutAndPricing = () => {
                         </Flex>
                         <Flex gap={20} mt={10}>
                           <Radio
+                            id="radio-yes"
                             onChange={handleRadioChange}
                             size={"md"}
                             value="Yes"
@@ -487,6 +490,7 @@ const PropertyLayoutAndPricing = () => {
                             checked={selectedValue === "Yes"}
                           />
                           <Radio
+                            id="radio-no"
                             onChange={handleRadioChange}
                             size={"md"}
                             value="No"
@@ -494,6 +498,7 @@ const PropertyLayoutAndPricing = () => {
                             checked={selectedValue === "No"}
                           />
                         </Flex>
+
 
                         <Divider size={"lg"} my="lg" opacity={"40%"} />
                       </div>
@@ -536,9 +541,9 @@ const PropertyLayoutAndPricing = () => {
                   }}
                 >
                   <TextInput
-                  onChange={(v) => {
-                    dispatch(updatePropertyLayout({ basePrice: v.target.value }));
-                  }}
+                    onChange={(v) => {
+                      dispatch(updatePropertyLayout({ basePrice: v.target.value }));
+                    }}
                     variant="unstyled"
                     rightSection={<Text>PKR</Text>}
                     styles={{
