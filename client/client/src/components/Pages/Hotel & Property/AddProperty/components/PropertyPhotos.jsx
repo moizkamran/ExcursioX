@@ -47,8 +47,17 @@ import {
   IconPhotoUp,
   IconUpload,
 } from "@tabler/icons";
+import axios from "axios";
 
 export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
+
+  async function addPhotoByLink(ev) {
+    ev.preventDefault()
+    const {data:filename} = await axios.post('/actions/upload-by-link', {link:photoLink})
+  }
+
+  const [photoLink, setPhotoLink] = useState('');
+  console.log(photoLink);
   const [data, setData] = useState([
     {
       value: "telephone",
@@ -320,6 +329,10 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                   <br /> property, so upload some high-resolution photos that{" "}
                   <br /> represent all your property has to offer.{" "}
                 </Text>
+                {/* BY LINK */}
+                <Flex gap={12}>
+                  <TextInput value={photoLink} onChange={ev => setPhotoLink(ev.target.value)} radius={'xl'}/> <Button onClick={addPhotoByLink} >Add via Link</Button>
+                </Flex>
                 <PhotosComponent />
               </div>
             </div>
@@ -331,3 +344,4 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
 };
 
 export default PropertyPhotos;
+

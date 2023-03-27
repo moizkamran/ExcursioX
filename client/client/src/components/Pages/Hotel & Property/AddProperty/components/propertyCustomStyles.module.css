@@ -152,3 +152,19 @@ border-radius: 0px 10px 10px 0px;
   background: #313131;
   color: white;
 }
+
+.hoverClass{
+  transition: all 0.2s ease-out;
+}
+
+.hoverClass:hover{
+  transform: scale(0.9);
+  color: #083eab;
+}
+
+.hoverClass:active {
+  transform: scale(0.7);
+  background-color: #c4c4c4;
+  border-radius: 25px;
+  transition: all 0.1s ease-in;
+}

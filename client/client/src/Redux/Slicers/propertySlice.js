@@ -14,6 +14,7 @@ export const initialState = {
     country: "",
     city: "",
   },
+
   propertyLayout: {
     apartment: "",
     nameOptional: "",
