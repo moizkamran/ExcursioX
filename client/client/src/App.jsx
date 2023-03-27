@@ -10,6 +10,7 @@ import React from "react";
 import Register from "./components/Account/Register";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
+import AddRoomForFloor from "./components/Pages/Hotel & Property/AddProperty/components/AddRoomForFloor";
 
 export default function App() {
   const { user } = useAuthContext()
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="/" element={<Body />} />
             <Route path="/hotel" element={<Hotel />} />
             <Route path="/AddProperty" element={<AddProperty />} />
+            <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
           </Route>
 
           <Route path="/login" element={<Login />}></Route>

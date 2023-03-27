@@ -411,7 +411,7 @@ const PropertyLayoutAndPricing = () => {
                         <Text mt={10}>
                           How many guests can stay in this room?
                         </Text>
-                        {/* <Flex gap={50} direction={"row"}>
+                        <Flex gap={50} direction={"row"}>
                           <Flex
                             mt={10}
                             style={{ alignItems: "center", gap: "10px" }}
@@ -469,7 +469,7 @@ const PropertyLayoutAndPricing = () => {
                               </Flex>
                             </div>
                           </Flex>
-                        </Flex> */}
+                        </Flex>
                         <Flex mt={10}>
                           <Text>Does it have an en-suite?</Text>
                           <IconQuestionMark

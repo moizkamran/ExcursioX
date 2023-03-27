@@ -1,43 +1,67 @@
 import { Button, Checkbox, Flex, NativeSelect, Text, TextInput, Title } from '@mantine/core'
-import { IconAddressBook, IconMinus, IconMoon, IconPlus, IconRocket, IconUsers } from '@tabler/icons'
+import { IconAddressBook, IconArrowsCross, IconCross, IconMinus, IconMoon, IconPlus, IconRocket, IconUsers, IconX } from '@tabler/icons'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { addRoomToFloor, updatePropertyDetails, updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
 import { RoomBox } from './Functions/RoomBox'
 
 import styles from './propertyCustomStyles.module.css'
 
-const AddRoomForFloor = () => {
+const AddRoomForFloor = ({ floorIndex, roomIndex, onModalClose }) => {
 
-    const dispatch = useDispatch();
+const dispatch = useDispatch();
+const { propertyDetails } = useSelector((state) => state.property);
+const floors = propertyDetails.floors;
+const rooms = floors[floorIndex].rooms;
+const room = rooms[roomIndex];
 
-    const [selectedValue, setSelectedValue] = useState('');
+const [roomType, setRoomType] = useState(room.roomType || '');
 
-    const handleCheckboxChange = (event) => {
-        setSelectedValue(event.target.value);
-    }
+console.log('Floor Index: '+floorIndex)
 
-    const roomTypes = [
-        { label: 'Single', value: 'single' },
-        { label: 'Double', value: 'double' },
-        { label: 'Triple', value: 'triple' },
-        { label: 'Quad', value: 'quad' },
-        { label: 'Family', value: 'family' },
-        { label: 'Studio', value: 'studio' },
-    ]
+const [selectedValue, setSelectedValue] = useState('');
 
+
+const handleCheckboxChange = (event) => {
+    setSelectedValue(event.target.value);
+}
+
+const roomTypes = [
+    { label: 'Single', value: 'single' },
+    { label: 'Double', value: 'double' },
+    { label: 'Triple', value: 'triple' },
+    { label: 'Quad', value: 'quad' },
+    { label: 'Family', value: 'family' },
+    { label: 'Studio', value: 'studio' },
+]
+
+  const handleSave = () => {
+    const newRooms = [...rooms];
+    newRooms[roomIndex] = { ...room, roomType };
+    const newFloors = [...floors];
+    newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
+    dispatch(updatePropertyDetails({ floors: newFloors }));
+  };
+  
   return (
     <>
         <Flex p={20} direction={'row'}  gap={50}>
 
             <Flex direction={'column'} >
                 <Title fz={25}>Your Configuration</Title>
+                <Text>Adding Room for {floors[floorIndex].name}</Text>
 
-                <RoomBox />
+                <RoomBox roomType={roomType} roomNumber={roomIndex}/>
 
                 <Flex direction={'column'}>
                     <Text>Select Room Type</Text>
-                    <NativeSelect data={roomTypes} radius={'md'} color={'black'} w={200}/>
+                    <NativeSelect
+  data={roomTypes}
+  radius="md"
+  color="black"
+  w={200}
+  onChange={(event) => setRoomType(event.target.value)}
+/>
                 </Flex>
 
                 <Flex direction={'column'}>
@@ -100,12 +124,15 @@ const AddRoomForFloor = () => {
                 <Text>How many same rooms like this are <br/> there in this floor?</Text>
 
                 <Flex direction={"row"}>
-                          <SameRooms     />
+                          <SameRooms    />
                 </Flex>
 
                 <Title mt={20}>Room Properties</Title>
                 <Text w={400}>You can also add room properties which include photos, amenities, house rules, etc later in the dashboard </Text>
                 <Button style={{ backgroundColor: '#FAFAFA', color: 'black'}} w={200} leftIcon={<IconRocket />} className={styles.hoverClass}> Launch Room Editor</Button>
+                <Button onClick={handleSave}>Submit</Button>
+                <Button onClick={onModalClose} style={{backgroundColor: 'red', width:'max-content', height: 'max-content'}}><IconX/></Button>
+
             </Flex>
         </Flex>
     </>

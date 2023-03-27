@@ -25,6 +25,7 @@ import AddRoomForFloor from "./components/AddRoomForFloor";
 
 //  COMPONENTS IMPORTS
 const AddProperty = () => {
+
   // FETCHING PROPERTY TYPE FROM REDUX STORE
   const { propertyDetails: { type } } = useSelector((state) => state.property);
   console.log(type);
@@ -33,6 +34,9 @@ const AddProperty = () => {
 
   const handleButtonClick = () => {
     setCurrentPage(currentPage => currentPage + 1);
+    if (page === 2 && type === "Hotel") {
+      setCurrentFloorIndex(0); // Set the current floor index to 0 when navigating to the hotel floors page
+    }
   };
   const handleButtonClickBack = () => {
     setCurrentPage(currentPage => currentPage - 1);
@@ -58,11 +62,7 @@ const AddProperty = () => {
       return (
         <HotelFloors onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
       );
-    }  else if (page === 3 && type === "Hotel") {
-      return (
-        <AddRoomForFloor onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
-      );
-    } else if (page === 2 || page === 4 && type === "Hotel") {
+    }  else if (page === 2 || page === 4 && type === "Hotel") {
       return <PropertyLayoutAndPricing />;
     } else if (page === 3) {
       return <PropertyFacilities />;
