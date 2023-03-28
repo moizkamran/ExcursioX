@@ -27,6 +27,9 @@ const Hotel = () => {
   function handleAddPropertyClick() {
     navigate("/addproperty");
   }
+  function handleFindBookingClick() {
+    navigate("/FindBooking");
+  }
 
   const today = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -436,8 +439,9 @@ const Hotel = () => {
                   leftIcon={<IconBroadcast />}
                   size={"md"}
                   style={{ maxWidth: 200, width: 200 }}
+                  onClick={handleFindBookingClick}
                 >
-                  Update RmS
+                  Find Bookings
                 </Button>
               </div>
             </div>

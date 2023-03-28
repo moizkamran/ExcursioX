@@ -11,6 +11,7 @@ import Register from "./components/Account/Register";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import AddRoomForFloor from "./components/Pages/Hotel & Property/AddProperty/components/AddRoomForFloor";
+import FindBooking from "./components/SearchPages/FindBookings/FindBooking";
 
 export default function App() {
   const { user } = useAuthContext()
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/" element={<Body />} />
             <Route path="/hotel" element={<Hotel />} />
             <Route path="/AddProperty" element={<AddProperty />} />
+            <Route path="/FindBooking" element={<FindBooking />} />
             <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
           </Route>
 
