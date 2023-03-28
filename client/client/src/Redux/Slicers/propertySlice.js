@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   propertyDetails: {
-    type: '',
-    propertyTypeOf: '',
+    type: "",
+    propertyTypeOf: "",
     propertyName: "",
     propertyContact: "",
     contactNumber: "",
@@ -39,6 +39,9 @@ export const initialState = {
     //Facilities
     facilities: [],
   },
+  propertyPhotos: {
+    photos: [],
+  },
 };
 
 const propertySlice = createSlice({
@@ -72,6 +75,9 @@ const propertySlice = createSlice({
         },
       };
     },
+    updatePropertyPhotos: (state, action) => {
+      state.propertyPhotos.photos = action.payload; // update the photos array with the new uploaded images
+    },
   },
 });
 
@@ -79,5 +85,6 @@ export const {
   updatePropertyDetails,
   updatePropertyLayout,
   updatePropertyFacilites,
+  updatePropertyPhotos,
 } = propertySlice.actions;
 export default propertySlice.reducer;

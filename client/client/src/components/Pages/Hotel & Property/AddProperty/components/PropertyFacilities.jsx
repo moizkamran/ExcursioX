@@ -217,6 +217,13 @@ export const PropertyFacilites = () => {
                   <div>
                     <Text>Price for Parking Per Day</Text>
                     <TextInput
+                      onChange={(v) => {
+                        dispatch(
+                          updatePropertyFacilites({
+                            parkingPrice: v.target.value,
+                          })
+                        );
+                      }}
                       variant="unstyled"
                       rightSection={<Text>PKR</Text>}
                       styles={{
