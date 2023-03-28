@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   propertyDetails: {
-    type: "",
-    propertyTypeOf: "",
+    type: '',
+    floors: [],
+    propertyTypeOf: '',
     propertyName: "",
     propertyContact: "",
     contactNumber: "",
@@ -14,6 +15,7 @@ export const initialState = {
     country: "",
     city: "",
   },
+
   propertyLayout: {
     apartment: "",
     nameOptional: "",
@@ -21,6 +23,9 @@ export const initialState = {
     beds: [],
     suite: "",
     basePrice: "",
+  },
+
+  hotelLayout: {
   },
 
   propertyFacilites: {
@@ -75,6 +80,29 @@ const propertySlice = createSlice({
         },
       };
     },
+    addHotelLayout: (state, action) => {
+      return {
+        ...state,
+        hotelLayout: {
+          ...state.hotelLayout,
+          ...action.payload,
+        },
+      };
+    },
+    addRoomToFloor: (state, action) => {
+      const { floorId, room } = action.payload;
+      const newFloors = [...state.propertyDetails.floors];
+      const floorIndex = newFloors.findIndex(floor => floor.name === `Floor ${floorId + 1}`);
+      const newRooms = [...newFloors[floorIndex].rooms, room];
+      newFloors[floorIndex] = { ...newFloors[floorIndex], rooms: newRooms };
+      return {
+        ...state,
+        propertyDetails: {
+          ...state.propertyDetails,
+          floors: newFloors,
+        },
+      };
+    },
     updatePropertyPhotos: (state, action) => {
       state.propertyPhotos.photos = action.payload; // update the photos array with the new uploaded images
     },
@@ -85,6 +113,8 @@ export const {
   updatePropertyDetails,
   updatePropertyLayout,
   updatePropertyFacilites,
+  addHotelLayout,
+  addRoomToFloor,
   updatePropertyPhotos,
 } = propertySlice.actions;
 export default propertySlice.reducer;

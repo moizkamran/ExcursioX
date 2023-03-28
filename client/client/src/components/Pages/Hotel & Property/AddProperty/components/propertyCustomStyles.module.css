@@ -152,3 +152,56 @@ border-radius: 0px 10px 10px 0px;
   background: #313131;
   color: white;
 }
+
+.hoverClass{
+  transition: all 0.2s ease-out;
+}
+
+.hoverClass:hover{
+  transform: scale(0.9);
+  color: #083eab;
+}
+
+.hoverClass:active {
+  transform: scale(0.7);
+  background-color: #c4c4c4;
+  border-radius: 25px;
+  transition: all 0.1s ease-in;
+}
+
+.addRoom{
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+  color: white;
+  aspect-ratio: 1/1;
+  width: 150px;
+  height: 210px;
+  border-radius: 25px;
+  border: 4px dashed #07399E;
+  transition: all 0.2s ease-in-out;
+}
+
+.addRoom:hover{
+  transform: scale(0.95);
+  border: 2px dashed #07399E;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: all 0.2s ease-out;
+  background-color: #083eab; /* replace with desired background color */
+}
+
+.circle:hover {
+  transform: scale(2);
+  background-color: #0a0a0a; /* replace with desired background color */
+}

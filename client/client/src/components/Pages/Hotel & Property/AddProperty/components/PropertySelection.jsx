@@ -33,7 +33,9 @@ const PropertySelection = ({ onButtonClick }) => {
 
         <UnstyledButton className={styles.card} onClick={() => handlePropertyTypeSelect({ type: 'Apartment' })}>
 
-          <PTCard   Image1={Image1} Title="Apartment" description="dawd dawd" />
+          <PTCard   Image1={Image1} Title="Apartment" description="Furnished & Self-catering
+            where guests can rent
+            the entire place" />
           
         </UnstyledButton>
 
@@ -55,7 +57,9 @@ const PropertySelection = ({ onButtonClick }) => {
 
           <UnstyledButton className={styles.card}  onClick={() => handlePropertyTypeSelect({ type: 'Hotel' })}>
 
-            <PTCard   Image1={hotelIcon} Title="Hotel" description="dawd dawd" />     
+            <PTCard   Image1={hotelIcon} Title="Hotel" description="Properties like hotels, 
+                    B&Bs, guest houses, 
+                    hostels, condo hotels, etc." />     
 
           </UnstyledButton>
 
@@ -66,7 +70,9 @@ const PropertySelection = ({ onButtonClick }) => {
 
           <UnstyledButton className={styles.card} onClick={() => handlePropertyTypeSelect({ type: 'House' })}>
 
-            <PTCard   Image1={HouseIcon} Title="Hotel" description="dawd dawd" />   
+            <PTCard   Image1={HouseIcon} Title="Homes" description="Properties like apartments,
+              vacation homes, 
+              villas, etc." />   
 
           </UnstyledButton>
 
@@ -79,7 +85,7 @@ const PropertySelection = ({ onButtonClick }) => {
 
         <UnstyledButton className={styles.card} onClick={() => handlePropertyTypeSelect({ type: 'Alternative' })} >
         
-         <PTCard   Image1={TentIcon} Title="Hotel" description="dawd dawd" />   
+         <PTCard   Image1={TentIcon} Title="Alternative Places" description="Properties like boats, campgrounds, luxury tents, etc." />   
 
         </UnstyledButton>
 
