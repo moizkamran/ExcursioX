@@ -1,7 +1,9 @@
-import { Button, Flex, Text, Title, UnstyledButton } from '@mantine/core'
+import { Button, Flex, Text, Title, UnstyledButton, Modal, Transition } from '@mantine/core'
 import { IconBed, IconChevronDown, IconCopy, IconDiamond, IconDoor, IconEdit, IconPlus, IconSettingsAutomation, IconTrash } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useDisclosure } from '@mantine/hooks';
+
 import { updatePropertyDetails } from '../../../../../Redux/Slicers/propertySlice'
 import AddRoomForFloor from './AddRoomForFloor'
 import { RoomBox } from './Functions/RoomBox'
@@ -31,6 +33,7 @@ const HotelFloors = ({ onButtonClick }) => {
   };
   
   const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
+  
 
   const handleAddRoom = (floorIndex) => {
     const newFloors = [...floors];
@@ -56,6 +59,27 @@ console.log(floors.rooms)
   
   return (
     <>
+    {isAddRoomModalOpen && (
+       <Modal
+       opened={isAddRoomModalOpen}
+       size="auto"
+       xOffset={0}
+       centered
+       transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}
+      onClose={() => setIsAddRoomModalOpen(false)}
+      radius="xl"
+       overlayProps={{
+         opacity: 0.50,
+         blur: 3,
+       }}
+     >
+        <Flex>
+        
+        <AddRoomForFloor floorIndex={floorIndex} roomIndex={roomIndex} onModalClose={setIsAddRoomModalOpen} />
+
+        </Flex>
+      </Modal>
+        )}
     <Flex direction={'column'} p={20}>
 
     <Title fz={14}>Total Floors: {numFloors}</Title>
@@ -87,9 +111,7 @@ console.log(floors.rooms)
             </Flex>
         </Flex> ))}
 
-        {isAddRoomModalOpen && (
-        <AddRoomForFloor floorIndex={floorIndex} roomIndex={roomIndex} onModalClose={() => setIsAddRoomModalOpen(false)}/>
-        )}
+        
 
     </Flex>
     </>

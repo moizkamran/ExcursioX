@@ -16,12 +16,30 @@ const rooms = floors[floorIndex].rooms;
 const room = rooms[roomIndex];
 
 const [roomType, setRoomType] = useState(room.roomType || '');
+const [roomSize, setRoomSize] = useState(room.roomSize || '');
 
-console.log('Floor Index: '+floorIndex)
+const currentRoom = room
 
 const [selectedValue, setSelectedValue] = useState('');
 
-
+const handleTypeChange = (event) => {
+    const selectedType = event.target.value;
+    console.log(selectedType);
+    const currentRoom = rooms[floorIndex][roomIndex];
+    const updatedRoom = { ...currentRoom, type: selectedType };
+    const updatedRooms = {
+      ...rooms,
+      [floorIndex]: {
+        ...rooms[floorIndex],
+        [roomIndex]: updatedRoom,
+      },
+    };
+    console.log(updatedRooms);
+    dispatch(updatePropertyDetails({ rooms: updatedRooms }));
+  };
+  
+  
+  
 const handleCheckboxChange = (event) => {
     setSelectedValue(event.target.value);
 }
@@ -35,14 +53,19 @@ const roomTypes = [
     { label: 'Studio', value: 'studio' },
 ]
 
-  const handleSave = () => {
+const handleSave = () => {
     const newRooms = [...rooms];
-    newRooms[roomIndex] = { ...room, roomType };
+    newRooms[roomIndex] = { ...room, type: roomType };
     const newFloors = [...floors];
     newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
-    dispatch(updatePropertyDetails({ floors: newFloors }));
+    const newPropertyDetails = { ...propertyDetails, floors: newFloors };
+    dispatch(updatePropertyDetails(newPropertyDetails));
+    onModalClose(false);
   };
   
+
+  console.log(rooms)
+
   return (
     <>
         <Flex p={20} direction={'row'}  gap={50}>
@@ -50,23 +73,23 @@ const roomTypes = [
             <Flex direction={'column'} >
                 <Title fz={25}>Your Configuration</Title>
                 <Text>Adding Room for {floors[floorIndex].name}</Text>
-
-                <RoomBox roomType={roomType} roomNumber={roomIndex}/>
-
+                    <Flex p={50}>
+                        <RoomBox roomType={roomType} roomNumber={roomIndex+1} roomTotalBeds={roomSize}/>
+                    </Flex>
                 <Flex direction={'column'}>
                     <Text>Select Room Type</Text>
                     <NativeSelect
-  data={roomTypes}
-  radius="md"
-  color="black"
-  w={200}
-  onChange={(event) => setRoomType(event.target.value)}
-/>
+                                data={roomTypes}
+                                radius="md"
+                                color="black"
+                                w={200}
+                                onChange={handleTypeChange}
+                                />
                 </Flex>
 
-                <Flex direction={'column'}>
+                <Flex direction={'column'} mt={10} mb={20}>
                     <Text>Room Size</Text>
-                    <TextInput radius={'md'} color={'black'} w={200}/>
+                    <TextInput radius={'md'} color={'black'} w={200} onChange={(event) => setRoomSize(event.target.value)}/>
                 </Flex>
                 
                 <BasePrice1 dispatch={dispatch} updatePropertyLayout={updatePropertyLayout} />
@@ -130,8 +153,7 @@ const roomTypes = [
                 <Title mt={20}>Room Properties</Title>
                 <Text w={400}>You can also add room properties which include photos, amenities, house rules, etc later in the dashboard </Text>
                 <Button style={{ backgroundColor: '#FAFAFA', color: 'black'}} w={200} leftIcon={<IconRocket />} className={styles.hoverClass}> Launch Room Editor</Button>
-                <Button onClick={handleSave}>Submit</Button>
-                <Button onClick={onModalClose} style={{backgroundColor: 'red', width:'max-content', height: 'max-content'}}><IconX/></Button>
+                <Button onClick={handleSave} style={{position: 'absolute', bottom: 20, right: 20}}>Add Room #{roomIndex+1} on {floors[floorIndex].name} </Button>
 
             </Flex>
         </Flex>
@@ -143,6 +165,7 @@ export default AddRoomForFloor
 
 function BasePrice1({dispatch, updatePropertyLayout}) {
     return (
+        <Flex direction={'column'}>
         <Flex direction={'column'}>
     <div style={{
 height: "100px",
@@ -197,9 +220,13 @@ justifyContent: "center"
 }} />
             </div>
             </div>
-            <Text w={300}>This is the lowest price that we automatically apply to this room for all dates. 
+            </Flex>
+            <Flex style={{justifyContent: 'center', alignContent:'center'}}>
+
+            <Text w={300} fz={14} mt={10} align={'center'} >This is the lowest price that we automatically apply to this room for all dates. 
                 Before your property goes live, you can set seasonal pricing on your property dashboard.</Text>
             </Flex>
+        </Flex>
             );
 
 }
