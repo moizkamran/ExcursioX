@@ -538,7 +538,7 @@ export const PropertyFacilites = () => {
                       size="md"
                       color="dark"
                       name="freeWifi"
-                      checked={checkboxes.freeWifi} // Pass the checked value here
+                      checked={checkboxes.freeWifi}
                       onChange={handleCheckboxChange}
                     />
 
