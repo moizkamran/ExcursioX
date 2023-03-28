@@ -12,7 +12,6 @@ export function RoomBox({
     sameRooms,
     }) {
     
-    roomType = roomType.charAt(0).toUpperCase() + roomType.slice(1)    
     
     return (
     

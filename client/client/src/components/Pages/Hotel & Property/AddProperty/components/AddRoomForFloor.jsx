@@ -18,26 +18,23 @@ const room = rooms[roomIndex];
 const [roomType, setRoomType] = useState(room.roomType || '');
 const [roomSize, setRoomSize] = useState(room.roomSize || '');
 
-const currentRoom = room
+console.log(roomIndex)
 
 const [selectedValue, setSelectedValue] = useState('');
 
 const handleTypeChange = (event) => {
     const selectedType = event.target.value;
     console.log(selectedType);
-    const currentRoom = rooms[floorIndex][roomIndex];
-    const updatedRoom = { ...currentRoom, type: selectedType };
-    const updatedRooms = {
-      ...rooms,
-      [floorIndex]: {
-        ...rooms[floorIndex],
-        [roomIndex]: updatedRoom,
-      },
-    };
-    console.log(updatedRooms);
-    dispatch(updatePropertyDetails({ rooms: updatedRooms }));
+    
+    const newRooms = [...rooms];
+    const newRoom = { ...newRooms[roomIndex], type: selectedType };
+    newRooms[roomIndex] = newRoom;
+    console.log(newRooms);
+    
+    setRoomType(selectedType); // set the roomType state variable with the selected type
+    
+    dispatch(updatePropertyDetails({ floors: floors }));
   };
-  
   
   
 const handleCheckboxChange = (event) => {
@@ -83,6 +80,7 @@ const handleSave = () => {
                                 radius="md"
                                 color="black"
                                 w={200}
+                                value={selectedValue}
                                 onChange={handleTypeChange}
                                 />
                 </Flex>

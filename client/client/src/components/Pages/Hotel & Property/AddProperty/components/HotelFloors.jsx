@@ -38,16 +38,16 @@ const HotelFloors = ({ onButtonClick }) => {
   const handleAddRoom = (floorIndex) => {
     const newFloors = [...floors];
     const rooms = newFloors[floorIndex].rooms || [];
-    const newRooms = [    ...rooms,    {      name: `Room ${rooms.length + 1}`,    },  ];
+    const newRooms = [    ...rooms,    Object.assign({}, { name: `Room ${rooms.length + 1}` }) ];
     newFloors[floorIndex] = { ...newFloors[floorIndex], rooms: newRooms };
     dispatch(updatePropertyDetails({ floors: newFloors }));
     setFloorIndex(floorIndex);
     setRoomIndex(rooms.length);
     setIsAddRoomModalOpen(true);
   };
+  
 
 
-console.log(floors.rooms)
 
   const handleDeleteFloor = (index) => {
     const newFloors = [...floors];
@@ -85,31 +85,33 @@ console.log(floors.rooms)
     <Title fz={14}>Total Floors: {numFloors}</Title>
 
         {numFloors < 1 && (<Button onClick={addFloor}>Add Floor</Button>)}
-        {Array.from({ length: numFloors }, (_, index) => (
-        <Flex key={index}>
-        <Flex direction={'column'} style={{height: 300, width: '80%', border: '1px solid #07399E', backgroundColor: '#FAFAFA', borderRadius: 20, padding: 20, position: 'relative'}} mt={20}>
-                {/* Floor Heading */}
-                <Flex gap={20} direction={'row'}>
-                    <Text>{`Floor ${index + 1}`}</Text>
-                    <Flex> <IconDoor/> <Text> 12 Rooms</Text></Flex>
-                </Flex>
+        {floors.map((floor, floorIndex) => (
+  <Flex key={floorIndex}>
+    <Flex direction={'column'} style={{height: 300, width: '80%', border: '1px solid #07399E', backgroundColor: '#FAFAFA', borderRadius: 20, padding: 20, position: 'relative'}} mt={20}>
+      {/* Floor Heading */}
+      <Flex gap={20} direction={'row'}>
+        <Text>{`Floor ${floorIndex + 1}`}</Text>
+        <Flex> <IconDoor/> <Text>{`${floor?.rooms?.length} Rooms`}</Text></Flex>
+      </Flex>
 
-                {/* Rooms */}   
-                <Flex direction={'row'} mt={10} gap={40}>
+      {/* Rooms */}
+      <Flex direction={'row'} mt={10} gap={40}>
+        {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
+          <RoomBox key={roomIndex} name={room.name} type={room.type} size={room.size} />
+        )) : ('')}
+        <Flex onClick={() => handleAddRoom(floorIndex)} className={styles.addRoom}><div className={styles.circle}><IconPlus/></div></Flex>
+      </Flex>
 
-                        
-                        <Flex onClick={() => handleAddRoom(index)} className={styles.addRoom}><div className={styles.circle}><IconPlus/></div></Flex>
-                </Flex>
+      {/* Bottom Buttons */}
+      <Flex gap={30} style={{position: 'absolute', bottom: 10, right: 10}}>
+        <UnstyledButton onClick={() => addFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconCopy/> <Text>Duplicate</Text></UnstyledButton>
+        <UnstyledButton onClick={() => handleEditFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconEdit/> <Text>Edit Floor</Text></UnstyledButton>
+        <UnstyledButton onClick={() => handleDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
+      </Flex>
 
-                {/* Bottom Buttons */}
-                <Flex gap={30} style={{position: 'absolute', bottom: 10, right: 10}}>
-                    <UnstyledButton onClick={addFloor} className={styles.buttonA} gap={5}> <IconCopy/> <Text>Duplicate</Text></UnstyledButton>
-                    <UnstyledButton className={styles.buttonA} gap={5}> <IconEdit/> <Text>Edit Floor</Text></UnstyledButton>
-                    <UnstyledButton onClick={() => handleDeleteFloor(index)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
-                </Flex>
-
-            </Flex>
-        </Flex> ))}
+    </Flex>
+  </Flex>
+))}
 
         
 
