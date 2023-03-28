@@ -44,6 +44,9 @@ export const initialState = {
     //Facilities
     facilities: [],
   },
+  propertyPhotos: {
+    photos: [],
+  },
 };
 
 const propertySlice = createSlice({
@@ -99,6 +102,8 @@ const propertySlice = createSlice({
           floors: newFloors,
         },
       };
+    updatePropertyPhotos: (state, action) => {
+      state.propertyPhotos.photos = action.payload; // update the photos array with the new uploaded images
     },
   },
 });
@@ -109,5 +114,6 @@ export const {
   updatePropertyFacilites,
   addHotelLayout,
   addRoomToFloor,
+  updatePropertyPhotos,
 } = propertySlice.actions;
 export default propertySlice.reducer;

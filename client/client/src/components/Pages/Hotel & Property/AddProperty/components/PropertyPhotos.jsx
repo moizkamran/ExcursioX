@@ -2,35 +2,17 @@ import PhotosComponent from "./Functions/PhotosComponent";
 import React, { useState } from "react";
 
 import {
-  Group,
-  Input,
-  TextInput,
+
   Title,
-  Tooltip,
+
   Text,
-  Radio,
-  Flex,
-  Button,
-  Container,
-  ActionIcon,
+
   NativeSelect,
   Checkbox,
   MultiSelect,
-  FileInput,
 } from "@mantine/core";
 import {
-  IconAlertCircle,
-  IconArrowBadgeLeft,
-  IconArrowBadgeRight,
-  IconQuestionCircle,
-  IconSearch,
-  IconMoon,
-  IconArrowLeft,
-  IconArrowRight,
-  IconBread,
-  IconParking,
-  IconPlus,
-  IconLanguageHiragana,
+
   IconApps,
   IconWifi,
   IconGlass,
@@ -42,10 +24,8 @@ import {
   IconAirConditioning,
   IconHorseToy,
   IconPool,
-  IconMessage,
   IconBed,
   IconPhotoUp,
-  IconUpload,
 } from "@tabler/icons";
 import axios from "axios";
 
@@ -99,10 +79,8 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
     },
   ]);
 
-
   return (
     <>
-      
       <div
         style={{
           display: "flex",
