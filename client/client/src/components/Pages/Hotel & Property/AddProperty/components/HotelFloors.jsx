@@ -46,26 +46,49 @@ const HotelFloors = ({ onButtonClick }) => {
     setIsAddRoomModalOpen(true);
   };
   
-
+ const [deleteFloorModal, setDeleteFloorModal] = useState(false);
+ const confrimDeleteFloor = (index) => {
+  setDeleteFloorModal(true);
+ }
 
 
   const handleDeleteFloor = (index) => {
     const newFloors = [...floors];
     newFloors.splice(index, 1);
     dispatch(updatePropertyDetails({ floors: newFloors }));
+    setDeleteFloorModal(false);
   };
   console.log(numFloors);
 
   
   return (
     <>
-    {isAddRoomModalOpen && (
+    <Modal
+       size="auto"
+       xOffset={0}
+       centered
+       onClose={() => setDeleteFloorModal(false)}
+       opened={deleteFloorModal}
+       transitionProps={{ transition: 'pop', duration: 300, timingFunction: 'ease-in-out' }}
+      radius="xl"
+       overlayProps={{
+         opacity: 0.50,
+         blur: 3,
+       }}
+     >
+      <Flex direction={'column'}>
+        <Title>Are you sure you want to delete {`Floor ${floorIndex + 1}`}?</Title>
+        <Text>This action can not be undone</Text>
+        <Button onClick={() => handleDeleteFloor(floorIndex)} style={{backgroundColor: 'red'}}>Yes</Button>
+        <Button onClick={() => setDeleteFloorModal(false)}>No</Button>
+      </Flex>
+     </Modal>
        <Modal
        opened={isAddRoomModalOpen}
        size="auto"
        xOffset={0}
        centered
-       transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}
+       transitionProps={{ transition: 'pop', duration: 450, timingFunction: 'ease-in-out' }}
       onClose={() => setIsAddRoomModalOpen(false)}
       radius="xl"
        overlayProps={{
@@ -79,7 +102,6 @@ const HotelFloors = ({ onButtonClick }) => {
 
         </Flex>
       </Modal>
-        )}
     <Flex direction={'column'} p={20}>
 
     <Title fz={14}>Total Floors: {numFloors}</Title>
@@ -107,6 +129,7 @@ const HotelFloors = ({ onButtonClick }) => {
         <UnstyledButton onClick={() => addFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconCopy/> <Text>Duplicate</Text></UnstyledButton>
         <UnstyledButton onClick={() => handleEditFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconEdit/> <Text>Edit Floor</Text></UnstyledButton>
         <UnstyledButton onClick={() => handleDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
+        <UnstyledButton onClick={() => confrimDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete</Text></UnstyledButton>
       </Flex>
 
     </Flex>
