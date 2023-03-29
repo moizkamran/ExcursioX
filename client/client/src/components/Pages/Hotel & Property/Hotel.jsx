@@ -449,7 +449,7 @@ const Hotel = () => {
           <div>
             <Title>Reports</Title>
             <div>
-              <LoyalCustomer />
+              
             </div>
           </div>
         </div>

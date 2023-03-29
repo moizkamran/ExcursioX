@@ -16,21 +16,57 @@ const rooms = floors[floorIndex].rooms;
 const room = rooms[roomIndex];
 
 const [roomType, setRoomType] = useState(room.roomType);
+
 const [roomSize, setRoomSize] = useState(room.roomSize || '');
 
 console.log(roomIndex)
 
 const [selectedValue, setSelectedValue] = useState('');
 
+const [roomClassValues, setRoomClassValues] = useState(room.checkboxValues || {});
+
+const roomClassFormated = Object.keys(roomClassValues)
+  .filter(key => roomClassValues[key])
+  .map(key => key.charAt(0).toUpperCase() + key.slice(1))
+  .join(', ');
+
+console.log(roomClassFormated)
+
+const handleCheckboxChange = (event) => {
+    const roomClassValues = event.target.value;
+    const isChecked = event.target.checked;
+    setRoomClassValues((prevState) => {
+      // If the checkbox is checked, create a new object with the current checkboxValue as the only key
+      if (isChecked) {
+        return { [roomClassValues]: true };
+      } else {
+        // If the checkbox is unchecked, create a new object without the current checkboxValue key
+        const { [roomClassValues]: _, ...newState } = prevState;
+        return newState;
+      }
+    });
+  };
+  
 //GENERIC STATE HANDLERS
-const handleFieldChange = fieldName => event => {
-    const fieldValue = event.target.value;
-    console.log(fieldValue);
+const [basePrice, setBasePrice] = useState(room.basePrice || '');
+
+const handleRoomSizeChange = (event) => {
+    const newRoomSize = event.target.value;
     const newRooms = [...rooms];
-    const newRoom = { ...newRooms[roomIndex], [fieldName]: fieldValue };
+    setRoomSize(newRoomSize);
+    const newRoom = { ...newRooms[roomIndex], roomSize: newRoomSize };
     newRooms[roomIndex] = newRoom;
     dispatch(updatePropertyDetails({ floors: floors }));
-  };
+};
+
+const handleBasePriceChange = (event) => {
+    const newBasePrice = event.target.value;
+    const newRooms = [...rooms];
+    setBasePrice(newBasePrice);
+    const newRoom = { ...newRooms[roomIndex], basePrice: newBasePrice };
+    newRooms[roomIndex] = newRoom;
+    dispatch(updatePropertyDetails({ floors: floors }));
+};
   
 
 
@@ -49,9 +85,6 @@ const handleTypeChange = (event) => {
   };
   
   
-const handleCheckboxChange = (event) => {
-    setSelectedValue(event.target.value);
-}
 
 const roomTypes = [
     { label: 'Single', value: 'Single' },
@@ -64,13 +97,15 @@ const roomTypes = [
 
 const handleSave = () => {
     const newRooms = [...rooms];
-    newRooms[roomIndex] = { ...room, type: roomType };
+    const newRoom = { ...room, type: roomType, basePrice: basePrice, roomSize: roomSize, roomClass: roomClassValues };
+    newRooms[roomIndex] = newRoom;
     const newFloors = [...floors];
     newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
     const newPropertyDetails = { ...propertyDetails, floors: newFloors };
     dispatch(updatePropertyDetails(newPropertyDetails));
     onModalClose(false);
   };
+  
   
 
   console.log(rooms)
@@ -83,7 +118,7 @@ const handleSave = () => {
                 <Title fz={25}>Your Configuration</Title>
                 <Text>Adding Room for {floors[floorIndex].name}</Text>
                     <Flex p={50}>
-                        <RoomBox roomType={roomType} roomNumber={roomIndex+1} roomTotalBeds={roomSize}/>
+                        <RoomBox roomType={roomType} roomNumber={roomIndex+1} roomTotalBeds={roomSize} basePrice={basePrice} roomName={roomClassFormated + (roomType ? ` ${roomType}` : '')}/>
                     </Flex>
                 <Flex direction={'column'}>
                     <Text>Select Room Type</Text>
@@ -99,10 +134,10 @@ const handleSave = () => {
 
                 <Flex direction={'column'} mt={10} mb={20}>
                     <Text>Room Size</Text>
-                    <TextInput radius={'md'} color={'black'} w={200} onChange={(event) => setRoomSize(event.target.value)}/>
+                    <TextInput radius={'md'} color={'black'} w={200} value={roomSize} onChange={handleRoomSizeChange}/>
                 </Flex>
                 
-                <BasePrice1 handleFieldChange={handleFieldChange} />
+                <BasePrice1 basePrice={basePrice} handleBasePriceChange={handleBasePriceChange} />
 
             </Flex>
 
@@ -116,12 +151,36 @@ const handleSave = () => {
                                 <Title fz={25}>Class</Title>
                                     <Flex direction={'column'} gap={5}>
 
-                                    <Checkbox label="Standard" value={'standard'} onChange={handleCheckboxChange} checked={selectedValue === 'standard'} />
-                                    <Checkbox label="Economy" value={'economy'} onChange={handleCheckboxChange} checked={selectedValue === 'economy'} />
-                                    <Checkbox label="Budget" value={'budget'} onChange={handleCheckboxChange} checked={selectedValue === 'budget'} />
-                                    <Checkbox label="Deluxe" value={'deluxe'} onChange={handleCheckboxChange} checked={selectedValue === 'deluxe'} />
-                                    <Checkbox label="Superior" value={'superior'} onChange={handleCheckboxChange} checked={selectedValue === 'superior'} />
-
+                                    <Checkbox
+                                        label="Standard"
+                                        value="standard"
+                                        onChange={handleCheckboxChange}
+                                        checked={roomClassValues.standard}
+                                        />
+                                        <Checkbox
+                                        label="Economy"
+                                        value="economy"
+                                        onChange={handleCheckboxChange}
+                                        checked={roomClassValues.economy}
+                                        />
+                                        <Checkbox
+                                        label="Budget"
+                                        value="budget"
+                                        onChange={handleCheckboxChange}
+                                        checked={roomClassValues.budget}
+                                        />
+                                        <Checkbox
+                                        label="Deluxe"
+                                        value="deluxe"
+                                        onChange={handleCheckboxChange}
+                                        checked={roomClassValues.deluxe}
+                                        />
+                                        <Checkbox
+                                        label="Superior"
+                                        value="superior"
+                                        onChange={handleCheckboxChange}
+                                        checked={roomClassValues.superior}
+                                        />
                                     </Flex>
                             </Flex>
                             <Flex direction={'column'}>
@@ -173,7 +232,7 @@ const handleSave = () => {
 
 export default AddRoomForFloor
 
-function BasePrice1({handleFieldChange}) {
+function BasePrice1({basePrice, handleBasePriceChange}) {
     return (
         <Flex direction={'column'}>
         <Flex direction={'column'}>
@@ -204,7 +263,8 @@ display: "flex",
 alignContent: "center",
 justifyContent: "center"
 }}>
-                <TextInput onChange={handleFieldChange('basePrice')} variant="unstyled" rightSection={<Text>PKR</Text>} styles={{
+                <TextInput value={basePrice}
+    onChange={handleBasePriceChange}  variant="unstyled" rightSection={<Text>PKR</Text>} styles={{
     input: {
     color: "white",
     fontSize: "20px",

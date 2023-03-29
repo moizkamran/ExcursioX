@@ -1,5 +1,5 @@
 import { Button, Flex, Text, Title, UnstyledButton, Modal, Transition } from '@mantine/core'
-import { IconBed, IconChevronDown, IconCopy, IconDiamond, IconDoor, IconEdit, IconPlus, IconSettingsAutomation, IconTrash } from '@tabler/icons'
+import { IconAbacus, IconAbacusOff, IconBed, IconChevronDown, IconCopy, IconDiamond, IconDoor, IconEdit, IconPlus, IconSettingsAutomation, IconTrash } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDisclosure } from '@mantine/hooks';
@@ -112,21 +112,28 @@ const HotelFloors = ({ onButtonClick }) => {
 
     <Title fz={14}>Total Floors: {numFloors}</Title>
 
-        {numFloors < 1 && (<Button onClick={addFloor}>Add Floor</Button>)}
+        {numFloors < 1 && (
+          <Flex gap={20} direction={'column'} w={'80%'} h={300} bg={'#F1F1F1'} mt={20} p={20} justify={'center'} align={'center'} sx={{borderRadius: 25}}>
+            <IconAbacusOff size={200} color={'#B9B9B9'}/>
+            <Text align='center'>Looks like no floors have been added <br /> Click the button to start adding some floors in your property.</Text>
+            <Button onClick={addFloor}>Add Floor</Button>
+          </Flex>
+        )}
+
         {floors.map((floor, floorIndex) => (
   <Flex key={floorIndex}>
     <Flex direction={'column'} style={{height: 300, width: '80%', border: '1px solid #07399E', backgroundColor: '#FAFAFA', borderRadius: 20, padding: 20, position: 'relative'}} mt={20}>
       {/* Floor Heading */}
       <Flex gap={20} direction={'row'}>
         <Text>{`Floor ${floorIndex + 1}`}</Text>
-        <Flex> <IconDoor/> <Text>{`${floor?.rooms?.length} Rooms`}</Text></Flex>
+        <Flex gap={5}> <IconDoor/> <Text>{floor?.rooms?.length > 0 ? `${floor.rooms.length} Rooms` : 'No Rooms'}</Text></Flex>
       </Flex>
 
       {/* Rooms */}
       <Flex direction={'row'} mt={10} gap={40}> 
 
           {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
-            <RoomBox key={roomIndex} name={room.name} roomType={room.type} roomNumber={roomIndex+1}/>
+            <RoomBox key={roomIndex} roomType={room.type} roomNumber={roomIndex+1} basePrice={room.basePrice} roomName={(room.type ? ` ${room.type}` : '')}/>
           )) : ('')}
         <Flex onClick={() => handleAddRoom(floorIndex)} className={styles.addRoom}><div className={styles.circle}><IconPlus/></div></Flex>
       </Flex>
