@@ -1,4 +1,4 @@
-import { Chip, Button, Flex, Switch, Text, Group} from '@mantine/core'
+import { Chip, Button, Flex, Switch, Text, Group } from '@mantine/core'
 import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
 import { IconBrandSuperhuman, IconCalendar, IconDoor, IconGlobe, IconHeartHandshake, IconMan, IconMinus, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconPower, IconSearch, IconUser, IconX } from '@tabler/icons'
 import { white } from 'color-name'
@@ -9,8 +9,19 @@ const FindBooking = () => {
 
     return (
         <>
-            <Flex>
-                <Flex style={{ display: "flex", flexDirection: "column", width: "650px", marginRight: "35px", }}>
+            <Text style={{
+                fontSize: "50px",
+                marginBottom: "35px",
+                fontWeight: "bold",
+                marginLeft: "50px",
+            }}>Find your perfect stay!</Text>
+            <Flex style={{ marginLeft: "50px", }}>
+                <Flex style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "650px",
+                    marginRight: "35px",
+                }}>
                     <Flex style={{
                         backgroundColor: "#07399E",
                         width: "650px",
@@ -129,8 +140,8 @@ const FindBooking = () => {
                                         justifyContent: "center",
                                     }}>
                                         <Flex style={{ marginTop: "auto", marginBottom: "auto" }}>
-                                            <IconCalendar style={{ marginRight: "10px", marginTop:"auto", marginBottom:"auto" }} />
-                                            <DatePickerInput color='dark' placeholder="Pick date"/>
+                                            <IconCalendar style={{ marginRight: "10px", marginTop: "auto", marginBottom: "auto" }} />
+                                            <DatePickerInput color='dark' placeholder="Pick date" />
                                         </Flex>
                                     </Flex>
                                 </Flex>
@@ -152,8 +163,8 @@ const FindBooking = () => {
                                         justifyContent: "center",
                                     }}>
                                         <Flex style={{ marginTop: "auto", marginBottom: "auto" }}>
-                                            <IconCalendar style={{ marginRight: "10px", marginTop:"auto", marginBottom:"auto" }} />
-                                            <DatePickerInput placeholder="Pick date"/>
+                                            <IconCalendar style={{ marginRight: "10px", marginTop: "auto", marginBottom: "auto" }} />
+                                            <DatePickerInput placeholder="Pick date" />
                                         </Flex>
                                     </Flex>
                                 </Flex>
@@ -204,7 +215,8 @@ const FindBooking = () => {
                     height: "310px",
                     borderRadius: "25px",
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    marginRight: "35px",
                 }}>
                     <Flex style={{ display: "flex", flexDirection: "column", marginLeft: "auto", marginRight: "auto", paddingBottom: "10px", paddingTop: "8px", }}>
                         <Text style={{ color: "#FFFFFF", fontSize: "30px", }}>Advance Filters</Text>
@@ -257,7 +269,74 @@ const FindBooking = () => {
 
                     </Flex>
                 </Flex>
-            </Flex>
+                <Flex style={{
+                    display: "flex",
+                    flexDirection: "column",
+                }}>
+
+                    <Flex style={{
+                        backgroundColor: "#002368",
+                        color: "#FFFFFF",
+                        width: "300px",
+                        height: "165px",
+                        borderTopRightRadius: "19.5px",
+                        borderTopLeftRadius: "19.5px",
+                    }}>
+                        <Flex style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginRight: "auto",
+                            marginLeft: "auto",
+                        }}>
+                            <Flex style={{ marginTop: "35px", textAlign: "center", }}><Text style={{ fontSize: "35px" }}>Loyalty Status</Text></Flex>
+                            <Flex style={{ justifyContent: "center", marginTop: "15px" }}>
+                                <Flex style={{ paddingLeft: "6px", paddingRight: "6px" }}>xSx</Flex>
+                                <Flex style={{ paddingLeft: "6px", paddingRight: "6px" }}>xPx</Flex>
+                                <Flex style={{ paddingLeft: "6px", paddingRight: "6px" }}>xTx</Flex>
+                            </Flex>
+                        </Flex>
+                    </Flex>
+
+                    <Flex style={{
+                        backgroundColor: "#00143D",
+                        color: "#FFFFFF",
+                        width: "300px",
+                        height: "145px",
+                        borderBottomLeftRadius: "19.5px",
+                        borderBottomRightRadius: "19.5px",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}>
+                        <Flex style={{
+                            display: "flex", flexDirection: "row", justifyContent: "center", paddingTop: "15px",
+                        }}>
+                            <Flex>xXx</Flex>
+                            <Flex style={{
+                                width: "137.5px",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                                marginLeft: "5px",
+                                display: "flex",
+                                flexDirection: "column",
+                            }}>
+                                <Flex style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                    <Text style={{ fontSize: "12px", fontWeight: "500" }}>Airtime</Text><Text style={{ fontSize: "12px", }}>1025 Clouds</Text>
+                                </Flex>
+                                <Flex>xxxxxxxxxxxxxxxxx</Flex>
+                            </Flex>
+                        </Flex>
+                        <Flex style={{
+                            width: "117px",
+                            height: "40px",
+                            textAlign: "center",
+                            marginTop: "18px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}><Text style={{ fontSize: "16.5px" }}>120 Clouds Left To Avance!</Text></Flex>
+                    </Flex>
+
+                </Flex>
+            </Flex >
         </>
     )
 }
