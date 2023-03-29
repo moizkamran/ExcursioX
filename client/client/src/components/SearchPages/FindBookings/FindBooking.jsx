@@ -1,4 +1,5 @@
-import { Button, Flex, Switch, Text, Group } from '@mantine/core'
+import { Chip, Button, Flex, Switch, Text, Group} from '@mantine/core'
+import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
 import { IconBrandSuperhuman, IconCalendar, IconDoor, IconGlobe, IconHeartHandshake, IconMan, IconMinus, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconPower, IconSearch, IconUser, IconX } from '@tabler/icons'
 import { white } from 'color-name'
 import React, { useState } from 'react'
@@ -8,6 +9,9 @@ const FindBooking = () => {
 
     return (
         <>
+        <Flex>
+            <DatePickerInput placeholder="Pick date"/>
+        </Flex>
             <Flex>
                 <Flex style={{ display: "flex", flexDirection: "column", width: "650px", marginRight: "35px", }}>
                     <Flex style={{
@@ -119,7 +123,7 @@ const FindBooking = () => {
                                         <Text style={{ fontSize: "30px", }}>Arrival</Text>
                                     </Flex>
                                     <Flex style={{
-                                        backgroundColor: "#F5E341",
+                                        backgroundColor: "#FFFFFF",
                                         color: "#000000",
                                         borderRadius: "5px",
                                         width: "185px",
@@ -128,8 +132,8 @@ const FindBooking = () => {
                                         justifyContent: "center",
                                     }}>
                                         <Flex style={{ marginTop: "auto", marginBottom: "auto" }}>
-                                            <IconCalendar style={{ marginRight: "10px" }} />
-                                            <Text style={{ fontSize: "18px" }}>Fri, Aug 28</Text>
+                                            <IconCalendar style={{ marginRight: "10px", marginTop:"auto", marginBottom:"auto" }} />
+                                            <DatePickerInput color='dark' placeholder="Pick date"/>
                                         </Flex>
                                     </Flex>
                                 </Flex>
@@ -142,7 +146,7 @@ const FindBooking = () => {
                                         <Text style={{ fontSize: "30px", }}>Departure</Text>
                                     </Flex>
                                     <Flex style={{
-                                        backgroundColor: "#F5E341",
+                                        backgroundColor: "#FFFFFF",
                                         color: "#000000",
                                         borderRadius: "5px",
                                         width: "185px",
@@ -151,8 +155,8 @@ const FindBooking = () => {
                                         justifyContent: "center",
                                     }}>
                                         <Flex style={{ marginTop: "auto", marginBottom: "auto" }}>
-                                            <IconCalendar style={{ marginRight: "10px" }} />
-                                            <Text style={{ fontSize: "18px" }}>Mon, Aug 31</Text>
+                                            <IconCalendar style={{ marginRight: "10px", marginTop:"auto", marginBottom:"auto" }} />
+                                            <DatePickerInput placeholder="Pick date"/>
                                         </Flex>
                                     </Flex>
                                 </Flex>
@@ -211,19 +215,19 @@ const FindBooking = () => {
                     <Flex style={{ backgroundColor: "#2C2C2C", width: "460px", height: "245px", borderRadius: "25px", }}>
                         <Flex style={{ display: "flex", flexDirection: "column", marginLeft: "auto", marginRight: "auto", marginTop: "10px" }}>
                             <Flex style={{ justifyContent: "center", }}>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Budget</Button>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Star Rating</Button>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Property Type</Button>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Budget</Chip>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Star Rating</Chip>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Property Type</Chip>
                             </Flex>
                             <Flex style={{ justifyContent: "center", }}>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Facilities</Button>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Meals</Button>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Chain</Button>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Bed Setting</Button>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Facilities</Chip>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Meals</Chip>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Chain</Chip>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Bed Setting</Chip>
                             </Flex>
                             <Flex style={{ justifyContent: "center", }}>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>City</Button>
-                                <Button color="gray" radius="xl" style={{ margin: "2.5px" }}>Landmarks</Button>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>City</Chip>
+                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Landmarks</Chip>
                             </Flex>
 
                             <Flex style={{ color: "#FFFFFF", display: "flex", flexDirection: "column", marginTop: "25px" }}>
