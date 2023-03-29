@@ -266,7 +266,6 @@ background: rgb(76, 114, 236);
   animation-duration: 0.4s;
   animation-fill-mode: both;;
 }
-
 @keyframes slide-in-left {
   0% {
     opacity: 0;

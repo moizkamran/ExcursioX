@@ -15,12 +15,24 @@ const floors = propertyDetails.floors;
 const rooms = floors[floorIndex].rooms;
 const room = rooms[roomIndex];
 
-const [roomType, setRoomType] = useState(room.roomType || '');
+const [roomType, setRoomType] = useState(room.roomType);
 const [roomSize, setRoomSize] = useState(room.roomSize || '');
 
 console.log(roomIndex)
 
 const [selectedValue, setSelectedValue] = useState('');
+
+//GENERIC STATE HANDLERS
+const handleFieldChange = fieldName => event => {
+    const fieldValue = event.target.value;
+    console.log(fieldValue);
+    const newRooms = [...rooms];
+    const newRoom = { ...newRooms[roomIndex], [fieldName]: fieldValue };
+    newRooms[roomIndex] = newRoom;
+    dispatch(updatePropertyDetails({ floors: floors }));
+  };
+  
+
 
 const handleTypeChange = (event) => {
     const selectedType = event.target.value;
@@ -29,9 +41,9 @@ const handleTypeChange = (event) => {
     const newRooms = [...rooms];
     const newRoom = { ...newRooms[roomIndex], type: selectedType };
     newRooms[roomIndex] = newRoom;
+    setRoomType(selectedType); // set the roomType state variable with the selected type
     console.log(newRooms);
     
-    setRoomType(selectedType); // set the roomType state variable with the selected type
     
     dispatch(updatePropertyDetails({ floors: floors }));
   };
@@ -42,12 +54,12 @@ const handleCheckboxChange = (event) => {
 }
 
 const roomTypes = [
-    { label: 'Single', value: 'single' },
-    { label: 'Double', value: 'double' },
-    { label: 'Triple', value: 'triple' },
-    { label: 'Quad', value: 'quad' },
-    { label: 'Family', value: 'family' },
-    { label: 'Studio', value: 'studio' },
+    { label: 'Single', value: 'Single' },
+    { label: 'Double', value: 'Double' },
+    { label: 'Triple', value: 'Triple' },
+    { label: 'Quad', value: 'Quad' },
+    { label: 'Family', value: 'Family' },
+    { label: 'Studio', value: 'Studio' },
 ]
 
 const handleSave = () => {
@@ -80,7 +92,7 @@ const handleSave = () => {
                                 radius="md"
                                 color="black"
                                 w={200}
-                                value={selectedValue}
+                                value={roomType}
                                 onChange={handleTypeChange}
                                 />
                 </Flex>
@@ -90,7 +102,7 @@ const handleSave = () => {
                     <TextInput radius={'md'} color={'black'} w={200} onChange={(event) => setRoomSize(event.target.value)}/>
                 </Flex>
                 
-                <BasePrice1 dispatch={dispatch} updatePropertyLayout={updatePropertyLayout} />
+                <BasePrice1 handleFieldChange={handleFieldChange} />
 
             </Flex>
 
@@ -161,7 +173,7 @@ const handleSave = () => {
 
 export default AddRoomForFloor
 
-function BasePrice1({dispatch, updatePropertyLayout}) {
+function BasePrice1({handleFieldChange}) {
     return (
         <Flex direction={'column'}>
         <Flex direction={'column'}>
@@ -192,11 +204,7 @@ display: "flex",
 alignContent: "center",
 justifyContent: "center"
 }}>
-                <TextInput onChange={v => {
-    dispatch(updatePropertyLayout({
-    basePrice: v.target.value
-    }));
-}} variant="unstyled" rightSection={<Text>PKR</Text>} styles={{
+                <TextInput onChange={handleFieldChange('basePrice')} variant="unstyled" rightSection={<Text>PKR</Text>} styles={{
     input: {
     color: "white",
     fontSize: "20px",

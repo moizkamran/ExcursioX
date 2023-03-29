@@ -38,7 +38,7 @@ const HotelFloors = ({ onButtonClick }) => {
   const handleAddRoom = (floorIndex) => {
     const newFloors = [...floors];
     const rooms = newFloors[floorIndex].rooms || [];
-    const newRooms = [    ...rooms,    Object.assign({}, { name: `Room ${rooms.length + 1}` }) ];
+    const newRooms = [    ...rooms,    Object.assign({}, { roomNumber: `Room ${rooms.length + 1}` }) ];
     newFloors[floorIndex] = { ...newFloors[floorIndex], rooms: newRooms };
     dispatch(updatePropertyDetails({ floors: newFloors }));
     setFloorIndex(floorIndex);
@@ -47,7 +47,8 @@ const HotelFloors = ({ onButtonClick }) => {
   };
   
  const [deleteFloorModal, setDeleteFloorModal] = useState(false);
- const confrimDeleteFloor = (index) => {
+
+ const confrimDeleteFloor = (floorIndex) => {
   setDeleteFloorModal(true);
  }
 
@@ -71,16 +72,21 @@ const HotelFloors = ({ onButtonClick }) => {
        opened={deleteFloorModal}
        transitionProps={{ transition: 'pop', duration: 300, timingFunction: 'ease-in-out' }}
       radius="xl"
+      withCloseButton={false}
        overlayProps={{
-         opacity: 0.50,
-         blur: 3,
+         opacity: 0.2,
+         blur: 2,
        }}
      >
-      <Flex direction={'column'}>
-        <Title>Are you sure you want to delete {`Floor ${floorIndex + 1}`}?</Title>
+      <Flex direction={'column'} p={20}>
+        <Title fz={20}>Are you sure you want to delete {`Floor ${floorIndex + 1}`}?</Title>
         <Text>This action can not be undone</Text>
-        <Button onClick={() => handleDeleteFloor(floorIndex)} style={{backgroundColor: 'red'}}>Yes</Button>
-        <Button onClick={() => setDeleteFloorModal(false)}>No</Button>
+        <Flex justify={'flex-end'} gap={10}>
+
+            <Button onClick={() => setDeleteFloorModal(false)} style={{backgroundColor: 'white', color: '#083eab'}}>No</Button>
+            <Button onClick={(floorIndex) => handleDeleteFloor(floorIndex)} style={{backgroundColor: 'red'}}>Yes</Button>
+
+        </Flex>
       </Flex>
      </Modal>
        <Modal
@@ -117,19 +123,19 @@ const HotelFloors = ({ onButtonClick }) => {
       </Flex>
 
       {/* Rooms */}
-      <Flex direction={'row'} mt={10} gap={40}>
-        {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
-          <RoomBox key={roomIndex} name={room.name} type={room.type} size={room.size} />
-        )) : ('')}
+      <Flex direction={'row'} mt={10} gap={40}> 
+
+          {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
+            <RoomBox key={roomIndex} name={room.name} roomType={room.type} roomNumber={roomIndex+1}/>
+          )) : ('')}
         <Flex onClick={() => handleAddRoom(floorIndex)} className={styles.addRoom}><div className={styles.circle}><IconPlus/></div></Flex>
       </Flex>
 
       {/* Bottom Buttons */}
-      <Flex gap={30} style={{position: 'absolute', bottom: 10, right: 10}}>
+      <Flex gap={30} style={{position: 'absolute', bottom: 10, right: 10, backgroundColor:'rgba(255, 255, 255, 0.349)', color: 'white', borderRadius: '25px', backdropFilter: 'blur(10px)'}}>
         <UnstyledButton onClick={() => addFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconCopy/> <Text>Duplicate</Text></UnstyledButton>
         <UnstyledButton onClick={() => handleEditFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconEdit/> <Text>Edit Floor</Text></UnstyledButton>
-        <UnstyledButton onClick={() => handleDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
-        <UnstyledButton onClick={() => confrimDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete</Text></UnstyledButton>
+        <UnstyledButton onClick={() => confrimDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
       </Flex>
 
     </Flex>
