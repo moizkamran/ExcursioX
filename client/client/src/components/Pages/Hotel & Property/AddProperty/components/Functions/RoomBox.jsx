@@ -12,11 +12,10 @@ export function RoomBox({
     sameRooms,
     }) {
     
-    roomType = roomType.charAt(0).toUpperCase() + roomType.slice(1)    
     
     return (
     
-    <Flex direction={'column'} gap={10} className={styles.roomBox} style={{
+    <Flex direction={'column'} gap={10} className={`${styles.roomBox} slide-in-left`} style={{
         
                     backgroundColor: roomType === 'Single' ? '#07399E' : roomType === 'Double' ? '#9E3D07' : roomType === 'Quad' ? '#0A9E07' : roomType === 'Family' ? '#9E0707' : roomType === 'Studio' ? '#9E0786' : 'black',
                     }}>
