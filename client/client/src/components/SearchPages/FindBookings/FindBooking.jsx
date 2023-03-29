@@ -9,9 +9,6 @@ const FindBooking = () => {
 
     return (
         <>
-        <Flex>
-            <DatePickerInput placeholder="Pick date"/>
-        </Flex>
             <Flex>
                 <Flex style={{ display: "flex", flexDirection: "column", width: "650px", marginRight: "35px", }}>
                     <Flex style={{
