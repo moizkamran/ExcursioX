@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   propertyDetails: {
-    type: '',
+    type: "",
     floors: [],
-    propertyTypeOf: '',
+    propertyTypeOf: "",
     propertyName: "",
     propertyContact: "",
     contactNumber: "",
@@ -25,8 +25,7 @@ export const initialState = {
     basePrice: "",
   },
 
-  hotelLayout: {
-  },
+  hotelLayout: {},
 
   propertyFacilites: {
     // PARKING
@@ -45,7 +44,38 @@ export const initialState = {
     facilities: [],
   },
   propertyPhotos: {
+    extraBed: "",
+    extraBedCount: "",
+    age: [],
+    Extras: [],
+    AddExtras: [],
     photos: [],
+  },
+  propertyHouseRules: {
+    guestArrivalChipsFrom: {
+      1: "",
+      2: "",
+      3: "",
+      4: "",
+    },
+    guestArrivalChipsTo: {
+      1: "",
+      2: "",
+      3: "",
+      4: "",
+    },
+    guestDepartureChipsFrom: {
+      1: "",
+      2: "",
+      3: "",
+      4: "",
+    },
+    guestDepartureChipsTo: {
+      1: "",
+      2: "",
+      3: "",
+      4: "",
+    },
   },
 };
 
@@ -80,6 +110,49 @@ const propertySlice = createSlice({
         },
       };
     },
+    updatePropertyPhotos: (state, action) => {
+      return {
+        ...state,
+        propertyPhotos: {
+          ...state.propertyPhotos,
+          ...action.payload,
+        },
+      };
+    },
+    updatePropertyHouseRules: (state, action) => {
+      const {
+        chipNumberFrom,
+        valueFrom,
+        chipNumberTo,
+        valueTo,
+        chipNumberFrom1,
+        valueFrom1,
+        chipNumberTo1,
+        valueTo1,
+      } = action.payload;
+      return {
+        ...state,
+        propertyHouseRules: {
+          guestArrivalChipsFrom: {
+            ...state.propertyHouseRules.guestArrivalChipsFrom,
+            [chipNumberFrom]: valueFrom,
+          },
+          guestArrivalChipsTo: {
+            ...state.propertyHouseRules.guestArrivalChipsTo,
+            [chipNumberTo]: valueTo,
+          },
+          guestDepartureChipsFrom: {
+            ...state.propertyHouseRules.guestDepartureChipsFrom,
+            [chipNumberFrom1]: valueFrom1,
+          },
+          guestDepartureChipsTo: {
+            ...state.propertyHouseRules.guestDepartureChipsTo,
+            [chipNumberTo1]: valueTo1,
+          },
+        },
+      };
+    },
+
     addHotelLayout: (state, action) => {
       return {
         ...state,
@@ -92,7 +165,9 @@ const propertySlice = createSlice({
     addRoomToFloor: (state, action) => {
       const { floorId, room } = action.payload;
       const newFloors = [...state.propertyDetails.floors];
-      const floorIndex = newFloors.findIndex(floor => floor.name === `Floor ${floorId + 1}`);
+      const floorIndex = newFloors.findIndex(
+        (floor) => floor.name === `Floor ${floorId + 1}`
+      );
       const newRooms = [...newFloors[floorIndex].rooms, room];
       newFloors[floorIndex] = { ...newFloors[floorIndex], rooms: newRooms };
       return {
@@ -103,15 +178,13 @@ const propertySlice = createSlice({
         },
       };
     },
-    updatePropertyPhotos: (state, action) => {
-      state.propertyPhotos.photos = action.payload; // update the photos array with the new uploaded images
-    },
   },
 });
 
 export const {
   updatePropertyDetails,
   updatePropertyLayout,
+  updatePropertyHouseRules,
   updatePropertyFacilites,
   addHotelLayout,
   addRoomToFloor,

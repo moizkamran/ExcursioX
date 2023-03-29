@@ -1,12 +1,12 @@
 import PhotosComponent from "./Functions/PhotosComponent";
 import React, { useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePropertyPhotos } from "../../../../../Redux/Slicers/propertySlice";
 
 import {
-
   Title,
-
   Text,
-
   NativeSelect,
   Checkbox,
   MultiSelect,
@@ -15,7 +15,6 @@ import {
   Button,
 } from "@mantine/core";
 import {
-
   IconApps,
   IconWifi,
   IconGlass,
@@ -30,16 +29,16 @@ import {
   IconBed,
   IconPhotoUp,
 } from "@tabler/icons";
-import axios from "axios";
 
 export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
-
   async function addPhotoByLink(ev) {
-    ev.preventDefault()
-    const {data:filename} = await axios.post('/actions/upload-by-link', {link:photoLink})
+    ev.preventDefault();
+    const { data: filename } = await axios.post("/actions/upload-by-link", {
+      link: photoLink,
+    });
   }
 
-  const [photoLink, setPhotoLink] = useState('');
+  const [photoLink, setPhotoLink] = useState("");
   console.log(photoLink);
   const [data, setData] = useState([
     {
@@ -81,7 +80,53 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
       label: "Accessible rooms and facilities for guests with disabilities",
     },
   ]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const handleSelectChange = (selected) => {
+    setSelectedOptions(selected);
+    dispatch(updatePropertyPhotos({ AddExtras: selected }));
+  };
 
+  const dispatch = useDispatch();
+  const { propertyPhotos } = useSelector((state) => state.property);
+  const [checkboxes, setCheckboxes] = useState({
+    childrenAge2: false,
+    children: false,
+    adults: false,
+  });
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    const age = Object.keys(checkboxes).filter((key) => checkboxes[key]);
+    if (checked) age.push(name);
+    else {
+      const index = age.indexOf(name);
+      if (index !== -1) age.splice(index, 1);
+    }
+    setCheckboxes({ ...checkboxes, [name]: checked });
+    dispatch(updatePropertyPhotos({ age }));
+  };
+  const [extraBoxes, setExtraBoxes] = useState({
+    freeWifi: false,
+    bar: false,
+    sauna: false,
+    garden: false,
+    terrance: false,
+    noSmokingRooms: false,
+    familyRooms: false,
+    hotTub: false,
+    airConditioning: false,
+    swimmingPool: false,
+  });
+  const handleExtraBoxes = (event) => {
+    const { name, checked } = event.target;
+    const Extras = Object.keys(checkboxes).filter((key) => checkboxes[key]);
+    if (checked) Extras.push(name);
+    else {
+      const index = Extras.indexOf(name);
+      if (index !== -1) Extras.splice(index, 1);
+    }
+    setCheckboxes({ ...checkboxes, [name]: checked });
+    dispatch(updatePropertyPhotos({ Extras }));
+  };
   return (
     <>
       <div
@@ -121,12 +166,24 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                   <Text>Can you provide extra beds?</Text>
                   <div style={{ display: "flex", gap: 10, marginTop: 5 }}>
                     <NativeSelect
+                      onChange={(e) => {
+                        dispatch(
+                          updatePropertyPhotos({ extraBed: e.target.value })
+                        );
+                      }}
                       data={["Yes", "No"]}
                       radius="md"
                       size="md"
                       style={{ width: 150 }}
                     />
                     <NativeSelect
+                      onChange={(e) => {
+                        dispatch(
+                          updatePropertyPhotos({
+                            extraBedCount: e.target.value,
+                          })
+                        );
+                      }}
                       data={["1 Bed", "2 Beds", "3 Beds", "4 Beds"]}
                       radius="md"
                       size="md"
@@ -150,10 +207,27 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                     <Checkbox
                       label="Children up to 2 years old in cribs"
                       size="md"
+                      name="childrenAge2"
+                      color="dark"
+                      value={checkboxes.childrenAge2}
+                      onChange={handleCheckboxChange}
+                    />
+                    <Checkbox
+                      name="Children"
+                      value={checkboxes.children}
+                      label="Children"
+                      size="md"
+                      color="dark"
+                      onChange={handleCheckboxChange}
+                    />
+                    <Checkbox
+                      name="adults"
+                      value={checkboxes.adults}
+                      onChange={handleCheckboxChange}
+                      label="Adults"
+                      size="md"
                       color="dark"
                     />
-                    <Checkbox label="Children" size="md" color="dark" />
-                    <Checkbox label="Adults" size="md" color="dark" />
                   </div>
                 </div>
               </div>{" "}
@@ -191,30 +265,46 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       icon={IconWifi}
                       size="md"
                       color="dark"
+                      name="freeWifi"
+                      checked={extraBoxes.freeWifi}
+                      onChange={handleExtraBoxes}
                     />
+
                     <Checkbox
                       label="Bar"
                       icon={IconGlass}
                       size="md"
                       color="dark"
+                      name="bar"
+                      checked={extraBoxes.bar}
+                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Sauna"
                       icon={IconBrightnessHalf}
                       size="md"
                       color="dark"
+                      name="sauna"
+                      checked={extraBoxes.sauna}
+                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Garden"
                       icon={IconLeaf}
                       size="md"
                       color="dark"
+                      name="garden"
+                      checked={extraBoxes.garden}
+                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Terrance"
                       icon={IconFence}
                       size="md"
                       color="dark"
+                      name="terrance"
+                      checked={extraBoxes.terrance}
+                      onChange={handleExtraBoxes}
                     />
                   </div>
                   <div
@@ -230,30 +320,45 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       icon={IconSmokingNo}
                       size="md"
                       color="dark"
+                      name="noSmokingRooms"
+                      checked={extraBoxes.noSmokingRooms}
+                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Family Rooms"
                       icon={IconHorseToy}
                       size="md"
                       color="dark"
+                      name="familyRooms"
+                      checked={extraBoxes.familyRooms}
+                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Hot tub/Jacuzzi"
                       icon={IconBath}
                       size="md"
                       color="dark"
+                      name="hotTub"
+                      checked={extraBoxes.hotTub}
+                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Air Conditioning"
                       icon={IconAirConditioning}
                       size="md"
                       color="dark"
+                      name="airConditioning"
+                      checked={extraBoxes.airConditioning}
+                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Swimming Pool"
                       icon={IconPool}
                       size="md"
                       color="dark"
+                      name="swimmingPool"
+                      checked={extraBoxes.swimmingPool}
+                      onChange={handleExtraBoxes}
                     />
                   </div>
                 </div>
@@ -282,6 +387,8 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                     setData((current) => [...current, item]);
                     return item;
                   }}
+                  value={selectedOptions}
+                  onChange={handleSelectChange}
                   dropdownPosition="bottom"
                   nothingFound="Nothing found"
                   radius="lg"
@@ -312,7 +419,12 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                 </Text>
                 {/* BY LINK */}
                 <Flex gap={12}>
-                  <TextInput value={photoLink} onChange={ev => setPhotoLink(ev.target.value)} radius={'xl'}/> <Button onClick={addPhotoByLink} >Add via Link</Button>
+                  <TextInput
+                    value={photoLink}
+                    onChange={(ev) => setPhotoLink(ev.target.value)}
+                    radius={"xl"}
+                  />{" "}
+                  <Button onClick={addPhotoByLink}>Add via Link</Button>
                 </Flex>
                 <PhotosComponent />
               </div>
@@ -325,4 +437,3 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
 };
 
 export default PropertyPhotos;
-
