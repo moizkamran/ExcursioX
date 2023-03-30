@@ -1,8 +1,15 @@
-import { Chip, Button, Flex, Switch, Text, Group } from '@mantine/core'
+import { Progress, Chip, Button, Flex, Switch, Text, Group, Image } from '@mantine/core'
 import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
 import { IconBrandSuperhuman, IconCalendar, IconDoor, IconGlobe, IconHeartHandshake, IconMan, IconMinus, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconPower, IconSearch, IconUser, IconX } from '@tabler/icons'
 import { white } from 'color-name'
 import React, { useState } from 'react'
+
+import AirtimeBadge from '../../Badges/Airtime'
+
+// Loyalty Tiers Import
+import S_Tier from '../../../assets/Tiers/S Tier.svg'
+import P_Tier from '../../../assets/Tiers/P Tier.svg'
+import T_Tier from '../../../assets/Tiers/T Tier.svg'
 
 const FindBooking = () => {
     const [count, setCount] = useState(0)
@@ -15,7 +22,7 @@ const FindBooking = () => {
                 fontWeight: "bold",
                 marginLeft: "50px",
             }}>Find your perfect stay!</Text>
-            <Flex style={{ marginLeft: "50px", }}>
+            <Flex mt={50}>
                 <Flex style={{
                     display: "flex",
                     flexDirection: "column",
@@ -128,7 +135,7 @@ const FindBooking = () => {
                                 <Flex style={{ display: "flex", flexDirection: "column" }}>
                                     <Flex style={{ justifyContent: "start" }}>
                                         <IconPlaneArrival style={{ marginTop: "auto", marginBottom: "auto", marginRight: "8.5px" }} />
-                                        <Text style={{ fontSize: "30px", }}>Arrival</Text>
+                                        <Text style={{ fontSize: "30px" }}>Arrival</Text>
                                     </Flex>
                                     <Flex style={{
                                         backgroundColor: "#FFFFFF",
@@ -141,7 +148,12 @@ const FindBooking = () => {
                                     }}>
                                         <Flex style={{ marginTop: "auto", marginBottom: "auto" }}>
                                             <IconCalendar style={{ marginRight: "10px", marginTop: "auto", marginBottom: "auto" }} />
-                                            <DatePickerInput color='dark' placeholder="Pick date" />
+                                            <DatePickerInput color='dark' placeholder="Pick date" styles={{
+                                                input: {
+                                                    border: 0,
+                                                },
+
+                                            }} />
                                         </Flex>
                                     </Flex>
                                 </Flex>
@@ -164,7 +176,11 @@ const FindBooking = () => {
                                     }}>
                                         <Flex style={{ marginTop: "auto", marginBottom: "auto" }}>
                                             <IconCalendar style={{ marginRight: "10px", marginTop: "auto", marginBottom: "auto" }} />
-                                            <DatePickerInput placeholder="Pick date" />
+                                            <DatePickerInput placeholder="Pick date" styles={{
+                                                input: {
+                                                    border: 0,
+                                                },
+                                            }} />
                                         </Flex>
                                     </Flex>
                                 </Flex>
@@ -222,21 +238,21 @@ const FindBooking = () => {
                         <Text style={{ color: "#FFFFFF", fontSize: "30px", }}>Advance Filters</Text>
                     </Flex>
                     <Flex style={{ backgroundColor: "#2C2C2C", width: "460px", height: "245px", borderRadius: "25px", }}>
-                        <Flex style={{ display: "flex", flexDirection: "column", marginLeft: "auto", marginRight: "auto", marginTop: "10px" }}>
-                            <Flex style={{ justifyContent: "center", }}>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Budget</Chip>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Star Rating</Chip>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Property Type</Chip>
+                        <Flex gap={5} style={{ display: "flex", flexDirection: "column", marginLeft: "auto", marginRight: "auto", marginTop: "10px" }}>
+                            <Flex justify={'center'} gap={5}>
+                                <Chip color="gray" variant="filled" >Budget</Chip>
+                                <Chip color="gray" variant="filled" >Star Rating</Chip>
+                                <Chip color="gray" variant="filled" >Property Type</Chip>
                             </Flex>
-                            <Flex style={{ justifyContent: "center", }}>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Facilities</Chip>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Meals</Chip>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Chain</Chip>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Bed Setting</Chip>
+                            <Flex justify={'center'} gap={5}>
+                                <Chip color="gray" variant="filled" >Facilities</Chip>
+                                <Chip color="gray" variant="filled" >Meals</Chip>
+                                <Chip color="gray" variant="filled" >Chain</Chip>
+                                <Chip color="gray" variant="filled" >Bed Setting</Chip>
                             </Flex>
-                            <Flex style={{ justifyContent: "center", }}>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>City</Chip>
-                                <Chip color="gray" variant="filled" style={{ margin: "2.5px" }}>Landmarks</Chip>
+                            <Flex justify={'center'} gap={5}>
+                                <Chip color="gray" variant="filled" >City</Chip>
+                                <Chip color="gray" variant="filled" >Landmarks</Chip>
                             </Flex>
 
                             <Flex style={{ color: "#FFFFFF", display: "flex", flexDirection: "column", marginTop: "25px" }}>
@@ -288,11 +304,11 @@ const FindBooking = () => {
                             marginRight: "auto",
                             marginLeft: "auto",
                         }}>
-                            <Flex style={{ marginTop: "35px", textAlign: "center", }}><Text style={{ fontSize: "35px" }}>Loyalty Status</Text></Flex>
-                            <Flex style={{ justifyContent: "center", marginTop: "15px" }}>
-                                <Flex style={{ paddingLeft: "6px", paddingRight: "6px" }}>xSx</Flex>
-                                <Flex style={{ paddingLeft: "6px", paddingRight: "6px" }}>xPx</Flex>
-                                <Flex style={{ paddingLeft: "6px", paddingRight: "6px" }}>xTx</Flex>
+                            <Flex style={{ marginTop: "30px", textAlign: "center", }}><Text style={{ fontSize: "35px" }}>Loyalty Status</Text></Flex>
+                            <Flex gap={15} style={{ justifyContent: "center", }}>
+                                <Image src={S_Tier} width={55} />
+                                <Image src={P_Tier} width={55} />
+                                <Image src={T_Tier} width={55} />
                             </Flex>
                         </Flex>
                     </Flex>
@@ -310,7 +326,7 @@ const FindBooking = () => {
                         <Flex style={{
                             display: "flex", flexDirection: "row", justifyContent: "center", paddingTop: "15px",
                         }}>
-                            <Flex>xXx</Flex>
+                            {/* <AirtimeBadge /> */}
                             <Flex style={{
                                 width: "137.5px",
                                 marginTop: "auto",
@@ -322,7 +338,7 @@ const FindBooking = () => {
                                 <Flex style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                     <Text style={{ fontSize: "12px", fontWeight: "500" }}>Airtime</Text><Text style={{ fontSize: "12px", }}>1025 Clouds</Text>
                                 </Flex>
-                                <Flex>xxxxxxxxxxxxxxxxx</Flex>
+                                <Progress value={50} />
                             </Flex>
                         </Flex>
                         <Flex style={{
