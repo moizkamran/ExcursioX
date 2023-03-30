@@ -1,5 +1,5 @@
-import { Button, Checkbox, Flex, NativeSelect, Text, TextInput, Title } from '@mantine/core'
-import { IconAddressBook, IconArrowsCross, IconCross, IconMinus, IconMoon, IconPlus, IconRocket, IconUsers, IconX } from '@tabler/icons'
+import { Button, Checkbox, Flex, Modal, NativeSelect, Text, TextInput, Title } from '@mantine/core'
+import { IconAddressBook, IconArrowsCross, IconCross, IconMinus, IconMoon, IconPlus, IconRocket, IconSquareRoundedX, IconUsers, IconX } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRoomToFloor, updatePropertyDetails, updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
@@ -25,14 +25,24 @@ const [selectedValue, setSelectedValue] = useState('');
 
 const [roomClassValues, setRoomClassValues] = useState(room.checkboxValues || {});
 
+const [roomViewValues, setRoomViewValues] = useState(room.checkboxValues || {});
+
 const roomClassFormated = Object.keys(roomClassValues)
   .filter(key => roomClassValues[key])
   .map(key => key.charAt(0).toUpperCase() + key.slice(1))
   .join(', ');
 
+const roomViewFormatted = Object.keys(roomViewValues)
+  .filter(key => roomViewValues[key])
+  .map(key => key.replace(/([A-Z])/g, ' $1').trim())
+  .map(key => key.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))
+  .join(', ');
+
+   
+
 console.log(roomClassFormated)
 
-const handleCheckboxChange = (event) => {
+const handleRoomClass = (event) => {
     const roomClassValues = event.target.value;
     const isChecked = event.target.checked;
     setRoomClassValues((prevState) => {
@@ -47,8 +57,25 @@ const handleCheckboxChange = (event) => {
     });
   };
   
+
+const handleRoomView = (event) => {
+    const roomViewValues = event.target.value;
+    const isChecked = event.target.checked;
+    setRoomViewValues((prevState) => {
+      // If the checkbox is checked, create a new object with the current checkboxValue as the only key
+      if (isChecked) {
+        return { [roomViewValues]: true };
+      } else {
+        // If the checkbox is unchecked, create a new object without the current checkboxValue key
+        const { [roomViewValues]: _, ...newState } = prevState;
+        return newState;
+      }
+    });
+  };
+  
 //GENERIC STATE HANDLERS
 const [basePrice, setBasePrice] = useState(room.basePrice || '');
+const [alert, setAlert] = useState(false);
 
 const handleRoomSizeChange = (event) => {
     const newRoomSize = event.target.value;
@@ -85,7 +112,6 @@ const handleTypeChange = (event) => {
   };
   
   
-
 const roomTypes = [
     { label: 'Single', value: 'Single' },
     { label: 'Double', value: 'Double' },
@@ -96,8 +122,12 @@ const roomTypes = [
 ]
 
 const handleSave = () => {
+    if (!roomType || roomSize == 0 || basePrice == 0) {
+        setAlert(true);
+        return;
+    }
     const newRooms = [...rooms];
-    const newRoom = { ...room, type: roomType, basePrice: basePrice, roomSize: roomSize, roomClass: roomClassValues };
+    const newRoom = { ...room, type: roomType, basePrice: basePrice, roomSize: roomSize, roomClass: roomClassValues, roomView: roomViewValues };
     newRooms[roomIndex] = newRoom;
     const newFloors = [...floors];
     newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
@@ -112,13 +142,36 @@ const handleSave = () => {
 
   return (
     <>
+    <Modal size="auto"
+       xOffset={0}
+       centered
+       opened={alert}
+       transitionProps={{ transition: 'pop', duration: 300, timingFunction: 'ease-in-out' }}
+      radius="xl"overlayProps={{
+        opacity: 0.5,
+      }}
+      zIndex={350}
+      withCloseButton={false} >
+                    <Flex direction={'column'} p={20}>
+                        
+        <Title fz={20}>An error ocurred while saving {`Room ${roomIndex + 1}`}</Title>
+        <Text>Please make sure that all fields are populated.</Text>
+        <Flex justify={'flex-end'} gap={10}>
+
+            <Button mt={15} onClick={() => setAlert(false)}>Okay</Button>
+
+        </Flex>
+      </Flex>
+            </Modal>
         <Flex p={20} direction={'row'}  gap={50}>
+
+            
 
             <Flex direction={'column'} >
                 <Title fz={25}>Your Configuration</Title>
                 <Text>Adding Room for {floors[floorIndex].name}</Text>
                     <Flex p={50}>
-                        <RoomBox roomType={roomType} roomNumber={roomIndex+1} roomTotalBeds={roomSize} basePrice={basePrice} roomName={roomClassFormated + (roomType ? ` ${roomType}` : '')}/>
+                        <RoomBox roomType={roomType} roomNumber={roomIndex+1} roomTotalBeds={roomSize} basePrice={basePrice} roomName={roomClassFormated + (roomType ? ` ${roomType}` : '') + (roomViewFormatted? ' with ' : '') + roomViewFormatted}/>
                     </Flex>
                 <Flex direction={'column'}>
                     <Text>Select Room Type</Text>
@@ -154,31 +207,31 @@ const handleSave = () => {
                                     <Checkbox
                                         label="Standard"
                                         value="standard"
-                                        onChange={handleCheckboxChange}
+                                        onChange={handleRoomClass}
                                         checked={roomClassValues.standard}
                                         />
                                         <Checkbox
                                         label="Economy"
                                         value="economy"
-                                        onChange={handleCheckboxChange}
+                                        onChange={handleRoomClass}
                                         checked={roomClassValues.economy}
                                         />
                                         <Checkbox
                                         label="Budget"
                                         value="budget"
-                                        onChange={handleCheckboxChange}
+                                        onChange={handleRoomClass}
                                         checked={roomClassValues.budget}
                                         />
                                         <Checkbox
                                         label="Deluxe"
                                         value="deluxe"
-                                        onChange={handleCheckboxChange}
+                                        onChange={handleRoomClass}
                                         checked={roomClassValues.deluxe}
                                         />
                                         <Checkbox
                                         label="Superior"
                                         value="superior"
-                                        onChange={handleCheckboxChange}
+                                        onChange={handleRoomClass}
                                         checked={roomClassValues.superior}
                                         />
                                     </Flex>
@@ -187,14 +240,14 @@ const handleSave = () => {
                                 <Title fz={25}>Views</Title>
                                     <Flex direction={'column'} gap={5}>
 
-                                    <Checkbox label="Haram View" value={'haramView'}   />
-                                    <Checkbox label="City View" value={'cityView'}   />
-                                    <Checkbox label="Garden View" value={'gardenView'}  />
-                                    <Checkbox label="Lake View" value={'lakeView'}   />
-                                    <Checkbox label="Mountain View" value={'mountainView'}  />
-                                    <Checkbox label="Park View" value={'parkView'}  />
-                                    <Checkbox label="Pool View" value={'poolView'}   />
-                                    <Checkbox label="Sea View" value={'seaView'}  />
+                                    <Checkbox label="Haram View" value='haramView'  onChange={handleRoomView} checked={roomViewValues.haramView}  />
+                                    <Checkbox label="City View" value='cityView' onChange={handleRoomView} checked={roomViewValues.cityView} />
+                                    <Checkbox label="Garden View" value='gardenView'  onChange={handleRoomView} checked={roomViewValues.gardenView} />
+                                    <Checkbox label="Lake View" value='lakeView'   onChange={handleRoomView} checked={roomViewValues.lakeView} />
+                                    <Checkbox label="Mountain View" value='mountainView'  onChange={handleRoomView} checked={roomViewValues.mountainView} />
+                                    <Checkbox label="Park View" value='parkView'  onChange={handleRoomView} checked={roomViewValues.parkView} />
+                                    <Checkbox label="Pool View" value='poolView'  onChange={handleRoomView} checked={roomViewValues.poolView}  />
+                                    <Checkbox label="Sea View" value='seaView' onChange={handleRoomView} checked={roomViewValues.seaView}  />
 
                                     </Flex>
                             </Flex>
