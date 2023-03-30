@@ -115,10 +115,11 @@ const propertySlice = createSlice({
         ...state,
         propertyPhotos: {
           ...state.propertyPhotos,
-          ...action.payload,
+          Extras: action.payload.Extras,
         },
       };
     },
+
     updatePropertyHouseRules: (state, action) => {
       const {
         chipNumberFrom,

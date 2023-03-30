@@ -1,5 +1,5 @@
 import PhotosComponent from "./Functions/PhotosComponent";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePropertyPhotos } from "../../../../../Redux/Slicers/propertySlice";
@@ -87,46 +87,41 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
   };
 
   const dispatch = useDispatch();
-  const { propertyPhotos } = useSelector((state) => state.property);
   const [checkboxes, setCheckboxes] = useState({
-    childrenAge2: false,
-    children: false,
-    adults: false,
-  });
-  const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    const age = Object.keys(checkboxes).filter((key) => checkboxes[key]);
-    if (checked) age.push(name);
-    else {
-      const index = age.indexOf(name);
-      if (index !== -1) age.splice(index, 1);
-    }
-    setCheckboxes({ ...checkboxes, [name]: checked });
-    dispatch(updatePropertyPhotos({ age }));
-  };
-  const [extraBoxes, setExtraBoxes] = useState({
     freeWifi: false,
     bar: false,
     sauna: false,
     garden: false,
-    terrance: false,
+    terrace: false,
     noSmokingRooms: false,
     familyRooms: false,
     hotTub: false,
     airConditioning: false,
     swimmingPool: false,
   });
-  const handleExtraBoxes = (event) => {
-    const { name, checked } = event.target;
-    const Extras = Object.keys(checkboxes).filter((key) => checkboxes[key]);
-    if (checked) Extras.push(name);
-    else {
-      const index = Extras.indexOf(name);
-      if (index !== -1) Extras.splice(index, 1);
+
+  useEffect(() => {
+    const persistedState = localStorage.getItem("checkboxes");
+    if (persistedState) {
+      setCheckboxes(JSON.parse(persistedState));
     }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("checkboxes", JSON.stringify(checkboxes));
+  }, [checkboxes]);
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
     setCheckboxes({ ...checkboxes, [name]: checked });
-    dispatch(updatePropertyPhotos({ Extras }));
+    const extras = Object.keys(checkboxes)
+      .filter((key) => checkboxes[key])
+      .map((key) => key.replace(/([A-Z])/g, ' $1').toLowerCase());
+    dispatch(updatePropertyPhotos({ Extras: extras }));
   };
+
+
+
   return (
     <>
       <div
@@ -265,46 +260,45 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       icon={IconWifi}
                       size="md"
                       color="dark"
+                      checked={checkboxes.freeWifi}
+                      onChange={handleCheckboxChange}
                       name="freeWifi"
-                      checked={extraBoxes.freeWifi}
-                      onChange={handleExtraBoxes}
                     />
-
                     <Checkbox
                       label="Bar"
                       icon={IconGlass}
                       size="md"
                       color="dark"
+                      checked={checkboxes.bar}
+                      onChange={handleCheckboxChange}
                       name="bar"
-                      checked={extraBoxes.bar}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Sauna"
                       icon={IconBrightnessHalf}
                       size="md"
                       color="dark"
+                      checked={checkboxes.sauna}
+                      onChange={handleCheckboxChange}
                       name="sauna"
-                      checked={extraBoxes.sauna}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Garden"
                       icon={IconLeaf}
                       size="md"
                       color="dark"
+                      checked={checkboxes.garden}
+                      onChange={handleCheckboxChange}
                       name="garden"
-                      checked={extraBoxes.garden}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
-                      label="Terrance"
+                      label="Terrace"
                       icon={IconFence}
                       size="md"
                       color="dark"
+                      checked={checkboxes.terrance}
+                      onChange={handleCheckboxChange}
                       name="terrance"
-                      checked={extraBoxes.terrance}
-                      onChange={handleExtraBoxes}
                     />
                   </div>
                   <div
@@ -320,36 +314,36 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       icon={IconSmokingNo}
                       size="md"
                       color="dark"
+                      checked={checkboxes.noSmokingRooms}
                       name="noSmokingRooms"
-                      checked={extraBoxes.noSmokingRooms}
-                      onChange={handleExtraBoxes}
+                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Family Rooms"
                       icon={IconHorseToy}
                       size="md"
                       color="dark"
+                      checked={checkboxes.familyRooms}
                       name="familyRooms"
-                      checked={extraBoxes.familyRooms}
-                      onChange={handleExtraBoxes}
+                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Hot tub/Jacuzzi"
                       icon={IconBath}
                       size="md"
                       color="dark"
+                      checked={checkboxes.hotTub}
                       name="hotTub"
-                      checked={extraBoxes.hotTub}
-                      onChange={handleExtraBoxes}
+                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Air Conditioning"
                       icon={IconAirConditioning}
                       size="md"
                       color="dark"
+                      checked={checkboxes.airConditioning}
                       name="airConditioning"
-                      checked={extraBoxes.airConditioning}
-                      onChange={handleExtraBoxes}
+                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Swimming Pool"
@@ -357,8 +351,9 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       size="md"
                       color="dark"
                       name="swimmingPool"
-                      checked={extraBoxes.swimmingPool}
-                      onChange={handleExtraBoxes}
+                      checked={checkboxes.swimmingPool}
+                      onChange={handleCheckboxChange}
+
                     />
                   </div>
                 </div>
