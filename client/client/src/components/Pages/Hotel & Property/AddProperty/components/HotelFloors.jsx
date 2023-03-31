@@ -34,6 +34,11 @@ const HotelFloors = ({ onButtonClick }) => {
   
   const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
   
+  // const handleEditRoom = (floorIndex, roomIndex) => {
+  //   setFloorIndex(floorIndex);
+  //   setRoomIndex(roomIndex);
+  //   setIsAddRoomModalOpen(true);
+  // };
 
   const handleAddRoom = (floorIndex) => {
     const newFloors = [...floors];
@@ -141,7 +146,10 @@ const HotelFloors = ({ onButtonClick }) => {
       <Flex direction={'row'} mt={10} gap={40}> 
 
           {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
-            <RoomBox key={roomIndex} roomType={room.type} roomNumber={roomIndex+1} basePrice={room.basePrice} roomName={(room.type ? ` ${room.type}` : '')}/>
+            <Flex key={roomIndex}>
+            {/* <Button onClick={handleEditRoom}>EDIT</Button> */}
+            <RoomBox  roomType={room.type} roomNumber={roomIndex+1} basePrice={room.basePrice} roomName={room.roomClass + (room.type ? ` ${room.type}` : '') + ' with ' + room.roomView}/>
+            </Flex>
           )) : ('')}
         <Flex onClick={() => handleAddRoom(floorIndex)} className={styles.addRoom}><div className={styles.circle}><IconPlus/></div></Flex>
       </Flex>

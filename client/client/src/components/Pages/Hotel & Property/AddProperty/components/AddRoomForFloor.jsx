@@ -1,4 +1,4 @@
-import { Button, Checkbox, Flex, Modal, NativeSelect, Text, TextInput, Title } from '@mantine/core'
+import { Button, Checkbox, Flex, Modal, NativeSelect, Radio, Text, TextInput, Title } from '@mantine/core'
 import { IconAddressBook, IconArrowsCross, IconCross, IconMinus, IconMoon, IconPlus, IconRocket, IconSquareRoundedX, IconUsers, IconX } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,50 +27,24 @@ const [roomClassValues, setRoomClassValues] = useState(room.checkboxValues || {}
 
 const [roomViewValues, setRoomViewValues] = useState(room.checkboxValues || {});
 
-const roomClassFormated = Object.keys(roomClassValues)
-  .filter(key => roomClassValues[key])
-  .map(key => key.charAt(0).toUpperCase() + key.slice(1))
-  .join(', ');
 
 const roomViewFormatted = Object.keys(roomViewValues)
-  .filter(key => roomViewValues[key])
   .map(key => key.replace(/([A-Z])/g, ' $1').trim())
   .map(key => key.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))
   .join(', ');
 
-   
 
-console.log(roomClassFormated)
 
 const handleRoomClass = (event) => {
-    const roomClassValues = event.target.value;
-    const isChecked = event.target.checked;
-    setRoomClassValues((prevState) => {
-      // If the checkbox is checked, create a new object with the current checkboxValue as the only key
-      if (isChecked) {
-        return { [roomClassValues]: true };
-      } else {
-        // If the checkbox is unchecked, create a new object without the current checkboxValue key
-        const { [roomClassValues]: _, ...newState } = prevState;
-        return newState;
-      }
-    });
+    const roomClassValue = event.target.value;
+    setRoomClassValues(roomClassValue.charAt(0).toUpperCase() + roomClassValue.slice(1));
   };
   
 
+
 const handleRoomView = (event) => {
     const roomViewValues = event.target.value;
-    const isChecked = event.target.checked;
-    setRoomViewValues((prevState) => {
-      // If the checkbox is checked, create a new object with the current checkboxValue as the only key
-      if (isChecked) {
-        return { [roomViewValues]: true };
-      } else {
-        // If the checkbox is unchecked, create a new object without the current checkboxValue key
-        const { [roomViewValues]: _, ...newState } = prevState;
-        return newState;
-      }
-    });
+    setRoomViewValues(roomViewValues);
   };
   
 //GENERIC STATE HANDLERS
@@ -94,7 +68,7 @@ const handleBasePriceChange = (event) => {
     newRooms[roomIndex] = newRoom;
     dispatch(updatePropertyDetails({ floors: floors }));
 };
-  
+  console.log(typeof roomClassValues);
 
 
 const handleTypeChange = (event) => {
@@ -121,20 +95,53 @@ const roomTypes = [
     { label: 'Studio', value: 'Studio' },
 ]
 
-const handleSave = () => {
-    if (!roomType || roomSize == 0 || basePrice == 0) {
-        setAlert(true);
-        return;
+const [roomCount, setRoomCount] = useState(0);
+
+const handleMinusClick = () => {
+    if (roomCount > 0) {
+    setRoomCount(roomCount - 1);
     }
+  };
+
+  const handlePlusClick = () => {
+    setRoomCount(roomCount + 1);
+  };
+
+const handleSave = () => {
+    if (!roomType || roomSize === 0 || basePrice === 0) {
+      setAlert(true);
+      return;
+    }
+  
     const newRooms = [...rooms];
-    const newRoom = { ...room, type: roomType, basePrice: basePrice, roomSize: roomSize, roomClass: roomClassValues, roomView: roomViewValues };
+  
+    // Add the original room
+    const newRoom = {
+      ...room,
+      type: roomType,
+      basePrice: basePrice,
+      roomSize: roomSize,
+      roomClass: roomClassValues,
+      roomView: roomViewValues,
+    };
     newRooms[roomIndex] = newRoom;
+  
+    // Add additional rooms
+    for (let i = 1; i <= roomCount; i++) {
+      const additionalRoom = {
+        ...newRoom,
+        roomNumber: roomIndex + i + 1,
+      };
+      newRooms.push(additionalRoom);
+    }
+  
     const newFloors = [...floors];
     newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
     const newPropertyDetails = { ...propertyDetails, floors: newFloors };
     dispatch(updatePropertyDetails(newPropertyDetails));
     onModalClose(false);
   };
+  
   
   
 
@@ -171,7 +178,15 @@ const handleSave = () => {
                 <Title fz={25}>Your Configuration</Title>
                 <Text>Adding Room for {floors[floorIndex].name}</Text>
                     <Flex p={50}>
-                        <RoomBox roomType={roomType} roomNumber={roomIndex+1} roomTotalBeds={roomSize} basePrice={basePrice} roomName={roomClassFormated + (roomType ? ` ${roomType}` : '') + (roomViewFormatted? ' with ' : '') + roomViewFormatted}/>
+                    <RoomBox 
+  roomType={roomType} 
+  roomNumber={roomIndex+1} 
+  roomTotalBeds={roomSize} 
+  basePrice={basePrice} 
+  roomName={(typeof roomClassValues === 'string' ? roomClassValues : '') + (roomType ? ` ${roomType}` : '') + (roomViewValues ? ` with ${roomViewValues}` : '')}
+/>
+
+
                     </Flex>
                 <Flex direction={'column'}>
                     <Text>Select Room Type</Text>
@@ -204,50 +219,52 @@ const handleSave = () => {
                                 <Title fz={25}>Class</Title>
                                     <Flex direction={'column'} gap={5}>
 
-                                    <Checkbox
+                                                                            <Radio
                                         label="Standard"
                                         value="standard"
                                         onChange={handleRoomClass}
-                                        checked={roomClassValues.standard}
+                                        checked={roomClassValues === "Standard"}
                                         />
-                                        <Checkbox
+                                        <Radio
                                         label="Economy"
                                         value="economy"
                                         onChange={handleRoomClass}
-                                        checked={roomClassValues.economy}
+                                        checked={roomClassValues === "Economy"}
                                         />
-                                        <Checkbox
+                                        <Radio
                                         label="Budget"
                                         value="budget"
                                         onChange={handleRoomClass}
-                                        checked={roomClassValues.budget}
+                                        checked={roomClassValues === "Budget"}
                                         />
-                                        <Checkbox
+                                        <Radio
                                         label="Deluxe"
                                         value="deluxe"
                                         onChange={handleRoomClass}
-                                        checked={roomClassValues.deluxe}
+                                        checked={roomClassValues === "Deluxe"}
                                         />
-                                        <Checkbox
+                                        <Radio
                                         label="Superior"
                                         value="superior"
                                         onChange={handleRoomClass}
-                                        checked={roomClassValues.superior}
+                                        checked={roomClassValues === "Superior"}
                                         />
+
                                     </Flex>
                             </Flex>
                             <Flex direction={'column'}>
                                 <Title fz={25}>Views</Title>
                                     <Flex direction={'column'} gap={5}>
 
-                                    <Checkbox label="Haram View" value='haramView'  onChange={handleRoomView} checked={roomViewValues.haramView}  />
-                                    <Checkbox label="City View" value='cityView' onChange={handleRoomView} checked={roomViewValues.cityView} />
-                                    <Checkbox label="Garden View" value='gardenView'  onChange={handleRoomView} checked={roomViewValues.gardenView} />
-                                    <Checkbox label="Lake View" value='lakeView'   onChange={handleRoomView} checked={roomViewValues.lakeView} />
-                                    <Checkbox label="Mountain View" value='mountainView'  onChange={handleRoomView} checked={roomViewValues.mountainView} />
-                                    <Checkbox label="Park View" value='parkView'  onChange={handleRoomView} checked={roomViewValues.parkView} />
-                                    <Checkbox label="Pool View" value='poolView'  onChange={handleRoomView} checked={roomViewValues.poolView}  />
-                                    <Checkbox label="Sea View" value='seaView' onChange={handleRoomView} checked={roomViewValues.seaView}  />
+                                    <Radio label="Haram View" value="Haram View" onChange={handleRoomView} checked={roomViewValues === 'Haram View'} />
+                                    <Radio label="City View" value="City View" onChange={handleRoomView} checked={roomViewValues === 'City View'} />
+                                    <Radio label="Garden View" value="Garden View" onChange={handleRoomView} checked={roomViewValues === 'Garden View'} />
+                                    <Radio label="Lake View" value="Lake View" onChange={handleRoomView} checked={roomViewValues === 'Lake View'} />
+                                    <Radio label="Mountain View" value="Mountain View" onChange={handleRoomView} checked={roomViewValues === 'Mountain View'} />
+                                    <Radio label="Park View" value="Park View" onChange={handleRoomView} checked={roomViewValues === 'Park View'} />
+                                    <Radio label="Pool View" value="Pool View" onChange={handleRoomView} checked={roomViewValues === 'Pool View'} />
+                                    <Radio label="Sea View" value="Sea View" onChange={handleRoomView} checked={roomViewValues === 'Sea View'} />
+
 
                                     </Flex>
                             </Flex>
@@ -269,7 +286,7 @@ const handleSave = () => {
                 <Text>How many same rooms like this are <br/> there in this floor?</Text>
 
                 <Flex direction={"row"}>
-                          <SameRooms    />
+                          <SameRooms  roomCount={roomCount}  handleMinusClick={handleMinusClick} handlePlusClick={handlePlusClick}/>
                 </Flex>
 
                 <Title mt={20}>Room Properties</Title>
@@ -350,55 +367,56 @@ justifyContent: "center"
 
 }
 
-function SameRooms({}) {
-    return (<Flex mt={10} style={{
-alignItems: "center",
-gap: "10px"
-}}>
-                        <div style={{
-display: "flex",
-alignItems: "center",
-justifyContent: "center",
-gap: "10px",
-textAlign: "center"
-}}>
-                            <Flex>
-                            <button style={{
-    border: "none",
-    background: "none"
-    }}>
-                            <IconPlus className={styles.hoverClass} style={{
-        cursor: "pointer",
-        marginTop: "10px",
-        marginRight: "10px"
-    }} size={25} />
-                            </button>
-                            <div style={{
-    display: "flex",
-    justifyContent: "center",
-    color: "white",
-    backgroundColor: "black",
-    borderRadius: "40px",
-    height: "40px",
-    width: "40px",
-    alignItems: "center",
-    userSelect: "none"
-    }}>
-                                <Text style={{
-        fontSize: "20px"
-    }}>1</Text>
-                            </div>
-                            <button style={{
-    border: "none",
-    background: "none"
-    }}>
-                            <IconMinus style={{
-        marginTop: "10px",
-        marginLeft: "10px",
-        cursor: "pointer"
-    }} className={styles.hoverClass} size={25} />
-                            </button>      
-                            </Flex>
-                        </div>
-                        </Flex>);
+function SameRooms({roomCount, handlePlusClick, handleMinusClick}) {
+  return (
+    <Flex mt={10} style={{ alignItems: "center", gap: "10px" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+          textAlign: "center",
+        }}
+      >
+        <Flex>
+          <button
+            style={{ border: "none", background: "none" }}
+            onClick={handlePlusClick}
+          >
+            <IconPlus
+              className={styles.hoverClass}
+              style={{ cursor: "pointer", marginTop: "10px", marginRight: "10px" }}
+              size={25}
+            />
+          </button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              color: "white",
+              backgroundColor: "black",
+              borderRadius: "40px",
+              height: "40px",
+              width: "40px",
+              alignItems: "center",
+              userSelect: "none",
+            }}
+          >
+            <Text style={{ fontSize: "20px" }}>{roomCount}</Text>
+          </div>
+          <button
+            style={{ border: "none", background: "none" }}
+            onClick={handleMinusClick}
+          >
+            <IconMinus
+              style={{ marginTop: "10px", marginLeft: "10px", cursor: "pointer" }}
+              className={styles.hoverClass}
+              size={25}
+            />
+          </button>
+        </Flex>
+      </div>
+    </Flex>
+  );
 }
