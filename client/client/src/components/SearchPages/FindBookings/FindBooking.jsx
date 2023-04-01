@@ -372,13 +372,13 @@ const FindBooking = () => {
                     background: "black",
                     borderRadius: "30px"
                 }}>
-                    <CustomPlans tourPrice="456,200 PKR" />
+                    <Text><CustomPlans tourPrice="456,200 PKR" package="Lahore Umrah" noOfPeople="Couple" planName="AMG-UM5445" /></Text>
                 </Flex>
                 <Flex style={{
                     background: "grey",
                     borderRadius: "30px"
                 }}>
-                    <CustomPlans tourPrice="1,236,200 PKR" />
+                    <Text><CustomPlans tourPrice="1,236,200 PKR" package="Mutan Hajj" noOfPeople="Family of 6" planName="AMG-UM5985" /></Text>
                 </Flex>
 
                 <Flex style={{

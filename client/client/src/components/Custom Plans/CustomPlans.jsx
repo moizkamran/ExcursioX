@@ -40,18 +40,19 @@ export const CustomPlans = (props) => {
                         </div>
                     </div>
                 </div>
+
                 <div
                     style={{
                         display: "flex",
                         flexDirection: "column",
-                        marginTop: 85,
+                        marginTop: 75,
                         marginLeft: "22.5px",
 
                     }}
                 >
                     <div>
                         <div>
-                            <span style={{ fontSize: "28.95px" }}>{props.city} Umrah</span>
+                            <span style={{ fontSize: "25px", fontWeight: "500" }}>{props.package}</span>
                         </div>
                         <div>
                             <div style={{ display: "flex" }}>
@@ -59,14 +60,14 @@ export const CustomPlans = (props) => {
                                     <span style={{ fontSize: "13.75px" }}>Plan Name</span>
                                 </div>
                                 <div>
-                                    <span style={{ color: "rgba(255, 255, 255, 0.5)" }}>
+                                    <span style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "13.75px" }}>
                                         {props.planName}
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div style={{ marginTop: "13.5px" }}>
+                    <div>
                         <div style={{ display: "flex" }}>
                             <div style={{ marginRight: 8 }}>
                                 <IconUser />
@@ -87,7 +88,7 @@ export const CustomPlans = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div style={{ marginTop: "10px" }}>
+                    <div>
                         <div>
                             <div>
                                 <span style={{ fontSize: "11.2px" }}>Includes</span>
