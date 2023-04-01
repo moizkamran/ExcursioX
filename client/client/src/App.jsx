@@ -12,6 +12,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import AddRoomForFloor from "./components/Pages/Hotel & Property/AddProperty/components/AddRoomForFloor";
 import FindBooking from "./components/SearchPages/FindBookings/FindBooking";
+import EnterpriseLanding from "./components/Pages/Landing Pages/Enterprise Landing/EnterpriseLanding";
 
 export default function App() {
   const { user } = useAuthContext()
@@ -19,6 +20,8 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
+
+          {/* Dashboard Routes all elements are children of Dashboard */}
           <Route element={<Dashboard />}>
             <Route path="/" element={<Body />} />
             <Route path="/hotel" element={<Hotel />} />
@@ -27,12 +30,10 @@ export default function App() {
             <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
           </Route>
 
+          {/* Public/Non-CRM Routes */}
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/AddProperty2" element={<PropertyLayoutAndPricing />}></Route>
-          <Route path="/AddProperty3" element={<PropertyView />}></Route>
-          <Route path="/booking" element={<Booking />}></Route>
-          <Route path="/propertyview" element={<PropertyView />}></Route>
+          <Route path="/enterprise" element={<EnterpriseLanding />}></Route>
 
 
 
