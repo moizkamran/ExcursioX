@@ -10,7 +10,8 @@ import { RoomBox } from './Functions/RoomBox'
 
 import styles from './propertyCustomStyles.module.css'
 
-const HotelFloors = ({ onButtonClick }) => {
+
+const HotelFloors = () => {
   const { propertyDetails } = useSelector((state) => state.property);
   const numFloors = propertyDetails.floors.length;
   const floors = propertyDetails.floors;
@@ -40,16 +41,31 @@ const HotelFloors = ({ onButtonClick }) => {
   //   setIsAddRoomModalOpen(true);
   // };
 
-  const handleAddRoom = (floorIndex) => {
-    const newFloors = [...floors];
-    const rooms = newFloors[floorIndex].rooms || [];
-    const newRooms = [    ...rooms,    Object.assign({}, { roomNumber: `Room ${rooms.length + 1}` }) ];
-    newFloors[floorIndex] = { ...newFloors[floorIndex], rooms: newRooms };
+const handleDeleteRoom = (floorIndex, roomId) => {
+  const newFloors = [...floors];
+  const targetFloor = newFloors[floorIndex];
+  const roomIndex = targetFloor.rooms.findIndex(room => room.id === roomId);
+  if (roomIndex !== -1) {
+    const newRooms = [...targetFloor.rooms];
+    newRooms.splice(roomIndex, 1);
+    const newFloor = { ...targetFloor, rooms: newRooms };
+    newFloors[floorIndex] = newFloor;
     dispatch(updatePropertyDetails({ floors: newFloors }));
-    setFloorIndex(floorIndex);
-    setRoomIndex(rooms.length);
-    setIsAddRoomModalOpen(true);
-  };
+  }
+};
+
+  
+  
+const handleAddRoom = (floorIndex) => {
+  const newFloors = [...floors];
+  const rooms = newFloors[floorIndex].rooms || [];
+  const newRooms = [    ...rooms,    Object.assign({}, { roomNumber: `Room ${rooms.length + 1}` }) ];
+  newFloors[floorIndex] = { ...newFloors[floorIndex], rooms: newRooms };
+  dispatch(updatePropertyDetails({ floors: newFloors }));
+  setFloorIndex(floorIndex);
+  setRoomIndex(rooms.length);
+  setIsAddRoomModalOpen(true);
+};
   
  const [deleteFloorModal, setDeleteFloorModal] = useState(false);
 
@@ -64,6 +80,7 @@ const HotelFloors = ({ onButtonClick }) => {
     dispatch(updatePropertyDetails({ floors: newFloors }));
     setDeleteFloorModal(false);
   };
+
   console.log(numFloors);
 
   
@@ -76,7 +93,8 @@ const HotelFloors = ({ onButtonClick }) => {
        xOffset={0}
        centered
        transitionProps={{ transition: 'pop', duration: 450, timingFunction: 'ease-in-out' }}
-      onClose={() => setIsAddRoomModalOpen(false)}
+       closeOnClickOutside={false}
+      
       radius="xl"
        overlayProps={{
          opacity: 0.50,
@@ -85,7 +103,7 @@ const HotelFloors = ({ onButtonClick }) => {
      >
         <Flex>
         
-        <AddRoomForFloor floorIndex={floorIndex} roomIndex={roomIndex} onModalClose={setIsAddRoomModalOpen} />
+        <AddRoomForFloor floorIndex={floorIndex} roomIndex={roomIndex} onModalClose={setIsAddRoomModalOpen}/>
 
         </Flex>
       </Modal>
@@ -94,7 +112,8 @@ const HotelFloors = ({ onButtonClick }) => {
       <Flex justify={'space-between'}>
           
           <Title fz={14}>Total Floors: {numFloors}</Title>
-          <Button onClick={addFloor} style={{backgroundColor: '#083eab', color: 'white'}}>Add Floor</Button>
+
+          {floors.length > 0 && (<Button onClick={addFloor} style={{backgroundColor: '#083eab', color: 'white'}}>Add Floor</Button>)}
 
       </Flex>
 
@@ -130,7 +149,7 @@ const HotelFloors = ({ onButtonClick }) => {
         <Flex justify={'flex-end'} gap={10}>
 
             <Button onClick={() => setDeleteFloorModal(false)} style={{backgroundColor: 'white', color: '#083eab'}}>No</Button>
-            <Button onClick={() => handleDeleteFloor(floorIndex)} style={{backgroundColor: 'red'}}>Yes</Button>
+            <Button onClick={() => handleDeleteRoom(floorIndex, roomIndex)}> <IconTrash /></Button>
 
         </Flex>
       </Flex>
@@ -145,12 +164,21 @@ const HotelFloors = ({ onButtonClick }) => {
       {/* Rooms */}
       <Flex direction={'row'} mt={10} gap={40}> 
 
-          {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
-            <Flex key={roomIndex}>
-            {/* <Button onClick={handleEditRoom}>EDIT</Button> */}
-            <RoomBox  roomType={room.type} roomNumber={roomIndex+1} basePrice={room.basePrice} roomName={room.roomClass + (room.type ? ` ${room.type}` : '') + ' with ' + room.roomView}/>
-            </Flex>
-          )) : ('')}
+      {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
+  <Flex key={roomIndex}>
+    <Flex className={styles.roomWrapper} direction={'column'}>
+      <RoomBox  roomType={room.type} 
+                roomNumber={roomIndex+1} 
+                basePrice={room.basePrice} 
+                roomName={room.roomClass + (room.type ? ` ${room.type}` : '') + ' with ' + room.roomView}/>
+      <Flex justify={'center'} mt={19} gap={10} className={styles.roomActionsWrapper}>
+        <Button> <IconEdit /></Button>
+        <Button onClick={() => handleDeleteRoom(floorIndex)}> <IconTrash /></Button>
+      </Flex>
+    </Flex>
+  </Flex>
+)) : ('')}
+
         <Flex onClick={() => handleAddRoom(floorIndex)} className={styles.addRoom}><div className={styles.circle}><IconPlus/></div></Flex>
       </Flex>
 
@@ -158,7 +186,7 @@ const HotelFloors = ({ onButtonClick }) => {
       <Flex gap={30} style={{position: 'absolute', bottom: 10, right: 10, backgroundColor:'rgba(255, 255, 255, 0.349)', color: 'white', borderRadius: '25px', backdropFilter: 'blur(10px)'}}>
         {/* <UnstyledButton onClick={() => addFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconCopy/> <Text>Duplicate</Text></UnstyledButton>
         <UnstyledButton onClick={() => handleEditFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconEdit/> <Text>Edit Floor</Text></UnstyledButton> */}
-        <UnstyledButton onClick={() => confrimDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
+        <UnstyledButton onClick={() => handleDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
       </Flex>
 
     </Flex>

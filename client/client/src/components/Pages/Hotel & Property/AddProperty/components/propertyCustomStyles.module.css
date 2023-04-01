@@ -205,3 +205,22 @@ border-radius: 0px 10px 10px 0px;
   transform: scale(2);
   background-color: #0a0a0a; /* replace with desired background color */
 }
+
+
+.roomActionsWrapper{
+  opacity: 0;
+  transition: all 0.2s ease-out;
+}
+
+.roomActionsWrapper:hover{
+  opacity: 1;
+}
+
+.roomActionsWrapper > Button{
+  transition: all 0.2s ease-out;
+  background-color: #000000;
+}
+.roomActionsWrapper > Button:hover{
+  transform: scale(0.9);
+  background-color: #000000;
+}

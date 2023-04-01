@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addRoomToFloor, updatePropertyDetails, updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
 import { RoomBox } from './Functions/RoomBox'
 
+import { v4 as uuidv4 } from 'uuid';
+
+
 import styles from './propertyCustomStyles.module.css'
 
 const AddRoomForFloor = ({ floorIndex, roomIndex, onModalClose }) => {
@@ -38,7 +41,7 @@ const roomViewFormatted = Object.keys(roomViewValues)
 const handleRoomClass = (event) => {
     const roomClassValue = event.target.value;
     setRoomClassValues(roomClassValue.charAt(0).toUpperCase() + roomClassValue.slice(1));
-  };
+};
   
 
 
@@ -118,6 +121,7 @@ const handleSave = () => {
     // Add the original room
     const newRoom = {
       ...room,
+      roomId: uuidv4(),
       type: roomType,
       basePrice: basePrice,
       roomSize: roomSize,
@@ -130,6 +134,7 @@ const handleSave = () => {
     for (let i = 1; i <= roomCount; i++) {
       const additionalRoom = {
         ...newRoom,
+        id: uuidv4(),
         roomNumber: roomIndex + i + 1,
       };
       newRooms.push(additionalRoom);
@@ -143,7 +148,7 @@ const handleSave = () => {
   };
   
   
-  
+  const roomName = (typeof roomClassValues === 'string' ? roomClassValues : '') + (roomType ? ` ${roomType}` : '') + (typeof roomViewValues === 'string' ? ' with ' + roomViewValues : '');
 
   console.log(rooms)
 
@@ -183,7 +188,7 @@ const handleSave = () => {
   roomNumber={roomIndex+1} 
   roomTotalBeds={roomSize} 
   basePrice={basePrice} 
-  roomName={(typeof roomClassValues === 'string' ? roomClassValues : '') + (roomType ? ` ${roomType}` : '') + (roomViewValues ? ` with ${roomViewValues}` : '')}
+  roomName={roomName}
 />
 
 
