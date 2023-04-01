@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addRoomToFloor, updatePropertyDetails, updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
 import { RoomBox } from './Functions/RoomBox'
 
+
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -43,7 +44,6 @@ const handleRoomClass = (event) => {
     setRoomClassValues(roomClassValue.charAt(0).toUpperCase() + roomClassValue.slice(1));
 };
   
-
 
 const handleRoomView = (event) => {
     const roomViewValues = event.target.value;
@@ -134,7 +134,7 @@ const handleSave = () => {
     for (let i = 1; i <= roomCount; i++) {
       const additionalRoom = {
         ...newRoom,
-        id: uuidv4(),
+        roomId: uuidv4(), // change from "id" to "roomId"
         roomNumber: roomIndex + i + 1,
       };
       newRooms.push(additionalRoom);

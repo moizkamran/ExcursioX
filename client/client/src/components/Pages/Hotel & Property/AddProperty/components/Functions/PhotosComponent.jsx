@@ -125,7 +125,6 @@ const PhotosComponent = () => {
                 top: "5px",
                 right: "5px",
                 border: "none",
-                backgroundColor: "transparent",
                 color: "white",
                 fontSize: "20px",
                 cursor: "pointer",
