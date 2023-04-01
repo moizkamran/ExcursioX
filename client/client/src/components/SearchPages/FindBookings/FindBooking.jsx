@@ -1,8 +1,11 @@
 import { Progress, Chip, Button, Flex, Switch, Text, Group, Image } from '@mantine/core'
 import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
-import { IconBrandSuperhuman, IconCalendar, IconDoor, IconGlobe, IconHeartHandshake, IconMan, IconMinus, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconPower, IconSearch, IconUser, IconX } from '@tabler/icons'
+import { IconBrandSuperhuman, IconCalendar, IconDoor, IconGlobe, IconHeartHandshake, IconMan, IconMinus, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconPower, IconSearch, IconUser, IconX, } from '@tabler/icons'
 import { white } from 'color-name'
 import React, { useState } from 'react'
+
+// Cumtom Plans
+import CustomPlans from '../../Custom Plans/CustomPlans';
 
 import AirtimeBadge from '../../Badges/Airtime'
 
@@ -19,10 +22,10 @@ const FindBooking = () => {
             <Text style={{
                 fontSize: "50px",
                 marginBottom: "35px",
-                fontWeight: "bold",
+                fontWeight: "500",
                 marginLeft: "50px",
             }}>Find your perfect stay!</Text>
-            <Flex mt={50}>
+            <Flex mt={50} ml={50}>
                 <Flex style={{
                     display: "flex",
                     flexDirection: "column",
@@ -352,7 +355,69 @@ const FindBooking = () => {
                     </Flex>
 
                 </Flex>
-            </Flex >
+            </Flex>
+
+            <Flex mt={25} ml={50} style={{
+                display: "flex",
+                flexDirection: "row",
+            }}>
+                <Text style={{
+                    fontSize: "47px",
+                    fontWeight: "500",
+                }}>Custom Plans</Text>
+            </Flex>
+
+            <Flex mt={25} ml={50} gap={25}>
+                <Flex style={{
+                    background: "black",
+                    borderRadius: "30px"
+                }}>
+                    <CustomPlans tourPrice="456,200 PKR" />
+                </Flex>
+                <Flex style={{
+                    background: "grey",
+                    borderRadius: "30px"
+                }}>
+                    <CustomPlans tourPrice="1,236,200 PKR" />
+                </Flex>
+
+                <Flex style={{
+                    width: 268,
+                    height: 363,
+                    border: "5px dashed rgba(7, 57, 158, 1)",
+                    borderRadius: 29,
+                    boxSizing: "border-box"
+                }}>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginTop: 85,
+                        alignItems: "center",
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    }}>
+                        <div style={{
+                            background: "#F0F0F0",
+                            width: 137,
+                            height: 137,
+                            borderRadius: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            marginBottom: 10
+                        }}>
+                            <div style={{
+                                marginTop: "auto",
+                                marginBottom: "auto"
+                            }}><IconPlus /></div>
+                        </div>
+                        <div><Text style={{
+                            color: "#000000",
+                            fontSize: "26px"
+                        }}>Create New Plan</Text></div>
+                    </div>
+                </Flex>
+            </Flex>
+
         </>
     )
 }
