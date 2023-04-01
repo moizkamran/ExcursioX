@@ -18,56 +18,21 @@ export function RoomBox({
     sameRooms,
 }) {
     return (
-        <Flex
-            direction={"column"}
-            gap={10}
-            className={`${styles.roomBox} slide-in-left`}
-            style={{
-                backgroundColor:
-                    roomType === "Single"
-                        ? "#07399E"
-                        : roomType === "Double"
-                            ? "#9E3D07"
-                            : roomType === "Quad"
-                                ? "#0A9E07"
-                                : roomType === "Family"
-                                    ? "#9E0707"
-                                    : roomType === "Studio"
-                                        ? "#9E0786"
-                                        : "black",
-            }}
-        >
-            {/* TITLE and ROOM NUMBER */}
-            <Flex
-                direction={"column"}
-                style={{
-                    flex: 1,
-                }}
-            >
-                <Title fz={25}>{roomName}</Title>
-                <Text fz={14} fw={100}>
-                    #{roomNumber}
-                </Text>
-            </Flex>
 
-            <Flex
-                direction={"column"}
-                style={{
-                    flex: 0,
-                    width: "100%",
-                    alignContent: "flex-start",
-                    alignItems: "flex-start",
-                    justifyContent: "flex-start",
-                    justifyItems: "flex-start",
-                }}
-            >
-                <Flex gap={5}>
-                    {" "}
-                    <IconDiamond color="yellow" /> <Text>{basePrice} USD / Night</Text>
-                </Flex>
-                <Flex gap={5}>
-                    {" "}
-                    <IconSettingsAutomation /> <Text>{roomType}</Text>
+    
+    <Flex direction={'column'} gap={10} className={`${styles.roomBox} slide-in-left`} style={{
+        
+                    backgroundColor: roomType === 'Single' ? '#07399E' : roomType === 'Double' ? '#9E3D07' : roomType === 'Quad' ? '#0A9E07' : roomType === 'Family' ? '#9E0707' : roomType === 'Studio' ? '#9E0786' : roomType === 'Triple' ? '#07839E' : 'black',
+                    }}>
+                                {
+                    /* TITLE and ROOM NUMBER */
+                    }
+                <Flex direction={'column'} style={{
+                        flex: 1
+                        }}>
+                    <Title fz={25}>{roomName}</Title>
+                    <Text fz={14} fw={100}>#{roomNumber}</Text>
+
                 </Flex>
                 <Flex gap={5}>
                     {" "}
