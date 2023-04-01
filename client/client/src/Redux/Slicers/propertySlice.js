@@ -46,8 +46,23 @@ export const initialState = {
   propertyPhotos: {
     extraBed: "",
     extraBedCount: "",
-    age: [],
-    Extras: [],
+    age: {
+      childrenAge2: false,
+      children: false,
+      adults: false,
+    },
+    Extras: {
+      freeWifi: false,
+      bar: false,
+      sauna: false,
+      garden: false,
+      terrace: false,
+      noSmokingRooms: false,
+      familyRooms: false,
+      hotTub: false,
+      airConditioning: false,
+      swimmingPool: false,
+    },
     AddExtras: [],
     photos: [],
   },
@@ -77,12 +92,21 @@ export const initialState = {
       4: "",
     },
   },
+  checkboxes: {
+    checkbox1: false,
+    checkbox2: false,
+  },
 };
 
 const propertySlice = createSlice({
   name: "property",
   initialState,
   reducers: {
+    setCheckboxValue: (state, action) => {
+      const { name, value } = action.payload;
+      state.propertyPhotos.age[name] = value;
+    },
+
     updatePropertyDetails: (state, action) => {
       return {
         ...state,
@@ -111,14 +135,23 @@ const propertySlice = createSlice({
       };
     },
     updatePropertyPhotos: (state, action) => {
+      const { age, Extras } = action.payload;
       return {
         ...state,
         propertyPhotos: {
           ...state.propertyPhotos,
-          ...action.payload,
+          age: {
+            ...state.propertyPhotos.age,
+            ...age,
+          },
+          Extras: {
+            ...state.propertyPhotos.Extras,
+            ...Extras,
+          },
         },
       };
     },
+
     updatePropertyHouseRules: (state, action) => {
       const {
         chipNumberFrom,
@@ -184,6 +217,7 @@ const propertySlice = createSlice({
 export const {
   updatePropertyDetails,
   updatePropertyLayout,
+  setCheckboxValue,
   updatePropertyHouseRules,
   updatePropertyFacilites,
   addHotelLayout,

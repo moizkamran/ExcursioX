@@ -17,7 +17,7 @@ const HotelFloors = () => {
   const floors = propertyDetails.floors;
   const [floorIndex, setFloorIndex] = useState(null);
   const [roomIndex, setRoomIndex] = useState(null);
-  console.log('TOTAL FLOORS '+ floors.length);
+  console.log("TOTAL FLOORS " + floors.length);
 
   const dispatch = useDispatch();
 
@@ -27,12 +27,12 @@ const HotelFloors = () => {
     const newFloor = {
       name: `Floor ${floors.length + 1}`,
     };
-  
+
     // Add the new floor to the floors array
     const newFloors = [...floors, newFloor];
     dispatch(updatePropertyDetails({ floors: newFloors }));
   };
-  
+
   const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
   
   // const handleEditRoom = (floorIndex, roomIndex) => {
@@ -74,6 +74,11 @@ const handleAddRoom = (floorIndex) => {
  }
 
 
+  const [deleteFloorModal, setDeleteFloorModal] = useState(false);
+  const confrimDeleteFloor = (floorIndex) => {
+    setDeleteFloorModal(true);
+  };
+
   const handleDeleteFloor = (index) => {
     const newFloors = [...floors];
     newFloors.splice(index, 1);
@@ -83,7 +88,6 @@ const handleAddRoom = (floorIndex) => {
 
   console.log(numFloors);
 
-  
   return (
     <>
     
@@ -187,19 +191,10 @@ const handleAddRoom = (floorIndex) => {
         {/* <UnstyledButton onClick={() => addFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconCopy/> <Text>Duplicate</Text></UnstyledButton>
         <UnstyledButton onClick={() => handleEditFloor(floorIndex)} className={styles.buttonA} gap={5}> <IconEdit/> <Text>Edit Floor</Text></UnstyledButton> */}
         <UnstyledButton onClick={() => handleDeleteFloor(floorIndex)} gap={5} className={styles.delete}> <IconTrash /> <Text>Delete Floor</Text></UnstyledButton>
+
       </Flex>
-
-    </Flex>
-  </Flex>
-))}
-
-        
-
-    </Flex>
     </>
-  )
-}
+  );
+};
 
-
-
-export default HotelFloors
+export default HotelFloors;

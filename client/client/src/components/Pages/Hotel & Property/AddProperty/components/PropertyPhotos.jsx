@@ -1,8 +1,12 @@
 import PhotosComponent from "./Functions/PhotosComponent";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePropertyPhotos } from "../../../../../Redux/Slicers/propertySlice";
+
+import {
+  setCheckboxValue,
+  updatePropertyPhotos,
+} from "../../../../../Redux/Slicers/propertySlice";
 
 import {
   Title,
@@ -87,45 +91,26 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
   };
 
   const dispatch = useDispatch();
-  const { propertyPhotos } = useSelector((state) => state.property);
-  const [checkboxes, setCheckboxes] = useState({
-    childrenAge2: false,
-    children: false,
-    adults: false,
-  });
-  const handleCheckboxChange = (event) => {
+
+  const propertyPhotos = useSelector((state) => state.property.propertyPhotos);
+
+  const HandleCheckboxChange = (event) => {
     const { name, checked } = event.target;
-    const age = Object.keys(checkboxes).filter((key) => checkboxes[key]);
-    if (checked) age.push(name);
-    else {
-      const index = age.indexOf(name);
-      if (index !== -1) age.splice(index, 1);
-    }
-    setCheckboxes({ ...checkboxes, [name]: checked });
-    dispatch(updatePropertyPhotos({ age }));
+
+    dispatch(
+      updatePropertyPhotos({
+        age: { [name]: checked },
+      })
+    );
   };
-  const [extraBoxes, setExtraBoxes] = useState({
-    freeWifi: false,
-    bar: false,
-    sauna: false,
-    garden: false,
-    terrance: false,
-    noSmokingRooms: false,
-    familyRooms: false,
-    hotTub: false,
-    airConditioning: false,
-    swimmingPool: false,
-  });
-  const handleExtraBoxes = (event) => {
+  const handleExtrasChange = (event) => {
     const { name, checked } = event.target;
-    const Extras = Object.keys(checkboxes).filter((key) => checkboxes[key]);
-    if (checked) Extras.push(name);
-    else {
-      const index = Extras.indexOf(name);
-      if (index !== -1) Extras.splice(index, 1);
-    }
-    setCheckboxes({ ...checkboxes, [name]: checked });
-    dispatch(updatePropertyPhotos({ Extras }));
+
+    dispatch(
+      updatePropertyPhotos({
+        Extras: { [name]: checked },
+      })
+    );
   };
   return (
     <>
@@ -209,24 +194,24 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       size="md"
                       name="childrenAge2"
                       color="dark"
-                      value={checkboxes.childrenAge2}
-                      onChange={handleCheckboxChange}
+                      checked={propertyPhotos.age.childrenAge2}
+                      onChange={HandleCheckboxChange}
                     />
                     <Checkbox
-                      name="Children"
-                      value={checkboxes.children}
+                      name="children"
                       label="Children"
                       size="md"
                       color="dark"
-                      onChange={handleCheckboxChange}
+                      checked={propertyPhotos.age.children}
+                      onChange={HandleCheckboxChange}
                     />
                     <Checkbox
                       name="adults"
-                      value={checkboxes.adults}
-                      onChange={handleCheckboxChange}
                       label="Adults"
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.age.adults}
+                      onChange={HandleCheckboxChange}
                     />
                   </div>
                 </div>
@@ -266,45 +251,44 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       size="md"
                       color="dark"
                       name="freeWifi"
-                      checked={extraBoxes.freeWifi}
-                      onChange={handleExtraBoxes}
+                      checked={propertyPhotos.Extras.freeWifi}
+                      onChange={handleExtrasChange}
                     />
-
                     <Checkbox
                       label="Bar"
                       icon={IconGlass}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.bar}
+                      onChange={handleExtrasChange}
                       name="bar"
-                      checked={extraBoxes.bar}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Sauna"
                       icon={IconBrightnessHalf}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.sauna}
+                      onChange={handleExtrasChange}
                       name="sauna"
-                      checked={extraBoxes.sauna}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Garden"
                       icon={IconLeaf}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.garden}
+                      onChange={handleExtrasChange}
                       name="garden"
-                      checked={extraBoxes.garden}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
-                      label="Terrance"
+                      label="Terrace"
                       icon={IconFence}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.terrance}
+                      onChange={handleExtrasChange}
                       name="terrance"
-                      checked={extraBoxes.terrance}
-                      onChange={handleExtraBoxes}
                     />
                   </div>
                   <div
@@ -320,45 +304,45 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       icon={IconSmokingNo}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.noSmokingRooms}
+                      onChange={handleExtrasChange}
                       name="noSmokingRooms"
-                      checked={extraBoxes.noSmokingRooms}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Family Rooms"
                       icon={IconHorseToy}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.familyRooms}
+                      onChange={handleExtrasChange}
                       name="familyRooms"
-                      checked={extraBoxes.familyRooms}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Hot tub/Jacuzzi"
                       icon={IconBath}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.hotTub}
+                      onChange={handleExtrasChange}
                       name="hotTub"
-                      checked={extraBoxes.hotTub}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Air Conditioning"
                       icon={IconAirConditioning}
                       size="md"
                       color="dark"
+                      checked={propertyPhotos.Extras.airConditioning}
+                      onChange={handleExtrasChange}
                       name="airConditioning"
-                      checked={extraBoxes.airConditioning}
-                      onChange={handleExtraBoxes}
                     />
                     <Checkbox
                       label="Swimming Pool"
+                      checked={propertyPhotos.Extras.swimmingPool}
+                      onChange={handleExtrasChange}
                       icon={IconPool}
                       size="md"
                       color="dark"
                       name="swimmingPool"
-                      checked={extraBoxes.swimmingPool}
-                      onChange={handleExtraBoxes}
                     />
                   </div>
                 </div>

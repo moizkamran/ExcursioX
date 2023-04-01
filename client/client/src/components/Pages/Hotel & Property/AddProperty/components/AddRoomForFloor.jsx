@@ -10,21 +10,35 @@ import { v4 as uuidv4 } from 'uuid';
 
 import styles from './propertyCustomStyles.module.css'
 
-const AddRoomForFloor = ({ floorIndex, roomIndex, onModalClose }) => {
 
-const dispatch = useDispatch();
-const { propertyDetails } = useSelector((state) => state.property);
-const floors = propertyDetails.floors;
-const rooms = floors[floorIndex].rooms;
-const room = rooms[roomIndex];
+const AddRoomForFloor = ({ floorIndex, roomIndex, onModalClose }) => {
+    const dispatch = useDispatch();
+    const { propertyDetails } = useSelector((state) => state.property);
+    const floors = propertyDetails.floors;
+    const rooms = floors[floorIndex].rooms;
+    const room = rooms[roomIndex];
+
+    const [roomType, setRoomType] = useState(room.roomType);
+    const [roomSize, setRoomSize] = useState(room.roomSize || "");
+
 
 const [roomType, setRoomType] = useState(room.roomType);
 
 const [roomSize, setRoomSize] = useState(room.roomSize || '');
 
-console.log(roomIndex)
 
-const [selectedValue, setSelectedValue] = useState('');
+    const [selectedValue, setSelectedValue] = useState("");
+
+    //GENERIC STATE HANDLERS
+    const handleFieldChange = (fieldName) => (event) => {
+        const fieldValue = event.target.value;
+        console.log(fieldValue);
+        const newRooms = [...rooms];
+        const newRoom = { ...newRooms[roomIndex], [fieldName]: fieldValue };
+        newRooms[roomIndex] = newRoom;
+        dispatch(updatePropertyDetails({ floors: floors }));
+    };
+
 
 const [roomClassValues, setRoomClassValues] = useState(room.checkboxValues || {});
 
@@ -72,6 +86,13 @@ const handleBasePriceChange = (event) => {
     dispatch(updatePropertyDetails({ floors: floors }));
 };
   console.log(typeof roomClassValues);
+
+
+        const newRooms = [...rooms];
+        const newRoom = { ...newRooms[roomIndex], type: selectedType };
+        newRooms[roomIndex] = newRoom;
+        setRoomType(selectedType); // set the roomType state variable with the selected type
+        console.log(newRooms);
 
 
 const handleTypeChange = (event) => {
@@ -150,7 +171,16 @@ const handleSave = () => {
   
   const roomName = (typeof roomClassValues === 'string' ? roomClassValues : '') + (roomType ? ` ${roomType}` : '') + (typeof roomViewValues === 'string' ? ' with ' + roomViewValues : '');
 
-  console.log(rooms)
+    const handleSave = () => {
+        const newRooms = [...rooms];
+        newRooms[roomIndex] = { ...room, type: roomType };
+        const newFloors = [...floors];
+        newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
+        const newPropertyDetails = { ...propertyDetails, floors: newFloors };
+        dispatch(updatePropertyDetails(newPropertyDetails));
+        onModalClose(false);
+    };
+
 
   return (
     <>
@@ -212,17 +242,20 @@ const handleSave = () => {
                 
                 <BasePrice1 basePrice={basePrice} handleBasePriceChange={handleBasePriceChange} />
 
-            </Flex>
 
-            <Flex direction={'column'}>
-                <Title>Room Attributes</Title>
-                <Text>You can only select one per attribute, this will decide the main
-                    <br/> name for your property</Text>
-                
-                <Flex direction={'row'} gap={50}>
-                            <Flex direction={'column'}>
-                                <Title fz={25}>Class</Title>
-                                    <Flex direction={'column'} gap={5}>
+                    <Flex direction={"column"} mt={10} mb={20}>
+                        <Text>Room Size</Text>
+                        <TextInput
+                            radius={"md"}
+                            color={"black"}
+                            w={200}
+                            onChange={(event) => setRoomSize(event.target.value)}
+                        />
+                    </Flex>
+
+                    <BasePrice1 handleFieldChange={handleFieldChange} />
+                </Flex>
+
 
                                                                             <Radio
                                         label="Standard"
@@ -255,8 +288,43 @@ const handleSave = () => {
                                         checked={roomClassValues === "Superior"}
                                         />
 
-                                    </Flex>
+
+                    <Flex direction={"row"} gap={50}>
+                        <Flex direction={"column"}>
+                            <Title fz={25}>Class</Title>
+                            <Flex direction={"column"} gap={5}>
+                                <Checkbox
+                                    label="Standard"
+                                    value={"standard"}
+                                    onChange={handleCheckboxChange}
+                                    checked={selectedValue === "standard"}
+                                />
+                                <Checkbox
+                                    label="Economy"
+                                    value={"economy"}
+                                    onChange={handleCheckboxChange}
+                                    checked={selectedValue === "economy"}
+                                />
+                                <Checkbox
+                                    label="Budget"
+                                    value={"budget"}
+                                    onChange={handleCheckboxChange}
+                                    checked={selectedValue === "budget"}
+                                />
+                                <Checkbox
+                                    label="Deluxe"
+                                    value={"deluxe"}
+                                    onChange={handleCheckboxChange}
+                                    checked={selectedValue === "deluxe"}
+                                />
+                                <Checkbox
+                                    label="Superior"
+                                    value={"superior"}
+                                    onChange={handleCheckboxChange}
+                                    checked={selectedValue === "superior"}
+                                />
                             </Flex>
+
                             <Flex direction={'column'}>
                                 <Title fz={25}>Views</Title>
                                     <Flex direction={'column'} gap={5}>
@@ -272,49 +340,68 @@ const handleSave = () => {
 
 
                                     </Flex>
-                            </Flex>
-                            <Flex direction={'column'}>
-                                <Title fz={25}>Ameneties</Title>
-                                    <Flex direction={'column'} gap={5}>
 
-                                    <Checkbox label="Shared Bathroom" value={'standard'}  />
-                                    <Checkbox label="Private Bathroom" value={'economy'}  />
-                                    <Checkbox label="Terrace" value={'budget'}  />
-                    
-                                    </Flex>
                             </Flex>
-                </Flex>
-                
-                <Title mt={20}>
-                    Same Rooms
-                </Title>
-                <Text>How many same rooms like this are <br/> there in this floor?</Text>
+                        </Flex>
+                        <Flex direction={"column"}>
+                            <Title fz={25}>Ameneties</Title>
+                            <Flex direction={"column"} gap={5}>
+                                <Checkbox label="Shared Bathroom" value={"standard"} />
+                                <Checkbox label="Private Bathroom" value={"economy"} />
+                                <Checkbox label="Terrace" value={"budget"} />
+                            </Flex>
+                        </Flex>
+                    </Flex>
+
 
                 <Flex direction={"row"}>
                           <SameRooms  roomCount={roomCount}  handleMinusClick={handleMinusClick} handlePlusClick={handlePlusClick}/>
                 </Flex>
 
-                <Title mt={20}>Room Properties</Title>
-                <Text w={400}>You can also add room properties which include photos, amenities, house rules, etc later in the dashboard </Text>
-                <Button style={{ backgroundColor: '#FAFAFA', color: 'black'}} w={200} leftIcon={<IconRocket />} className={styles.hoverClass}> Launch Room Editor</Button>
-                <Button onClick={handleSave} style={{position: 'absolute', bottom: 20, right: 20}}>Add Room #{roomIndex+1} on {floors[floorIndex].name} </Button>
 
+                    <Flex direction={"row"}>
+                        <SameRooms />
+                    </Flex>
+
+                    <Title mt={20}>Room Properties</Title>
+                    <Text w={400}>
+                        You can also add room properties which include photos, amenities,
+                        house rules, etc later in the dashboard{" "}
+                    </Text>
+                    <Button
+                        style={{ backgroundColor: "#FAFAFA", color: "black" }}
+                        w={200}
+                        leftIcon={<IconRocket />}
+                        className={styles.hoverClass}
+                    >
+                        {" "}
+                        Launch Room Editor
+                    </Button>
+                    <Button
+                        onClick={handleSave}
+                        style={{ position: "absolute", bottom: 20, right: 20 }}
+                    >
+                        Add Room #{roomIndex + 1} on {floors[floorIndex].name}{" "}
+                    </Button>
+                </Flex>
             </Flex>
-        </Flex>
-    </>
-  )
-}
+        </>
+    );
+};
 
-export default AddRoomForFloor
+export default AddRoomForFloor;
+
 
 function BasePrice1({basePrice, handleBasePriceChange}) {
     return (
-        <Flex direction={'column'}>
-        <Flex direction={'column'}>
-    <div style={{
-height: "100px",
-padding: "10px",
-width: "400px",
+        <Flex direction={"column"}>
+            <Flex direction={"column"}>
+                <div
+                    style={{
+                        height: "100px",
+                        padding: "10px",
+                        width: "400px",
+
 
 backgroundColor: "#F1F1F1",
 borderRadius: "20px",
@@ -362,15 +449,17 @@ justifyContent: "center"
             </div>
             </div>
             </Flex>
-            <Flex style={{justifyContent: 'center', alignContent:'center'}}>
-
-            <Text w={300} fz={14} mt={10} align={'center'} >This is the lowest price that we automatically apply to this room for all dates. 
-                Before your property goes live, you can set seasonal pricing on your property dashboard.</Text>
+            <Flex style={{ justifyContent: "center", alignContent: "center" }}>
+                <Text w={300} fz={14} mt={10} align={"center"}>
+                    This is the lowest price that we automatically apply to this room for
+                    all dates. Before your property goes live, you can set seasonal
+                    pricing on your property dashboard.
+                </Text>
             </Flex>
         </Flex>
-            );
-
+    );
 }
+
 
 function SameRooms({roomCount, handlePlusClick, handleMinusClick}) {
   return (
