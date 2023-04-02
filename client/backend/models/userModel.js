@@ -19,7 +19,6 @@ const userSchema = new Schema({
     phone: {
         type: String,
         required: false,
-        unique: true,
     },
     email: {
         type: String,
@@ -29,7 +28,25 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    role: {
+        type: String,
+        required: true,
+        default: 'user'
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
+    avatar: {
+        type: String,
+        required: false,
+    },
+    isEnterprise: {
+        type: Boolean,
+        default: false
+    },
+
 })
 
 //Static Register Method
