@@ -5,6 +5,7 @@ import { IconArrowBack, IconKey } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 
+
 //main stylesheet import
 
 
@@ -22,6 +23,7 @@ import {
   MantineProvider,
   Image,
   ActionIcon,
+  Flex,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 
@@ -118,11 +120,13 @@ const Login = () => {
 
             <Text align="center" mt="md">
               Don&apos;t have an account yet?
-              <a className="links" ml="10px" href="/register">
+              <Text ml="10px" to="/register" component={Link} c={'#07399E'}>
                 Sign up now
-              </a>
+              </Text>
             </Text>
+            <Flex justify={'center'} mt={20}>
               <ActionIcon variant="subtle" component={Link} to={-1}><IconArrowBack /></ActionIcon>
+            </Flex>
             
           </Paper>
         </div>

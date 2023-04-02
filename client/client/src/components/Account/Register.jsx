@@ -70,7 +70,7 @@ const Register = () => {
   return (
     <Container display={'flex'} h={'100vh'} size={'100%'} px={0}>
 
-      <Container style={{ flex: 1 }} size={'100%'} px={0}>
+      <Container style={{ flex: 1 }} size={'100%'} px={0} className='imageContainer'>
         <div style={{ backgroundImage, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%', width: '100%' }}> </div>
       </Container>
 
@@ -87,7 +87,7 @@ const Register = () => {
 
           <Flex direction={'column'} align={'flex-start'} ta={'left'} gap={5}>
 
-            <TextInput placeholder={'BKS-5200'} w={390} radius={'md'} label="Company ID" icon={<IconLuggage />} rightSection={
+            <TextInput placeholder={'BKS-5200'} w={390} radius={'md'} size="md" label="Company ID" icon={<IconLuggage />} rightSection={
                 <Tooltip  
                 label="If you dont know what this is, please ask your company to provide you an ID for BKNSQ-CRM" 
                 multiline
@@ -104,11 +104,11 @@ const Register = () => {
               }/>
 
               <Flex w={390} justify={'space-between'} gap={5}>
-                  <TextInput radius={'md'} label="First Name" />
-                  <TextInput radius={'md'} label="Last Name" />
+                  <TextInput radius={'md'} size="md" label="First Name" />
+                  <TextInput radius={'md'} size="md" label="Last Name" />
               </Flex>
               
-              <TextInput placeholder={'name@company.com'} w={390} radius={'md'} label="Email" icon={<IconMail />} rightSection={
+              <TextInput placeholder={'name@company.com'} size="md" w={390} radius={'md'} label="Email" icon={<IconMail />} rightSection={
                 <Tooltip  
                 label="Please enter your company email address"
                 multiline
@@ -133,6 +133,7 @@ const Register = () => {
                       <PasswordInput
                         w={390}
                         radius={'md'}
+                        size="md"
                         label="Password"
                         value={value}
                         onChange={(event) => setValue(event.currentTarget.value)}
@@ -151,13 +152,14 @@ const Register = () => {
               defaultCountry="sa"
               value={phone}
               hideDropdown
-              inputStyle={{ width: 350, borderRadius: 9, borderColor: '#ced4da', fontFamily: 'Fredoka' }}
+              inputStyle={{ width: 350, borderRadius: 9, borderColor: '#ced4da', fontFamily: 'Fredoka', fontSize: '0.875rem', height: 41.99 }}
               countrySelectorStyleProps={{ 
                 buttonStyle:{
                   borderRadius: 9,
                   marginRight: 5,
                   borderColor: '#ced4da',
                   fontSize: '0.875rem',
+                  height: 41.99,
                 },
               }}
             />
