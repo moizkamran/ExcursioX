@@ -34,10 +34,6 @@ const userSchema = new Schema({
         required: true,
         default: 'user'
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
     avatar: {
         type: String,
         required: false,
@@ -47,7 +43,7 @@ const userSchema = new Schema({
         default: false
     },
 
-})
+}, {timestamps: true} );
 
 //Static Register Method
 userSchema.statics.register = async function (email, password, companyId, firstName, lastName, phone){

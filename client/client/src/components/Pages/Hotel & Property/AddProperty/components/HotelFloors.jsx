@@ -70,6 +70,8 @@ const handleAddRoom = (floorIndex) => {
   
  const [deleteFloorModal, setDeleteFloorModal] = useState(false);
 
+
+
   const handleDeleteFloor = (index) => {
     const newFloors = [...floors];
     newFloors.splice(index, 1);

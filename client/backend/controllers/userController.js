@@ -23,6 +23,8 @@ const loginUser = async (req, res) => {
 }
 
 
+
+
 //register user
 const registerUser = async (req, res) => {
     const {email, password, companyId, firstName, lastName, phone} = req.body
@@ -38,6 +40,21 @@ const registerUser = async (req, res) => {
         res.status(400).json({error: error.message})
     }
 }
+
+// create a delete user function
+const deleteUser = async (req, res) => {
+    const {email} = req.body
+
+    try {
+        const user = await User.delete(email)
+
+
+        res.status(200).json({email})
+    } catch(error){
+        res.status(400).json({error: error.message})
+    }
+}
+
 
 module.exports ={
     registerUser, loginUser,
