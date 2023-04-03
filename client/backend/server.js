@@ -1,60 +1,40 @@
-//Backend configurations
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors');
-const mongoose = require('mongoose')
-const propertyRoutes = require('./route/property')
-const userRoutes = require('./route/user')
-const imageDownloader = require('image-downloader')
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import userRoute from "./routes/user.route.js";
+import authRoute from "./routes/auth.route.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+
+const app = express();
+dotenv.config();
+mongoose.set("strictQuery", true);
+
+const connect = async () => {
+  try {
+    mongoose.connect(process.env.MONGO);
+    console.log("Connected to mongoDB!");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173", credentials: true}));
+app.use(cookieParser());
 
 
-//Express App
-const app = express()
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
-//Middleware
-app.use(express.json())
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong!";
 
-app.use('uploads', express.static(__dirname+'/uploads'))
+  return res.status(errorStatus).send(errorMessage);
+});
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    console.log(req.path, req.method)
-    next()
-})
-
-
-//routes
-app.use('/api/property', propertyRoutes)
-app.use('/api/user', userRoutes)
-
-
-app.post('/actions/upload-by-link', async (req, res) => {
-    const { link } = req.body
-    const newName = 'photo' + Date.now() + '.jpg';
-    await imageDownloader.image({
-        url: link,
-        dest: __dirname+'/uploads' +newName,
-    });
-    res.json(newName);
-})
-
-//Connect to DB
-mongoose.set('strictQuery', false);
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        //listen for requests
-        app.listen(process.env.PORT, () => {
-        console.log('connected to db and Listening on', process.env.PORT, 'oyh!')
-})
-    })
-    .catch((error) => {
-        console.log(error)
-    })
-
-
-app.get('/api/test', (req,res) => {
-    mongoose.connect(process.env.MONGO_URL);
-    res.json('test ok');
-    });
+app.listen(8800, () => {
+  connect();
+  console.log("Backend server is running!");
+});

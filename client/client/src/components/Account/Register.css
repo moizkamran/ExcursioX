@@ -1,75 +1,64 @@
-.picture{
-  background-image: url('../../assets/makkahTower.jpg');
+.cssbuttons-io {
+  position: relative;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  width: 390px;
+  height: 50px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(to right, #07399E, #07399E);
+  transition: all 0.4s ease-in-out;
+  color: ghostwhite;
+  overflow: hidden;
 }
 
+.cssbuttons-io svg {
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 0.5em;
+}
 
-.video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-  }
-  
-  .video-background iframe {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    pointer-events: none;
-  }
-
-.formFloatContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    max-width: 500px;
-    margin: 0 auto;
-  
-  }
-
-  .formFloatContainer {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-.form3 {
-  border-radius: 35px;
+.cssbuttons-io span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+  display: inline-flex;
   align-items: center;
-  background-color: #ffffff50;
-  box-shadow: 0 15px 25px rgba(129, 124, 124, 0.2);
-  backdrop-filter: blur(10px);
-  color: #18181890;
-  
-  transition: background-color 0.5s ease;
+  justify-content: center;
 }
 
-.form3:hover {
-  background-color: #ffffff;
+.cssbuttons-io::before,
+.cssbuttons-io::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-
-.title {
-  color: black;
-  font-family: 'Hammersmith One', sans-serif;
-  justify-content: start;
-  align-items: center;
-  font-size: 47px;
+.cssbuttons-io::before {
+  content: "";
+  background: #000;
+  width: 120%;
+  left: -10%;
+  transform: skew(30deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
 }
 
-.input-area{
-  margin-top: -80px;
+.cssbuttons-io:hover::before {
+  transform: translate3d(100%, 0, 0);
 }
 
-.input-area > *{
-  margin-top: 10px;
+.cssbuttons-io:active {
+  transform: scale(0.95);
 }
 
-
+@media (max-width: 767px) {
+  .imageContainer {
+    display: none;
+  }
+}

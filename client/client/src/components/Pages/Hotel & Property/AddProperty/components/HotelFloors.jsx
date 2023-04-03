@@ -2,7 +2,6 @@ import { Button, Flex, Text, Title, UnstyledButton, Modal, Transition } from '@m
 import { IconAbacus, IconAbacusOff, IconBed, IconChevronDown, IconCopy, IconDiamond, IconDoor, IconEdit, IconPlus, IconSettingsAutomation, IconTrash } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useDisclosure } from '@mantine/hooks';
 
 import { updatePropertyDetails } from '../../../../../Redux/Slicers/propertySlice'
 import AddRoomForFloor from './AddRoomForFloor'
@@ -41,18 +40,20 @@ const HotelFloors = () => {
   //   setIsAddRoomModalOpen(true);
   // };
 
-const handleDeleteRoom = (floorIndex, roomId) => {
-  const newFloors = [...floors];
-  const targetFloor = newFloors[floorIndex];
-  const roomIndex = targetFloor.rooms.findIndex(room => room.id === roomId);
-  if (roomIndex !== -1) {
-    const newRooms = [...targetFloor.rooms];
-    newRooms.splice(roomIndex, 1);
-    const newFloor = { ...targetFloor, rooms: newRooms };
-    newFloors[floorIndex] = newFloor;
-    dispatch(updatePropertyDetails({ floors: newFloors }));
-  }
-};
+  const handleDeleteRoom = (floorIndex, roomId) => {
+    console.log('DELETE ROOM ' + roomId)
+    const newFloors = [...floors];
+    const targetFloor = newFloors[floorIndex];
+    const roomIndex = targetFloor.rooms.findIndex(room => room.roomId === roomId);
+    if (roomIndex !== -1) {
+      const newRooms = [...targetFloor.rooms];
+      newRooms.splice(roomIndex, 1);
+      const newFloor = { ...targetFloor, rooms: newRooms };
+      newFloors[floorIndex] = newFloor;
+      dispatch(updatePropertyDetails({ floors: newFloors }));
+    }
+  };
+  
 
   
   
@@ -68,6 +69,8 @@ const handleAddRoom = (floorIndex) => {
 };
   
  const [deleteFloorModal, setDeleteFloorModal] = useState(false);
+
+
 
   const handleDeleteFloor = (index) => {
     const newFloors = [...floors];
@@ -89,8 +92,7 @@ const handleAddRoom = (floorIndex) => {
        centered
        transitionProps={{ transition: 'pop', duration: 450, timingFunction: 'ease-in-out' }}
        closeOnClickOutside={false}
-      
-      radius="xl"
+       radius="xl"
        overlayProps={{
          opacity: 0.50,
          blur: 3,
@@ -104,7 +106,7 @@ const handleAddRoom = (floorIndex) => {
       </Modal>
     <Flex direction={'column'} p={20}>
 
-      <Flex justify={'space-between'}>
+      <Flex justify={'space-between'} align={'center'}>
           
           <Title fz={14}>Total Floors: {numFloors}</Title>
 
@@ -114,8 +116,8 @@ const handleAddRoom = (floorIndex) => {
 
 
         {numFloors < 1 && (
-          <Flex gap={20} direction={'column'} w={'80%'} h={300} bg={'#F1F1F1'} mt={20} p={20} justify={'center'} align={'center'} sx={{borderRadius: 25}}>
-            <IconAbacusOff size={200} color={'#B9B9B9'}/>
+          <Flex gap={20} direction={'column'} w={'100%'} h={300} bg={'#F1F1F1'} mt={20} justify={'center'} align={'center'} sx={{borderRadius: 25}}>
+            <IconAbacusOff size={150} color={'#B9B9B9'}/>
             <Text align='center'>Looks like no floors have been added <br /> Click the button to start adding some floors in your property.</Text>
             <Button onClick={addFloor}>Add Floor</Button>
           </Flex>
@@ -149,7 +151,7 @@ const handleAddRoom = (floorIndex) => {
         </Flex>
       </Flex>
      </Modal>
-    <Flex direction={'column'} style={{height: 300, width: '80%', border: '1px solid #07399E', backgroundColor: '#FAFAFA', borderRadius: 20, padding: 20, position: 'relative'}} mt={20}>
+    <Flex direction={'column'} style={{height: 300, width: '100%', border: '1px solid #07399E', backgroundColor: '#FAFAFA', borderRadius: 20, padding: 20, position: 'relative' }} mt={20}>
       {/* Floor Heading */}
       <Flex gap={20} direction={'row'}>
         <Text>{`Floor ${floorIndex + 1}`}</Text>
@@ -168,7 +170,8 @@ const handleAddRoom = (floorIndex) => {
                 roomName={room.roomClass + (room.type ? ` ${room.type}` : '') + ' with ' + room.roomView}/>
       <Flex justify={'center'} mt={19} gap={10} className={styles.roomActionsWrapper}>
         <Button> <IconEdit /></Button>
-        <Button onClick={() => handleDeleteRoom(floorIndex)}> <IconTrash /></Button>
+        <Button onClick={() => handleDeleteRoom(floorIndex, room.roomId)}> <IconTrash /></Button>
+
       </Flex>
     </Flex>
   </Flex>

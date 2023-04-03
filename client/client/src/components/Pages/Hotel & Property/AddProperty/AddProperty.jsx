@@ -62,16 +62,18 @@ const AddProperty = () => {
       return (
         <HotelFloors onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
       );
-    }  else if (page === 2 || page === 4 && type === "Hotel") {
+    }  else if (page === 2 || page === 3 && type === "Hotel") {
       return <PropertyLayoutAndPricing />;
-    } else if (page === 3) {
+    } else if (page === 3 || page === 4 && type === "Hotel" ) {
       return <PropertyFacilities />;
-    } else if (page === 4) {
+    } else if (page === 4 || page === 5 && type === "Hotel") {
       return <PropertyPhotos />;
     } else if (page === 5) {
       return <PropertyHouseRules />;
     } else if (page === 6) {
       return <PropertyPayments />;
+    } else if (page === 7) {
+      return <PropertyPreview />;
     } else {
       return <PropertySelection />;
     }

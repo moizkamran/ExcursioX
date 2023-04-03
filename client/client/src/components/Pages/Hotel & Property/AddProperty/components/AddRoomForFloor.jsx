@@ -1,9 +1,10 @@
-import { Button, Checkbox, Flex, Modal, NativeSelect, Radio, Text, TextInput, Title } from '@mantine/core'
-import { IconAddressBook, IconArrowsCross, IconCross, IconMinus, IconMoon, IconPlus, IconRocket, IconSquareRoundedX, IconUsers, IconX } from '@tabler/icons'
+import { Button, Checkbox, Container, Flex, Modal, NativeSelect, NumberInput, Radio, Text, TextInput, Title } from '@mantine/core'
+import { IconAddressBook, IconArrowsCross, IconCross, IconMinus, IconMoon, IconPlus, IconQuestionMark, IconRocket, IconSquareRoundedX, IconUserSearch, IconUsers, IconX } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRoomToFloor, updatePropertyDetails, updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
 import { RoomBox } from './Functions/RoomBox'
+
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -43,7 +44,6 @@ const handleRoomClass = (event) => {
     setRoomClassValues(roomClassValue.charAt(0).toUpperCase() + roomClassValue.slice(1));
 };
   
-
 
 const handleRoomView = (event) => {
     const roomViewValues = event.target.value;
@@ -94,9 +94,37 @@ const roomTypes = [
     { label: 'Double', value: 'Double' },
     { label: 'Triple', value: 'Triple' },
     { label: 'Quad', value: 'Quad' },
+    { label: 'Quint', value: 'Quint' },
+    { label: 'Hexa', value: 'Hexa' },
     { label: 'Family', value: 'Family' },
     { label: 'Studio', value: 'Studio' },
 ]
+
+const bedTypes = [
+  "Twin Beds / 90-130 cm wide",
+  "Queen Beds / 151-180 cm wide",
+  "King Beds / 181-210 cm wide",
+  "Full Beds / 131-150 cm wide",
+  "Bunk Beds / Variable size",
+  "Sofa Beds / Variable size",
+  "Crib / Variable size",
+  "Air Mattress / Variable size",
+  "Double Beds / Variable size",
+];
+
+const [numBeds, setNumBeds] = useState(1);
+
+const addBed = () => {
+  if (numBeds < 3) {
+    setNumBeds(numBeds + 1);
+  }
+};
+
+const removeBed = () => {
+  if (numBeds > 1) {
+    setNumBeds(numBeds - 1);
+  }
+};
 
 const [roomCount, setRoomCount] = useState(0);
 
@@ -116,36 +144,37 @@ const handleSave = () => {
       return;
     }
   
-    const newRooms = [...rooms];
-  
-    // Add the original room
-    const newRoom = {
-      ...room,
-      roomId: uuidv4(),
-      type: roomType,
-      basePrice: basePrice,
-      roomSize: roomSize,
-      roomClass: roomClassValues,
-      roomView: roomViewValues,
+const newRooms = [...rooms];
+
+// Add the original room
+const newRoom = {
+  ...room,
+  roomId: uuidv4(),
+  type: roomType,
+  basePrice: basePrice,
+  roomSize: roomSize,
+  roomClass: roomClassValues,
+  roomView: roomViewValues,
+};
+  newRooms[roomIndex] = newRoom;
+
+  // Add additional rooms
+  for (let i = 1; i <= roomCount; i++) {
+    const additionalRoom = {
+      ...newRoom,
+      roomId: uuidv4(), // change from "id" to "roomId"
+      roomNumber: roomIndex + i + 1,
     };
-    newRooms[roomIndex] = newRoom;
-  
-    // Add additional rooms
-    for (let i = 1; i <= roomCount; i++) {
-      const additionalRoom = {
-        ...newRoom,
-        id: uuidv4(),
-        roomNumber: roomIndex + i + 1,
-      };
-      newRooms.push(additionalRoom);
-    }
-  
-    const newFloors = [...floors];
-    newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
-    const newPropertyDetails = { ...propertyDetails, floors: newFloors };
-    dispatch(updatePropertyDetails(newPropertyDetails));
-    onModalClose(false);
-  };
+    newRooms.push(additionalRoom);
+  }
+
+const newFloors = [...floors];
+newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
+const newPropertyDetails = { ...propertyDetails, floors: newFloors };
+dispatch(updatePropertyDetails(newPropertyDetails));
+onModalClose(false);
+
+};
   
   
   const roomName = (typeof roomClassValues === 'string' ? roomClassValues : '') + (roomType ? ` ${roomType}` : '') + (typeof roomViewValues === 'string' ? ' with ' + roomViewValues : '');
@@ -182,7 +211,7 @@ const handleSave = () => {
             <Flex direction={'column'} >
                 <Title fz={25}>Your Configuration</Title>
                 <Text>Adding Room for {floors[floorIndex].name}</Text>
-                    <Flex p={50}>
+                    <Flex p={40}>
                     <RoomBox 
   roomType={roomType} 
   roomNumber={roomIndex+1} 
@@ -195,6 +224,7 @@ const handleSave = () => {
                     </Flex>
                 <Flex direction={'column'}>
                     <Text>Select Room Type</Text>
+
                     <NativeSelect
                                 data={roomTypes}
                                 radius="md"
@@ -205,11 +235,89 @@ const handleSave = () => {
                                 />
                 </Flex>
 
-                <Flex direction={'column'} mt={10} mb={20}>
+                <Flex direction={'column'} mt={10} mb={10}>
                     <Text>Room Size</Text>
                     <TextInput radius={'md'} color={'black'} w={200} value={roomSize} onChange={handleRoomSizeChange}/>
                 </Flex>
                 
+
+                <Flex mb={20}>
+                      <div>
+                        <Text>
+                          What Kind of beds are available in this room?{" "}
+                        </Text>
+                        {Array.from({ length: numBeds }).map((_, bedIndex) => (
+                          <Flex
+                            key={bedIndex}
+                            gap={10}
+                            align="center"
+                            mt={10}
+                          >
+                            <NativeSelect
+                              data={bedTypes}
+                              radius="md"
+                            />
+                            {bedIndex === numBeds - 1 && (
+                              <Flex>
+                                {numBeds > 1 && (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      color: "white",
+                                      backgroundColor: "red",
+                                      borderRadius: "40px",
+                                      height: "25px",
+                                      width: "25px",
+                                    }}
+                                    onClick={removeBed}
+                                  >
+                                    <IconMinus
+                                      size={15}
+                                      className="IconBed"
+                                      cursor={"pointer"}
+                                    />
+                                  </div>
+                                )}
+                              </Flex>
+                            )}
+                          </Flex>
+                        ))}
+                        {/*  */}
+                        <Flex
+                          mt={10}
+                          alignItems="center"
+                          justifyContent="center"
+                          gap={2}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "white",
+                              backgroundColor: "#07399E",
+                              borderRadius: "40px",
+                              height: "25px",
+                              width: "25px",
+                            }}
+                          >
+                            <IconPlus
+                              size={15}
+                              className="IconBed"
+                              onClick={addBed}
+                              cursor={"pointer"}
+                            />
+                          </div>
+                          
+                          <Text ml={10} bold size={"md"}>
+                            Add Another Bed
+                          </Text>
+                        </Flex>
+                      </div>
+                    </Flex>
+
                 <BasePrice1 basePrice={basePrice} handleBasePriceChange={handleBasePriceChange} />
 
             </Flex>
