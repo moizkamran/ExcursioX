@@ -3,7 +3,10 @@ import LogoImage from "../../assets/booking-souq-black.svg";
 import Popup from "../Popovers/forgot-password";
 import { IconArrowBack, IconKey } from "@tabler/icons";
 import { useEffect, useState } from "react";
-import { useLogin } from "../../hooks/useLogin";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
+import { useForm } from '@mantine/form' 
 
 
 //main stylesheet import
@@ -25,7 +28,9 @@ import {
   ActionIcon,
   Flex,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import newRequest from "../../utils/newRequest";
+import { loginFailure, loginStart, loginSuccess } from "../../Redux/Slicers/userSlice";
 
 
 const Login = () => {
@@ -45,16 +50,25 @@ const Login = () => {
     setBackgroundImage(randomImage);
   }, []);
 
-  const {login, error, isLoading} = useLogin()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    await login(email, password)
-  }
+    e.preventDefault();
+    dispatch(loginStart());
+    try {
+      const res = await axios.post("http://localhost:8800/api/auth/login", { email, password });
+      dispatch(loginSuccess(res.data));
+      navigate("/")
+    } catch (err) {
+      console.log(err.response.data);
+      dispatch(loginFailure());
+    }
+  };
 
   return (
     <>
@@ -104,7 +118,7 @@ const Login = () => {
                   Forgot password?
                 </Anchor>
               </Group>
-              <Button className="button" type="submit" disabled={isLoading}>
+              <Button className="button" type="submit" disabled={error}>
                 Sign In
               </Button>
               <Button
@@ -117,7 +131,7 @@ const Login = () => {
                 SSO
               </Button>
             </form>
-
+            {error && <Text color="red">{error}</Text>}
             <Text align="center" mt="md">
               Don&apos;t have an account yet?
               <Text ml="10px" to="/register" component={Link} c={'#07399E'}>

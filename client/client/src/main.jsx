@@ -6,7 +6,6 @@ import ReactDOM from "react-dom/client";
 import store from "./Redux/Store/store";
 import { MantineProvider } from "@mantine/core";
 import { Provider } from "react-redux";
-import { AuthContextProvider } from "./context/AuthContext";
 
 //REDUX STORE
 
@@ -14,7 +13,6 @@ import { AuthContextProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <AuthContextProvider>
       <MantineProvider
         theme={{
           colors: {
@@ -55,6 +53,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       >
         <App />
       </MantineProvider>
-    </AuthContextProvider>
   </Provider>
 );
