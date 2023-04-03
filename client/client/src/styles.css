@@ -3,6 +3,8 @@
 /* Fredoka font on cloud, please make it local during deployement*/
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 
 :root{
   /* Colors */
@@ -33,7 +35,6 @@ a {
 
 .imageContainer {
   width: 50%;
-  background-image: url(./assets/Image.png);
   background-size: cover;
   background-position: center;
 }
@@ -266,7 +267,6 @@ background: rgb(76, 114, 236);
   animation-duration: 0.4s;
   animation-fill-mode: both;;
 }
-
 @keyframes slide-in-left {
   0% {
     opacity: 0;
@@ -328,4 +328,24 @@ background: rgb(76, 114, 236);
   100% {
     transform: translateY(100px);
   }
+}
+
+.facilityPill{
+  width: 9rem;
+  background-color: #F3F3F3;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 10px;
+  border-radius: 25px;
+  gap: 5px;
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+}
+
+.facilityPill:hover {
+  background-color: #07399E;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }

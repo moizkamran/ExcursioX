@@ -8,7 +8,6 @@ import PlaneIcon from "../../assets/icons/plane.svg";
 import { Box, Button, Card, Progress, ScrollArea, Text, Title } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight, IconBusinessplan, IconDoorEnter, IconDoorExit, IconMapPin, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconSwitch2, IconWorld } from "@tabler/icons";
 import { useState } from "react";
-import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Body = () => {
   const [count, setCount] = useState(0);

@@ -1,0 +1,226 @@
+.card {
+    border: none;
+    color: white;
+    padding: 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+  
+.card:hover {
+  transform: scale(0.95);
+}
+
+.card:active {
+  transform: scale(1);
+  transition: all 0.2s ease-in;
+}
+
+.gridBox {
+  background-color: #F1F1F1;
+  padding: 38px 15px 38px 15px;
+  cursor: pointer;
+  border-radius: 15px;
+  max-width: 400px;
+  height: 100px;
+  transition: all 0.2s ease-out;
+  position: relative;
+}
+
+.gridBox:hover {
+  transform: scale(0.95);
+  background-color: #083eab;
+  color: white;
+}
+
+.gridBox:hover::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border-radius: 15px;
+  box-shadow: 0 0 0 0 rgba(97, 37, 236, 0.733);
+  animation: pulse 1s infinite;
+}
+
+.gridBox.selected{
+  background-color: #083eab;
+  color: white;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(14, 10, 231, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.delete{
+  display: flex;
+  gap: 5px;
+  min-height: 20px;
+  height: max-content;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  max-height: max-content;
+  padding: 5px 10px;
+  border-radius: 15px;
+  transition: all 0.2s ease-out;
+}
+
+.delete:hover{
+  transform: scale(0.95);
+  background-color: red;
+  color: white;
+}
+
+.buttonA{
+  display: flex;
+  gap: 5px;
+  min-height: 20px;
+  height: max-content;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  max-height: max-content;
+  padding: 5px 10px;
+  border-radius: 15px;
+  transition: all 0.2s ease-out;
+}
+
+.buttonA:hover{
+  transform: scale(0.95);
+  background-color: #083eab;
+  color: white;
+}
+
+.delete:active, .buttonA:active {
+  transform: scale(0.9);
+  transition: all 0.1s ease-in;
+}
+
+.roomBox{
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+  color: white;
+  width: 190px;
+  height: 210px;
+  border-radius: 25px;
+  transition: all 0.2s ease-out;
+}
+
+.roomBox:hover{
+  transform: scale(0.95);
+  background-color: #0a0a0a;
+}
+
+.moreRooms{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 5px 2px;
+gap: 10px;
+position: absolute;
+right: 0;
+margin-right: -23px;
+color: rgb(255, 255, 255);
+width: 20px;
+height: 200px;
+transition: all 0.2s ease-out;
+background: #000000;
+border-radius: 0px 10px 10px 0px;
+}
+
+.moreRooms:hover{
+  background: #313131;
+  color: white;
+}
+
+.hoverClass{
+  transition: all 0.2s ease-out;
+}
+
+.hoverClass:hover{
+  transform: scale(0.9);
+  color: #083eab;
+}
+
+.hoverClass:active {
+  transform: scale(0.7);
+  background-color: #c4c4c4;
+  border-radius: 25px;
+  transition: all 0.1s ease-in;
+}
+
+.addRoom{
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+  color: white;
+  aspect-ratio: 1/1;
+  width: 150px;
+  height: 210px;
+  border-radius: 25px;
+  border: 4px dashed #07399E;
+  transition: all 0.2s ease-in-out;
+}
+
+.addRoom:hover{
+  transform: scale(0.95);
+  border: 2px dashed #07399E;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: all 0.2s ease-out;
+  background-color: #083eab; /* replace with desired background color */
+}
+
+.circle:hover {
+  transform: scale(2);
+  background-color: #0a0a0a; /* replace with desired background color */
+}
+
+
+.roomActionsWrapper{
+  opacity: 0;
+  transition: all 0.2s ease-out;
+}
+
+.roomActionsWrapper:hover{
+  opacity: 1;
+}
+
+.roomActionsWrapper > Button{
+  transition: all 0.2s ease-out;
+  background-color: #000000;
+}
+.roomActionsWrapper > Button:hover{
+  transform: scale(0.9);
+  background-color: #000000;
+}

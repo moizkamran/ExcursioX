@@ -8,8 +8,6 @@ import hotelIcon from "../../assets/icons/bed.svg";
 import passportIcon from "../../assets/icons/passport.svg";
 import planeIcon from "../../assets/icons/plane.svg";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { useLogout } from "../../hooks/useLogout";
 import { CustomLink } from "./Dashboard";
 
 import {
@@ -45,12 +43,6 @@ import {
 
 
 function NavbarItems() {
-  const { user } = useAuthContext();
-  const { logout } = useLogout();
-  const handleLogout = () => {
-    logout();
-  };
-
   const [open, setOpen] = useState(false);
 
   return (
@@ -155,11 +147,11 @@ function NavbarItems() {
                 }}
               >
                 <Text fw={700}>Abdulmoiz Kamran</Text>
-                {user && (
+                {/* {user && (
                   <Text size="sm" color="dimmed">
                     {user.email}
                   </Text>
-                )}
+                )} */}
               </div>
             </div>
             <div
@@ -251,7 +243,7 @@ function NavbarItems() {
                   alignItems: "center",
                   padding: "10px 0",
                 }}
-                onClick={handleLogout}
+                // onClick={handleLogout}
               >
                 <IconLogout size={25} style={{ marginRight: 10 }} />
                 <Text style={{ flex: 1 }}>Logout</Text>

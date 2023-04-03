@@ -1,57 +1,36 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import { IconAlertCircle, IconQuestionCircle, IconSearch } from "@tabler/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePropertyDetails } from "../../../../../Redux/Slicers/propertySlice";
 
 import {
-  Group,
   Input,
-  TextInput,
   Title,
   Tooltip,
   Text,
   Radio,
   Flex,
   Button,
-  Container,
-  ActionIcon,
   NativeSelect,
-  Select,
-  Avatar,
+  Rating,
 } from "@mantine/core";
-import {
-  IconAlertCircle,
-  IconArrowBadgeLeft,
-  IconArrowBadgeRight,
-  IconQuestionCircle,
-  IconSearch,
-  IconMoon,
-  IconArrowLeft,
-  IconArrowRight,
-} from "@tabler/icons";
 
-const data = Array(50)
-  .fill(0)
-  .map((_, index) => `Item ${index}`);
-
-export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
-  const [form, setForm] = useState({
-    propertyName: "",
-    propertyContact: "",
-    contact: "",
-    company: "",
-    channel: " ",
-    streetAddress: "",
-    addressLine2: "",
-    country: "",
-  });
-  const [isCompanyOwned, setIsCompanyOwned] = useState(false);
-  const [hasChannelManager, setHasChannelManager] = useState(false);
+export const PropertyDetails = ({ type }) => {
+  const dispatch = useDispatch();
+  const { propertyDetails } = useSelector((state) => state.property);
+  const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
+  const hasChannelManeger = useSelector(
+    (state) => propertyDetails.hasChannelManeger
+  );
 
   const [countryState, setCountryState] = useState({
     loading: false,
     countries: [],
     errorMessage: "",
   });
+
+  const { countries } = countryState;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,18 +60,6 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
 
     fetchData();
   }, []);
-  const { loading, errorMessage, countries } = countryState;
-
-  const [selectedCountry, setSelectedCountry] = useState();
-
-  //   find selected country data
-  //search selected country
-  const searchSelectedCountry = countries.find((obj) => {
-    if (obj.name.common === selectedCountry) {
-      return true;
-    }
-    return false;
-  });
 
   const countryOptions = countries.map((country) => ({
     value: country.name.common,
@@ -118,9 +85,12 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Property Name
               </Text>
               <Input
-                onChange={(e) => {
-                  setForm({ ...form, PropertyName: e.target.value });
-
+                defaultValue={propertyDetails.propertyName}
+                onChange={(v) => {
+                  console.log(v.target.value);
+                  dispatch(
+                    updatePropertyDetails({ propertyName: v.target.value })
+                  );
                 }}
                 radius={"md"}
                 size="sm"
@@ -142,13 +112,17 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Property Contact Person Name
               </Text>
               <Input
+                defaultValue={propertyDetails.propertyContact}
+                onChange={(v) => {
+                  console.log(v.target.value);
+                  dispatch(
+                    updatePropertyDetails({ propertyContact: v.target.value })
+                  );
+                }}
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
-                onChange={(e) => {
-                  setForm({ ...form, propertyContact: e.target.value });
-
-                }}
+                name="propertyContact"
                 rightSection={
                   <Tooltip label="This is public" position="top-end" withArrow>
                     <div>
@@ -166,11 +140,13 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Contact Number
               </Text>
               <Input
-                radius={"md"}
-                onChange={(e) => {
-                  setForm({ ...form, company: e.target.value });
-
+                onChange={(v) => {
+                  dispatch(
+                    updatePropertyDetails({ contactNumber: v.target.value })
+                  );
                 }}
+                radius={"md"}
+                name="contactName"
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
                 rightSection={
@@ -185,6 +161,8 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 }
               />
             </div>
+            <Flex>{type === "Hotel" ? <RatingModule /> : null}</Flex>
+
             <div style={{ marginTop: 10 }}>
               <div
                 style={{
@@ -217,22 +195,28 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
               >
                 <Radio
                   label="Yes"
-                  value="yes"
-                  name="company-owned"
-                  onClick={(e) => {
-                    setForm({ ...form, contact: e.target.value });
-                    console.log(form)
+                  value="Yes"
+                  name="isCompanyOwned"
+                  defaultChecked={isCompanyOwned === "Yes"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        isCompanyOwned: event.target.value,
+                      })
+                    );
                   }}
-                  onChange={() => setIsCompanyOwned(true)}
                 />
                 <Radio
-                  label="Yes"
-                  value="yes"
-                  name="company-owned"
-                  onChange={() => setIsCompanyOwned(false)}
-                  onClick={(e) => {
-                    setForm({ ...form, contact: e.target.value });
-                    console.log(form)
+                  label="No"
+                  value="No"
+                  name="isCompanyOwned"
+                  defaultChecked={isCompanyOwned === "No"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        isCompanyOwned: event.target.value,
+                      })
+                    );
                   }}
                 />
               </div>
@@ -247,7 +231,9 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 }}
               >
                 <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
-                  Do you use a channel manager?
+                  {type === "Hotel"
+                    ? "Do you own multiple hotels?"
+                    : "Do you use a channel manager?"}
                 </Text>
                 <Tooltip label="This is public" position="top-end" withArrow>
                   <div>
@@ -269,23 +255,29 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
               >
                 <Radio
                   label="Yes"
-                  value="yes"
-                  name="channel-mananger"
-                  onClick={(e) => {
-                    setForm({ ...form, channel: e.target.value });
-                    console.log(form)
+                  value="Yes"
+                  name="hasChannelManeger"
+                  defaultChecked={hasChannelManeger === "Yes"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        hasChannelManeger: event.target.value,
+                      })
+                    );
                   }}
-                  onChange={() => setHasChannelManager(true)}
                 />
                 <Radio
                   label="No"
-                  value="no"
-                  onClick={(e) => {
-                    setForm({ ...form, channel: e.target.value });
-                    console.log(form)
+                  value="No"
+                  name="hasChannelManeger"
+                  defaultChecked={hasChannelManeger === "No"}
+                  onChange={(event) => {
+                    dispatch(
+                      updatePropertyDetails({
+                        hasChannelManeger: event.target.value,
+                      })
+                    );
                   }}
-                  name="channel-mananger"
-                  onChange={() => setHasChannelManager(false)}
                 />
               </div>
             </div>
@@ -300,10 +292,12 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Street Address
               </Text>
               <Input
-                onChange={(e) => {
-                  setForm({ ...form, streetAddress: e.target.value });
-
+                onChange={(v) => {
+                  dispatch(
+                    updatePropertyDetails({ streetAddress: v.target.value })
+                  );
                 }}
+                name="streetAddress"
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -324,10 +318,12 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                 Address Line 2
               </Text>
               <Input
-                onChange={(e) => {
-                  setForm({ ...form, addressLine2: e.target.value });
-
+                onChange={(v) => {
+                  dispatch(
+                    updatePropertyDetails({ addressLine2: v.target.value })
+                  );
                 }}
+                name="addressLine2"
                 radius={"md"}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -349,21 +345,17 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
                   Country
                 </Text>
                 <Flex gap={10}>
-                  <Select
+                  <NativeSelect
+                    w={200}
+                    radius={"md"}
+                    onChange={(v) => {
+                      dispatch(
+                        updatePropertyDetails({ country: v.target.value })
+                      );
+                    }}
                     data={countryOptions}
-                    value={selectedCountry}
-                    searchable
-                    onChange={(value) => {
-                      setForm(value)
-                      console.log(form)
-                    }
-
-                    }
-
+                    name="country"
                   />
-                  {searchSelectedCountry && (
-                    <Avatar src={searchSelectedCountry.flags.svg} radius="xs" />
-                  )}
                 </Flex>
               </div>
             </div>
@@ -472,48 +464,49 @@ export const PropertyDetails = ({ onButtonClick, onBackClick }) => {
             </div>
           </div>
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "flex-end",
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            marginRight: 20,
-            marginBottom: 20,
-          }}
-        >
-          <ActionIcon
-            onClick={onBackClick}
-            radius="xl"
-            variant="filled"
-            style={{
-              backgroundColor: "black",
-              height: "50px",
-              width: "50px",
-              marginRight: 10,
-            }}
-          >
-            <IconArrowLeft size="1.5rem" />
-          </ActionIcon>
-          <Button
-            onClick={onButtonClick}
-            rightIcon={<IconArrowRight />}
-            style={{
-              backgroundColor: "#07399E",
-              height: "50px",
-              width: "200px",
-            }}
-          >
-            Next Step
-          </Button>
-        </div>
       </div>
     </>
   );
 };
 
 export default PropertyDetails;
+
+
+function RatingModule({}) {
+  return (<div style={{
+flexDirection: 'column',
+height: 100,
+width: 400,
+paddingTop: 20,
+paddingBottom: 20,
+display: 'flex',
+alignContent: 'center',
+alignItems: 'center',
+backgroundColor: '#EAEAEA',
+borderRadius: 16,
+overflow: 'hidden',
+marginTop: 20,
+position: "relative"
+}}>
+<Text fz={20}>Star Rating</Text>
+<Rating defaultValue={0} color="orange" size="lg" />
+<div style={{
+marginTop: 10,
+position: "absolute",
+bottom: 0,
+width: '100%',
+display: 'flex',
+margin: 0,
+padding: 3,
+backgroundColor: '#07399E',
+borderRadius: '12px 12px 17px 17px',
+justifyContent: 'center',
+display: 'flex',
+alignContent: 'center',
+alignItems: 'center'
+}}>
+  <Text c={'white'} fz={15} fw={400} w={'60%'} align={'center'}>You’ll be required to submit official documents later</Text>
+</div>
+</div>);
+}
+  
