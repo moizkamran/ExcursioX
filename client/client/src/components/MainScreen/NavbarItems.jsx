@@ -7,7 +7,7 @@ import dashboardIcon from "../../assets/icons/dashboard.svg";
 import hotelIcon from "../../assets/icons/bed.svg";
 import passportIcon from "../../assets/icons/passport.svg";
 import planeIcon from "../../assets/icons/plane.svg";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { CustomLink } from "./Dashboard";
 
 import {
@@ -40,10 +40,20 @@ import {
   Tooltip,
   UnstyledButton,
 } from "@mantine/core";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../Redux/Slicers/userSlice";
 
 
 function NavbarItems() {
   const [open, setOpen] = useState(false);
+
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
 
   return (
     <div
@@ -146,12 +156,12 @@ function NavbarItems() {
                   marginLeft: 10,
                 }}
               >
-                <Text fw={700}>Abdulmoiz Kamran</Text>
-                {/* {user && (
+                <Text fw={400} c="black">{user.firstName} {user.lastName}</Text>
+                {user && (
                   <Text size="sm" color="dimmed">
                     {user.email}
                   </Text>
-                )} */}
+                )}
               </div>
             </div>
             <div
@@ -164,7 +174,7 @@ function NavbarItems() {
               }}
             >
               <IconMoon size={25} color="black" style={{ marginRight: 10 }} />
-              <Text style={{ flex: 1 }}>Dark Mode</Text>
+              <Text style={{ flex: 1 }} c="black">Dark Mode</Text>
               <Switch
                 color="dark"
                 size="md"
@@ -243,14 +253,14 @@ function NavbarItems() {
                   alignItems: "center",
                   padding: "10px 0",
                 }}
-                // onClick={handleLogout}
+                onClick={handleLogout}
               >
                 <IconLogout size={25} style={{ marginRight: 10 }} />
                 <Text style={{ flex: 1 }}>Logout</Text>
               </UnstyledButton>
             </div>
             <Text size="xs" color="dimmed">
-              Version 1.2 Alpha Phase NFR
+              DevF: {user._id}
             </Text>
           </HoverCard.Dropdown>
         </HoverCard>

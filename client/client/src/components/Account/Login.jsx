@@ -61,10 +61,11 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post("http://localhost:8800/api/auth/login", { email, password });
+      const res = await axios.post("https://winter-star-599.fly.dev/api/auth/login", { email, password });
       dispatch(loginSuccess(res.data));
       navigate("/")
     } catch (err) {
+      setError(err.response.data);
       console.log(err.response.data);
       dispatch(loginFailure());
     }
@@ -118,7 +119,7 @@ const Login = () => {
                   Forgot password?
                 </Anchor>
               </Group>
-              <Button className="button" type="submit" disabled={error}>
+              <Button className="button" type="submit">
                 Sign In
               </Button>
               <Button
@@ -131,7 +132,7 @@ const Login = () => {
                 SSO
               </Button>
             </form>
-            {error && <Text color="red">{error}</Text>}
+            <Text>{error}</Text>
             <Text align="center" mt="md">
               Don&apos;t have an account yet?
               <Text ml="10px" to="/register" component={Link} c={'#07399E'}>

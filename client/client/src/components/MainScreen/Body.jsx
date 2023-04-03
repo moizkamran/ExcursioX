@@ -8,9 +8,11 @@ import PlaneIcon from "../../assets/icons/plane.svg";
 import { Box, Button, Card, Progress, ScrollArea, Text, Title } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight, IconBusinessplan, IconDoorEnter, IconDoorExit, IconMapPin, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconSwitch2, IconWorld } from "@tabler/icons";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Body = () => {
   const [count, setCount] = useState(0);
+  const userName = useSelector((state) => state.user.currentUser.firstName);
   return (
     <>
 
@@ -24,7 +26,7 @@ const Body = () => {
       >
 
         <Text style={{ marginBottom: 10 }}>Home {'>'} Dashboard</Text>
-        <Title order={2}>Welcome Back,!</Title>
+        <Title order={2}>Welcome Back, {userName}!</Title>
         <div style={{ display: "flex", alignItems: "center", marginTop: 20 }}>
           <Title order={4} style={{ marginRight: 10 }}>
             Today's Overview
