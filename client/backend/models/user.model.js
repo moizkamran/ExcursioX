@@ -9,12 +9,11 @@ const userSchema = new Schema({
   firstName: {
     type: String,
     required: true,
-    unique: true,
   },
   lastName: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   email: {
     type: String,
@@ -27,7 +26,6 @@ const userSchema = new Schema({
   },
   img: {
     type: String,
-    required: false,
   },
   country: {
     type: String,
@@ -42,6 +40,10 @@ const userSchema = new Schema({
     default:false
   },
   isPlanMember: {
+    type: Boolean,
+    default:false
+  },
+  fromGoogle: {
     type: Boolean,
     default:false
   },

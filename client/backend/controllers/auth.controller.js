@@ -72,18 +72,7 @@ export const googleAuth = async (req, res, next) => {
         .status(200)
         .json(user._doc);
     } else {
-      const newUser = new User({
-        ...req.body,
-        fromGoogle: true,
-      });
-      const savedUser = await newUser.save();
-      const token = jwt.sign({ id: savedUser._id }, process.env.JWT_KEY);
-      res
-        .cookie("access_token", token, {
-          httpOnly: true,
-        })
-        .status(200)
-        .json(savedUser._doc);
+      return next(createError(404, "No account linked with Google!"));
     }
   } catch (err) {
     next(err);
