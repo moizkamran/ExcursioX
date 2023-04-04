@@ -1,7 +1,7 @@
 import "../../styles.css";
 import LogoImage from "../../assets/booking-souq-black.svg";
 import AppleIcon from "../../assets/icons/apple.png";
-import GoogleIcon from "../../assets/icons/Google.png";
+import GoogleIcon from "../../assets/icons/google.png";
 import MicrosoftIcon from "../../assets/icons/microsoft.png";
 import Popup from "../Popovers/forgot-password";
 import { IconArrowBack, IconBrandGoogle, IconKey } from "@tabler/icons";
