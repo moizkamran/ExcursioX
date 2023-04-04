@@ -4,8 +4,6 @@ import Popup from "../Popovers/forgot-password";
 import { IconArrowBack, IconKey } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
-
 import { useForm } from '@mantine/form' 
 
 
@@ -61,8 +59,11 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post("https://winter-star-599.fly.dev/api/auth/login", { email, password });
-      dispatch(loginSuccess(res.data));
+      const res = await newRequest.post("/auth/login", { 
+        email, password
+       },
+       );
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
       navigate("/")
     } catch (err) {
       setError(err.response.data);

@@ -7,7 +7,7 @@ import dashboardIcon from "../../assets/icons/dashboard.svg";
 import hotelIcon from "../../assets/icons/bed.svg";
 import passportIcon from "../../assets/icons/passport.svg";
 import planeIcon from "../../assets/icons/plane.svg";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { CustomLink } from "./Dashboard";
 
 import {
@@ -42,16 +42,26 @@ import {
 } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/Slicers/userSlice";
+import newRequest from "../../utils/newRequest";
 
 
 function NavbarItems() {
   const [open, setOpen] = useState(false);
 
-  const user = useSelector((state) => state.user.currentUser);
+  const user = JSON.parse(localStorage.getItem('currentUser'))
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      dispatch(logout());
+      await newRequest.post("/auth/logout");
+      localStorage.removeItem("currentUser");
+      navigate("/enterprise");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
 
@@ -264,8 +274,6 @@ function NavbarItems() {
             </Text>
           </HoverCard.Dropdown>
         </HoverCard>
-
-
         <ActionIcon 
   size="lg" 
   radius="xl" 
