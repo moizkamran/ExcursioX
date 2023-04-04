@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 const Body = () => {
   const [count, setCount] = useState(0);
-  const user = JSON.parse(localStorage.getItem('currentUser'))
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <>
 

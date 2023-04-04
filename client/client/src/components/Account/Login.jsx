@@ -63,7 +63,7 @@ const Login = () => {
         email, password
        },
        );
-      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      dispatch(loginSuccess(res.data));
       navigate("/")
     } catch (err) {
       setError(err.response.data);

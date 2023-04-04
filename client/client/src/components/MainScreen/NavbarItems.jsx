@@ -48,7 +48,7 @@ import newRequest from "../../utils/newRequest";
 function NavbarItems() {
   const [open, setOpen] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem('currentUser'))
+  const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();

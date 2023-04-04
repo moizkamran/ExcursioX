@@ -3,9 +3,10 @@ import "./styles.css";
 import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import store from "./Redux/Store/store";
+import store, { persistor } from "./Redux/Store/store";
 import { MantineProvider } from "@mantine/core";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 //REDUX STORE
 
@@ -13,6 +14,7 @@ import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
       <MantineProvider
         theme={{
           colors: {
@@ -53,5 +55,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       >
         <App />
       </MantineProvider>
+      </PersistGate>
   </Provider>
 );
