@@ -55,7 +55,14 @@ export const PropertyHouseRules = () => {
         dispatch(updatePropertyHouseRules({ chipNumberTo: chipNumberTo, valueTo: valueTo }));
     };
 
+    const smoking = useSelector((state) => state.property.propertyHouseRules.smoking);
+    const accomodate = useSelector((state) => state.property.propertyHouseRules.accomodate);
+    const pets = useSelector((state) => state.property.propertyHouseRules.pets);
 
+    const handleRadioChange = (event) => {
+        const { name, value } = event.target;
+        dispatch(updatePropertyHouseRules({ [name]: value }));
+    };;
     return (
         <>
             <div style={{ padding: 20 }}>
@@ -402,8 +409,25 @@ export const PropertyHouseRules = () => {
                                                 marginTop: 10,
                                             }}
                                         >
-                                            <Radio label="Yes" color="dark" value="yes" />
-                                            <Radio label="No" color="dark" value="no" />
+                                            <Radio
+                                                onChange={(event) => {
+                                                    dispatch(updatePropertyHouseRules({ smoking: event.target.value }));
+                                                }}
+                                                label="Yes"
+                                                color="dark"
+                                                value="yes"
+                                                checked={smoking === "yes"}
+                                            />
+
+                                            <Radio
+                                                onChange={(event) => {
+                                                    dispatch(updatePropertyHouseRules({ smoking: event.target.value }));
+                                                }}
+                                                label="No"
+                                                color="dark"
+                                                value="no"
+                                                checked={smoking === "no"}
+                                            />
                                         </div>
                                     </div>
                                     <div>
@@ -451,8 +475,25 @@ export const PropertyHouseRules = () => {
                                                 marginTop: 10,
                                             }}
                                         >
-                                            <Radio label="Yes" color="dark" value="yes" />
-                                            <Radio label="No" color="dark" value="no" />
+                                            <Radio
+                                                onChange={(e) => {
+                                                    dispatch(updatePropertyHouseRules({ accomodate: e.target.value }));
+                                                }}
+                                                label="Yes"
+                                                color="dark"
+                                                value="yes"
+                                                checked={accomodate === "yes"}
+                                            />
+
+                                            <Radio
+                                                onChange={(e) => {
+                                                    dispatch(updatePropertyHouseRules({ accomodate: e.target.value }));
+                                                }}
+                                                label="No"
+                                                color="dark"
+                                                value="no"
+                                                checked={accomodate === "no"}
+                                            />
                                         </div>
                                     </div>
                                     <div>
@@ -498,8 +539,25 @@ export const PropertyHouseRules = () => {
                                                 marginTop: 10,
                                             }}
                                         >
-                                            <Radio label="Yes" color="dark" value="yes" />
-                                            <Radio label="No" color="dark" value="no" />
+                                            <Radio
+                                                onChange={(e) => {
+                                                    dispatch(updatePropertyHouseRules({ pets: e.target.value }));
+                                                }}
+                                                label="Yes"
+                                                color="dark"
+                                                value="yes"
+                                                checked={pets === "yes"}
+                                            />
+
+                                            <Radio
+                                                onChange={(e) => {
+                                                    dispatch(updatePropertyHouseRules({ pets: e.target.value }));
+                                                }}
+                                                label="No"
+                                                color="dark"
+                                                value="no"
+                                                checked={pets === "no"}
+                                            />
                                         </div>
                                     </div>
                                 </Flex>

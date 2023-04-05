@@ -41,7 +41,18 @@ export const initialState = {
     // Languages
     languages: [],
     //Facilities
-    facilities: [],
+    facilities: {
+      freeWifi: false,
+      bar: false,
+      sauna: false,
+      garden: false,
+      terrace: false,
+      noSmokingRooms: false,
+      familyRooms: false,
+      hotTub: false,
+      airConditioning: false,
+      swimmingPool: false,
+    },
   },
   propertyPhotos: {
     extraBed: "",
@@ -67,6 +78,9 @@ export const initialState = {
     photos: [],
   },
   propertyHouseRules: {
+    smoking: "",
+    accomodate: "",
+    pets: "",
     guestArrivalChipsFrom: {
       1: "",
       2: "",
@@ -126,11 +140,15 @@ const propertySlice = createSlice({
       };
     },
     updatePropertyFacilites: (state, action) => {
+      const { facilities } = action.payload;
       return {
         ...state,
         propertyFacilites: {
           ...state.propertyFacilites,
-          ...action.payload,
+          facilities: {
+            ...state.propertyFacilites.facilities,
+            ...facilities,
+          },
         },
       };
     },
@@ -163,9 +181,16 @@ const propertySlice = createSlice({
         chipNumberTo1,
         valueTo1,
       } = action.payload;
+      const { smoking, accomodate, pets } = action.payload;
+
       return {
         ...state,
         propertyHouseRules: {
+          ...state.propertyHouseRules,
+          smoking,
+          accomodate,
+          pets,
+
           guestArrivalChipsFrom: {
             ...state.propertyHouseRules.guestArrivalChipsFrom,
             [chipNumberFrom]: valueFrom,

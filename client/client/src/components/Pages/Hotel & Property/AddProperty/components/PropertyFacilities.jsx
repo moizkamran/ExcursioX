@@ -111,7 +111,16 @@ export const PropertyFacilites = () => {
     setLanguages(updatedLanguages);
     dispatch(updatePropertyFacilites({ language: updatedLanguages }));
   };
+  const propertyFacilities = useSelector((state) => state.property.propertyFacilites);
+  const HandleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
 
+    dispatch(
+      updatePropertyFacilites({
+        facilities: { [name]: checked },
+      })
+    );
+  };
   console.log(checkboxes);
 
   return (
@@ -538,8 +547,8 @@ export const PropertyFacilites = () => {
                       size="md"
                       color="dark"
                       name="freeWifi"
-                      checked={checkboxes.freeWifi}
-                      onChange={handleCheckboxChange}
+                      checked={propertyFacilities.facilities.freeWifi}
+                      onChange={HandleCheckboxChange}
                     />
 
                     <Checkbox
@@ -547,36 +556,36 @@ export const PropertyFacilites = () => {
                       icon={IconGlass}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.bar}
+                      onChange={HandleCheckboxChange}
                       name="bar"
-                      checked={checkboxes.bar}
-                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Sauna"
                       icon={IconBrightnessHalf}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.sauna}
+                      onChange={HandleCheckboxChange}
                       name="sauna"
-                      checked={checkboxes.sauna}
-                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Garden"
                       icon={IconLeaf}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.garden}
+                      onChange={HandleCheckboxChange}
                       name="garden"
-                      checked={checkboxes.garden}
-                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
-                      label="Terrance"
+                      label="Terrace"
                       icon={IconFence}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.terrance}
+                      onChange={HandleCheckboxChange}
                       name="terrance"
-                      checked={checkboxes.terrance}
-                      onChange={handleCheckboxChange}
                     />
                   </div>
                   <div
@@ -592,45 +601,45 @@ export const PropertyFacilites = () => {
                       icon={IconSmokingNo}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.noSmokingRooms}
+                      onChange={HandleCheckboxChange}
                       name="noSmokingRooms"
-                      checked={checkboxes.noSmokingRooms}
-                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Family Rooms"
                       icon={IconHorseToy}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.familyRooms}
+                      onChange={HandleCheckboxChange}
                       name="familyRooms"
-                      checked={checkboxes.familyRooms}
-                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Hot tub/Jacuzzi"
                       icon={IconBath}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.hotTub}
+                      onChange={HandleCheckboxChange}
                       name="hotTub"
-                      checked={checkboxes.hotTub}
-                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Air Conditioning"
                       icon={IconAirConditioning}
                       size="md"
                       color="dark"
+                      checked={propertyFacilities.facilities.airConditioning}
+                      onChange={HandleCheckboxChange}
                       name="airConditioning"
-                      checked={checkboxes.airConditioning}
-                      onChange={handleCheckboxChange}
                     />
                     <Checkbox
                       label="Swimming Pool"
+                      checked={propertyFacilities.facilities.swimmingPool}
+                      onChange={HandleCheckboxChange}
                       icon={IconPool}
                       size="md"
                       color="dark"
                       name="swimmingPool"
-                      checked={checkboxes.swimmingPool}
-                      onChange={handleCheckboxChange}
                     />
                   </div>
                 </div>
