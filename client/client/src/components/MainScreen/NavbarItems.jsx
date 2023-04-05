@@ -57,7 +57,6 @@ function NavbarItems() {
     try {
       dispatch(logout());
       await newRequest.post("/auth/logout");
-      localStorage.removeItem("currentUser");
       navigate("/enterprise");
     } catch (error) {
       console.log(error);
