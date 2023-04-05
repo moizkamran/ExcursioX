@@ -6,6 +6,8 @@ import authRoute from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+const port = process.env.PORT || "8080";
+
 const app = express();
 dotenv.config();
 mongoose.set("strictQuery", true);
@@ -34,7 +36,7 @@ app.use((err, req, res, next) => {
   return res.status(errorStatus).send(errorMessage);
 });
 
-app.listen(8800, () => {
+app.listen(port, () => {
   connect();
   console.log("Backend server is running!");
 });

@@ -11,8 +11,6 @@ dotenv.config();
 
 export const register = async (req, res, next) => {
     try {
-
-        console.log(req.body)
       const password = req.body.password;
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(password, salt);
@@ -59,6 +57,26 @@ export const login = async (req, res, next) => {
     next(err);
   }
 };
+
+export const googleAuth = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json(user._doc);
+    } else {
+      return next(createError(404, "No account linked with Google!"));
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 export const logout = async (req, res) => {
   res
