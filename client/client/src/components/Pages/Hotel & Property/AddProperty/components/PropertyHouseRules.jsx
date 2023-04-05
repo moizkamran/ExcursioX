@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -39,30 +39,39 @@ const MARKS = [
 export const PropertyHouseRules = () => {
     const dispatch = useDispatch();
 
-    const handleArrivalFrom = (chipNumberFrom, valueFrom) => {
-        dispatch(updatePropertyHouseRules({ chipNumberFrom1: chipNumberFrom, valueFrom1: valueFrom }));
-    };
-
-    const handleArrivalTo = (chipNumberTo, valueTo) => {
-        dispatch(updatePropertyHouseRules({ chipNumberTo1: chipNumberTo, valueTo1: valueTo }));
-    };
-
-    const handleDepartureFrom = (chipNumberFrom, valueFrom) => {
-        dispatch(updatePropertyHouseRules({ chipNumberFrom: chipNumberFrom, valueFrom: valueFrom }));
-    };
-
-    const handleDepartureTo = (chipNumberTo, valueTo) => {
-        dispatch(updatePropertyHouseRules({ chipNumberTo: chipNumberTo, valueTo: valueTo }));
-    };
-
-    const smoking = useSelector((state) => state.property.propertyHouseRules.smoking);
-    const accomodate = useSelector((state) => state.property.propertyHouseRules.accomodate);
-    const pets = useSelector((state) => state.property.propertyHouseRules.pets);
-
+    const propertyHouseRules = useSelector(state => state.property.propertyHouseRules);
     const handleRadioChange = (event) => {
         const { name, value } = event.target;
-        dispatch(updatePropertyHouseRules({ [name]: value }));
-    };;
+        dispatch(updatePropertyHouseRules({
+            ...propertyHouseRules,
+            [name]: value,
+        }));
+    };
+
+    const handleChipChange = (value, chipGroup) => {
+        const newPropertyHouseRules = {
+            ...propertyHouseRules,
+            arrivalFromChipValue:
+                chipGroup === 'from' ? value : propertyHouseRules.arrivalFromChipValue,
+            arrivalToChipValue:
+                chipGroup === 'to' ? value : propertyHouseRules.arrivalToChipValue,
+        };
+
+        dispatch(updatePropertyHouseRules(newPropertyHouseRules));
+    };
+    const handleChipChange2 = (value, chipGroup) => {
+        const newPropertyHouseRules = {
+            ...propertyHouseRules,
+            departureFromChipValue:
+                chipGroup === 'from' ? value : propertyHouseRules.departureFromChipValue,
+            departureToChipValue:
+                chipGroup === 'to' ? value : propertyHouseRules.departureToChipValue,
+        };
+
+        dispatch(updatePropertyHouseRules(newPropertyHouseRules));
+    };
+
+
     return (
         <>
             <div style={{ padding: 20 }}>
@@ -242,19 +251,66 @@ export const PropertyHouseRules = () => {
                                         <Flex gap={10}>
                                             <Chip.Group position="center">
                                                 <Chip
-                                                    value="1" onClick={() => handleArrivalFrom("1", "12:00 PM")}>12:00 PM</Chip>
-                                                <Chip value="2" onClick={() => handleArrivalFrom("2", "2:00 PM")}>2:00 PM</Chip>
-                                                <Chip value="3" onClick={() => handleArrivalFrom("3", "3:00 PM")}>3:00 PM</Chip>
-                                                <Chip value="4" onClick={() => handleArrivalFrom("4", "Other")}>Other</Chip>
+                                                    value="12:00 PM"
+                                                    checked={propertyHouseRules.arrivalFromChipValue === '12:00 PM'}
+                                                    onClick={() => handleChipChange('12:00 PM', 'from')}
+                                                >
+                                                    12:00 PM
+                                                </Chip>
+                                                <Chip
+                                                    value="2:00 PM"
+                                                    checked={propertyHouseRules.arrivalFromChipValue === '2:00 PM'}
+                                                    onClick={() => handleChipChange('2:00 PM', 'from')}
+                                                >
+                                                    2:00 PM
+                                                </Chip>
+                                                <Chip
+                                                    value="3:00 PM"
+                                                    checked={propertyHouseRules.arrivalFromChipValue === '3:00 PM'}
+                                                    onClick={() => handleChipChange('3:00 PM', 'from')}
+                                                >
+                                                    3:00 PM
+                                                </Chip>
+                                                <Chip
+                                                    value="Other"
+                                                    checked={propertyHouseRules.arrivalFromChipValue === 'Other'}
+                                                    onClick={() => handleChipChange('Other', 'from')}
+                                                >
+                                                    Other
+                                                </Chip>
                                             </Chip.Group>
                                         </Flex>
                                         <Text>to</Text>
                                         <Flex gap={10}>
                                             <Chip.Group position="center">
-                                                <Chip value="1" onClick={() => handleArrivalTo("1", "12:00 PM")}>12:00 PM</Chip>
-                                                <Chip value="2" onClick={() => handleArrivalTo("2", "2:00 PM")}>2:00 PM</Chip>
-                                                <Chip value="3" onClick={() => handleArrivalTo("3", "3:00 PM")}>3:00 PM</Chip>
-                                                <Chip value="4" onClick={() => handleArrivalTo("4", "Other")}>Other</Chip>
+                                                <Chip
+                                                    value="12:00 PM"
+                                                    checked={propertyHouseRules.arrivalToChipValue === "12:00 PM"}
+                                                    onClick={() => handleChipChange("12:00 PM", "to")}
+                                                >
+                                                    12:00 PM
+                                                </Chip>
+                                                <Chip
+                                                    value="2:00 PM"
+                                                    checked={propertyHouseRules.arrivalToChipValue === '2:00 PM'}
+                                                    onClick={() => handleChipChange('2:00 PM', 'to')}
+                                                >
+                                                    2:00 PM
+                                                </Chip>
+                                                <Chip
+                                                    value="3:00 PM"
+                                                    checked={propertyHouseRules.arrivalToChipValue === '3:00 PM'}
+                                                    onClick={() => handleChipChange('3:00 PM', 'to')}
+                                                >
+                                                    3:00 PM
+                                                </Chip>
+                                                <Chip
+                                                    value="Other"
+                                                    checked={propertyHouseRules.arrivalToChipValue === 'Other'}
+                                                    onClick={() => handleChipChange('Other', 'to')}
+                                                >
+                                                    Other
+                                                </Chip>
                                             </Chip.Group>
                                         </Flex>
 
@@ -301,28 +357,31 @@ export const PropertyHouseRules = () => {
                                         <Flex gap={10}>
                                             <Chip.Group position="center">
                                                 <Chip
-                                                    value="1"
-                                                    onClick={() => handleDepartureFrom("1", "12:00 PM")}
+                                                    value="12:00 PM"
+                                                    checked={propertyHouseRules.departureFromChipValue === '12:00 PM'}
+                                                    onClick={() => handleChipChange2('12:00 PM', 'from')}
                                                 >
-                                                    {" "}
                                                     12:00 PM
                                                 </Chip>
-
                                                 <Chip
-                                                    value="2"
-                                                    onClick={() => handleDepartureFrom("2", "2:00 PM")}
+                                                    value="2:00 PM"
+                                                    checked={propertyHouseRules.departureFromChipValue === '2:00 PM'}
+                                                    onClick={() => handleChipChange2('2:00 PM', 'from')}
                                                 >
                                                     2:00 PM
                                                 </Chip>
                                                 <Chip
-                                                    value="3"
-                                                    onClick={() => handleDepartureFrom("3", "3:00 PM")}
+                                                    value="3:00 PM"
+                                                    checked={propertyHouseRules.departureFromChipValue === '3:00 PM'}
+                                                    onClick={() => handleChipChange2('3:00 PM', 'from')}
                                                 >
                                                     3:00 PM
                                                 </Chip>
                                                 <Chip
-                                                    value="4"
-                                                    onClick={() => handleDepartureFrom("4", "Other")}>
+                                                    value="Other"
+                                                    checked={propertyHouseRules.departureFromChipValue === 'Other'}
+                                                    onClick={() => handleChipChange2('Other', 'from')}
+                                                >
                                                     Other
                                                 </Chip>
                                             </Chip.Group>
@@ -331,25 +390,31 @@ export const PropertyHouseRules = () => {
                                         <Flex gap={10}>
                                             <Chip.Group position="center">
                                                 <Chip
-                                                    value="1"
-                                                    onClick={() => handleDepartureTo("1", "12:00 PM")}
+                                                    value="12:00 PM"
+                                                    checked={propertyHouseRules.departureToChipValue === '12:00 PM'}
+                                                    onClick={() => handleChipChange2('12:00 PM', 'from')}
                                                 >
-                                                    {" "}
                                                     12:00 PM
                                                 </Chip>
                                                 <Chip
-                                                    value="2"
-                                                    onClick={() => handleDepartureTo("2", "2:00 PM")}>
+                                                    value="2:00 PM"
+                                                    checked={propertyHouseRules.departureToChipValue === '2:00 PM'}
+                                                    onClick={() => handleChipChange2('2:00 PM', 'from')}
+                                                >
                                                     2:00 PM
                                                 </Chip>
                                                 <Chip
-                                                    value="3"
-                                                    onClick={() => handleDepartureTo("3", "3:00 PM")}>
+                                                    value="3:00 PM"
+                                                    checked={propertyHouseRules.departureToChipValue === '3:00 PM'}
+                                                    onClick={() => handleChipChange2('3:00 PM', 'from')}
+                                                >
                                                     3:00 PM
                                                 </Chip>
                                                 <Chip
-                                                    value="4"
-                                                    onClick={() => handleDepartureTo("4", "Other")}>
+                                                    value="Other"
+                                                    checked={propertyHouseRules.departureToChipValue === 'Other'}
+                                                    onClick={() => handleChipChange2('Other', 'from')}
+                                                >
                                                     Other
                                                 </Chip>
                                             </Chip.Group>
@@ -410,24 +475,26 @@ export const PropertyHouseRules = () => {
                                             }}
                                         >
                                             <Radio
-                                                onChange={(event) => {
-                                                    dispatch(updatePropertyHouseRules({ smoking: event.target.value }));
-                                                }}
                                                 label="Yes"
                                                 color="dark"
                                                 value="yes"
-                                                checked={smoking === "yes"}
+                                                name="radioGroup1Value"
+                                                checked={propertyHouseRules.radioGroup1Value === 'yes'}
+                                                onChange={handleRadioChange}
                                             />
 
                                             <Radio
-                                                onChange={(event) => {
-                                                    dispatch(updatePropertyHouseRules({ smoking: event.target.value }));
-                                                }}
                                                 label="No"
                                                 color="dark"
                                                 value="no"
-                                                checked={smoking === "no"}
+                                                name="radioGroup1Value"
+                                                checked={propertyHouseRules.radioGroup1Value === 'no'}
+                                                onChange={handleRadioChange}
                                             />
+
+
+
+
                                         </div>
                                     </div>
                                     <div>
@@ -476,23 +543,21 @@ export const PropertyHouseRules = () => {
                                             }}
                                         >
                                             <Radio
-                                                onChange={(e) => {
-                                                    dispatch(updatePropertyHouseRules({ accomodate: e.target.value }));
-                                                }}
                                                 label="Yes"
                                                 color="dark"
                                                 value="yes"
-                                                checked={accomodate === "yes"}
+                                                name="radioGroup2Value"
+                                                checked={propertyHouseRules.radioGroup2Value === 'yes'}
+                                                onChange={handleRadioChange}
                                             />
 
                                             <Radio
-                                                onChange={(e) => {
-                                                    dispatch(updatePropertyHouseRules({ accomodate: e.target.value }));
-                                                }}
                                                 label="No"
                                                 color="dark"
                                                 value="no"
-                                                checked={accomodate === "no"}
+                                                name="radioGroup2Value"
+                                                checked={propertyHouseRules.radioGroup2Value === 'no'}
+                                                onChange={handleRadioChange}
                                             />
                                         </div>
                                     </div>
@@ -540,23 +605,21 @@ export const PropertyHouseRules = () => {
                                             }}
                                         >
                                             <Radio
-                                                onChange={(e) => {
-                                                    dispatch(updatePropertyHouseRules({ pets: e.target.value }));
-                                                }}
                                                 label="Yes"
                                                 color="dark"
                                                 value="yes"
-                                                checked={pets === "yes"}
+                                                name="radioGroup3Value"
+                                                checked={propertyHouseRules.radioGroup3Value === 'yes'}
+                                                onChange={handleRadioChange}
                                             />
 
                                             <Radio
-                                                onChange={(e) => {
-                                                    dispatch(updatePropertyHouseRules({ pets: e.target.value }));
-                                                }}
                                                 label="No"
                                                 color="dark"
                                                 value="no"
-                                                checked={pets === "no"}
+                                                name="radioGroup3Value"
+                                                checked={propertyHouseRules.radioGroup3Value === 'no'}
+                                                onChange={handleRadioChange}
                                             />
                                         </div>
                                     </div>

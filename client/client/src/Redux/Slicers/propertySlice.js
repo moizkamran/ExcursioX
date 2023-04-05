@@ -78,37 +78,13 @@ export const initialState = {
     photos: [],
   },
   propertyHouseRules: {
-    smoking: "",
-    accomodate: "",
-    pets: "",
-    guestArrivalChipsFrom: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-    guestArrivalChipsTo: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-    guestDepartureChipsFrom: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-    guestDepartureChipsTo: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-  },
-  checkboxes: {
-    checkbox1: false,
-    checkbox2: false,
+    radioGroup1Value: "",
+    radioGroup2Value: "",
+    radioGroup3Value: "",
+    arrivalFromChipValue: "",
+    arrivalToChipValue: "",
+    departureFromChipValue: "",
+    departureToChipValue: "",
   },
 };
 
@@ -171,44 +147,7 @@ const propertySlice = createSlice({
     },
 
     updatePropertyHouseRules: (state, action) => {
-      const {
-        chipNumberFrom,
-        valueFrom,
-        chipNumberTo,
-        valueTo,
-        chipNumberFrom1,
-        valueFrom1,
-        chipNumberTo1,
-        valueTo1,
-      } = action.payload;
-      const { smoking, accomodate, pets } = action.payload;
-
-      return {
-        ...state,
-        propertyHouseRules: {
-          ...state.propertyHouseRules,
-          smoking,
-          accomodate,
-          pets,
-
-          guestArrivalChipsFrom: {
-            ...state.propertyHouseRules.guestArrivalChipsFrom,
-            [chipNumberFrom]: valueFrom,
-          },
-          guestArrivalChipsTo: {
-            ...state.propertyHouseRules.guestArrivalChipsTo,
-            [chipNumberTo]: valueTo,
-          },
-          guestDepartureChipsFrom: {
-            ...state.propertyHouseRules.guestDepartureChipsFrom,
-            [chipNumberFrom1]: valueFrom1,
-          },
-          guestDepartureChipsTo: {
-            ...state.propertyHouseRules.guestDepartureChipsTo,
-            [chipNumberTo1]: valueTo1,
-          },
-        },
-      };
+      state.propertyHouseRules = action.payload;
     },
 
     addHotelLayout: (state, action) => {
