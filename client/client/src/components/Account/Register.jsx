@@ -7,6 +7,10 @@ import './Register.css'
 
 import LogoImage from "../../assets/booking-souq-black.svg";
 import { IconAlertCircle, IconCheck, IconLuggage, IconMail, IconPhone, IconUsers, IconX } from '@tabler/icons';
+import newRequest from '../../utils/newRequest';
+import { loginSuccess } from '../../Redux/Slicers/userSlice';
+import { loginFailure } from '../../Redux/Slicers/userSlice';
+import { useDispatch } from 'react-redux';
 
 function PasswordRequirement({ meets, label }) {
   return (
@@ -42,7 +46,20 @@ function getStrength(password) {
 const Register = () => {
 
   const [backgroundImage, setBackgroundImage] = useState("");
+
+  const [companyId, setCompanyId] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
+
+  const [error, setError] = useState('');
+
+  const dispatch = useDispatch();
+  
+  console.log(companyId, firstName, lastName, email, password, phone);
+
 
   useEffect(() => {
     const images = [
@@ -58,13 +75,30 @@ const Register = () => {
   }, []);
 
   const [popoverOpened, setPopoverOpened] = useState(false);
-  const [value, setValue] = useState('');
+
+  
+
   const checks = requirements.map((requirement, index) => (
-    <PasswordRequirement key={index} label={requirement.label} meets={requirement.re.test(value)} />
+    <PasswordRequirement key={index} label={requirement.label} meets={requirement.re.test(password)} />
   ));
 
-  const strength = getStrength(value);
+  const strength = getStrength(password);
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await newRequest.post("/auth/register", { 
+        companyId, firstName, lastName, email, password, phone
+       },
+       );
+      
+      navigate("/")
+    } catch (err) {
+      setError(err.response.data);
+      console.log(err.response.data);
+    }
+  };
 
 
   return (
@@ -79,6 +113,8 @@ const Register = () => {
         <Image src={LogoImage} width={250} pos={'absolute'} top={15} right={30}/>
 
         <Flex justify={'center'} align={'center'} h={'100vh'} direction={'column'} gap={20}>
+
+          <form onSubmit={handleSubmit}>
           
           <Flex direction={'column'} align={'flex-start'}>
             <Title ff={'Kumbh Sans'} fw={'bold'}>Let's get you all setup!</Title>
@@ -101,11 +137,11 @@ const Register = () => {
                     <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
                   </div>
                 </Tooltip>
-              }/>
+              } onChange={(event) => setCompanyId(event.currentTarget.value)} value={companyId} autoComplete='company-id'/>
 
               <Flex w={390} justify={'space-between'} gap={5}>
-                  <TextInput radius={'md'} size="md" label="First Name" />
-                  <TextInput radius={'md'} size="md" label="Last Name" />
+                  <TextInput radius={'md'} size="md" label="First Name" onChange={(event) => setFirstName(event.currentTarget.value)} value={firstName}/>
+                  <TextInput radius={'md'} size="md" label="Last Name" onChange={(event) => setLastName(event.currentTarget.value)} value={lastName}/>
               </Flex>
               
               <TextInput placeholder={'name@company.com'} size="md" w={390} radius={'md'} label="Email" icon={<IconMail />} rightSection={
@@ -122,7 +158,7 @@ const Register = () => {
                     <IconAlertCircle size="1rem" style={{ display: 'block', opacity: 0.5 }} />
                   </div>
                 </Tooltip>
-              }/>
+              }onChange={(event) => setEmail(event.currentTarget.value)} value={email} autoComplete='username'/>
 
               <Popover opened={popoverOpened} position="bottom" width={350} transitionProps={{ transition: 'pop' }} radius={'md'}>
                   <Popover.Target>
@@ -135,14 +171,15 @@ const Register = () => {
                         radius={'md'}
                         size="md"
                         label="Password"
-                        value={value}
-                        onChange={(event) => setValue(event.currentTarget.value)}
+                        value={password}
+                        autoComplete="current-password"
+                        onChange={(event) => setPassword(event.currentTarget.value)}
                       />
                     </div>
                   </Popover.Target>
                   <Popover.Dropdown>
                     <Progress color={color} value={strength} size={5} mb="xs" />
-                    <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
+                    <PasswordRequirement label="Includes at least 6 characters" meets={password.length > 5} />
                     {checks}
                   </Popover.Dropdown>
               </Popover>
@@ -151,6 +188,7 @@ const Register = () => {
               <PhoneInput
               defaultCountry="sa"
               value={phone}
+              onChange={(phone) => setPhone(phone)}
               hideDropdown
               inputStyle={{ width: 350, borderRadius: 9, borderColor: '#ced4da', fontFamily: 'Fredoka', fontSize: '0.875rem', height: 41.99 }}
               countrySelectorStyleProps={{ 
@@ -167,10 +205,10 @@ const Register = () => {
 
           </Flex>
 
-              <UnstyledButton class="cssbuttons-io">
+              <UnstyledButton className="cssbuttons-io" type='submit' mt={22}>
                 <span>Register</span>
               </UnstyledButton>
-
+              </form>
         </Flex>
       
       </Container>

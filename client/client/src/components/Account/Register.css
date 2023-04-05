@@ -28,7 +28,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* add this */
+  display: flex;
 }
+
 
 .cssbuttons-io::before,
 .cssbuttons-io::after {
