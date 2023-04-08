@@ -8,6 +8,9 @@ import { MantineProvider } from "@mantine/core";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
+import { Notifications } from '@mantine/notifications';
+
+
 //REDUX STORE
 
 //main stylesheet import
@@ -53,6 +56,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           },
         }}
       >
+        <Notifications />
         <App />
       </MantineProvider>
       </PersistGate>
