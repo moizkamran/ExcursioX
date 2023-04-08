@@ -21,8 +21,15 @@ const connect = async () => {
   }
 };
 
+
+const allowedOrigins = ["http://localhost:5173", "https://bookingsouq.me"];
+
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true}));
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 app.use(cookieParser());
 
 
