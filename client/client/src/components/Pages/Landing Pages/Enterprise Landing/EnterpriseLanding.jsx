@@ -7,6 +7,7 @@ import { IconBox, IconBrandAirbnb, IconBrandBooking, IconBrandMatrix, IconBuildi
 import BSWhiteLogo from '../../../../assets/booking-souq-white.svg'
 import MachIcon from '../../../../assets/mach.svg'
 import Footer from '../Footer';
+import EnterpriseNav from './EnterpriseNav';
 
 const EnterpriseLanding = () => {
   return (
@@ -70,6 +71,7 @@ const EnterpriseLanding = () => {
 
             </Container>
         </Container>
+        <EnterpriseNav />
         <Footer />
     </>
   )

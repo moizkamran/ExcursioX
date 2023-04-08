@@ -16,3 +16,22 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.BLOGO{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #000000;
+    position: relative;
+}
+
+.BLOGOIMG{
+    width: 40px;
+    height: 40px;
+    color: #4E4E4E;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
