@@ -16,3 +16,40 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.BLOGO{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #000000;
+    position: relative;
+}
+
+.BLOGOIMG{
+    width: 30px;
+    height: 30px;
+    color: #4E4E4E;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.navLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    width: 50px; /* set the width to a fixed value */
+    height: 50px; /* set the height to the same fixed value as the width */
+    box-sizing: border-box; /* include padding and border in element's dimensions */
+    border-radius: 50%; /* create a circular shape */
+    background-color: transparent; /* set background color to transparent to remove any color shift on hover */
+  }
+  
+  .navLinks:hover {
+    background-color: #07399E; /* apply the background color on hover */
+  }
+  

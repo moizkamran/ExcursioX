@@ -35,6 +35,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import { loginFailure, loginStart, loginSuccess } from "../../Redux/Slicers/userSlice";
+import { notifications } from "@mantine/notifications";
 
 
 const Login = () => {
@@ -77,6 +78,11 @@ const Login = () => {
       navigate("/")
     } catch (err) {
       setError(err.response.data);
+      notifications.show({
+        title: 'Error',
+        message: err.response.data,
+        color: 'red',
+      });
       console.log(err.response.data);
       dispatch(loginFailure());
     }
@@ -165,7 +171,6 @@ const Login = () => {
               
               </Flex>
             </form>
-            <Text>{error}</Text>
             <Text align="center" mt="md">
               Don&apos;t have an account yet?
               <Text ml="10px" to="/register" component={Link} c={'#07399E'}>

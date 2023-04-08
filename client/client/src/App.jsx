@@ -11,6 +11,7 @@ import FindBooking from "./components/SearchPages/FindBookings/FindBooking";
 import EnterpriseLanding from "./components/Pages/Landing Pages/Enterprise Landing/EnterpriseLanding";
 import ProtectRoute from "./utils/protectRoute";
 import UnprotectRoute from "./utils/unprotectRoute";
+import EnterpriseOnboarding from "./components/Pages/FunnelPages/Enterprise Signup/EnterpriseOnboarding";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/login" element={<UnprotectRoute><Login /></UnprotectRoute>}></Route>
           <Route path="/register" element={<UnprotectRoute><Register /></UnprotectRoute>}></Route>
           <Route path="/enterprise" element={<EnterpriseLanding />}></Route>
+          <Route path="/enterprise/onboarding" element={<EnterpriseOnboarding />}></Route>
 
 
 
