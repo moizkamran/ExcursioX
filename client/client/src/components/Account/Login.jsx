@@ -6,7 +6,7 @@ import MicrosoftIcon from "../../assets/icons/microsoft.png";
 import Popup from "../Popovers/forgot-password";
 import { IconArrowBack, IconBrandGoogle, IconKey } from "@tabler/icons";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from '@mantine/form' 
 
 import { auth, provider } from "../../firebase";
@@ -30,6 +30,7 @@ import {
   Image,
   ActionIcon,
   Flex,
+  LoadingOverlay,
 } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
@@ -40,6 +41,9 @@ const Login = () => {
 
   
   const [backgroundImage, setBackgroundImage] = useState("");
+
+  const loading = useSelector((state) => state.user.loading);
+  
   
   useEffect(() => {
     const images = [
@@ -100,7 +104,8 @@ const Login = () => {
       <div className="container">
         <div className="formContainer">
           <Image className="logo" src={LogoImage} alt="Logo" width={250}/>
-          <Paper className="form" radius={0} p={30}>
+          <Paper className="form" radius={0} p={30} pos={'relative'}>
+          <LoadingOverlay visible={loading} overlayBlur={2} transitionDuration={200}/>
             <Title order={2} ff={'Kumbh Sans'} align="left" mb={100} fz={40} fw={700}>
               Welcome Back
               <Text ff={'Kumbh Sans'} fz={25} fw={300}>Please enter your credentials</Text>
