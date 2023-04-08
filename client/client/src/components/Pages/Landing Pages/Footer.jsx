@@ -68,6 +68,7 @@ const Footer = () => {
   ];
 
   const [region, setRegion] = useState('');
+  const [countryCode, setCountryCode] = useState('');
   console.log(region);
 
   // AUTO DETECT REGION
@@ -76,12 +77,15 @@ const Footer = () => {
       async ({ coords }) => {
         const { data } = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${coords.latitude}+${coords.longitude}&key=c240e0ecad5244059d7f5415a0e9a06c`);
         const addressComponents = data.results[0].components;
-        setRegion(addressComponents.region || addressComponents.state || '');
+        console.log(addressComponents);
+        setRegion(addressComponents.country || '');
+        setCountryCode(addressComponents.country_code || '');
       },
       (error) => console.error(error),
       { enableHighAccuracy: false, timeout: 5000, maximumAge: 0 }
     );
   }, []);
+  
   
   // For showing flags in select
   const SelectItem = forwardRef(({ image, label, ...others }, ref) => (
