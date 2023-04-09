@@ -43,7 +43,7 @@ const EnterpriseLanding = () => {
                                 <Flex align={'center'} gap={10} ><Title ff={'Kumbh Sans'} fz={50} fw={'bold'} >of Mach</Title><Image src={MachIcon} width={50}/></Flex>
                             </Flex>
                             <Flex direction={'column'} >
-                                <Flex><Button mt={20} size='md'>Try For free</Button></Flex>
+                                <Flex><Button mt={20} size='md' component={Link} to="/enterprise/onboarding">Try For free</Button></Flex>
 
                                     <Flex gap={20} mt={30}>
                                         <Flex>
