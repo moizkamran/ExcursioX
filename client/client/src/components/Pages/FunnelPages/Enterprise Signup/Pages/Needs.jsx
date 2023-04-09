@@ -1,17 +1,23 @@
 import { Container, Flex, Text } from '@mantine/core'
 import { IconQuestionCircle, IconUserCircle } from '@tabler/icons'
-import React from 'react'
+import { motion as m } from 'framer-motion'
 
 const Needs = () => {
   return (
-    <>
-      <Text fz={35} ff={'Kumbh Sans'} fw={700}>Let's get to know your needs</Text>
+    <m.div
+    style={{position: 'absolute', overflow: 'hidden', width: '80%'}}
+    initial={{x: '100%', opacity: 0}}
+    animate={{x: "0%", opacity: 1}}
+    transition={{duration: 0.75, ease: 'easeInOut'}}
+    exit={{opacity: 1, x: '-100%'}}
+    >
+      <Text fz={45} ff={'Kumbh Sans'} fw={700} mb={80}>Let's get to know your needs</Text>
       <Flex direction={'column'} gap={20}>
       <NeedsModule description="You are a freelancer or independent contractor"/>
       <NeedsModule description="You have a company or an agency"/>
       <NeedsModule description="You want to create a new company or agency"/>
       </Flex>
-    </>
+    </m.div>
   )
 }
 

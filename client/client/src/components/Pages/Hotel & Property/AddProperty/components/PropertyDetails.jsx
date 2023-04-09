@@ -501,7 +501,6 @@ padding: 3,
 backgroundColor: '#07399E',
 borderRadius: '12px 12px 17px 17px',
 justifyContent: 'center',
-display: 'flex',
 alignContent: 'center',
 alignItems: 'center'
 }}>

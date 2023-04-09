@@ -7,6 +7,7 @@ import UseCase from './Pages/UseCase'
 import CompnayBased from './Pages/CompnayBased'
 import Verfiy from './Pages/Verfiy'
 import Branding from './Pages/Branding'
+import { AnimatePresence } from 'framer-motion'
 
 const EnterpriseOnboarding = () => {
 
@@ -14,9 +15,6 @@ const EnterpriseOnboarding = () => {
 
   const handleButtonClick = () => {
     setCurrentPage(currentPage => currentPage + 1);
-    if (page === 2 && type === "Hotel") {
-      setCurrentFloorIndex(0); // Set the current floor index to 0 when navigating to the hotel floors page
-    }
   };
   const handleButtonClickBack = () => {
     setCurrentPage(currentPage => currentPage - 1);
@@ -25,10 +23,16 @@ const EnterpriseOnboarding = () => {
   const PageDisplay = () => {
 
     if (page === 0) {
-      return <Needs/>;
+      return (
+      <AnimatePresence>
+        <Needs key={page}/>
+      </AnimatePresence>
+      );
     } else if (page === 1) {
       return (
-        <UseCase />
+        <AnimatePresence>
+          <UseCase key={page}/>
+        </AnimatePresence>
       );
     } else if (page === 2) {
       return (
@@ -40,7 +44,7 @@ const EnterpriseOnboarding = () => {
       );
     } else if (page === 4) {
       return <Branding />;
-    } else if (page === 7) {
+    } else if (page === 5) {
       return <h1>Done</h1>;
     } else {
       return <h1>ERROR</h1>;
@@ -49,18 +53,26 @@ const EnterpriseOnboarding = () => {
 
   return (
     <>
-    <div style={{position:'absolute', width: '100%'}}>
+    <div style={{position:'absolute', width: '100%', zIndex: 11}}>
         <EnterpriseNav/>
     </div>
-    <Container  display={'flex'} h={'100vh'} size={'100%'} px={0}>
+    <Container  display={'flex'} h={'100vh'} size={'100%'} px={0} sx={{overflow: 'hidden'}}>
 
-    <Container style={{ flex: 1 }} size={'70%'} mx={50} my={100}>
+    <Container style={{ flex: 1 }} size={'70%'} mx={50} my={200} sx={{zIndex: 9, overflow: 'hidden'}}>
     {PageDisplay()}
+    </Container>
+
+    
+
+    <Container style={{ flex: 1 }} size={'30%'} px={0} sx={{zIndex: 10}}> 
+      <div style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80)', backgroundSize: 'cover', backgroundPosition: 'center', height: '100%', width: '100%' }}> </div>
+    </Container>
     <div>
-    {page >= 0 && <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20 }}>
+    {page >= 0 && <div style={{ zIndex: 30,display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20 }}>
 
     {page >= 2 && <div style={{
       display: 'flex',
+      zIndex: 30,
       flexDirection: 'column',
       backgroundColor: '#07399E',
       width: '240px',
@@ -80,11 +92,6 @@ const EnterpriseOnboarding = () => {
     </div>
     </div>}
     </div>
-    </Container>
-
-    <Container style={{ flex: 1 }} size={'30%'} px={0}>
-      <div style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80)', backgroundSize: 'cover', backgroundPosition: 'center', height: '100%', width: '100%' }}> </div>
-    </Container>
 
 
     </Container>
