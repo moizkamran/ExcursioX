@@ -11,6 +11,14 @@ import { AnimatePresence } from 'framer-motion'
 
 const EnterpriseOnboarding = () => {
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+  
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   const [page, setCurrentPage] = useState(0);
 
   const handleButtonClick = () => {
@@ -36,11 +44,15 @@ const EnterpriseOnboarding = () => {
       );
     } else if (page === 2) {
       return (
-        <CompnayBased />
+        <AnimatePresence>
+        <CompnayBased key={page}/>
+        </AnimatePresence>
       );
     } else if (page === 3) {
       return (
-        <Verfiy />
+        <AnimatePresence>
+        <Verfiy key={page}/>
+        </AnimatePresence>
       );
     } else if (page === 4) {
       return <Branding />;
@@ -53,7 +65,7 @@ const EnterpriseOnboarding = () => {
 
   return (
     <>
-    <div style={{position:'absolute', width: '100%', zIndex: 11}}>
+    <div style={{position:'absolute', width: '100%', zIndex: 11, overflow: 'hidden'}}>
         <EnterpriseNav/>
     </div>
     <Container  display={'flex'} h={'100vh'} size={'100%'} px={0} sx={{overflow: 'hidden'}}>

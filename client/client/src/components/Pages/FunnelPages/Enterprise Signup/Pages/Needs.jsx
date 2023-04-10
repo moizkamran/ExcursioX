@@ -5,7 +5,7 @@ import { motion as m } from 'framer-motion'
 const Needs = () => {
   return (
     <m.div
-    style={{position: 'absolute', overflow: 'hidden', width: '80%'}}
+    style={{position: 'absolute', width: '65%', height: '70%'}}
     initial={{x: '100%', opacity: 0}}
     animate={{x: "0%", opacity: 1}}
     transition={{duration: 0.75, ease: 'easeInOut'}}
