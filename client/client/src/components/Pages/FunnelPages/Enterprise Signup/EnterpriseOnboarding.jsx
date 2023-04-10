@@ -55,7 +55,10 @@ const EnterpriseOnboarding = () => {
         </AnimatePresence>
       );
     } else if (page === 4) {
-      return <Branding />;
+      return (
+        <AnimatePresence>
+          <Branding key={page}/>
+        </AnimatePresence>);
     } else if (page === 5) {
       return <h1>Done</h1>;
     } else {
