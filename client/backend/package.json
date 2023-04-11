@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.2",
     "nodemon": "^2.0.20",
+    "otp-generator": "^4.0.1",
     "stripe": "^11.11.0"
   }
 }
