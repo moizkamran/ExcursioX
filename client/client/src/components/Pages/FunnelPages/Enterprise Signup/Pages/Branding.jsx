@@ -1,6 +1,9 @@
-import { Flex, Group, Image, Text, useMantineTheme, rem, TextInput, Button } from '@mantine/core'
-import { IconArrowRight, IconPhoto, IconSend, IconUpload, IconX } from '@tabler/icons'
+import { Flex, Group, Image, Text, useMantineTheme, rem, TextInput, Button, ThemeIcon } from '@mantine/core'
+import { IconArrowRight, IconCheck, IconPhoto, IconSend, IconUpload, IconX } from '@tabler/icons'
 import { motion as m } from 'framer-motion'
+
+import LogoToDo from '../../../../../assets/Resources/LogoToDo.svg'
+import LogoNotToDo from '../../../../../assets/Resources/LogoNotToDo.svg'
 
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
@@ -50,11 +53,7 @@ vouchers, invoices and complete CRM branding</Text>
       
   </Flex>
   <Flex direction={'column'} gap={20}>
-   <Flex bg={'#222323'} h={300} w={700} sx={{borderRadius: 20}}>
-    <Flex >
-      <Text align={'center'} justify={'center'} c={'white'}>ENSURE THE FOLLOWING</Text>
-    </Flex>
-   </Flex>
+   <Ensure   LogoToDo={LogoToDo} LogoNotToDo={LogoNotToDo}  />
   </Flex>
 </Flex>
 
@@ -94,7 +93,7 @@ vouchers, invoices and complete CRM branding</Text>
     function Email({placeholder, heading}) {
       return (<Flex gap={20}direction={'column'}> 
         <Text fz={15} ff={'Kumbh Sans'} fw={500}>{heading}</Text>
-        <TextInput placeholder={placeholder} w={250} mt={-15}styles={{
+        <TextInput placeholder={placeholder} w={250} mt={-15} styles={{
     input: {
       height: 30,
       border: '1px solid #D0D5DD',
@@ -105,4 +104,31 @@ vouchers, invoices and complete CRM branding</Text>
         </Flex>);
     }
 
-  export default Branding
+
+    function Ensure({LogoToDo, LogoNotToDo}) {
+      return (<Flex bg={'#222323'} h={250} w={700} sx={{
+  borderRadius: 20
+}} align={'center'} justify={'center'} pos={'relative'} direction={'column'}>
+    <Text top={20} pos={'absolute'} ff={'Kumbh Sans'} c={'white'}>ENSURE THE FOLLOWING</Text>
+    <Flex align={'center'} justify={'center'} gap={20}>
+      <Flex direction={'column'} align={'center'} justify={'center'}>
+        <Image src={LogoToDo} width={150} mb={10} />
+        <Flex gap={20}>
+         <ThemeIcon radius={50} size={50} color='#0D8467'> <IconCheck /> </ThemeIcon> <Text fz={14} fw={300} w={250} c={'white'}>Don't include your address or personal info in the logo. Dont worry, we'll add them later. 
+
+
+
+        </Text>
+        </Flex>
+      </Flex>
+      <Flex direction={'column'} align={'center'} justify={'center'}>
+        <Image src={LogoNotToDo} width={200} mb={10} />
+        <Flex gap={20}>
+         <ThemeIcon radius={50} size={50} color='#FC0000'> <IconX size={30} /> </ThemeIcon> <Text fz={14} fw={300} w={250} c={'white'}>Make your logo visible in both bright and dark environments, with a transparent background.</Text>
+        </Flex>
+      </Flex>
+
+    </Flex>
+   </Flex>);
+    }
+    export default Branding
