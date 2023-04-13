@@ -14,3 +14,11 @@ export const verifyToken = (req, res, next) => {
     next()
   });
 };
+
+export function localVariables(req, res, next) {
+  res.app.locals = {
+    OTP: null,
+    resetSession: false,
+  }
+  next();
+}

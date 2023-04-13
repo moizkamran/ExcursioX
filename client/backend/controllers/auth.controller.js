@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"; // add this import statement
 
+import otpGenerator from 'otp-generator'
+
 dotenv.config();
 
 
@@ -87,3 +89,22 @@ export const logout = async (req, res) => {
     .status(200)
     .send("User has been logged out.");
 };
+
+
+/** GET: http://localhost:8080/api/generateOTP */
+export async function generateOTP(req,res){
+  req.app.locals.OTP = otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false })
+  res.status(201).send({ code: req.app.locals.OTP })
+}
+
+
+/** GET: http://localhost:8080/api/verifyOTP */
+export async function verifyOTP(req,res){
+  const { code } = req.query;
+  if(parseInt(req.app.locals.OTP) === parseInt(code)){
+      req.app.locals.OTP = null; // reset the OTP value
+      req.app.locals.resetSession = true; // start session for reset password
+      return res.status(201).send({ msg: 'Verify Successsfully!'})
+  }
+  return res.status(400).send({ error: "Invalid OTP"});
+}

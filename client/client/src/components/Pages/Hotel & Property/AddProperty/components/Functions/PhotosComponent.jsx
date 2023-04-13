@@ -4,6 +4,8 @@ import { IconUpload } from "@tabler/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePropertyPhotos } from "../../../../../../Redux/Slicers/propertySlice";
 
+import { AnimatePresence, motion } from "framer-motion";
+
 const PhotosComponent = () => {
   const { photos } = useSelector((state) => state.property.propertyPhotos);
   const dispatch = useDispatch();
@@ -82,7 +84,7 @@ const PhotosComponent = () => {
   const renderPhotos = (photos) => {
     return photos.map((photo) => {
       return (
-        <div
+        <motion.div
           style={{
             display: "flex",
             flexDirection: "row",
@@ -141,7 +143,7 @@ const PhotosComponent = () => {
               &times;
             </button>
           </div>
-        </div>
+        </motion.div>
       );
     });
   };

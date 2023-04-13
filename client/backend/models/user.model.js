@@ -13,7 +13,7 @@ const userSchema = new Schema({
   lastName: {
     type: String,
     required: true,
-    unique: false,
+    unique: false, // Allow duplicate values
   },
   email: {
     type: String,

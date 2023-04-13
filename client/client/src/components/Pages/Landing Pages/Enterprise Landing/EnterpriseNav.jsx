@@ -7,7 +7,7 @@ import { IconBrandMatrix, IconDoorEnter, IconFolder, IconGlobe, IconStars, IconU
 const EnterpriseNav = () => {
   return (
     <>
-    <Container size={'100%'} align={'center'} justify={'center'} px={0}>
+    <Container size={'100%'} align={'center'} justify={'center'} px={0} sx={{zIndex: 200}}>
       <Grid align={'center'} justify={'center'} px={0} m={0}>
         <Grid.Col span={'content'}>
         <div className={styles.BLOGO}><img src={BookingSouq} className={styles.BLOGOIMG}/></div>
