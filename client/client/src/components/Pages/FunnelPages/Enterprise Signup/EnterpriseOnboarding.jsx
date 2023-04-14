@@ -8,6 +8,7 @@ import CompnayBased from './Pages/CompnayBased'
 import Verfiy from './Pages/Verfiy'
 import Branding from './Pages/Branding'
 import { AnimatePresence } from 'framer-motion'
+import Agents from './Pages/Agents'
 
 const EnterpriseOnboarding = () => {
 
@@ -60,7 +61,10 @@ const EnterpriseOnboarding = () => {
           <Branding key={page}/>
         </AnimatePresence>);
     } else if (page === 5) {
-      return <h1>Done</h1>;
+      return (
+        <AnimatePresence>
+          <Agents key={page}/>
+        </AnimatePresence>);
     } else {
       return <h1>ERROR</h1>;
     }
