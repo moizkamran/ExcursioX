@@ -58,7 +58,10 @@ const Agents = (props) => {
         ]}
       />
                       </Flex>
-                      <Button mt={20} w={250} color={'white'} sx={{borderRadius: 10}} rightIcon={<IconUserPlus size={20} />}>Invite Employee</Button>
+                      <Flex align={'flex-end'} justify={'flex-end'} >
+
+                      <Button   mt={20} w={250} color={'white'} sx={{borderRadius: 10}} rightIcon={<IconUserPlus size={20} />}>Invite Employee</Button>
+                      </Flex>
                     </Flex>
             </Flex>
         </Flex>
