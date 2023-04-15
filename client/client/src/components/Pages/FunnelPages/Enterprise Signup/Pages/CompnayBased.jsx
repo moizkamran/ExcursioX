@@ -27,61 +27,65 @@ const CompnayBased = () => {
 
     <Flex gap={20}>
   <NeedsModule description="KSA" flag="SA" 
-        onSelect={handleSelect}/>
-  <NeedsModule description="Pakistan" flag="PK" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'SA'} />
+  <NeedsModule description="Pakistan" flag="PK"  
+        onSelect={handleSelect} isSelected={selectedItem === 'PK'} />
   <NeedsModule description="UAE" flag="AE" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'AE'} />
   <NeedsModule description="Iran" flag="IR" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'IR'} />
   <NeedsModule description="Indonesia" flag="ID" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'ID'} />
 </Flex>
+
 <Flex gap={20}>
   <NeedsModule description="Malaysia" flag="MY" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'MY'} />
   <NeedsModule description="UK" flag="GB" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'GB'} />
   <NeedsModule description="Uzbezistan" flag="UZ" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'UZ'} />
   <NeedsModule description="Turmenistan" flag="TM" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'TM'} />
   <NeedsModule description="Canada" flag="CA" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'CA'} />
 </Flex>
+
 <Flex gap={20}>
   <NeedsModule description="Qatar" flag="QA" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'QA'} />
   <NeedsModule description="Algeria" flag="DZ" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'DZ'} />
   <NeedsModule description="Morocco" flag="MA" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'MA'} />
   <NeedsModule description="Lebonnaon" flag="LB" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'LB'} />
   <NeedsModule description="Sudan" flag="SD" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'SD'} />
 </Flex>
+
 <Flex gap={20}>
   <NeedsModule description="Kuwait" flag="KW" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'KW'} />
   <NeedsModule description="India" flag="IN" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'IN'} />
   <NeedsModule description="Bangladesh" flag="BD" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'BD'} />
   <NeedsModule description="Greece" flag="GR" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'GR'} />
   <NeedsModule description="Spain" flag="ES" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'ES'} />
 </Flex>
+
 <Flex gap={20}>
   <NeedsModule description="France" flag="FR" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'FR'} />
   <NeedsModule description="Germany" flag="DE" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'DE'} />
   <NeedsModule description="Italy" flag="IT" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'IT'} />
   <NeedsModule description="Australia" flag="AU" 
-        onSelect={handleSelect}/>
+        onSelect={handleSelect} isSelected={selectedItem === 'AU'} />
   <NeedsModule description="Global" icon={<IconWorld size={40}/>}/>
 </Flex>
 
@@ -93,8 +97,8 @@ const CompnayBased = () => {
 }
 
 function NeedsModule({flag ,description, icon, val, isSelected, onSelect}) {
-  const dispatch = useDispatch();
-  isSelected = val ;  
+  const dispatch = useDispatch();  
+
 
   val = flag;
 
@@ -111,14 +115,16 @@ boxShadow: '0px 3.00889px 2.25667px -3.00889px rgba(0, 0, 0, 0.31)',
 borderRadius: 15,
 transition: 'all 0.3s ease',
 cursor: 'pointer',
+color: isSelected ? 'white' : 'black',
 '&:hover': {
 backgroundColor: '#222323',
 transform: 'scale(1.09)',
-color: 'white'
+color: isSelected ? 'white' : 'white'
 }
 }}>
-      {flag? (<Image width={50} src={flag? `https://flagcdn.com/w80/${flag.toLowerCase()}.png` : ''} /> ) : ''}{icon} <Text fz={21} c={isSelected ? 'white' : 'black'}>{description}</Text>
-    </Flex>);
+      {flag? (<Image width={50} src={flag? `https://flagcdn.com/w80/${flag.toLowerCase()}.png` : ''} /> ) : ''}{icon} <Text fz={21}>{description}</Text>
+    </Flex>
+    );
 }
 
 export default CompnayBased

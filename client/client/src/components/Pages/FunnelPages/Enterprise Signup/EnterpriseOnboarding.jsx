@@ -7,10 +7,21 @@ import UseCase from './Pages/UseCase'
 import CompnayBased from './Pages/CompnayBased'
 import Verfiy from './Pages/Verfiy'
 import Branding from './Pages/Branding'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Agents from './Pages/Agents'
 
+const backgroundImageArray = [
+  "url('https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80')",
+  "url('https://images.unsplash.com/photo-1480944657103-7fed22359e1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80')",
+  "url('https://images.unsplash.com/photo-1551041777-ed277b8dd348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80')",
+  "url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')",
+  // add more image URLs here
+];
+
+
 const EnterpriseOnboarding = () => {
+  const [backgroundImage, setBackgroundImage] = useState(backgroundImageArray[0]);
+
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -23,10 +34,14 @@ const EnterpriseOnboarding = () => {
   const [page, setCurrentPage] = useState(0);
 
   const handleButtonClick = () => {
-    setCurrentPage(currentPage => currentPage + 1);
+    const nextPage = page + 1;
+    setBackgroundImage(backgroundImageArray[nextPage]);
+    setCurrentPage(nextPage);
   };
   const handleButtonClickBack = () => {
-    setCurrentPage(currentPage => currentPage - 1);
+    const nextPage = page - 1;
+    setBackgroundImage(backgroundImageArray[nextPage]);
+    setCurrentPage(nextPage);
   };
 
   const PageDisplay = () => {
@@ -83,8 +98,13 @@ const EnterpriseOnboarding = () => {
 
     
 
-    <Container style={{ flex: 1 }} size={'30%'} px={0} sx={{zIndex: 10}}> 
-      <div style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80)', backgroundSize: 'cover', backgroundPosition: 'center', height: '100%', width: '100%' }}> </div>
+    <Container style={{ flex: 1 }} size={'30%'} px={0} sx={{zIndex: 10}} bg={'black'}> 
+      <motion.div  
+      key={backgroundImage}
+      initial={{ clipPath: 'inset(0 100% 0 0)', filter: 'blur(5px)', transform: 'scale(1.1)'}}
+      animate={{ clipPath: 'inset(0 0 0 0)', filter: 'blur(0px)', transform: 'scale(1)' }}
+      transition={{ duration: 0.8 }}
+      style={{ backgroundImage, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%', width: '100%' }}> </motion.div>
     </Container>
     <div>
     {page >= 0 && <div style={{ zIndex: 30,display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20 }}>

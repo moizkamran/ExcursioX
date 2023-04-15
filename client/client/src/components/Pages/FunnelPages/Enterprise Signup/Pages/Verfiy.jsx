@@ -2,8 +2,21 @@ import { Button, Flex, Image, PinInput, Select, Text, TextInput } from '@mantine
 import { IconArrowRight, IconCrown, IconQuestionCircle, IconSend } from '@tabler/icons'
 import { motion as m } from 'framer-motion'
 import PhotosComponent from '../../../Hotel & Property/AddProperty/components/Functions/PhotosComponent';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { setEnterpriseDetails, setEnterpriseOwner } from '../../../../../Redux/Slicers/enterpriseSlice';
 
 const Verfiy = () => {
+  const enterpriseDetails = useSelector(state => state.enterprise.enterpriseDetails);
+  const enterpriseOwner = useSelector(state => state.enterprise.enterpriseOwner);
+  const ep_size = useSelector(state => state.enterprise.enterpriseDetails.enterpriseSize);
+  const [selectedItem, setSelectedItem] = useState(ep_size);
+
+  const handleSelect = (size) => {
+    setSelectedItem(size);
+  };
+
+  const dispatch = useDispatch();
 
   const roles = [
     { label: 'CEO', value: 'ceo' },
@@ -30,6 +43,7 @@ const Verfiy = () => {
 
   
   return (
+    
     <m.div 
     style={{position: 'absolute', width: '65%', height: '70%'}}
     initial={{x: '100%', opacity: 0}}
@@ -42,24 +56,24 @@ const Verfiy = () => {
     <Flex>
       <Flex gap={20} direction={'column'}>
           {/* EMAIL */}
-          <Email     />
+          <Email   dispatch={dispatch} enterpriseDetails={enterpriseDetails} />
           {/* PIN */}
-          <PIN     />
+          <PIN    dispatch={dispatch} enterpriseDetails={enterpriseDetails} />
 
           {/* ENTERPRISE EMP DETAILS */}
             <Flex direction={'column'} gap={20} mt={20}>
             {/* YOUR ROLE */}
-              <RoleInCompany   roles={roles}  />
+              <RoleInCompany   roles={roles}  dispatch={dispatch} enterpriseOwner={enterpriseOwner}/>
               {/* ENTERPRISE SIZE */}
               <Flex direction={'column'} gap={10}>
                   <Text fz={25} ff={'Kumbh Sans'} fw={500}>How big is the company?</Text>
                   <Flex gap={10} mt={10}>
-                    <EnterpriseSize   icon={<IconCrown />} size={'1'}  />
-                    <EnterpriseSize   icon={<IconCrown />} size={'2'}  />
+                    <EnterpriseSize   icon={<IconCrown />} size={'1 - 20'}  dispatch={dispatch} enterpriseSize={ep_size} onSelect={handleSelect}/>
+                    <EnterpriseSize   icon={<IconCrown />} size={'20 - 100'}  dispatch={dispatch} enterpriseSize={ep_size} onSelect={handleSelect}/>
                   </Flex>
                   <Flex gap={10} >
-                    <EnterpriseSize   icon={<IconCrown />} size={'3'}  />
-                    <EnterpriseSize   icon={<IconCrown />} size={'4'}  />
+                    <EnterpriseSize   icon={<IconCrown />} size={'100 - 500'} dispatch={dispatch} enterpriseSize={ep_size} onSelect={handleSelect} />
+                    <EnterpriseSize   icon={<IconCrown />} size={'1000+'}  dispatch={dispatch} enterpriseSize={ep_size} onSelect={handleSelect}/>
                   </Flex>
               </Flex>
             </Flex>
@@ -90,29 +104,48 @@ const Verfiy = () => {
 }
 
 
-function EnterpriseSize({icon, size}) {
-  return (<Flex sx={{
-borderRadius: 8,
-border: '0.707865px solid #D0D5DD',
-width: 160,
-cursor: 'pointer',
-height: 50,
-transition: 'all 0.3s ease',
-boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)',
-'&:hover':{
-backgroundColor: '#222323',
-color: 'white',
-transform: 'scale(1.09)',
-boxShadow: '0px 3.00889px 2.25667px -3.00889px rgba(0, 0, 0, 0.31)',
-},
+function EnterpriseSize({icon, size, dispatch, enterpriseSize, isSelected, onSelect}) {
+  const handleClick = () => {
+    onSelect(size);
+    dispatch(setEnterpriseDetails({ enterpriseSize: size }));
+  };
+
+  isSelected = enterpriseSize === size;
+
+  return (
+  <Flex 
+  onClick={handleClick}
+  bg={isSelected ? '#222323' : '#F8F8F8'}
+  sx={{
+            borderRadius: 8,
+            border: '0.707865px solid #D0D5DD',
+            width: 160,
+            cursor: 'pointer',
+            height: 50,
+            color: isSelected ? 'white' : 'black',
+            transition: 'all 0.3s ease',
+            boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)',
+            '&:hover':{
+                      backgroundColor: '#222323',
+                      color: isSelected ? 'white' : 'white',
+                      transform: 'scale(1.09)',
+                      boxShadow: '0px 3.00889px 2.25667px -3.00889px rgba(0, 0, 0, 0.31)',
+                      },
 }} align={'center'} justify={'center'}>
               {icon} <Text ml={10} fz={18} ff={'Kumbh Sans'} fw={600}>{size}</Text>
             </Flex>);
 }
 
-function Email({}) {
+function Email({dispatch, enterpriseDetails: {enterpriseEmail}}) {
   return (<Flex gap={20} align={'center'}>
-    <TextInput placeholder={'Enter your email'} w={250} styles={{
+    <TextInput placeholder={'Enter your email'} w={250}
+    value={enterpriseEmail} 
+    onChange={(e) => {
+      const email = e.target.value;
+      dispatch(setEnterpriseDetails({ enterpriseEmail: email }));
+      
+    }}
+    styles={{
 input: {
   height: 40,
   border: '1px solid #D0D5DD',
@@ -127,9 +160,15 @@ height: 40
     </Flex>);
 }
 
-function PIN({}) {
+function PIN({dispatch, enterpriseDetails: {verify_PIN_State}}) {
   return (<Flex gap={20} align={'center'}>
-      <PinInput length={4} size='md' styles={{
+      <PinInput length={4} size='md'
+      value={verify_PIN_State}
+      type="number"
+      onChange={(pin) => {
+        dispatch(setEnterpriseDetails({ verify_PIN_State: pin }));
+      }}
+      styles={{
 input: {
   height: 40,
   border: '1px solid #D0D5DD',
@@ -149,16 +188,22 @@ input: {
     </Flex>);
 }
   
-function RoleInCompany({roles}) {
+function RoleInCompany({roles, dispatch, enterpriseOwner: {role}}) {
   return (<Flex direction={'column'} gap={10}>
             <Text fz={25} ff={'Kumbh Sans'} fw={500}>Your role in the company</Text>
-            <Select placeholder={'Select your role'} w={250} styles={{
-input: {
-  height: 40,
-  border: '1px solid #D0D5DD',
-  borderRadius: 10,
-  boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)'
-}
+            <Select placeholder={'Select your role'} w={250} 
+            value={role}
+            onChange={(role) => {
+              dispatch(setEnterpriseOwner({ role }));
+            }}
+            
+            styles={{
+                    input: {
+                      height: 40,
+                      border: '1px solid #D0D5DD',
+                      borderRadius: 10,
+                      boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)'
+                    }
 }} data={roles} />
         </Flex>);
 }
