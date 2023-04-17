@@ -3,9 +3,40 @@ import { IconArrowRight, IconCheck, IconEdit, IconPhoto, IconSend, IconTrash, Ic
 import { motion as m } from 'framer-motion'
 
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { useDispatch, useSelector } from 'react-redux';
+import { setEnterpriseEmployees } from '../../../../../Redux/Slicers/enterpriseSlice';
+import { useState } from 'react';
 
 const Agents = (props) => {
   const theme = useMantineTheme();
+  const enterpriseEmployees = useSelector(state => state.enterprise.enterpriseEmployees.employees);
+  const dispatch = useDispatch();
+
+  const addEmployee = () => (dispatch, getState) => {
+    const newEmployee = {
+      name: '',
+      jobTitle: '',
+      email: '',
+      employmentType: '',
+      ownership: '',
+      roleInCRM: '',
+      profilePicture: ''
+    };
+    const updatedEmployees = [...getState().enterprise.enterpriseEmployees.employees, newEmployee];
+    dispatch(setEnterpriseEmployees({ employees: updatedEmployees }));
+  };
+
+  const [inputValues, setInputValues] = useState([]);
+
+  const handleInputChange = (index, key, value) => {
+    setEnterpriseEmployees(prevDetails => {
+      const updatedEmployee = {...prevDetails[index], [key]: value};
+      const updatedDetails = {...prevDetails, [index]: updatedEmployee};
+      return updatedDetails;
+    });
+  };
+  
+
   return (
     <m.div
     style={{position: 'absolute', width: '65%', height: '70%'}}
@@ -21,9 +52,9 @@ const Agents = (props) => {
                 <Text fz={20} ff={'Kumbh Sans'} fw={700} mb={10}>ROLE</Text>
                 <Flex gap={20} >
                     <Flex direction={'column'} gap={10}>
-                     <Inputss placeholder={''} heading={'Full Name'} />
-                     <Inputss placeholder={'Role'} heading={'Job Title'} />
-                     <Inputss placeholder={''} heading={'Email'} />
+                    <Inputss placeholder={''} heading={'Full Name'} val="name" onChange={(key, value) => handleInputChange(key, value)} />
+<Inputss placeholder={'Role'} heading={'Job Title'} val="jobTitle" onChange={(key, value) => handleInputChange(key, value)} />
+<Inputss placeholder={''} heading={'Email'} val="email"  hic={handleInputChange}/>
                     </Flex>
                     <Flex direction={'column'} gap={10} >
                     <Inputss placeholder={'Shares/Salaried'} heading={'Employement Type'} />
@@ -42,7 +73,7 @@ const Agents = (props) => {
                     </Flex>
                 </Flex>
                     <Flex direction={'column'} mt={20}>
-                    <Text fz={20} ff={'Kumbh Sans'} fw={700} mb={10}>IDENTIFICATION</Text>
+                    <Text fz={20} ff={'Kumbh Sans'} fw={700} mb={10}>Profile Picture</Text>
                       <Flex w={'100%'}>
                         <LogoUpload  theme={theme} IMAGE_MIME_TYPE={IMAGE_MIME_TYPE} props={props} rem={rem}  />
                         <RingProgress
@@ -60,7 +91,7 @@ const Agents = (props) => {
                       </Flex>
                       <Flex align={'flex-end'} justify={'flex-end'} >
 
-                      <Button   mt={20} w={250} color={'white'} sx={{borderRadius: 10}} rightIcon={<IconUserPlus size={20} />}>Invite Employee</Button>
+                      <Button mt={20} w={250} color={'white'} sx={{borderRadius: 10}} onClick={() => dispatch(addEmployee())}>Add Employee</Button>
                       </Flex>
                     </Flex>
             </Flex>
@@ -77,19 +108,26 @@ const Agents = (props) => {
   )
 }
 
-function Inputss({placeholder, heading}) {
-    return (<Flex gap={20}direction={'column'}> 
+function Inputss({placeholder, heading, val, onChange, hic}) {
+  console.log(val);
+  const handleChange = (e) => {
+    onChange(val, e.target.value);
+  };
+
+  return (
+    <Flex gap={20} direction={'column'}> 
       <Text fz={15} ff={'Kumbh Sans'} fw={500}>{heading}</Text>
-      <TextInput placeholder={placeholder} w={250} mt={-15} styles={{
-  input: {
-    height: 30,
-    border: '1px solid #D0D5DD',
-    borderRadius: 10,
-    boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)'
-  }
-  }} />
-      </Flex>);
-  }
+      <TextInput placeholder={placeholder} w={250} mt={-15} onChange={(key, value) => hic(key, value)} styles={{
+        input: {
+          height: 30,
+          border: '1px solid #D0D5DD',
+          borderRadius: 10,
+          boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)'
+        }
+      }} />
+    </Flex>
+  );
+}
   
   function LogoUpload({theme, IMAGE_MIME_TYPE, props, rem}) {
     return (<Dropzone onDrop={files => console.log('accepted files', files)} onReject={files => console.log('rejected files', files)} maxSize={3 * 1024 ** 2} accept={IMAGE_MIME_TYPE} {...props}>
@@ -109,10 +147,10 @@ function Inputss({placeholder, heading}) {
 
       <div>
         <Text size="xl" inline>
-          Upload your ID Card or Passport
+          Upload your picture
         </Text>
         <Text size="sm" color="dimmed" inline mt={7}>
-          Attach both sides, each file should not exceed 5mb
+          Make sure it's a .jpg or .png file and less than 3MB.
         </Text>
       </div>
     </Group>

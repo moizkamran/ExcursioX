@@ -8,9 +8,14 @@ import LogoNotToDo from '../../../../../assets/Resources/LogoNotToDo.svg'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 import PhotosComponent from '../../../Hotel & Property/AddProperty/components/Functions/PhotosComponent';
+import { useDispatch, useSelector } from 'react-redux'
+import { setEnterpriseDetails } from '../../../../../Redux/Slicers/enterpriseSlice'
 
 const Branding = (props) => {
   const theme = useMantineTheme();
+  const enterpriseDetails = useSelector(state => state.enterprise.enterpriseDetails);
+  const dispatch = useDispatch();
+
   return (
     <m.div
     style={{position: 'absolute', width: '65%', height: '70%'}}
@@ -21,8 +26,8 @@ const Branding = (props) => {
     >
       <Text fz={45} ff={'Kumbh Sans'} fw={700} mb={10}>Almost Done, Branding</Text>
       <Text fz={18} ff={'Kumbh Sans'} fw={400} w={500}>These will appear on all of your receipts, itinerary, 
-accommodation booking, simple bookings, quick bookings, 
-vouchers, invoices and complete CRM branding</Text>
+        accommodation booking, simple bookings, quick bookings, 
+        vouchers, invoices and complete CRM branding</Text>
 
 <Flex>
   <Flex gap={20} direction={'column'}>
@@ -38,13 +43,13 @@ vouchers, invoices and complete CRM branding</Text>
               </Flex>
               <Flex gap={20}>
                 <Flex gap={5} direction={'column'}>
-                  <Email heading={'Company Name'} placeholder={""}/>
-                  <Email heading={'Company Moto'} placeholder={""}/>
-                  <Email heading={'Company Address'} placeholder={""}/>
+                  <Email heading={'Company Name'} placeholder={""} dispatch={dispatch} enterpriseDetails={enterpriseDetails} val="enterpriseName"/>
+                  <Email heading={'Company Moto'} placeholder={""} dispatch={dispatch} enterpriseDetails={enterpriseDetails} val="enterpriseMoto"/>
+                  <Email heading={'Company Address'} placeholder={""} dispatch={dispatch} enterpriseDetails={enterpriseDetails} val="streetAddress"/>
                 </Flex>
                 <Flex gap={5} direction={'column'}>
-                  <Email heading={'Company Phone'} placeholder={""}/>
-                  <Email heading={'How did you hear about us?'} placeholder={""}/>
+                  <Email heading={'Company Phone'} placeholder={""} dispatch={dispatch} enterpriseDetails={enterpriseDetails} val="contactNumber"/>
+                  <Email heading={'How did you hear about us?'} placeholder={""} dispatch={dispatch} enterpriseDetails={enterpriseDetails} val="referral"/>
                 </Flex>
               </Flex>
 
@@ -90,10 +95,17 @@ vouchers, invoices and complete CRM branding</Text>
     </Dropzone>);
     }
 
-    function Email({placeholder, heading}) {
-      return (<Flex gap={20}direction={'column'}> 
+    function Email({placeholder, heading, dispatch, enterpriseDetails, val}) {
+      return (
+      
+      <Flex gap={20}direction={'column'}> 
         <Text fz={15} ff={'Kumbh Sans'} fw={500}>{heading}</Text>
-        <TextInput placeholder={placeholder} w={250} mt={-15} styles={{
+        <TextInput placeholder={placeholder} w={250} mt={-15} 
+        value={enterpriseDetails && enterpriseDetails[val] ? enterpriseDetails[val] : ''}
+
+        onChange={(e) => dispatch(setEnterpriseDetails({[val]: e.currentTarget.value}))}
+        
+        styles={{
     input: {
       height: 30,
       border: '1px solid #D0D5DD',

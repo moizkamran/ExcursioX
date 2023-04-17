@@ -33,15 +33,6 @@ export const initialState = {
 
     enterpriseEmployees: {
         employees: [
-            { 
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-                phoneNumber: "",
-                role: "",
-            },
         ],
     },
 
@@ -76,11 +67,31 @@ const enterpriseSlice = createSlice({
                     ...action.payload,
                 },
             };
-        }
+        },
+
+        setEnterpriseBranding: (state, action) => {
+            return {
+                ...state,
+                enterpriseBranding: {
+                    ...state.enterpriseBranding,
+                    ...action.payload,
+                },
+            };
+        },
+
+        setEnterpriseEmployees: (state, action) => {
+            return {
+              ...state,
+              enterpriseEmployees: {
+                ...state.enterpriseEmployees,
+                employees: action.payload.employees
+              }
+            };
+          },
     },
 });
 
-export const { setEnterpriseDetails, setEnterpriseOwner } = enterpriseSlice.actions;
+export const { setEnterpriseDetails, setEnterpriseOwner, setEnterpriseBranding, setEnterpriseEmployees } = enterpriseSlice.actions;
 export default enterpriseSlice.reducer;
 
 
