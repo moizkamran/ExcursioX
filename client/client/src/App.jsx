@@ -12,6 +12,7 @@ import EnterpriseLanding from "./components/Pages/Landing Pages/Enterprise Landi
 import ProtectRoute from "./utils/protectRoute";
 import UnprotectRoute from "./utils/unprotectRoute";
 import EnterpriseOnboarding from "./components/Pages/FunnelPages/Enterprise Signup/EnterpriseOnboarding";
+import AddBooking from "./components/Pages/Hotel & Property/AddBooking/AddBooking";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/AddProperty" element={<AddProperty />} />
             <Route path="/FindBooking" element={<FindBooking />} />
             <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
+            <Route path="/new/package-booking" element={<AddBooking />} />
           </Route>
 
           {/* Public/Non-CRM Routes */}
