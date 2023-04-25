@@ -18,38 +18,15 @@ import {
   IconMaximize,
   IconWallet,
 } from "@tabler/icons";
+import { Link } from "react-router-dom";
 const MenuItems = () => {
   return (
 
     <div style={{ display: "flex", gap: "20px" }}>
-      <Menu>
-        <Menu.Target>
-          <Button
-            style={{
-              backgroundColor: "white",
-              color: "#07399E",
-              display: "flex",
-              alignItems: "center",
-              borderRadius: "20px",
-            }}
-          >
-            <IconPlus size={16} color="blue" />
-          </Button>
-        </Menu.Target>
-
-        <Menu.Dropdown>
-          <Menu.Item>
-            <Input
-              placeholder="Search..."
-              variant="filled"
-              icon={<IconSearch />}
-              style={{ width: "300px" }}
-            />
-          </Menu.Item>
-
-          {/* Other items ... */}
-        </Menu.Dropdown>
-      </Menu>
+      <Button color="blue" style={{ height: "40px" }} component={Link} to={'/new/package-booking'}>
+        <IconPlus size={20} />
+        <span style={{ marginLeft: "10px" }}>New Booking</span>
+      </Button>
       <UnstyledButton className="headerIcon">
         <IconMessageDots />
       </UnstyledButton>

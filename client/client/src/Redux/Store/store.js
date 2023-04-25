@@ -1,5 +1,6 @@
 import propertyReducer from "../Slicers/propertySlice";
 import userReducer from "../Slicers/userSlice";
+import enterpriseReducer from "../Slicers/enterpriseSlice";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import {
@@ -12,17 +13,31 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
+import createTransform from "redux-persist/es/createTransform";
 import storage from 'redux-persist/lib/storage'
-import { PersistGate } from 'redux-persist/integration/react'
+
+const excludeLoadingAndError = createTransform(
+  // Transform state on its way to being serialized and persisted.
+  (inboundState, key) => {
+    return key === 'user' ? { ...inboundState, loading: false, error: false } : inboundState;
+  },
+  // Transform state being rehydrated
+  (outboundState, key) => {
+    return key === 'user' ? { ...outboundState, loading: false, error: false } : outboundState;
+  },
+  { whitelist: ['user'] }
+);
 
 const rootReducer = combineReducers({
   property: propertyReducer,
   user : userReducer,
+  enterprise: enterpriseReducer,
 });
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
+  transforms: [excludeLoadingAndError],
 }
 
 
