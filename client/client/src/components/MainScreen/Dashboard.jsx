@@ -1,6 +1,5 @@
 import AddProperty from "../Pages/Hotel & Property/AddProperty/AddProperty";
-import Body from "./Body";
-import HeaderComponent from "./HeaderComponent";
+
 import MenuItems from "./MenuItems";
 import NavbarItems from "./NavbarItems";
 import React from "react";
@@ -37,8 +36,8 @@ const Dashboard = () => {
             style={{
               borderRadius: "50px 0 0 0",
               backgroundColor: "white",
-              marginLeft: "0px",
-              padding: "20px",
+             
+
               flex: 1,
             }}
           >  <ScrollArea.Autosize mah={"100%"} mx="auto">

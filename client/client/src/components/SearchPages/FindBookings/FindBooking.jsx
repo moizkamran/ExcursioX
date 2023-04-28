@@ -1,4 +1,4 @@
-import { Progress, Chip, Button, Flex, Switch, Text, Group, Image } from '@mantine/core'
+import { Progress, Chip, Button, Flex, Switch, Text, Group, Image, Box, BackgroundImage, Center, UnstyledButton } from '@mantine/core'
 import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
 import { IconBrandSuperhuman, IconCalendar, IconDoor, IconGlobe, IconHeartHandshake, IconMan, IconMinus, IconPlaneArrival, IconPlaneDeparture, IconPlus, IconPower, IconSearch, IconUser, IconX, } from '@tabler/icons'
 import { white } from 'color-name'
@@ -13,12 +13,69 @@ import AirtimeBadge from '../../Badges/Airtime'
 import S_Tier from '../../../assets/Tiers/S Tier.svg'
 import P_Tier from '../../../assets/Tiers/P Tier.svg'
 import T_Tier from '../../../assets/Tiers/T Tier.svg'
-
+import {
+    IconMoon,
+    IconSun,
+    IconMoonStars,
+    IconActivityHeartbeat,
+    IconSettings,
+    IconBinaryTree,
+    IconTicket,
+    IconLogout,
+    IconLayoutDashboard,
+    IconEPassport,
+    IconArrowRight,
+    IconChevronRight,
+    IconBusStop,
+    IconBed,
+    IconPlaneTilt,
+    IconCoin,
+    IconCircle,
+} from "@tabler/icons";
 const FindBooking = () => {
     const [count, setCount] = useState(0)
 
     return (
         <>
+            <Box
+
+            >
+                <BackgroundImage
+                    h={122}
+
+                    style={{ borderRadius: "50px 0 0 0", }}
+                    w="100%"
+                    src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+                    radius="sm"
+                >
+<Box
+p={10}
+>
+
+
+                    <Text color="#fff">
+                        Live, Breathe & Embrace
+                    </Text>
+                    <Text color="#fff">
+                        Enjoy Lifetime 12% Discount* for BookingSouq+ Customers
+                    </Text>
+
+                    <UnstyledButton
+
+                        style={{
+
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "10px 0",
+                            backgroundColor: "white"
+                        }}
+                    >
+                        <IconSettings size={25} />
+                        <Text style={{ flex: 1 }}>Upgrade Now</Text>
+                    </UnstyledButton>
+                    </Box>
+                </BackgroundImage>
+            </Box>
             <Text style={{
                 fontSize: "50px",
                 marginBottom: "35px",
