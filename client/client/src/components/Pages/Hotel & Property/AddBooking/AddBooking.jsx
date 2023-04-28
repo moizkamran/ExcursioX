@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import { ScrollArea, Text, Title, Radio, Group, Tooltip, TextInput, Popover, Button} from '@mantine/core'
+import { ScrollArea, Text, Title, Radio, Group, Tooltip, TextInput, Popover, Button, Flex, Avatar} from '@mantine/core'
 import { DatePicker } from '@mantine/dates';
 import { IconQuestionCircle } from '@tabler/icons';
 
@@ -9,33 +9,83 @@ export const AddBooking = () => {
   return (
     
     <>
-        <div
-          style={{
-            padding: 0,
-            margin: 0,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
             <Text style={{ marginBottom: 10 }}>Home {'>'} Add Booking</Text>
             <Title order={2} style={{fontSize: 40}}>New Booking Wizard</Title>
 
             <div style={{ display: "flex", alignItems: "center", marginTop: 5 }}>
               <Text>Let's help you start a new booking request!</Text>
             </div>
-           
-            <div style={{backgroundColor: '#07399E', borderRadius: '0px 45px 0px 0px', width: 'max-content', padding: 30, color: 'white'}}>
-            
-            <div>
-              
-            <Heading   series={1} title={'When is this person planning to travel?'}  />
-            
-                 <DateArea     />
-              </div>
-             
-            </div>
 
-        </div>
+            <Flex gap={20} justify={'start'}>
+
+            {/* Dynamic Configurator */}
+              <Flex direction={'column'} style={{backgroundColor: '#07399E', borderRadius: '0px 45px 0px 0px', width: 'max-content', padding: 30, color: 'white'}}>
+              
+              {/* Wien mann reisen? */}
+                <div>             
+                  <Heading   series={1} title={'When is this person planning to travel?'}  />
+                  <DateArea     />
+                </div>
+              {/* Wien mann reisen? ENDE */}
+
+              {/* Wie viele Personen? */}
+                <div style={{marginTop: 20}}>
+                  <Heading   series={2} title={'Enterprise Booking'}  />
+
+                    <Flex mt={20}>
+                      <Text>Are they already our customer?</Text>
+                      <IconQuestionCircle style={{marginLeft: 10}} />
+                    </Flex>
+                    
+                    <Flex align={'center'} gap={10} mt={10} >
+                      <Radio label="Yes" value="yes" color='dark' styles={{label:{color: 'white'}}}/>
+                      <Radio label="No" value="no" color='dark' styles={{label:{color: 'white'}}}/>
+                    </Flex>
+                </div>
+              {/* Wie viele Personen? ENDE */}
+              {/* Klasse */}
+                <div style={{marginTop: 20}}>
+                  <Heading   series={3} title={'What class do they want to travel in?'}  />
+                  <Flex mt={20} gap={20}>
+                    <ClassTier tier={'SWIFT'} gradient={'linear-gradient(180deg, #0FFF44 0%, #00C82C 100%)'}    />
+                    <ClassTier tier={'NOVA'} gradient={'linear-gradient(180deg, #1E5FC1 0%, #092D63 100%)'}    />
+                    <ClassTier tier={'LUXE'} gradient={'linear-gradient(180deg, #C41818 0%, #FF2E00 100%)'}    />
+                    <ClassTier tier={'FLEX'} gradient={'linear-gradient(180deg, #FF7A00 0%, #C05C00 100%)'}    />
+                  </Flex>
+                </div>
+              {/* Klasse ENDE */}
+              {/* Rechnung */}
+              <div>
+                <Heading  series={4} title={'Invoice Type'}  />
+
+                <Flex mt={20} w={200} bg={'black'} p={20} sx={{borderRadius: '20px'}}>
+                  <Text>Select Acoomodation First</Text>
+                </Flex>
+              </div>
+              {/* Rechnung ENDE */}
+              </Flex>
+              {/* Dynamic Configurator ENDE */}
+
+              <Flex direction={'column'}>
+                <Heading series={5} title={'Add Passengers'} />
+                <PassengerViable
+                 passport_number={'123456789'}
+                 given_name={'John'}
+                 surname={'Doe'}
+                 dob={'01/01/1990'}
+                 passport_valid={'01/01/2025'}
+                 passport_class={'P'}
+                 age={'31'}
+                 gender={'Male'}
+                 pob={'Germany'}
+                 issue_state={'Germany'}
+                 pax={'ADULT'}
+                 group={'1'} 
+                  />
+              </Flex>
+
+            </Flex>
+
     </>
   )
 }
@@ -55,7 +105,7 @@ position: 'relative',
 width: 38,
 height: 38,
 borderRadius: 35,
-backgroundColor: 'black'
+backgroundColor: `${series > 4 ? '#07399E' : 'black'}`,
 }}>
             <Text style={{
   color: 'white',
@@ -140,5 +190,102 @@ marginRight: 20
               </div>);
 }
   
+function ClassTier({tier, gradient}) {
+  return (<Flex w={80} h={100} align={'center'} justify={'center'} sx={{
+background: `${gradient}`,
+borderRadius: '10px',
+transition: 'transform 0.2s ease-in-out',
+cursor: 'pointer',
+':hover': {
+transform: 'scale(1.05)',
+// Scale up on hover
+border: '1px solid white'
+}
+}}>
+                <Text fz={20} fw={500}>{tier}</Text>
+              </Flex>);
+}
 
-export default AddBooking
+
+
+function PassengerViable({passport_number, given_name, surname, dob, passport_valid, passport_class, age, gender, pob, issue_state, pax, group}) {
+  return (<Flex w={800} bg={'#F4F4F4'} sx={{
+borderRadius: '25px'
+}} p={20}>
+              <Avatar src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmKSB58XrNO0v8WsRmqVIyhhsGk7vMDtkjhw&usqp=CAU'} size={120} sx={{
+borderRadius: '25px'
+}} />
+                <Flex direction={'column'} ml={20}>
+                <Flex gap={15}>
+                  <Flex direction={'column'}>
+                    <Text fz={30} ff={'Kumbh Sans'} fw={700}>{passport_number}</Text>
+                    <Text fz={15} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Passport Number</Text>
+                  </Flex>
+                  <Flex w={'max-content'} bg={'#D9D9D9'} sx={{
+    borderRadius: '50px'
+  }} justify={'center'} align={'center'} h={50}>
+                    <Flex gap={15} p={'0px 15px 0px 15px'}>
+                      <Flex direction={'column'}>
+                        <Text fz={15} ff={'Kumbh Sans'} fw={700}>{passport_class}</Text>
+                        <Text fz={10} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Class</Text>
+                      </Flex>
+                      <Flex direction={'column'}>
+                        <Text fz={15} ff={'Kumbh Sans'} fw={700}>{age}</Text>
+                        <Text fz={10} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Age</Text>
+                      </Flex>
+                      <Flex direction={'column'}>
+                        <Text fz={15} ff={'Kumbh Sans'} fw={700}>{gender}</Text>
+                        <Text fz={10} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Gender</Text>
+                      </Flex>
+                      <Flex direction={'column'}>
+                        <Text fz={15} ff={'Kumbh Sans'} fw={700}>{pob}</Text>
+                        <Text fz={10} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Place of Birth</Text>
+                      </Flex>
+                      <Flex direction={'column'}>
+                        <Text fz={15} ff={'Kumbh Sans'} fw={700}>{issue_state}</Text>
+                        <Text fz={10} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Issuing State</Text>
+                      </Flex>
+                    </Flex>
+                  </Flex>
+                  <Flex w={'max-content'} bg={'rgba(0, 0, 0, 0.88)'} sx={{
+    borderRadius: '50px',
+    color: 'white'
+  }} justify={'center'} align={'center'} h={50}>
+                    <Flex gap={15} p={'0px 15px 0px 15px'}>
+                      <Flex direction={'column'}>
+                        <Text fz={15} ff={'Kumbh Sans'} fw={700}>{pax}</Text>
+                        <Text fz={10} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>PAX Code</Text>
+                      </Flex>
+                      <Flex direction={'column'}>
+                        <Text fz={15} ff={'Kumbh Sans'} fw={700}>{group}</Text>
+                        <Text fz={10} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Group</Text>
+                      </Flex>
+                    </Flex>
+                  </Flex>
+                </Flex>
+                <Flex gap={15}>
+
+                  <Flex direction={'column'}>
+                    <Text fz={20} ff={'Kumbh Sans'} fw={700}>{given_name}</Text>
+                    <Text fz={15} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Given Name</Text>
+                  </Flex>
+                  <Flex direction={'column'}>
+                    <Text fz={20} ff={'Kumbh Sans'} fw={700}>{surname}</Text>
+                    <Text fz={15} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Surname</Text>
+                  </Flex>
+                  <Flex direction={'column'}>
+                    <Text fz={20} ff={'Kumbh Sans'} fw={700}>{dob}</Text>
+                    <Text fz={15} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Date of Birth</Text>
+                  </Flex>
+                  <Flex direction={'column'}>
+                    <Text fz={20} ff={'Kumbh Sans'} fw={700}>{passport_valid}</Text>
+                    <Text fz={15} ff={'Kumbh Sans'} fw={400} c={'dimmed'} mt={-5}>Passport Valid Until</Text>
+                  </Flex>
+
+                </Flex>
+                </Flex>
+            </Flex>);
+}
+
+
+  export default AddBooking
