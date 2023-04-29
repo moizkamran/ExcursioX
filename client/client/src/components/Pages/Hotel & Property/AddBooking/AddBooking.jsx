@@ -228,8 +228,6 @@ border: '1px solid white'
               </Flex>);
 }
 
-
-
 function PassengerVessel({passport_picture, passport_number, given_name, surname, dob, passport_valid, passport_class, age, gender, pob, issue_state, pax, group, isFH}) {
   const isFHBorder = isFH ? '1px solid #FF9A23' : 'none'
   
