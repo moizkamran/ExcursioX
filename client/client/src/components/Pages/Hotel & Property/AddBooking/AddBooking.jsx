@@ -1,14 +1,32 @@
 import { React, useState } from 'react'
-import { ScrollArea, Text, Title, Radio, Group, Tooltip, TextInput, Popover, Button, Flex, Avatar} from '@mantine/core'
+import { ScrollArea, Text, Title, Radio, Group, Tooltip, TextInput, Popover, Button, Flex, Avatar, Modal} from '@mantine/core'
 import { DatePicker } from '@mantine/dates';
-import { IconQuestionCircle } from '@tabler/icons';
+import { IconCrown, IconPlus, IconQuestionCircle } from '@tabler/icons';
+import PassengerAdd from './PassengerAdd';
 
 
 export const AddBooking = () => {
+  const [addPassengerModal, setAddPassengerModal] = useState(false);
 
   return (
     
     <>
+    <Modal
+    opened={addPassengerModal}
+    onClose={() => setAddPassengerModal(false)}
+    size="auto"
+    xOffset={0}
+    centered
+    transitionProps={{ transition: 'pop', duration: 450, timingFunction: 'ease-in-out' }}
+    closeOnClickOutside={true}
+    radius="xl"
+    overlayProps={{
+      opacity: 0.30,
+      blur: 1.5,
+    }}
+  >
+    <PassengerAdd />
+    </Modal>
             <Text style={{ marginBottom: 10 }}>Home {'>'} Add Booking</Text>
             <Title order={2} style={{fontSize: 40}}>New Booking Wizard</Title>
 
@@ -66,11 +84,14 @@ export const AddBooking = () => {
               </Flex>
               {/* Dynamic Configurator ENDE */}
 
-              <Flex direction={'column'}>
+              <Flex direction={'column'} gap={20}>
                 <Heading series={5} title={'Add Passengers'} />
-                <PassengerViable
+                {/* Verwenden Sie map, um Werte zuzuweisen  */}
+                <PassengerVessel
+                 passport_picture={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmKSB58XrNO0v8WsRmqVIyhhsGk7vMDtkjhw&usqp=CAU'}
                  passport_number={'123456789'}
                  given_name={'John'}
+                 isFH={true}
                  surname={'Doe'}
                  dob={'01/01/1990'}
                  passport_valid={'01/01/2025'}
@@ -82,6 +103,7 @@ export const AddBooking = () => {
                  pax={'ADULT'}
                  group={'1'} 
                   />
+                  <Button rightIcon={<IconPlus/>} w={'max-content'} onClick={() => setAddPassengerModal(true)}>Add Passenger</Button>
               </Flex>
 
             </Flex>
@@ -208,13 +230,22 @@ border: '1px solid white'
 
 
 
-function PassengerViable({passport_number, given_name, surname, dob, passport_valid, passport_class, age, gender, pob, issue_state, pax, group}) {
-  return (<Flex w={800} bg={'#F4F4F4'} sx={{
-borderRadius: '25px'
-}} p={20}>
-              <Avatar src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmKSB58XrNO0v8WsRmqVIyhhsGk7vMDtkjhw&usqp=CAU'} size={120} sx={{
-borderRadius: '25px'
-}} />
+function PassengerVessel({passport_picture, passport_number, given_name, surname, dob, passport_valid, passport_class, age, gender, pob, issue_state, pax, group, isFH}) {
+  const isFHBorder = isFH ? '1px solid #FF9A23' : 'none'
+  
+  return (
+  <>
+  <Flex w={800} bg={'#F4F4F4'} sx={{
+    borderRadius: '25px', border: `${isFHBorder}`, position: 'relative', boxSizing: 'border-box'
+  }} p={20}>
+              <Avatar src={passport_picture} size={120} sx={{
+                borderRadius: '25px'
+              }} />
+              {
+              isFH
+              ? <Flex gap={5} bg={'#FF9A23'} c='white' w={'max-content'} p={'3px 10px 3px 10px'} sx={{borderRadius: 25, position: 'absolute', top:-15, right:40}}><IconCrown/><Text fz={14}>Family Head</Text></Flex>
+              : null
+              }
                 <Flex direction={'column'} ml={20}>
                 <Flex gap={15}>
                   <Flex direction={'column'}>
@@ -284,7 +315,9 @@ borderRadius: '25px'
 
                 </Flex>
                 </Flex>
-            </Flex>);
+            </Flex>
+            </>
+            );
 }
 
 
