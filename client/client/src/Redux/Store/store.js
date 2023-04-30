@@ -1,5 +1,6 @@
 import propertyReducer from "../Slicers/propertySlice";
 import userReducer from "../Slicers/userSlice";
+import passengerReducer from "../Slicers/passengerSlice";
 import enterpriseReducer from "../Slicers/enterpriseSlice";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
@@ -30,6 +31,7 @@ const excludeLoadingAndError = createTransform(
 
 const rootReducer = combineReducers({
   property: propertyReducer,
+  passengers: passengerReducer,
   user : userReducer,
   enterprise: enterpriseReducer,
 });

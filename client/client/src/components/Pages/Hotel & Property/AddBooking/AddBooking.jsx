@@ -5,8 +5,26 @@ import { IconCrown, IconPlus, IconQuestionCircle } from '@tabler/icons';
 import PassengerAdd from './PassengerAdd';
 
 
+
+
 export const AddBooking = () => {
   const [addPassengerModal, setAddPassengerModal] = useState(false);
+
+  const passengers = [
+    {id: '1', passport_picture: 'https://i.pinimg.com/564x/e8/2a/e2/e82ae2fe2d7fab87b74b42ed96174282.jpg',
+    passport_number: 'BKVQ2566', given_name: 'Esra', surname: 'Biligic', dob: '1/2/2003', passport_valid: '01/01/2047', passport_class: 'Ordinary',
+    age: '21', gender: 'Female', pob: 'Turkey', issue_state: 'Germany', pax: 'ADULT', group: '1', isFH: false},
+    {id: '2', passport_picture: 'https://cdn.yaqeeninstitute.org/wp-content/uploads/2017/01/1-ShOmar.jpg',
+    passport_number: '123456789', given_name: 'Omar', surname: 'Suleiman', dob: '1/2/1997', passport_valid: '01/01/2047', passport_class: 'Ordinary',
+    age: '21', gender: 'Male', pob: 'Germany', issue_state: 'Germany', pax: 'ADULT', group: '1', isFH: true}
+  ]
+
+  const renderPassengers = () => passengers.map((passenger) => (
+    <PassengerVessel key={passenger.id} passport_picture={passenger.passport_picture} passport_number={passenger.passport_number}
+    given_name={passenger.given_name} surname={passenger.surname} dob={passenger.dob} passport_valid={passenger.passport_valid}
+    passport_class={passenger.passport_class} age={passenger.age} gender={passenger.gender} pob={passenger.pob} issue_state={passenger.issue_state}
+    pax={passenger.pax} group={passenger.group} isFH={passenger.isFH}/>
+    ))
 
   return (
     
@@ -87,22 +105,7 @@ export const AddBooking = () => {
               <Flex direction={'column'} gap={20}>
                 <Heading series={5} title={'Add Passengers'} />
                 {/* Verwenden Sie map, um Werte zuzuweisen  */}
-                <PassengerVessel
-                 passport_picture={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmKSB58XrNO0v8WsRmqVIyhhsGk7vMDtkjhw&usqp=CAU'}
-                 passport_number={'123456789'}
-                 given_name={'John'}
-                 isFH={true}
-                 surname={'Doe'}
-                 dob={'01/01/1990'}
-                 passport_valid={'01/01/2025'}
-                 passport_class={'P'}
-                 age={'31'}
-                 gender={'Male'}
-                 pob={'Germany'}
-                 issue_state={'Germany'}
-                 pax={'ADULT'}
-                 group={'1'} 
-                  />
+                {passengers.length ? renderPassengers() : <Text>No Passengers Added</Text>}
                   <Button rightIcon={<IconPlus/>} w={'max-content'} onClick={() => setAddPassengerModal(true)}>Add Passenger</Button>
               </Flex>
 
@@ -234,7 +237,7 @@ function PassengerVessel({passport_picture, passport_number, given_name, surname
   return (
   <>
   <Flex w={800} bg={'#F4F4F4'} sx={{
-    borderRadius: '25px', border: `${isFHBorder}`, position: 'relative', boxSizing: 'border-box'
+    borderRadius: '25px', border: `${isFHBorder}`, position: 'relative'
   }} p={20}>
               <Avatar src={passport_picture} size={120} sx={{
                 borderRadius: '25px'
