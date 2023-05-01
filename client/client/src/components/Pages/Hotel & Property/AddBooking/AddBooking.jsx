@@ -11,8 +11,8 @@ export const AddBooking = () => {
   const [addPassengerModal, setAddPassengerModal] = useState(false);
 
   const passengers = [
-    {id: '1', passport_picture: 'https://i.pinimg.com/564x/e8/2a/e2/e82ae2fe2d7fab87b74b42ed96174282.jpg',
-    passport_number: 'BKVQ2566', given_name: 'Esra', surname: 'Biligic', dob: '1/2/2003', passport_valid: '01/01/2047', passport_class: 'Ordinary',
+    {id: '1', passport_picture: '',
+    passport_number: 'BKVQ2566', given_name: '', surname: '', dob: '1/2/2003', passport_valid: '01/01/2047', passport_class: 'Ordinary',
     age: '21', gender: 'Female', pob: 'Turkey', issue_state: 'Germany', pax: 'ADULT', group: '1', isFH: false},
     {id: '2', passport_picture: 'https://cdn.yaqeeninstitute.org/wp-content/uploads/2017/01/1-ShOmar.jpg',
     passport_number: '123456789', given_name: 'Omar', surname: 'Suleiman', dob: '1/2/1997', passport_valid: '01/01/2047', passport_class: 'Ordinary',

@@ -2,8 +2,10 @@ import { Title, Text, Flex, TextInput, Tooltip, Select, Button, Image } from '@m
 import { DateInput } from '@mantine/dates'
 import { IconAlertCircle, IconBabyBottle, IconBadges, IconCalendar, IconCheck, IconCircle, IconEPassport, IconGenderFemale, IconGenderMale, IconHeartHandshake, IconHierarchy3, IconHorseToy, IconInfoCircle, IconMan, IconQuestionCircle, IconRobot, IconRubberStamp, IconScan, IconUpload, IconX } from '@tabler/icons'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import PassportScan from '../../../../assets/icons/PassportScan.svg'
+import { setPassengerDetails, setPassportDetails } from '../../../../Redux/Slicers/passengerSlice'
 
 const getCountries = async () => {
   const response = await fetch('https://restcountries.com/v3.1/all');
@@ -14,14 +16,28 @@ const getCountries = async () => {
 
 const PassengerAdd = () => {
   const [dob, setDob] = useState(null)
-  const [passport_valid, setPassport_valid] = useState(false)
+  // make it dipatch to redux
+  
+  const handleDOBChange = (date) => {
+  setDob(date);
+  const serializedDate = date.toISOString();
+  dispatch(setPassengerDetails({ dob: serializedDate }));
+};
 
+  const [maritial_status, setMaritial_status] = useState('')
+  const [pob, setPob] = useState('')
+  const [nationality, setNationality] = useState('')
+  const [education, setEducation] = useState('')
   const [issueDate, setIssueDate] = useState(null)
   const [expiryDate, setExpiryDate] = useState(null)
+  const [passportType, setPassportType] = useState('')
 
 
   // Countries MAP
   const [countries, setCountries] = useState([]);
+
+  //PAX Incomming
+  const [label, setLabel] = useState('');
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -60,8 +76,10 @@ const PassengerAdd = () => {
     }
   } else {
     displayAge = `${age} year${age !== 1 ? 's' : ''}`;
-  }
+  } 
   return { valid: true, age: displayAge, numericAge: numericAge };
+  
+  
 }
 
  function checkPassportValidity (issueDate, expiryDate) {
@@ -76,15 +94,24 @@ const PassengerAdd = () => {
 }
 
 const checkPassport = checkPassportValidity(issueDate, expiryDate);
-console.log(checkPassport);
-
 
 // Usage
 const result = calculateAge(dob);
 
+const dispatch = useDispatch();
+const passengerDetails = useSelector(state => state.passengers.passengerDetails);
+
+
+const handleAddPassenger = () => {
+  dispatch(setPassengerDetails({ ...passengerDetails, age: result.numericAge, passport_valid: checkPassport.valid, pax: label, maritial_status: maritial_status,
+  pob:pob, nationality: nationality, education: education}));
+  dispatch(setPassportDetails({ passport_type: passportType, issue_date: issueDate }));
+}
+
   return (
     <>
     <Flex p={15} direction={'column'}>
+      <Button variant={'outline'} color={'blue'} onClick={handleAddPassenger}>TEST</Button>
         <Flex direction={'column'} gap={5}>
             <Title ff={'Kumbh Sans'} fw={700}>Add New Passenger</Title>
             <Text ff={'Kumbh Sans'} fw={400}>You can either manually enter the passport details or just upload or scan the passport <br/> and we will automatically fill in the details for you. </Text>
@@ -94,10 +121,13 @@ const result = calculateAge(dob);
             <Flex direction={'column'}>
                 <Flex gap={10}><IconMan/><Text ff={'Kumbh Sans'} fw={700}>Passenger Details</Text></Flex>
                     <Flex direction={'column'} gap={10} mt={20} w={350}>
-                        <InputCustom heading={'Passport Number'} info={'The passport number located on the first page'}/>
+                        <InputCustom heading={'Passport Number'} info={'The passport number located on the first page'}
+                        dispatch={dispatch} dispatchType={passengerDetails} val="passport_number"/>
                             <Flex gap={10}>
-                                <InputCustom heading={'Given Name'} info={"The individual's first name, as it appears on their passport"}/>
-                                <InputCustom heading={'Surname'} info={"The individual's last name, as it appears on their passport"}/>
+                                <InputCustom heading={'Given Name'} info={"The individual's first name, as it appears on their passport"} 
+                                dispatch={dispatch} dispatchType={passengerDetails} val="given_name"/>
+                                <InputCustom heading={'Surname'} info={"The individual's last name, as it appears on their passport"}
+                                dispatch={dispatch} dispatchType={passengerDetails} val="surname"/>
                             </Flex>
                             {/* Gender and Maritial Status */}
                             <Flex gap={10}>
@@ -114,6 +144,7 @@ const result = calculateAge(dob);
                                         mt={5}
                                         radius={12}
                                         data={['Single', 'Married', 'Divorced', 'Widowed']}
+                                        onChange={(selectedOption) => setMaritial_status(selectedOption)}
                                         styles={{
                                             input: {
                                                 height: 30,
@@ -130,7 +161,7 @@ const result = calculateAge(dob);
                                   <Text fz={15} ff={'Kumbh Sans'} fw={500}>Date of Birth</Text>
                                   <DateInput
                                       value={dob}
-                                      onChange={setDob}
+                                      onChange={handleDOBChange}
                                       mt={5}
                                       rightSection={<IconCalendar color={'#D0D5DD'} size={20}/>}
                                       radius={12}
@@ -144,7 +175,7 @@ const result = calculateAge(dob);
                                     />
                                     <Flex gap={5}>  
                                         <AgeInfo result={result}/>
-                                        <PAX result={result}/>
+                                        <PAX result={result} setLabel={setLabel}/>
                                     </Flex>
                               </Flex>
                               {/* Age and PAX ENDE */}
@@ -156,6 +187,7 @@ const result = calculateAge(dob);
                                         mt={5}
                                         searchable
                                         radius={12}
+                                        onChange={(selectedOption) => setPob(selectedOption)}
                                         data={countries}
                                         styles={{
                                           input: {
@@ -172,6 +204,7 @@ const result = calculateAge(dob);
                                         mt={5}
                                         radius={12}
                                         searchable
+                                        onChange={(selectedOption) => setNationality(selectedOption)}
                                         data={countries}
                                         styles={{
                                           input: {
@@ -189,6 +222,7 @@ const result = calculateAge(dob);
                                         mt={5}
                                         radius={12}
                                         searchable
+                                        onChange={(selectedOption) => setEducation(selectedOption)}
                                         data={['High School', 'Bachelors', 'Masters', 'PhD', 'Other']}
                                         styles={{
                                           input: {
@@ -213,6 +247,7 @@ const result = calculateAge(dob);
                                     <Select
                                         mt={5}
                                         radius={12}
+                                        onChange={(selectedOption) => setPassportType(selectedOption)}
                                         searchable
                                         data={['Ordinary', 'Diplomatic', 'Official', 'Emergency', 'Collective', 'Family', 'Refugee']}
                                         styles={{
@@ -369,32 +404,44 @@ const result = calculateAge(dob);
   )
 }
 
-function InputCustom({placeholder, heading, info, dispatch, enterpriseDetails, val}) {
-    return (
-    
-    <Flex gap={20}direction={'column'}> 
-      <Text fz={15} ff={'Kumbh Sans'} fw={500}>{heading}</Text>
-      <TextInput placeholder={placeholder}  mt={-15} radius={12}
-      rightSection={info ? (<Tooltip label={`${info}`} withArrow arrowSize={6} arrowRadius={4}>
-        <div>
-      <IconQuestionCircle  color={'#D0D5DD'} style={{marginTop:5}} size={20}/>
-        </div>
-    </Tooltip>):''
-    }
-    //   value={enterpriseDetails && enterpriseDetails[val] ? enterpriseDetails[val] : ''}
+function InputCustom({ placeholder, heading, info, dispatchType, val }) {
+  const dispatch = useDispatch();
 
-    //   onChange={(e) => dispatch(setEnterpriseDetails({[val]: e.currentTarget.value}))}
-      
-      styles={{
-  input: {
-    height: 30,
-    border: '1px solid #D0D5DD',
-    boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)'
-  }
-  }} />
-      </Flex>);
-  }
+  const handleChange = (e) => {
+    dispatch(setPassengerDetails({ [val]: e.currentTarget.value }));
+  };
 
+  return (
+    <Flex gap={20} direction="column">
+      <Text fz={15} ff="Kumbh Sans" fw={500}>
+        {heading}
+      </Text>
+      <TextInput
+        placeholder={placeholder}
+        mt={-15}
+        radius={12}
+        value={dispatchType && dispatchType[val] ? dispatchType[val] : ''}
+        onChange={handleChange}
+        rightSection={
+          info ? (
+            <Tooltip label={`${info}`} withArrow arrowSize={6} arrowRadius={4}>
+              <div>
+                <IconQuestionCircle color={'#D0D5DD'} style={{ marginTop: 5 }} size={20} />
+              </div>
+            </Tooltip>
+          ) : ''
+        }
+        styles={{
+          input: {
+            height: 30,
+            border: '1px solid #D0D5DD',
+            boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)',
+          },
+        }}
+      />
+    </Flex>
+  );
+}
 function QSelect({iconQ, textQ}) {
   return (<Flex p={8} h={20} bg={'rgba(0, 0, 0, 0.06)'} justify={'center'} align={'center'} sx={{
 borderRadius: 8,
@@ -426,7 +473,7 @@ function AgeInfo({result}) {
   }
 }
 
-function PAX({ result }) {
+function PAX({ result, setLabel }) {
   if (result.valid) {
     const age = result.numericAge;
     let label, icon;
@@ -440,6 +487,7 @@ function PAX({ result }) {
       label = "Infant";
       icon = <IconBabyBottle color={"black"} size={20} />;
     }
+    setLabel(label);
     return (
       <Flex
         bg={"rgba(0, 0, 0, 0.06)"}

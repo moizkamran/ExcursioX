@@ -58,10 +58,19 @@ const passengerSlice = createSlice({
                     ...action.payload,
                 },
             };
-        }
+        },
+        setPassportDetails: (state, action) => {
+            return {
+                ...state,
+                passportDetails: {
+                    ...state.passportDetails,
+                    ...action.payload,
+                },
+            };
+        },
     },
 });
 
-export const { setPassengerDetails } = passengerSlice.actions;
+export const { setPassengerDetails, setPassportDetails } = passengerSlice.actions;
 
 export default passengerSlice.reducer;
