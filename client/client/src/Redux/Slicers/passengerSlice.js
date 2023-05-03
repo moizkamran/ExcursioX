@@ -68,9 +68,36 @@ const passengerSlice = createSlice({
                 },
             };
         },
+        setVisaDetails: (state, action) => {
+            return {
+                ...state,
+                visaDetails: {
+                    ...state.visaDetails,
+                    ...action.payload,
+                },
+            };
+        },
+        setRelationDetails: (state, action) => {
+            return {
+                ...state,
+                relationDetails: {
+                    ...state.relationDetails,
+                    ...action.payload,
+                },
+            };
+        },
+        setGroupDetails: (state, action) => {
+            return {
+                ...state,
+                groupDetails: {
+                    ...state.groupDetails,
+                    ...action.payload,
+                },
+            };
+        },
     },
 });
 
-export const { setPassengerDetails, setPassportDetails } = passengerSlice.actions;
+export const { setPassengerDetails, setPassportDetails, setVisaDetails, setRelationDetails, setGroupDetails } = passengerSlice.actions;
 
 export default passengerSlice.reducer;

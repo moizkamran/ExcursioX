@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import PassportScan from '../../../../assets/icons/PassportScan.svg'
-import { setPassengerDetails, setPassportDetails } from '../../../../Redux/Slicers/passengerSlice'
+import { setGroupDetails, setPassengerDetails, setPassportDetails, setRelationDetails, setVisaDetails } from '../../../../Redux/Slicers/passengerSlice'
 
 const getCountries = async () => {
   const response = await fetch('https://restcountries.com/v3.1/all');
@@ -26,7 +26,10 @@ const PassengerAdd = () => {
 
   const [maritial_status, setMaritial_status] = useState('')
   const [pob, setPob] = useState('')
+  const [relation, setRelation] = useState('')
+  const [group_name, setGroup_name] = useState('')
   const [nationality, setNationality] = useState('')
+  const [gender, setGender] = useState('')
   const [education, setEducation] = useState('')
   const [issueDate, setIssueDate] = useState(null)
   const [expiryDate, setExpiryDate] = useState(null)
@@ -38,6 +41,11 @@ const PassengerAdd = () => {
 
   //PAX Incomming
   const [label, setLabel] = useState('');
+
+  //handle gender click
+  const handleGenderChange = (gender) => {
+    setGender(gender)
+  };
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -82,16 +90,57 @@ const PassengerAdd = () => {
   
 }
 
- function checkPassportValidity (issueDate, expiryDate) {
+function checkPassportValidity (issueDate, expiryDate) {
   const today = new Date();
   const issueDateDate = new Date(issueDate);
   const expiryDateDate = new Date(expiryDate);
-  const isValidDate = !isNaN(issueDateDate.getTime()) && issueDateDate <= today && !isNaN(expiryDateDate.getTime()) && expiryDateDate >= today;
+  const sixMonthsFromToday = new Date(today.setMonth(today.getMonth() + 6));
+  const isValidDate = !isNaN(issueDateDate.getTime()) && issueDateDate <= today && !isNaN(expiryDateDate.getTime()) && expiryDateDate >= sixMonthsFromToday;
   if (!isValidDate) {
     return { valid: false };
   }
   return { valid: true };
 }
+
+//married check
+function isMarriedCheck(maritial_status) {
+  if (maritial_status === 'Married') {
+    return { valid: true };
+  }
+  return { valid: false };
+}
+
+const isMarried = isMarriedCheck(maritial_status)
+
+// Check if passenger requires guardian or mehram for umrah passengers
+const requiresGuardian = (gender, dateOfBirth, isMarried) => {
+  const today = new Date();
+  const birthDate = new Date(dateOfBirth);
+  const isValidDate = !isNaN(birthDate.getTime()) && birthDate <= today;
+
+  if (!isValidDate) {
+    return { valid: false };
+  }
+
+  const age = Math.floor((today - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
+
+  if (gender === 'female') {
+    if (age > 40 && !isMarried) {
+      return { valid: false };
+    } else if (age < 12) {
+      return { valid: true };
+    };
+    return { valid: true };
+  }
+
+  if (gender === 'male' && age < 12) {
+    return { valid: true };
+  }
+
+  return { valid: age < 18 };
+}
+
+const mehramCheck = requiresGuardian(gender, dob, isMarried);
 
 const checkPassport = checkPassportValidity(issueDate, expiryDate);
 
@@ -100,23 +149,26 @@ const result = calculateAge(dob);
 
 const dispatch = useDispatch();
 const passengerDetails = useSelector(state => state.passengers.passengerDetails);
+const visaDetails = useSelector(state => state.passengers.visaDetails);
 
 
 const handleAddPassenger = () => {
   dispatch(setPassengerDetails({ ...passengerDetails, age: result.numericAge, passport_valid: checkPassport.valid, pax: label, maritial_status: maritial_status,
-  pob:pob, nationality: nationality, education: education}));
+  pob:pob, nationality: nationality, education: education, gender: gender}));
   dispatch(setPassportDetails({ passport_type: passportType, issue_date: issueDate }));
+  dispatch(setRelationDetails({ relation: relation }));
+  dispatch(setGroupDetails({ group_name: group_name }));
 }
 
   return (
     <>
     <Flex p={15} direction={'column'}>
-      <Button variant={'outline'} color={'blue'} onClick={handleAddPassenger}>TEST</Button>
+      
         <Flex direction={'column'} gap={5}>
             <Title ff={'Kumbh Sans'} fw={700}>Add New Passenger</Title>
             <Text ff={'Kumbh Sans'} fw={400}>You can either manually enter the passport details or just upload or scan the passport <br/> and we will automatically fill in the details for you. </Text>
         </Flex>
-        <Flex mt={35} gap={50}>
+        <Flex mt={35} gap={50} mb={20}>
           {/* Passenger Details */}
             <Flex direction={'column'}>
                 <Flex gap={10}><IconMan/><Text ff={'Kumbh Sans'} fw={700}>Passenger Details</Text></Flex>
@@ -134,8 +186,18 @@ const handleAddPassenger = () => {
                                 <Flex direction={'column'}>
                                     <Text fz={15} ff={'Kumbh Sans'} fw={500}>Gender</Text>
                                     <Flex gap={5} mt={5}>
-                                        <QSelect   iconQ={<IconGenderFemale/>} textQ={'Female'}  />
-                                        <QSelect   iconQ={<IconGenderMale/>} textQ={'Male'}  />
+                                    <QSelect
+                                        iconQ={<IconGenderFemale />}
+                                        textQ={'Female'}
+                                        selected={gender === 'female'}
+                                        onClick={() => handleGenderChange('female')}
+                                      />
+                                      <QSelect
+                                        iconQ={<IconGenderMale />}
+                                        textQ={'Male'}
+                                        selected={gender === 'male'}
+                                        onClick={() => handleGenderChange('male')}
+                                      />
                                     </Flex>
                                 </Flex>
                                 <Flex direction={'column'}>
@@ -319,7 +381,9 @@ const handleAddPassenger = () => {
                               <Flex gap={10}><IconRubberStamp/><Text ff={'Kumbh Sans'} fw={700}>Visa Details</Text></Flex>
                               <Flex mt={20} direction={'column'}>
                                 <Flex gap={10}>
-                                <InputCustom heading={'Visa Number'} info={'Visa Number'}/>
+                                <InputCustom heading={'Visa Number'} info={'Visa Number'}
+                                dispatch={dispatch} dispatchType={visaDetails} val="visa_number" 
+                                setDispatchType={'Visa'}/>
                                 <Button bg={'#07399E'} sx={{borderRadius: 12}} mt={28}>Import from Excel</Button>
                                 </Flex>
                               </Flex>
@@ -327,30 +391,40 @@ const handleAddPassenger = () => {
                             {/* Visa Information ENDE */}
 
                             {/* Relation Information Start */}
-                            <Flex direction={'column'} mt={20}>
-                              <Flex gap={10}><IconHeartHandshake/><Text ff={'Kumbh Sans'} fw={700}>Relation Details</Text></Flex>
-                              <Flex mt={20} direction={'column'}>
-                                <Flex gap={10}>
-                                <Flex direction={'column'}>
-                                    <Text fz={15} ff={'Kumbh Sans'} fw={500}>Relation</Text>
-                                    <Select
-                                        mt={5}
-                                        radius={12}
-                                        searchable
-                                        data={['Father', 'Mother', 'Brother', 'Sister', 'Son', 'Daughter', 'Husband', 'Other']}
-                                        styles={{
-                                          input: {
-                                            height: 30,
-                                            border: '1px solid #D0D5DD',
-                                            boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)'
-                                          }
-                                        }}
-                                        />
-                                </Flex>
-                                <Button bg={'#07399E'} sx={{borderRadius: 12}} mt={28}>Select Passenger</Button>
-                                </Flex>
-                              </Flex>
-                            </Flex>
+                            {
+                                mehramCheck.valid
+                                  ? (
+                                    <Flex direction={'column'} mt={20}>
+                                      <Flex gap={10}><IconHeartHandshake /><Text ff={'Kumbh Sans'} fw={700}>Relation Details</Text></Flex>
+                                      <Flex mt={20} direction={'column'}>
+                                        <Flex gap={10}>
+                                          <Flex direction={'column'}>
+                                            <Text fz={15} ff={'Kumbh Sans'} fw={500}>Relation</Text>
+                                            <Select
+                                              mt={5}
+                                              radius={12}
+                                              searchable
+                                              onChange={(selectedOption) => setRelation(selectedOption)}
+                                              data={['Father', 'Mother', 'Brother', 'Sister', 'Son', 'Daughter', 'Husband', 'Other']}
+                                              styles={{
+                                                input: {
+                                                  height: 30,
+                                                  border: '1px solid #D0D5DD',
+                                                  boxShadow: '0px 1.14159px 2.28317px rgba(16, 24, 40, 0.05)',
+                                                },
+                                              }}
+                                            />
+                                          </Flex>
+                                          <Button bg={'#07399E'} sx={{ borderRadius: 12 }} mt={28}>
+                                            Select Passenger
+                                          </Button>
+                                        </Flex>
+                                      </Flex>
+                                    </Flex>
+                                  )
+                                  : null
+                              }
+
                             {/* Relation Information ENDE */}
                     </Flex>
             </Flex>
@@ -367,6 +441,7 @@ const handleAddPassenger = () => {
                                     <Select
                                         mt={5}
                                         radius={12}
+                                        onChange={(selectedOption) => setGroup_name(selectedOption)}
                                         searchable
                                         data={['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5', 'Group 6', 'Group 7', 'Group 8', 'Group 9', 'Group 10']}
                                         styles={{
@@ -399,18 +474,25 @@ const handleAddPassenger = () => {
             </Flex>
             {/* Passport AI Scan ENDE */}
         </Flex>
+        <Button onClick={handleAddPassenger} w={'max-content'} 
+        sx={{bottom: 10, right: 15, position: 'absolute'}}>Add {passengerDetails?.given_name}</Button>
     </Flex>
     </>
   )
 }
 
-function InputCustom({ placeholder, heading, info, dispatchType, val }) {
+function InputCustom({ placeholder, heading, info, dispatchType, val, setDispatchType }) {
   const dispatch = useDispatch();
-
+  // make it so that if setDispatchType is Visa then use setVisaDetails
+  
   const handleChange = (e) => {
-    dispatch(setPassengerDetails({ [val]: e.currentTarget.value }));
+    if (setDispatchType === "Visa") {
+      dispatch(setVisaDetails({ [val]: e.currentTarget.value }));
+    } else {
+      dispatch(setPassengerDetails({ [val]: e.currentTarget.value }));
+    }
   };
-
+  
   return (
     <Flex gap={20} direction="column">
       <Text fz={15} ff="Kumbh Sans" fw={500}>
@@ -442,17 +524,35 @@ function InputCustom({ placeholder, heading, info, dispatchType, val }) {
     </Flex>
   );
 }
-function QSelect({iconQ, textQ}) {
-  return (<Flex p={8} h={20} bg={'rgba(0, 0, 0, 0.06)'} justify={'center'} align={'center'} sx={{
-borderRadius: 8,
-':hover': {
-cursor: 'pointer',
-backgroundColor: '#07399E',
-color: 'white',
-transform: 'scale(1.1)',
-transition: 'all 0.2s ease-in-out'
-}
-}}>{iconQ}<Text>{textQ}</Text></Flex>);
+
+function QSelect({iconQ, textQ, onClick, selected}) {
+  const bgColor = selected ? '#07399E' : 'rgba(0, 0, 0, 0.06)';
+  const textColor = selected ? 'white' : 'black';
+
+  return (
+    <Flex
+      p={8}
+      h={20}
+      bg={bgColor}
+      justify={'center'}
+      align={'center'}
+      sx={{
+        borderRadius: 8,
+        color: `${textColor}`,
+        ':hover': {
+          cursor: 'pointer',
+          backgroundColor: '#07399E',
+          color: 'white',
+          transform: 'scale(1.1)',
+          transition: 'all 0.2s ease-in-out'
+        }
+      }}
+      onClick={onClick}
+    >
+      {iconQ}
+      <Text>{textQ}</Text>
+    </Flex>
+  );
 }
 
 function AgeInfo({result}) {
