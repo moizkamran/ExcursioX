@@ -1,11 +1,13 @@
-import { Title, Text, Flex, TextInput, Tooltip, Select, Button, Image } from '@mantine/core'
+import { Title, Text, Flex, TextInput, Tooltip, Select, Button, Image, Switch } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
-import { IconAlertCircle, IconBabyBottle, IconBadges, IconCalendar, IconCheck, IconCircle, IconEPassport, IconGenderFemale, IconGenderMale, IconHeartHandshake, IconHierarchy3, IconHorseToy, IconInfoCircle, IconMan, IconQuestionCircle, IconRobot, IconRubberStamp, IconScan, IconUpload, IconX } from '@tabler/icons'
+import { IconAlertCircle, IconBabyBottle, IconBadges, IconBrandCampaignmonitor, IconCalendar, IconCheck, IconCircle, IconCrown, IconEPassport, IconGenderFemale, IconGenderMale, IconHeartHandshake, IconHierarchy3, IconHorseToy, IconInfoCircle, IconMan, IconQuestionCircle, IconRobot, IconRubberStamp, IconScan, IconUpload, IconX } from '@tabler/icons'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { v4 as uuidv4 } from 'uuid';
+
 import PassportScan from '../../../../assets/icons/PassportScan.svg'
-import { setGroupDetails, setPassengerDetails, setPassportDetails, setRelationDetails, setVisaDetails } from '../../../../Redux/Slicers/passengerSlice'
+import { addPassenger, setConfig, setGroupDetails, setPassengerDetails, setPassportDetails, setRelationDetails, setVisaDetails } from '../../../../Redux/Slicers/passengerSlice'
 
 const getCountries = async () => {
   const response = await fetch('https://restcountries.com/v3.1/all');
@@ -14,7 +16,7 @@ const getCountries = async () => {
   return countries;
 };
 
-const PassengerAdd = () => {
+const PassengerAdd = ({setAddPassengerModal}) => {
   const [dob, setDob] = useState(null)
   // make it dipatch to redux
   
@@ -34,7 +36,9 @@ const PassengerAdd = () => {
   const [issueDate, setIssueDate] = useState(null)
   const [expiryDate, setExpiryDate] = useState(null)
   const [passportType, setPassportType] = useState('')
-
+  const [isFH, setIsFH] = useState(false)
+  const [isGH, setIsGH] = useState(false)
+  const [IssuingCountry, setIssuingCountry] = useState('')
 
   // Countries MAP
   const [countries, setCountries] = useState([]);
@@ -124,7 +128,7 @@ const requiresGuardian = (gender, dateOfBirth, isMarried) => {
 
   const age = Math.floor((today - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
 
-  if (gender === 'female') {
+  if (gender === 'Female') {
     if (age > 40 && !isMarried) {
       return { valid: false };
     } else if (age < 12) {
@@ -133,7 +137,7 @@ const requiresGuardian = (gender, dateOfBirth, isMarried) => {
     return { valid: true };
   }
 
-  if (gender === 'male' && age < 12) {
+  if (gender === 'Male' && age < 12) {
     return { valid: true };
   }
 
@@ -154,20 +158,33 @@ const visaDetails = useSelector(state => state.passengers.visaDetails);
 
 const handleAddPassenger = () => {
   dispatch(setPassengerDetails({ ...passengerDetails, age: result.numericAge, passport_valid: checkPassport.valid, pax: label, maritial_status: maritial_status,
-  pob:pob, nationality: nationality, education: education, gender: gender}));
-  dispatch(setPassportDetails({ passport_type: passportType, issue_date: issueDate }));
+  pob:pob, nationality: nationality, education: education, gender: gender, passengerUUID: uuidv4()}));
+  dispatch(setPassportDetails({ passport_type: passportType, issue_date: issueDate.toISOString(), expiry_date: expiryDate.toISOString(), issuing_country: IssuingCountry }));
   dispatch(setRelationDetails({ relation: relation }));
   dispatch(setGroupDetails({ group_name: group_name }));
+  dispatch(setConfig({ isFH: isFH, isGH: isGH }));
+  dispatch(addPassenger());
+  setAddPassengerModal(false);
 }
+
+console.log(isGH)
 
   return (
     <>
     <Flex p={15} direction={'column'}>
-      
+      <Flex justify={'space-between'} >
         <Flex direction={'column'} gap={5}>
             <Title ff={'Kumbh Sans'} fw={700}>Add New Passenger</Title>
             <Text ff={'Kumbh Sans'} fw={400}>You can either manually enter the passport details or just upload or scan the passport <br/> and we will automatically fill in the details for you. </Text>
         </Flex>
+        <Flex direction={'column'} bg={'rgba(0, 0, 0, 0.06)'} p={15} sx={{borderRadius: 15, zIndex: 1}}>
+          <Text>Leadership Control</Text>
+          <Flex direction={'column'} gap={10} mt={20} >    
+            <Switch label="Family Head" color="yellow" onLabel={<IconCrown stroke={2.5} size={'20px'}/>} onChange={() => setIsFH(!isFH)}/> 
+            <Switch label="Group Head" color="violet" onLabel={<IconBrandCampaignmonitor size={'20px'} stroke={2.5} />} onChange={() => setIsGH(!isGH)}/> 
+          </Flex>
+        </Flex>
+      </Flex>
         <Flex mt={35} gap={50} mb={20}>
           {/* Passenger Details */}
             <Flex direction={'column'}>
@@ -189,14 +206,14 @@ const handleAddPassenger = () => {
                                     <QSelect
                                         iconQ={<IconGenderFemale />}
                                         textQ={'Female'}
-                                        selected={gender === 'female'}
-                                        onClick={() => handleGenderChange('female')}
+                                        selected={gender === 'Female'}
+                                        onClick={() => handleGenderChange('Female')}
                                       />
                                       <QSelect
                                         iconQ={<IconGenderMale />}
                                         textQ={'Male'}
-                                        selected={gender === 'male'}
-                                        onClick={() => handleGenderChange('male')}
+                                        selected={gender === 'Male'}
+                                        onClick={() => handleGenderChange('Male')}
                                       />
                                     </Flex>
                                 </Flex>
@@ -365,6 +382,7 @@ const handleAddPassenger = () => {
                                         mt={5}
                                         radius={12}
                                         searchable
+                                        onChange={(selectedOption) => setIssuingCountry(selectedOption)}
                                         data={countries}
                                         styles={{
                                           input: {

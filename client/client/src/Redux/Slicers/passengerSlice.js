@@ -13,6 +13,7 @@ export const initialState = {
         pob: "",
         nationality : "",
         education: "",
+        passengerUUID: "",
     },
     passportDetails: {
         passport_type: "",
@@ -44,6 +45,7 @@ export const initialState = {
         usedMRZ: false,
         usedFaceMatch: false,
     },
+    passengersICB: [],
 };
 
 const passengerSlice = createSlice({
@@ -95,9 +97,38 @@ const passengerSlice = createSlice({
                 },
             };
         },
+        setConfig: (state, action) => {
+            return {
+                ...state,
+                config: {
+                    ...state.config,
+                    ...action.payload,
+                },
+            };
+        },
+        addPassenger: (state, action) => {
+            return {
+                ...state,
+                passengersICB: [...state.passengersICB, {
+                    passengerDetails: state.passengerDetails,
+                    passportDetails: state.passportDetails,
+                    visaDetails: state.visaDetails,
+                    relationDetails: state.relationDetails,
+                    groupDetails: state.groupDetails,
+                    config: state.config,
+                }],
+                passengerDetails: initialState.passengerDetails,
+                passportDetails: initialState.passportDetails,
+                visaDetails: initialState.visaDetails,
+                relationDetails: initialState.relationDetails,
+                groupDetails: initialState.groupDetails,
+                config: initialState.config,
+            };
+        },
+        
     },
 });
 
-export const { setPassengerDetails, setPassportDetails, setVisaDetails, setRelationDetails, setGroupDetails } = passengerSlice.actions;
+export const { setPassengerDetails, setPassportDetails, setVisaDetails, setRelationDetails, setGroupDetails, setConfig, addPassenger } = passengerSlice.actions;
 
 export default passengerSlice.reducer;

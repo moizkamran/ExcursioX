@@ -3,6 +3,7 @@ import { ScrollArea, Text, Title, Radio, Group, Tooltip, TextInput, Popover, But
 import { DatePicker } from '@mantine/dates';
 import { IconCrown, IconPlus, IconQuestionCircle } from '@tabler/icons';
 import PassengerAdd from './PassengerAdd';
+import { useSelector } from 'react-redux';
 
 
 
@@ -10,21 +11,34 @@ import PassengerAdd from './PassengerAdd';
 export const AddBooking = () => {
   const [addPassengerModal, setAddPassengerModal] = useState(false);
 
-  const passengers = [
-    {id: '1', passport_picture: '',
-    passport_number: 'BKVQ2566', given_name: '', surname: '', dob: '1/2/2003', passport_valid: '01/01/2047', passport_class: 'Ordinary',
-    age: '21', gender: 'Female', pob: 'Turkey', issue_state: 'Germany', pax: 'ADULT', group: '1', isFH: false},
-    {id: '2', passport_picture: 'https://cdn.yaqeeninstitute.org/wp-content/uploads/2017/01/1-ShOmar.jpg',
-    passport_number: '123456789', given_name: 'Omar', surname: 'Suleiman', dob: '1/2/1997', passport_valid: '01/01/2047', passport_class: 'Ordinary',
-    age: '21', gender: 'Male', pob: 'Germany', issue_state: 'Germany', pax: 'ADULT', group: '1', isFH: true}
-  ]
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
+  
 
-  const renderPassengers = () => passengers.map((passenger) => (
-    <PassengerVessel key={passenger.id} passport_picture={passenger.passport_picture} passport_number={passenger.passport_number}
-    given_name={passenger.given_name} surname={passenger.surname} dob={passenger.dob} passport_valid={passenger.passport_valid}
-    passport_class={passenger.passport_class} age={passenger.age} gender={passenger.gender} pob={passenger.pob} issue_state={passenger.issue_state}
-    pax={passenger.pax} group={passenger.group} isFH={passenger.isFH}/>
-    ))
+  const passengers = useSelector(state => state.passengers.passengersICB);
+
+  const renderPassengers = () => passengers.map((passenger, index) => (
+    <PassengerVessel key={index} 
+      passport_picture={passenger.passportDetails.passport_photo} 
+      passport_number={passenger.passengerDetails.passport_number}
+      given_name={passenger.passengerDetails.given_name} 
+      surname={passenger.passengerDetails.surname} 
+      dob={formatDate(passenger.passengerDetails.dob)} 
+      passport_valid={formatDate(passenger.passportDetails.expiry_date)}
+      passport_class={passenger.passportDetails.passport_type} 
+      age={passenger.passengerDetails.age} 
+      gender={passenger.passengerDetails.gender} 
+      pob={passenger.passengerDetails.pob} 
+      issue_state={passenger.passportDetails.issuing_country}
+      pax={passenger.passengerDetails.pax} 
+      group={passenger.groupDetails.group_name} 
+      isFH={passenger.config.isFH}
+    />
+  ))
+
 
   return (
     
@@ -43,7 +57,7 @@ export const AddBooking = () => {
       blur: 1.5,
     }}
   >
-    <PassengerAdd />
+    <PassengerAdd setAddPassengerModal={setAddPassengerModal}/>
     </Modal>
             <Text style={{ marginBottom: 10 }}>Home {'>'} Add Booking</Text>
             <Title order={2} style={{fontSize: 40}}>New Booking Wizard</Title>
@@ -238,7 +252,7 @@ function PassengerVessel({passport_picture, passport_number, given_name, surname
   <>
   <Flex w={800} bg={'#F4F4F4'} sx={{
     borderRadius: '25px', border: `${isFHBorder}`, position: 'relative'
-  }} p={20}>
+  }} p={20} w={'max-content'}>
               <Avatar src={passport_picture} size={120} sx={{
                 borderRadius: '25px'
               }} />
