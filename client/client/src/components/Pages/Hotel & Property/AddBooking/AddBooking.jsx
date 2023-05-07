@@ -119,7 +119,7 @@ export const AddBooking = () => {
               <Flex direction={'column'} gap={20}>
                 <Heading series={5} title={'Add Passengers'} />
                 {/* Verwenden Sie map, um Werte zuzuweisen  */}
-                {passengers.length ? renderPassengers() : <Text>No Passengers Added</Text>}
+                {passengers?.length ? renderPassengers() : <Text>No Passengers Added</Text>}
                   <Button rightIcon={<IconPlus/>} w={'max-content'} onClick={() => setAddPassengerModal(true)}>Add Passenger</Button>
               </Flex>
 
@@ -251,8 +251,8 @@ function PassengerVessel({passport_picture, passport_number, given_name, surname
   return (
   <>
   <Flex w={800} bg={'#F4F4F4'} sx={{
-    borderRadius: '25px', border: `${isFHBorder}`, position: 'relative'
-  }} p={20} w={'max-content'}>
+    borderRadius: '25px', border: `${isFHBorder}`, position: 'relative', width: 'max-content'
+  }} p={20} >
               <Avatar src={passport_picture} size={120} sx={{
                 borderRadius: '25px'
               }} />
