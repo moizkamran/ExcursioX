@@ -43,6 +43,7 @@ export const AddBooking = () => {
   return (
     
     <>
+    <div style={{padding: 15}}>
     <Modal
     opened={addPassengerModal}
     onClose={() => setAddPassengerModal(false)}
@@ -68,8 +69,18 @@ export const AddBooking = () => {
 
             <Flex gap={20} justify={'start'}>
 
-            {/* Dynamic Configurator */}
-              <Flex direction={'column'} style={{backgroundColor: '#07399E', borderRadius: '0px 45px 0px 0px', width: 'max-content', padding: 30, color: 'white'}}>
+            
+
+              <Flex direction={'column'} gap={20}>
+                <Heading series={5} title={'Add Passengers'} />
+                {/* Verwenden Sie map, um Werte zuzuweisen  */}
+                {passengers?.length ? renderPassengers() : <Text>No Passengers Added</Text>}
+                  <Button rightIcon={<IconPlus/>} w={'max-content'} onClick={() => setAddPassengerModal(true)}>Add Passenger</Button>
+              </Flex>
+
+              {/* Dynamic Configurator */}
+              <div style={{display: 'flex', flex: 1}}></div>
+              <Flex direction={'column'} style={{backgroundColor: '#F4F4F4', borderRadius: '25px', width: 'max-content', padding: 30, color: 'white'}}>
               
               {/* Wien mann reisen? */}
                 <div>             
@@ -83,13 +94,12 @@ export const AddBooking = () => {
                   <Heading   series={2} title={'Enterprise Booking'}  />
 
                     <Flex mt={20}>
-                      <Text>Are they already our customer?</Text>
-                      <IconQuestionCircle style={{marginLeft: 10}} />
+                      <Text c='black'>Are they already our customer?</Text>
                     </Flex>
                     
                     <Flex align={'center'} gap={10} mt={10} >
-                      <Radio label="Yes" value="yes" color='dark' styles={{label:{color: 'white'}}}/>
-                      <Radio label="No" value="no" color='dark' styles={{label:{color: 'white'}}}/>
+                      <Radio label="Yes" value="yes" color='dark' styles={{label:{color: 'black'}}}/>
+                      <Radio label="No" value="no" color='dark' styles={{label:{color: 'black'}}}/>
                     </Flex>
                 </div>
               {/* Wie viele Personen? ENDE */}
@@ -116,16 +126,9 @@ export const AddBooking = () => {
               </Flex>
               {/* Dynamic Configurator ENDE */}
 
-              <Flex direction={'column'} gap={20}>
-                <Heading series={5} title={'Add Passengers'} />
-                {/* Verwenden Sie map, um Werte zuzuweisen  */}
-                {passengers?.length ? renderPassengers() : <Text>No Passengers Added</Text>}
-                  <Button rightIcon={<IconPlus/>} w={'max-content'} onClick={() => setAddPassengerModal(true)}>Add Passenger</Button>
-              </Flex>
-
             </Flex>
 
-    </>
+    </div></>
   )
 }
 
@@ -141,10 +144,10 @@ display: 'flex',
 alignItems: 'center',
 justifyContent: 'center',
 position: 'relative',
-width: 38,
-height: 38,
+width: 30,
+height: 30,
 borderRadius: 35,
-backgroundColor: `${series > 4 ? '#07399E' : 'black'}`,
+backgroundColor: `${series > 4 ? '#07399E' : '#07399E'}`,
 }}>
             <Text style={{
   color: 'white',
@@ -154,7 +157,8 @@ backgroundColor: `${series > 4 ? '#07399E' : 'black'}`,
           </div>
           <Text style={{
 marginLeft: 10,
-fontSize: 20
+fontSize: 20,
+color: 'black',
 }}>{title}</Text>
           
           </div>);
@@ -184,9 +188,10 @@ marginRight: 20
                     <div style={{
     display: 'inline-flex'
   }}>
-                    <IconQuestionCircle />
+                    <IconQuestionCircle color='black'/>
                     <Title style={{
       marginLeft: 10,
+      color: 'black',
       fontSize: 20,
       fontFamily: 'Fredoka',
       fontWeight: 400
@@ -196,6 +201,7 @@ marginRight: 20
     width: 210,
     opacity: "70%",
     marginTop: 5,
+    color: 'black',
     fontFamily: 'Fredoka',
     fontWeight: 400
   }}>Here, you can enter the date for which they
@@ -210,17 +216,19 @@ marginRight: 20
                 <div style={{
     display: 'inline-flex'
   }}>
-                <IconQuestionCircle />
+                <IconQuestionCircle color='black'/>
                 <Title style={{
       marginLeft: 10,
       fontSize: 20,
       fontFamily: 'Fredoka',
+      color: 'black',
       fontWeight: 400
     }}>If there is no flight?</Title>
                   </div>
                 <Text style={{
     width: 210,
     opacity: "70%",
+    color: 'black',
     marginTop: 5,
     fontFamily: 'Fredoka',
     fontWeight: 400
@@ -230,15 +238,13 @@ marginRight: 20
 }
   
 function ClassTier({tier, gradient}) {
-  return (<Flex w={80} h={100} align={'center'} justify={'center'} sx={{
+  return (<Flex w={80} h={80} align={'center'} justify={'center'} sx={{
 background: `${gradient}`,
 borderRadius: '10px',
 transition: 'transform 0.2s ease-in-out',
 cursor: 'pointer',
 ':hover': {
-transform: 'scale(1.05)',
-// Scale up on hover
-border: '1px solid white'
+transform: 'scale(1.09)',
 }
 }}>
                 <Text fz={20} fw={500}>{tier}</Text>
