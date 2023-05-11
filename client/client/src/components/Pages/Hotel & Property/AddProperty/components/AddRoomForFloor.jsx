@@ -1,9 +1,11 @@
-import { Button, Checkbox, Container, Flex, Modal, NativeSelect, NumberInput, Radio, Text, TextInput, Title } from '@mantine/core'
-import { IconAddressBook, IconArrowsCross, IconCross, IconMinus, IconMoon, IconPlus, IconQuestionMark, IconRocket, IconSquareRoundedX, IconUserSearch, IconUsers, IconX } from '@tabler/icons'
+import { Avatar, Badge, Button, Checkbox, Container, Flex, Image, Modal, NativeSelect, NumberInput, Radio, Select, Text, TextInput, Title, Tooltip } from '@mantine/core'
+import { Icon3dRotate, IconAddressBook, IconArrowsCross, IconBed, IconCross, IconMan, IconMinus, IconMoon, IconPlus, IconQuestionMark, IconRocket, IconSquareRoundedX, IconUserSearch, IconUsers, IconX } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRoomToFloor, updatePropertyDetails, updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
 import { RoomBox } from './Functions/RoomBox'
+
+import BedIcon  from '../../../../../assets/icons/bed.svg'
 
 
 import { v4 as uuidv4 } from 'uuid';
@@ -23,7 +25,6 @@ const [roomType, setRoomType] = useState(room.roomType);
 
 const [roomSize, setRoomSize] = useState(room.roomSize || '');
 
-console.log(roomIndex)
 
 const [selectedValue, setSelectedValue] = useState('');
 
@@ -71,19 +72,47 @@ const handleBasePriceChange = (event) => {
     newRooms[roomIndex] = newRoom;
     dispatch(updatePropertyDetails({ floors: floors }));
 };
-  console.log(typeof roomClassValues);
 
+
+const [guestCount, setGuestCount] = useState(1); // Initialize with 1 guest
 
 const handleTypeChange = (event) => {
     const selectedType = event.target.value;
-    console.log(selectedType);
-    
     const newRooms = [...rooms];
     const newRoom = { ...newRooms[roomIndex], type: selectedType };
     newRooms[roomIndex] = newRoom;
     setRoomType(selectedType); // set the roomType state variable with the selected type
-    console.log(newRooms);
     
+    // Update guest count based on room type
+    switch (selectedType) {
+      case 'Single':
+          setGuestCount(1);
+          break;
+      case 'Double':
+          setGuestCount(2);
+          break;
+      case 'Triple':
+          setGuestCount(3);
+          break;
+      case 'Quad':
+          setGuestCount(4);
+          break;
+      case 'Quint':
+          setGuestCount(5);
+          break;
+      case 'Hexa':
+          setGuestCount(6);
+          break;
+      case 'Family':
+          setGuestCount(4);
+          break;
+      case 'Studio':
+          setGuestCount(10);
+          break;
+      default:
+          setGuestCount(1);
+          break;
+  }
     
     dispatch(updatePropertyDetails({ floors: floors }));
   };
@@ -101,30 +130,15 @@ const roomTypes = [
 ]
 
 const bedTypes = [
-  "Twin Beds / 90-130 cm wide",
-  "Queen Beds / 151-180 cm wide",
-  "King Beds / 181-210 cm wide",
-  "Full Beds / 131-150 cm wide",
-  "Bunk Beds / Variable size",
-  "Sofa Beds / Variable size",
-  "Crib / Variable size",
-  "Air Mattress / Variable size",
-  "Double Beds / Variable size",
+  { label: "Single Bed 👤", value: "single" },
+  { label: "Sofa Bed 👤", value: "sofa" },
+  { label: "Double Bed 👤👤", value: "double" },
+  { label: "Bunk Bed 👤👤", value: "bunk" },
 ];
 
+
+
 const [numBeds, setNumBeds] = useState(1);
-
-const addBed = () => {
-  if (numBeds < 3) {
-    setNumBeds(numBeds + 1);
-  }
-};
-
-const removeBed = () => {
-  if (numBeds > 1) {
-    setNumBeds(numBeds - 1);
-  }
-};
 
 const [roomCount, setRoomCount] = useState(0);
 
@@ -175,11 +189,24 @@ dispatch(updatePropertyDetails(newPropertyDetails));
 onModalClose(false);
 
 };
-  
+
+
+const [personCount, setPersonCount] = useState(1); // Initialize guest count to 1 for Single Bed
+
+  const handleBedSelection = (event) => {
+    const selectedBed = event.target.value;
+    let count = 0;
+
+    if (selectedBed === 'Double Bed 👤👤' || selectedBed === 'Bunk Bed 👤👤') {
+      count = 2;
+    }
+
+    setPersonCount(count);
+  };
+
+const bedsLeft = guestCount - personCount;
   
   const roomName = (typeof roomClassValues === 'string' ? roomClassValues : '') + (roomType ? ` ${roomType}` : '') + (typeof roomViewValues === 'string' ? ' with ' + roomViewValues : '');
-
-  console.log(rooms)
 
   return (
     <>
@@ -242,83 +269,34 @@ onModalClose(false);
                 
 
                 <Flex mb={20}>
-                      <div>
-                        <Text>
-                          What Kind of beds are available in this room?{" "}
-                        </Text>
-                        {Array.from({ length: numBeds }).map((_, bedIndex) => (
-                          <Flex
-                            key={bedIndex}
-                            gap={10}
-                            align="center"
-                            mt={10}
-                          >
-                            <NativeSelect
-                              data={bedTypes}
-                              radius="md"
-                            />
-                            {bedIndex === numBeds - 1 && (
-                              <Flex>
-                                {numBeds > 1 && (
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      color: "white",
-                                      backgroundColor: "red",
-                                      borderRadius: "40px",
-                                      height: "25px",
-                                      width: "25px",
-                                    }}
-                                    onClick={removeBed}
-                                  >
-                                    <IconMinus
-                                      size={15}
-                                      className="IconBed"
-                                      cursor={"pointer"}
-                                    />
-                                  </div>
-                                )}
-                              </Flex>
-                            )}
+                      <Flex direction={'column'} gap={10}>
+                        <Text>Number of Guests</Text>
+                        <Flex bg={'#07399E'} p={10} sx={{borderRadius: 10, width: 'max-content'}} gap={10}>{Array.from({ length: guestCount }, (_, index) => (
+            <IconMan key={index} color="white" />
+        ))}</Flex>
+
+                        {/* Fill in Beds */}
+                        <Flex direction={'column'} mt={10} gap={10}>
+                          <Flex direction={'row'} gap={10}>
+                            <Text>Fill in Beds</Text> <Icon3dRotate/> <Text>{guestCount} person's bed to assign</Text>
+                            <Flex align={'center'} justify={'center'} w={'max-content'} p={'0px 15px 0px 15px'} 
+                          sx={{borderRadius: 25, backgroundColor: 'rgba(56, 112, 255, 0.13)'}}>
+                            <Text color='#00154D'>{bedsLeft} Left</Text>
                           </Flex>
-                        ))}
-                        {/*  */}
-                        <Flex
-                          mt={10}
-                          alignItems="center"
-                          justifyContent="center"
-                          gap={2}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              color: "white",
-                              backgroundColor: "#07399E",
-                              borderRadius: "40px",
-                              height: "25px",
-                              width: "25px",
-                            }}
-                          >
-                            <IconPlus
-                              size={15}
-                              className="IconBed"
-                              onClick={addBed}
-                              cursor={"pointer"}
-                            />
-                          </div>
+                          </Flex>
                           
-                          <Text ml={10} bold size={"md"}>
-                            Add Another Bed
-                          </Text>
+                            <Select 
+                            radius={'md'}
+                            color={'black'}
+                            w={200}
+                            onChange={handleBedSelection}
+                            data={bedTypes}
+                            />
                         </Flex>
-                      </div>
+                      </Flex>
                     </Flex>
 
-                <BasePrice1 basePrice={basePrice} handleBasePriceChange={handleBasePriceChange} />
+                
 
             </Flex>
 
@@ -406,7 +384,7 @@ onModalClose(false);
                 <Text w={400}>You can also add room properties which include photos, amenities, house rules, etc later in the dashboard </Text>
                 <Button style={{ backgroundColor: '#FAFAFA', color: 'black'}} w={200} leftIcon={<IconRocket />} className={styles.hoverClass}> Launch Room Editor</Button>
                 <Button onClick={handleSave} style={{position: 'absolute', bottom: 20, right: 20}}>Add Room #{roomIndex+1} on {floors[floorIndex].name} </Button>
-
+                <BasePrice1  basePrice={basePrice} handleBasePriceChange={handleBasePriceChange} />
             </Flex>
         </Flex>
     </>
@@ -417,7 +395,7 @@ export default AddRoomForFloor
 
 function BasePrice1({basePrice, handleBasePriceChange}) {
     return (
-        <Flex direction={'column'}>
+        <Flex direction={'column'} mt={10}>
         <Flex direction={'column'}>
     <div style={{
 height: "100px",
@@ -439,7 +417,10 @@ justifyContent: "center"
     marginLeft: 10
 }} color="black">
                 Base Price /Night
-                </Text>
+                </Text> <Tooltip multiline label="This is the lowest price that we automatically apply to this room for all dates. 
+    Before your property goes live, you can set seasonal pricing on your property dashboard." width={220}>
+        <Badge sx={{marginLeft: 10}}>INFO</Badge>
+      </Tooltip>
             </div>
             <div style={{
 display: "flex",
@@ -470,11 +451,7 @@ justifyContent: "center"
             </div>
             </div>
             </Flex>
-            <Flex style={{justifyContent: 'center', alignContent:'center'}}>
-
-            <Text w={300} fz={14} mt={10} align={'center'} >This is the lowest price that we automatically apply to this room for all dates. 
-                Before your property goes live, you can set seasonal pricing on your property dashboard.</Text>
-            </Flex>
+            
         </Flex>
             );
 

@@ -13,6 +13,7 @@ import ProtectRoute from "./utils/protectRoute";
 import UnprotectRoute from "./utils/unprotectRoute";
 import EnterpriseOnboarding from "./components/Pages/FunnelPages/Enterprise Signup/EnterpriseOnboarding";
 import AddBooking from "./components/Pages/Hotel & Property/AddBooking/AddBooking";
+import BookingPortal from "./components/Pages/Booking Portal/BookingPortal";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route element={<ProtectRoute><Dashboard /></ProtectRoute>}>
             <Route path="/" element={<Body />} />
             <Route path="/hotel" element={<Hotel />} />
+            <Route path="/Bookings" element={<BookingPortal />} />
             <Route path="/AddProperty" element={<AddProperty />} />
             <Route path="/FindBooking" element={<FindBooking />} />
             <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
