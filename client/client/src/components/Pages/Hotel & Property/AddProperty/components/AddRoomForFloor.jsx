@@ -1,5 +1,5 @@
 import { Avatar, Badge, Button, Checkbox, Container, Flex, Image, Modal, NativeSelect, NumberInput, Radio, Select, Text, TextInput, Title, Tooltip } from '@mantine/core'
-import { Icon3dRotate, IconAddressBook, IconArrowsCross, IconBed, IconCross, IconMan, IconMinus, IconMoon, IconPlus, IconQuestionMark, IconRocket, IconSquareRoundedX, IconUserSearch, IconUsers, IconX } from '@tabler/icons'
+import { Icon3dRotate, IconAddressBook, IconArrowsCross, IconBed, IconCirclePlus, IconCircleX, IconCross, IconMan, IconMinus, IconMoon, IconPlus, IconQuestionMark, IconRocket, IconSquareRoundedX, IconUserSearch, IconUsers, IconX } from '@tabler/icons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRoomToFloor, updatePropertyDetails, updatePropertyLayout } from '../../../../../Redux/Slicers/propertySlice'
@@ -20,6 +20,11 @@ const { propertyDetails } = useSelector((state) => state.property);
 const floors = propertyDetails.floors;
 const rooms = floors[floorIndex].rooms;
 const room = rooms[roomIndex];
+
+const singleBedIcon = 'https://firebasestorage.googleapis.com/v0/b/bookingsouq-e14e8.appspot.com/o/assets%2FbedTypes%2Fsingle-bed.svg?alt=media&token=fc7320a7-4104-4124-bf6f-8fdf216915e6';
+const doubleBedIcon = 'https://firebasestorage.googleapis.com/v0/b/bookingsouq-e14e8.appspot.com/o/assets%2FbedTypes%2Fdouble-bed.svg?alt=media&token=f57d40cb-7990-48f8-9e3d-c7f7bcec0329';
+const sofaBedIcon = 'https://firebasestorage.googleapis.com/v0/b/bookingsouq-e14e8.appspot.com/o/assets%2FbedTypes%2Fsofa-bed.svg?alt=media&token=1a8e8a7b-3d14-4474-a605-f35ee47e2b3c';
+const bunkBedIcon = 'https://firebasestorage.googleapis.com/v0/b/bookingsouq-e14e8.appspot.com/o/assets%2FbedTypes%2Fbunk-bed.svg?alt=media';
 
 const [roomType, setRoomType] = useState(room.roomType);
 
@@ -132,8 +137,8 @@ const roomTypes = [
 const bedTypes = [
   { label: "Single Bed 👤", value: "single" },
   { label: "Sofa Bed 👤", value: "sofa" },
-  { label: "Double Bed 👤👤", value: "double" },
-  { label: "Bunk Bed 👤👤", value: "bunk" },
+  { label: "Double Bed 👥", value: "double" },
+  { label: "Bunk Bed 👥", value: "bunk" },
 ];
 
 
@@ -182,29 +187,35 @@ const newRoom = {
     newRooms.push(additionalRoom);
   }
 
-const newFloors = [...floors];
-newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
-const newPropertyDetails = { ...propertyDetails, floors: newFloors };
-dispatch(updatePropertyDetails(newPropertyDetails));
-onModalClose(false);
+    const newFloors = [...floors];
+    newFloors[floorIndex] = { ...floors[floorIndex], rooms: newRooms };
+    const newPropertyDetails = { ...propertyDetails, floors: newFloors };
+    dispatch(updatePropertyDetails(newPropertyDetails));
+    onModalClose(false);
 
 };
+  const [bed, setBed] = useState(null);
+  
+  const bedGuestOccupancy = (bed) => {
+    // add a switch case for each bed type for the selected bed value
+    switch (bed) {
+      case 'single':
+        return 1;
+      case 'sofa':
+        return 1;
+      case 'double':
+        return 2;
+      case 'bunk':
+        return 2;
+      default:
+        return 0;
+  }
+};
 
+  const bedFillInsLeft =  guestCount - bedGuestOccupancy(bed);
 
-const [personCount, setPersonCount] = useState(1); // Initialize guest count to 1 for Single Bed
-
-  const handleBedSelection = (event) => {
-    const selectedBed = event.target.value;
-    let count = 0;
-
-    if (selectedBed === 'Double Bed 👤👤' || selectedBed === 'Bunk Bed 👤👤') {
-      count = 2;
-    }
-
-    setPersonCount(count);
-  };
-
-const bedsLeft = guestCount - personCount;
+ console.log(bedFillInsLeft);
+  
   
   const roomName = (typeof roomClassValues === 'string' ? roomClassValues : '') + (roomType ? ` ${roomType}` : '') + (typeof roomViewValues === 'string' ? ' with ' + roomViewValues : '');
 
@@ -240,12 +251,12 @@ const bedsLeft = guestCount - personCount;
                 <Text>Adding Room for {floors[floorIndex].name}</Text>
                     <Flex p={40}>
                     <RoomBox 
-  roomType={roomType} 
-  roomNumber={roomIndex+1} 
-  roomTotalBeds={roomSize} 
-  basePrice={basePrice} 
-  roomName={roomName}
-/>
+                      roomType={roomType} 
+                      roomNumber={roomIndex+1} 
+                      roomTotalBeds={roomSize} 
+                      basePrice={basePrice} 
+                      roomName={roomName}
+                    />
 
 
                     </Flex>
@@ -279,19 +290,33 @@ const bedsLeft = guestCount - personCount;
                         <Flex direction={'column'} mt={10} gap={10}>
                           <Flex direction={'row'} gap={10}>
                             <Text>Fill in Beds</Text> <Icon3dRotate/> <Text>{guestCount} person's bed to assign</Text>
+                            {/* BEDS ROW */}
+                            
                             <Flex align={'center'} justify={'center'} w={'max-content'} p={'0px 15px 0px 15px'} 
                           sx={{borderRadius: 25, backgroundColor: 'rgba(56, 112, 255, 0.13)'}}>
-                            <Text color='#00154D'>{bedsLeft} Left</Text>
-                          </Flex>
+                            <Text color='#00154D'>{bedFillInsLeft} Left</Text>
                           </Flex>
                           
+                          </Flex>
+                            <Flex gap={10}>
+                                  <BedRowVessel   bedRow_bedTypeIcon={doubleBedIcon} BedRow_BedTypeName={'Double Bed'}  /> 
+                                  <BedRowVessel   bedRow_bedTypeIcon={singleBedIcon} BedRow_BedTypeName={'Single Bed'}  /> 
+                                  <BedRowVessel   bedRow_bedTypeIcon={singleBedIcon} BedRow_BedTypeName={'Single Bed'}  /> 
+                                  <BedRowVessel   bedRow_bedTypeIcon={bunkBedIcon} BedRow_BedTypeName={'Bunk Bed'}  /> 
+                                  <BedRowVessel   bedRow_bedTypeIcon={singleBedIcon} BedRow_BedTypeName={'Single Bed'}  /> 
+                                  <BedRowVessel   bedRow_bedTypeIcon={singleBedIcon} BedRow_BedTypeName={'Single Bed'}  /> 
+                            </Flex>
+
+                            <Flex gap={10}>
                             <Select 
                             radius={'md'}
                             color={'black'}
                             w={200}
-                            onChange={handleBedSelection}
+                            onChange={selection => setBed(selection)}
                             data={bedTypes}
                             />
+                            <Button>Add Bed</Button>
+                            </Flex>
                         </Flex>
                       </Flex>
                     </Flex>
@@ -428,6 +453,7 @@ alignContent: "center",
 justifyContent: "center"
 }}>
                 <TextInput value={basePrice}
+                type='number'
     onChange={handleBasePriceChange}  variant="unstyled" rightSection={<Text>PKR</Text>} styles={{
     input: {
     color: "white",
@@ -455,6 +481,20 @@ justifyContent: "center"
         </Flex>
             );
 
+}
+
+function BedRowVessel({bedRow_bedTypeIcon, BedRow_BedTypeName}) {
+  return (<Flex align={'center'} justify={'center'} pos={'relative'} direction={'column'} sx={{
+borderRadius: 25,
+backgroundColor: 'rgba(56, 112, 255, 0.13)',
+zIndex: 9
+}}>
+                          
+                                  <Flex p={8}>
+                                    <Image src={bedRow_bedTypeIcon} width={70} h={50} fit='contain' />
+                                  </Flex>
+                                    <Text color='#00154D' mb={10} fz={14}>{BedRow_BedTypeName}</Text>
+                              </Flex>);
 }
 
 function SameRooms({roomCount, handlePlusClick, handleMinusClick}) {
