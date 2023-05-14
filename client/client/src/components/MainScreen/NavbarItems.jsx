@@ -214,6 +214,8 @@ function NavbarItems() {
             </UnstyledButton>
 
             <UnstyledButton
+              component={Link}
+              to="/settings"
               className="userHover"
               style={{
                 width: "100%",

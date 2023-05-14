@@ -14,6 +14,7 @@ import UnprotectRoute from "./utils/unprotectRoute";
 import EnterpriseOnboarding from "./components/Pages/FunnelPages/Enterprise Signup/EnterpriseOnboarding";
 import AddBooking from "./components/Pages/Hotel & Property/AddBooking/AddBooking";
 import BookingPortal from "./components/Pages/Booking Portal/BookingPortal";
+import SettingsPage from "./components/Pages/ConfigurationPages/SettingsPage/SettingsPage";
 
 export default function App() {
   return (
@@ -30,6 +31,10 @@ export default function App() {
             <Route path="/FindBooking" element={<FindBooking />} />
             <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
             <Route path="/new/package-booking" element={<AddBooking />} />
+            
+            
+            {/* Configuation Pages */}
+            <Route path="/settings" element={<SettingsPage />} />
           </Route>
 
           {/* Public/Non-CRM Routes */}
