@@ -217,8 +217,7 @@ const newRoom = {
     updatedBeds.splice(index, 1);
     setBeds(updatedBeds);
   };
-  
-  console.log(beds);
+
   
   const bedGuestOccupancy = (bed) => {
     // add a switch case for each bed type for the selected bed value

@@ -1,5 +1,5 @@
 import { Flex, Image, Text, Title } from "@mantine/core";
-import { IconBed, IconChevronDown, IconDiamond, IconSettings } from "@tabler/icons";
+import { IconBed, IconChevronDown, IconDiamond, IconSettings, IconUsers } from "@tabler/icons";
 
 //icons import
 
@@ -9,24 +9,29 @@ import bunkBedIcon from '../../../../../../assets/icons/bunkBedIcon.svg'
 import sofaBedIcon from '../../../../../../assets/icons/sofaBedIcon.svg'
 
 import styles from "../propertyCustomStyles.module.css";
+import { forwardRef } from "react";
 
-export function RoomBox({
-    roomName,
-    roomNumber,
-    basePrice,
-    roomType,
-    sameRooms,
-    singleBeds,
-    doubleBeds,
-    bunkBeds,
-    sofaBeds,
-    maxGuests,
-}) {
+export const RoomBox = forwardRef(
+    (
+      {
+        roomName,
+        roomNumber,
+        basePrice,
+        roomType,
+        sameRooms,
+        singleBeds,
+        doubleBeds,
+        bunkBeds,
+        sofaBeds,
+        maxGuests
+      },
+      ref
+    ) => {
     
     
     return (
     
-    <Flex direction={'column'} gap={10} className={`${styles.roomBox} slide-in-left`} style={{
+    <Flex ref={ref} direction={'column'} gap={10} className={styles.roomBox} style={{
         
                     backgroundColor: roomType === 'Single' ? '#07399E' : roomType === 'Double' ? '#9E3D07' : roomType === 'Quad' ? '#0A9E07' : roomType === 'Family' ? '#9E0707' : roomType === 'Studio' ? '#9E0786' : roomType === 'Triple' ? '#07839E' : roomType === 'Quint' ? '#9E7D07' : roomType === 'Hexa' ? '#DA1D61' : 'black',
                     }}>
@@ -50,7 +55,7 @@ export function RoomBox({
                         gap: 1,
                         }}>
                     <Flex gap={5}> <IconDiamond color='yellow' /> <Text>{basePrice} USD / Night</Text></Flex>
-                    <Flex gap={5}>  <UserGroupIcon /> <Text>{maxGuests} Max Guests </Text></Flex>
+                    <Flex gap={5}>  <IconUsers /> <Text>{maxGuests} Max Guests </Text></Flex>
                     <Flex gap={5}> <IconSettings /> <Text>{roomType}</Text></Flex>
                         <Flex gap={5} justify={'center'} align={'center'}> 
                            {
@@ -88,15 +93,5 @@ export function RoomBox({
                 </Flex> 
             </Flex>);
   }
-  
-  function UserGroupIcon() {
-    return (<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-group" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-<path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-<path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-<path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-<path d="M17 10h2a2 2 0 0 1 2 2v1" />
-<path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-<path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-</svg>);
-  }
+    )
+
