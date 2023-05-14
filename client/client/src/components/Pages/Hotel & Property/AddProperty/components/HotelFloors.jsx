@@ -166,7 +166,12 @@ const handleAddRoom = (floorIndex) => {
     <Flex className={styles.roomWrapper} direction={'column'}>
       <RoomBox  roomType={room.type} 
                 roomNumber={roomIndex+1} 
-                basePrice={room.basePrice} 
+                basePrice={room.basePrice}
+                singleBeds={room.bedClassifications?.single} 
+                doubleBeds={room.bedClassifications?.double}
+                sofaBeds={room.bedClassifications?.sofa}
+                maxGuests={room.maxGuests}
+                bunkBeds={room.bedClassifications?.bunk}
                 roomName={room.roomClass + (room.type ? ` ${room.type}` : '') + ' with ' + room.roomView}/>
       <Flex justify={'center'} mt={19} gap={10} className={styles.roomActionsWrapper}>
         <Button> <IconEdit /></Button>
