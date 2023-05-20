@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
+import propertyRoute from "./routes/property.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -22,7 +23,7 @@ const connect = async () => {
 };
 
 
-const allowedOrigins = ["http://localhost:5173", "https://bookingsouq.me", "http://127.0.0.1:5173"];
+const allowedOrigins = ["http://localhost:5173", "https://bookingsouq.me", "http://127.0.0.1:5173", "101.53.233.193"];
 
 app.use(express.json());
 app.use(cors({
@@ -35,6 +36,8 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
+app.use("/api/property", propertyRoute);
+
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

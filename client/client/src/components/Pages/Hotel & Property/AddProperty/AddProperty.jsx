@@ -28,7 +28,6 @@ const AddProperty = () => {
 
   // FETCHING PROPERTY TYPE FROM REDUX STORE
   const { propertyDetails: { type } } = useSelector((state) => state.property);
-  console.log(type);
   
   const [page, setCurrentPage] = useState(0);
 

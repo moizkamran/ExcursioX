@@ -28,6 +28,7 @@ import {
   IconPlaneTilt,
   IconCoin,
   IconCircle,
+  IconBook,
 } from "@tabler/icons";
 import {
   ActionIcon,
@@ -89,6 +90,12 @@ function NavbarItems() {
   <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
     <IconLayoutDashboard  size={'2.5rem'} color="white" />
     <Text className="slide-in-left" style={{display: !open && 'none', transformOrigin: 'left'}}>Dashboard</Text>
+  </div>
+</CustomLink>
+<CustomLink to="/bookings">
+  <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
+    <IconBook  size={'2.5rem'} color="white" />
+    <Text className="slide-in-left" style={{display: !open && 'none', transformOrigin: 'left'}}>Bookings</Text>
   </div>
 </CustomLink>
   <div style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center', padding: 8, borderRadius: 10 }} className={open ? 'button-Nav' : 'button-Nav-Coll'}> 
@@ -207,6 +214,8 @@ function NavbarItems() {
             </UnstyledButton>
 
             <UnstyledButton
+              component={Link}
+              to="/settings"
               className="userHover"
               style={{
                 width: "100%",

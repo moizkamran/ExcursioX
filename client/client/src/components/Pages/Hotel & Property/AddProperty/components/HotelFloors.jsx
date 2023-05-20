@@ -8,6 +8,7 @@ import AddRoomForFloor from './AddRoomForFloor'
 import { RoomBox } from './Functions/RoomBox'
 
 import styles from './propertyCustomStyles.module.css'
+import { AnimatePresence, motion } from "framer-motion";
 
 
 const HotelFloors = () => {
@@ -16,7 +17,6 @@ const HotelFloors = () => {
   const floors = propertyDetails.floors;
   const [floorIndex, setFloorIndex] = useState(null);
   const [roomIndex, setRoomIndex] = useState(null);
-  console.log('TOTAL FLOORS '+ floors.length);
 
   const dispatch = useDispatch();
 
@@ -41,7 +41,6 @@ const HotelFloors = () => {
   // };
 
   const handleDeleteRoom = (floorIndex, roomId) => {
-    console.log('DELETE ROOM ' + roomId)
     const newFloors = [...floors];
     const targetFloor = newFloors[floorIndex];
     const roomIndex = targetFloor.rooms.findIndex(room => room.roomId === roomId);
@@ -78,8 +77,6 @@ const handleAddRoom = (floorIndex) => {
     dispatch(updatePropertyDetails({ floors: newFloors }));
     setDeleteFloorModal(false);
   };
-
-  console.log(numFloors);
 
   
   return (
@@ -160,13 +157,29 @@ const handleAddRoom = (floorIndex) => {
 
       {/* Rooms */}
       <Flex direction={'row'} mt={10} gap={40}> 
-
+      <AnimatePresence mode="popLayout">
       {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
+        <motion.div
+        layout
+        key={room.roomId}
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{
+          duration: 0.8,
+          ease: [0, 0.71, 0.2, 1.01]
+        }}
+      >
   <Flex key={roomIndex}>
     <Flex className={styles.roomWrapper} direction={'column'}>
       <RoomBox  roomType={room.type} 
                 roomNumber={roomIndex+1} 
-                basePrice={room.basePrice} 
+                basePrice={room.basePrice}
+                singleBeds={room.bedClassifications?.single} 
+                doubleBeds={room.bedClassifications?.double}
+                sofaBeds={room.bedClassifications?.sofa}
+                maxGuests={room.maxGuests}
+                bunkBeds={room.bedClassifications?.bunk}
                 roomName={room.roomClass + (room.type ? ` ${room.type}` : '') + ' with ' + room.roomView}/>
       <Flex justify={'center'} mt={19} gap={10} className={styles.roomActionsWrapper}>
         <Button> <IconEdit /></Button>
@@ -175,7 +188,9 @@ const handleAddRoom = (floorIndex) => {
       </Flex>
     </Flex>
   </Flex>
-)) : ('')}
+  </motion.div>
+)) : ('')} 
+</AnimatePresence>
 
         <Flex onClick={() => handleAddRoom(floorIndex)} className={styles.addRoom}><div className={styles.circle}><IconPlus/></div></Flex>
       </Flex>
