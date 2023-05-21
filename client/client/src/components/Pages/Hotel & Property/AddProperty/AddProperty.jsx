@@ -57,11 +57,13 @@ const AddProperty = () => {
       return (
         <PropertyTypeOf onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
       );
-    } else if (page === 2 && type === "Hotel") {
+    } else if (page === 3 && type === "Hotel") {
       return (
         <HotelFloors onButtonClick={handleButtonClick} onBackClick={handleButtonClickBack} type={type} />
       );
-    }  else if (page === 2 || page === 3 && type === "Hotel") {
+    } else if (page === 2 && type === "Hotel") {
+      return <PropertyDetails />;
+    } else if (page === 2 || page === 4 && type === "Hotel") {
       return <PropertyLayoutAndPricing />;
     } else if (page === 3 || page === 4 && type === "Hotel" ) {
       return <PropertyFacilities />;

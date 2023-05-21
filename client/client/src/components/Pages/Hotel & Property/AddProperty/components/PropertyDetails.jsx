@@ -14,9 +14,10 @@ import {
   Button,
   NativeSelect,
   Rating,
+  Select,
 } from "@mantine/core";
 
-export const PropertyDetails = ({ type }) => {
+export const PropertyDetails = () => {
   const dispatch = useDispatch();
   const { propertyDetails } = useSelector((state) => state.property);
   const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
@@ -24,13 +25,22 @@ export const PropertyDetails = ({ type }) => {
     (state) => propertyDetails.hasChannelManeger
   );
 
+  const type = useSelector((state) => state.property.propertyDetails.type);
+
   const [countryState, setCountryState] = useState({
     loading: false,
     countries: [],
     errorMessage: "",
   });
 
+  const [cities, setCities] = useState([]);
+
+  
+
+
   const { countries } = countryState;
+
+  const selectedCountry = useSelector(state => state.property.propertyDetails.country);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,9 +72,45 @@ export const PropertyDetails = ({ type }) => {
   }, []);
 
   const countryOptions = countries.map((country) => ({
-    value: country.name.common,
     label: country.name.common,
+    value: country.cca2,
   }));
+  
+  const currentCountry = countryOptions.find((country) => country.value === selectedCountry);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (currentCountry) {
+          const response = await axios.get(
+            `http://api.geonames.org/searchJSON?country=${currentCountry?.value}&maxRows=1000&username=moizkamran`
+          );
+          const data = response.data.geonames;
+            console.log("🌍 %cFETCHING CITIES...", "color: green");
+
+  
+          // Extract unique city names
+          const uniqueCities = Array.from(new Set(data.map((city) => city.name)));
+  
+          setCities(uniqueCities);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  }, [selectedCountry]);
+  
+  
+  
+
+  const cityOptions = cities.map((city, index) => ({
+    label: city,
+    value: city,
+    key: `city-${index}`,
+  }));
+  
 
   return (
     <>
@@ -341,21 +387,39 @@ export const PropertyDetails = ({ type }) => {
             </div>
             <div style={{ display: "flex", flexDirection: "row", gap: 10 }}>
               <div style={{ marginTop: 10 }}>
+                <Flex gap={10} w={300}>
+                <Flex gap={10} direction={'column'}>
                 <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
                   Country
                 </Text>
-                <Flex gap={10}>
-                  <NativeSelect
-                    w={200}
+                  <Select
+                  searchable
                     radius={"md"}
-                    onChange={(v) => {
+                    onChange={(selection) => {
                       dispatch(
-                        updatePropertyDetails({ country: v.target.value })
+                        updatePropertyDetails({ country: selection })
                       );
                     }}
                     data={countryOptions}
+                    value = {selectedCountry}
                     name="country"
                   />
+                </Flex>
+                <Flex gap={10} direction={'column'}>
+                <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
+                  City
+                </Text>
+                <Select
+                    searchable
+                    radius={"md"}
+                    onChange={(selection) => {
+                      dispatch(updatePropertyDetails({ city: selection}));
+                    }}
+                    data={cityOptions}
+                    name="city"
+                    key={cityOptions.key} // Add the key prop here
+                  />
+                </Flex>
                 </Flex>
               </div>
             </div>
