@@ -12,7 +12,7 @@ import { Link, Outlet, useMatch, useResolvedPath } from "react-router-dom";
 const Dashboard = () => {
   return (
     <>
-      <div style={{ backgroundColor: "#121927" }}>
+      <div style={{ backgroundColor: "black" }}>
         <div
           style={{
             display: "flex",

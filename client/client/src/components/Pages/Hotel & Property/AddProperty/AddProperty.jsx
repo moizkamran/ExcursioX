@@ -33,9 +33,9 @@ const AddProperty = () => {
 
   const handleButtonClick = () => {
     setCurrentPage(currentPage => currentPage + 1);
-    if (page === 2 && type === "Hotel") {
-      setCurrentFloorIndex(0); // Set the current floor index to 0 when navigating to the hotel floors page
-    }
+    // if (page === 2 && type === "Hotel") {
+    //   setCurrentFloorIndex(0); // Set the current floor index to 0 when navigating to the hotel floors page
+    // }
   };
   const handleButtonClickBack = () => {
     setCurrentPage(currentPage => currentPage - 1);
