@@ -63,7 +63,7 @@ const AddProperty = () => {
       );
     } else if (page === 2 && type === "Hotel") {
       return <PropertyDetails />;
-    } else if (page === 2 || page === 4 && type === "Hotel") {
+    } else if (page === 2) {
       return <PropertyLayoutAndPricing />;
     } else if (page === 3 || page === 4 && type === "Hotel" ) {
       return <PropertyFacilities />;

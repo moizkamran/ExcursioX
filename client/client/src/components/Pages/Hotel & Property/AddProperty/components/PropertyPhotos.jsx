@@ -17,6 +17,7 @@ import {
   Flex,
   TextInput,
   Button,
+  Select,
 } from "@mantine/core";
 import {
   IconApps,
@@ -150,10 +151,10 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                 <div>
                   <Text>Can you provide extra beds?</Text>
                   <div style={{ display: "flex", gap: 10, marginTop: 5 }}>
-                    <NativeSelect
-                      onChange={(e) => {
+                    <Select
+                      onChange={(selection) => {
                         dispatch(
-                          updatePropertyPhotos({ extraBed: e.target.value })
+                          updatePropertyPhotos({ extraBed: selection })
                         );
                       }}
                       data={["Yes", "No"]}
