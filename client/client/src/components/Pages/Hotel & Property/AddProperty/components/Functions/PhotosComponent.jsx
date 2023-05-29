@@ -3,8 +3,11 @@ import { Button, Text } from "@mantine/core";
 import { IconUpload } from "@tabler/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePropertyPhotos } from "../../../../../../Redux/Slicers/propertySlice";
+import { storage } from "../../../../../../firebase";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 
 const PhotosComponent = () => {
   const { photos } = useSelector((state) => state.property.propertyPhotos);
@@ -67,19 +70,39 @@ const PhotosComponent = () => {
   };
 
   useEffect(() => {
-    // Create an object URL for each selected file and store in an array
-    const urls = selectedFiles.map((file) => URL.createObjectURL(file));
-    setSelectedFilesUrls(urls);
-
-    // Clean up object URLs when component unmounts or when selected files change
-    return () => {
-      urls.forEach((url) => URL.revokeObjectURL(url));
+    const uploadFile = () => {
+      const name = new Date().getTime() + selectedFiles[0].name;
+  
+      console.log(name);
+      const storageRef = ref(storage, name);
+      const uploadTask = uploadBytesResumable(storageRef, selectedFiles[0]);
+  
+      uploadTask.on(
+        "state_changed",
+        (uploadTask) => {
+          const progress = (uploadTask.bytesTransferred / uploadTask.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          setPerc(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setData((prev) => ({ ...prev, img: downloadURL }));
+          });
+        }
+      );
     };
+  
+    selectedFiles.length > 0 && uploadFile();
   }, [selectedFiles]);
+  
 
-  const handleSubmit = () => {
-    dispatch(updatePropertyPhotos([...photos, ...selectedFilesUrls]));
-  };
+  
+  
+  
+  
 
   const renderPhotos = (photos) => {
     return photos.map((photo) => {
@@ -227,7 +250,7 @@ const PhotosComponent = () => {
           {renderPhotos(selectedFiles)}
         </div>
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <Button onClick={handleUpload} mt={5}>Submit</Button>
     </div>
   );
 };

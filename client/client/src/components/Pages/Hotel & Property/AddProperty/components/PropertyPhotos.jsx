@@ -403,7 +403,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                   <br /> represent all your property has to offer.{" "}
                 </Text>
                 {/* BY LINK */}
-                <Flex gap={12}>
+                <Flex gap={12} mt={10}>
                   <TextInput
                     value={photoLink}
                     onChange={(ev) => setPhotoLink(ev.target.value)}
