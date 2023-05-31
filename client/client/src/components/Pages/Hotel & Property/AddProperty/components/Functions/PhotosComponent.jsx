@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text } from "@mantine/core";
+import { Button, Progress, Text } from "@mantine/core";
 import { IconUpload } from "@tabler/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePropertyPhotos } from "../../../../../../Redux/Slicers/propertySlice";
 import { storage } from "../../../../../../firebase";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable, deleteObject } from "firebase/storage";
 
 
 const PhotosComponent = () => {
-  const { photos } = useSelector((state) => state.property.propertyPhotos);
   const dispatch = useDispatch();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -65,9 +64,27 @@ const PhotosComponent = () => {
   };
 
   const deleteFile = (fileToDelete) => {
-    const filteredFiles = selectedFiles.filter((file) => file !== fileToDelete);
-    setSelectedFiles(filteredFiles);
+    // Delete from Firebase storage
+    const storageRef = ref(storage, fileToDelete);
+    deleteObject(storageRef)
+      .then(() => {
+        console.log(`File ${fileToDelete} deleted from Firebase storage.`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  
+    // Remove from the selectedFiles state
+  const filteredFiles = selectedFiles.filter((file) => file !== fileToDelete);
+  setSelectedFiles(filteredFiles);
+
+  // Remove from the photos state in Redux
+  const filteredPhotos = selectedFilesUrls.filter((photo) => photo !== fileToDelete);
+  dispatch(updatePropertyPhotos({ photos: filteredPhotos }));
   };
+  
+
+  const [updPerc, setPerc] = useState(null);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -89,7 +106,9 @@ const PhotosComponent = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setData((prev) => ({ ...prev, img: downloadURL }));
+            console.log(downloadURL)
+            // Dispatch the URL to the photos state
+            dispatch(updatePropertyPhotos({ selectedFileUrl: downloadURL }));
           });
         }
       );
@@ -101,7 +120,7 @@ const PhotosComponent = () => {
 
   
   
-  
+  const photos = useSelector((state) => state.property.propertyPhotos.photos);
   
 
   const renderPhotos = (photos) => {
@@ -115,7 +134,7 @@ const PhotosComponent = () => {
             justifyContent: "center",
             width: "100%",
           }}
-          key={photo.name}
+          key={photo}
         >
           <div
             style={{
@@ -130,8 +149,8 @@ const PhotosComponent = () => {
             }}
           >
             <img
-              src={URL.createObjectURL(photo)}
-              alt={photo.name}
+              src={photo}
+              alt={photo}
               style={{
                 maxWidth: "150px",
                 width: "auto",
@@ -143,7 +162,7 @@ const PhotosComponent = () => {
                 objectPosition: "center center",
               }}
             />
-
+  
             <button
               style={{
                 position: "absolute",
@@ -170,6 +189,7 @@ const PhotosComponent = () => {
       );
     });
   };
+  
 
   return (
     <div>
@@ -247,10 +267,11 @@ const PhotosComponent = () => {
             marginTop: 20,
           }}
         >
-          {renderPhotos(selectedFiles)}
+          {renderPhotos(photos)}
         </div>
       </div>
-      <Button onClick={handleUpload} mt={5}>Submit</Button>
+      <Progress color="dark" radius="xl" size="sm" value={updPerc} striped animate />
+      {/* <Button onClick={handleUpload} mt={5}>Submit</Button> */}
     </div>
   );
 };

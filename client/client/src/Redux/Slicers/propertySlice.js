@@ -135,7 +135,7 @@ const propertySlice = createSlice({
       };
     },
     updatePropertyPhotos: (state, action) => {
-      const { age, Extras, extraBed, extraBedCount, AddExtras } = action.payload;
+      const { age, Extras, extraBed, extraBedCount, AddExtras, selectedFileUrl } = action.payload;
       return {
         ...state,
         propertyPhotos: {
@@ -151,9 +151,10 @@ const propertySlice = createSlice({
           extraBed: extraBed !== undefined ? extraBed : state.propertyPhotos.extraBed,
           extraBedCount: extraBedCount !== undefined ? extraBedCount : state.propertyPhotos.extraBedCount,
           AddExtras: AddExtras !== undefined ? AddExtras : state.propertyPhotos.AddExtras,
+          photos: selectedFileUrl !== undefined ? [...state.propertyPhotos.photos, selectedFileUrl] : state.propertyPhotos.photos,
         },
       };
-    },
+    },    
     
     
 
