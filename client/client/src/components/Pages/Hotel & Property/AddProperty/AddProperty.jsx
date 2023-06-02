@@ -84,6 +84,7 @@ const AddProperty = () => {
   const titles = ["Select Property Type", "Property Details", "Property Layout", "Facilities & Services", "Amenities & Photos", "House Rules", "Payments & Agreement", "Preview"];
 
   const [active, setActive] = useState(1);
+  const [helpToolbar, setHelpToolbar] = useState(false);
   return (
     <>
       <div
@@ -119,7 +120,7 @@ const AddProperty = () => {
       </div>
       {page >= 1 && <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20 }}>
 
-        {page >= 2 && <div style={{
+        {helpToolbar ? <div style={{
           display: 'flex',
           flexDirection: 'column',
           backgroundColor: '#07399E',
@@ -131,7 +132,7 @@ const AddProperty = () => {
         }}>
           <Text>Step {page} out of 5</Text>
           <Button style={{ backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 10 }} leftIcon={<IconMessage />}>Need Help?</Button>
-        </div>}
+        </div> : ''}
         <div style={{ flexDirection: 'row', display: 'flex' }}>
           <ActionIcon onClick={handleButtonClickBack} radius="xl" variant="filled" disabled={page === 0} style={{ backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10 }}>
             <IconArrowLeft size="1.5rem" />

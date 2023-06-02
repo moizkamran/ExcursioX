@@ -67,34 +67,23 @@ export const initialState = {
     photos: [],
   },
   propertyHouseRules: {
-    guestArrivalChipsFrom: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
+   cancellationPolicy: "",
+   accidentalBookingsGuard : "",
+   checktimes: {
+    guestsArrival: {
+      from: "",
+      to: "",
     },
-    guestArrivalChipsTo: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-    guestDepartureChipsFrom: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-    guestDepartureChipsTo: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
+    guestsDeparture: {
+      from: "",
+      to: "",
     },
   },
-  checkboxes: {
-    checkbox1: false,
-    checkbox2: false,
+  isSmokingAllowed: "",
+  isPetsAllowed: "",
+  isEventsAllowed: "",
+  canInfantsBeHosted: "",
+  minNightStay: "",
   },
 };
 
@@ -112,6 +101,15 @@ const propertySlice = createSlice({
         ...state,
         propertyDetails: {
           ...state.propertyDetails,
+          ...action.payload,
+        },
+      };
+    },
+    updatePropertyHouseRules: (state, action) => {
+      return {
+        ...state,
+        propertyHouseRules: {
+          ...state.propertyHouseRules,
           ...action.payload,
         },
       };
@@ -155,42 +153,6 @@ const propertySlice = createSlice({
         },
       };
     },    
-    
-    
-
-    updatePropertyHouseRules: (state, action) => {
-      const {
-        chipNumberFrom,
-        valueFrom,
-        chipNumberTo,
-        valueTo,
-        chipNumberFrom1,
-        valueFrom1,
-        chipNumberTo1,
-        valueTo1,
-      } = action.payload;
-      return {
-        ...state,
-        propertyHouseRules: {
-          guestArrivalChipsFrom: {
-            ...state.propertyHouseRules.guestArrivalChipsFrom,
-            [chipNumberFrom]: valueFrom,
-          },
-          guestArrivalChipsTo: {
-            ...state.propertyHouseRules.guestArrivalChipsTo,
-            [chipNumberTo]: valueTo,
-          },
-          guestDepartureChipsFrom: {
-            ...state.propertyHouseRules.guestDepartureChipsFrom,
-            [chipNumberFrom1]: valueFrom1,
-          },
-          guestDepartureChipsTo: {
-            ...state.propertyHouseRules.guestDepartureChipsTo,
-            [chipNumberTo1]: valueTo1,
-          },
-        },
-      };
-    },
 
     addHotelLayout: (state, action) => {
       return {

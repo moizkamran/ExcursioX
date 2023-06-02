@@ -33,7 +33,7 @@ const PhotosComponent = () => {
         errors += `${file.name} is not a supported format.\n`;
         return;
       }
-      if (file.size > 1024 * 1024) {
+      if (file.size > 3024 * 3024) {
         errors += `${file.name} is too large, please pick a smaller file.\n`;
         return;
       }
@@ -107,6 +107,8 @@ const PhotosComponent = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log(downloadURL)
+            // Update selectedFilesUrls state
+          setSelectedFilesUrls((prevUrls) => [...prevUrls, downloadURL]);
             // Dispatch the URL to the photos state
             dispatch(updatePropertyPhotos({ selectedFileUrl: downloadURL }));
           });
@@ -270,7 +272,7 @@ const PhotosComponent = () => {
           {renderPhotos(photos)}
         </div>
       </div>
-      <Progress color="dark" radius="xl" size="sm" value={updPerc} striped animate />
+      <Progress color="dark" radius="xl" size="md" value={updPerc} striped animate />
       {/* <Button onClick={handleUpload} mt={5}>Submit</Button> */}
     </div>
   );
