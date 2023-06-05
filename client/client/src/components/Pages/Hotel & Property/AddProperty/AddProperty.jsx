@@ -69,11 +69,11 @@ const AddProperty = () => {
       return <PropertyFacilities />;
     } else if (page === 4 || page === 5 && type === "Hotel") {
       return <PropertyPhotos />;
-    } else if (page === 5) {
+    } else if (page === 5 || page === 6 && type === "Hotel") {
       return <PropertyHouseRules />;
-    } else if (page === 6) {
+    } else if (page === 6 || page === 7 && type === "Hotel")  {
       return <PropertyPayments />;
-    } else if (page === 7) {
+    } else if (page === 7 || page === 8 && type === "Hotel") {
       return <PropertyPreview />;
     } else {
       return <PropertySelection />;
@@ -137,7 +137,7 @@ const AddProperty = () => {
           <ActionIcon onClick={handleButtonClickBack} radius="xl" variant="filled" disabled={page === 0} style={{ backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10 }}>
             <IconArrowLeft size="1.5rem" />
           </ActionIcon>
-          <Button onClick={handleButtonClick} rightIcon={<IconArrowRight />} disabled={page > 6} style={{ backgroundColor: '#07399E', height: '50px', width: '200px' }}>Next Step</Button>
+          <Button onClick={handleButtonClick} rightIcon={<IconArrowRight />} disabled={page > 7} style={{ backgroundColor: '#07399E', height: '50px', width: '200px' }}>Next Step</Button>
         </div>
       </div>}
     </>

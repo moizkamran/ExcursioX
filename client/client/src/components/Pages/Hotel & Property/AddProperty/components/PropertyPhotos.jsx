@@ -85,9 +85,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
       label: "Accessible rooms and facilities for guests with disabilities",
     },
   ]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const handleSelectChange = (selected) => {
-    setSelectedOptions(selected);
     dispatch(updatePropertyPhotos({ AddExtras: selected }));
   };
 
@@ -159,6 +157,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                       }}
                       data={["Yes", "No"]}
                       radius="md"
+                      value={propertyPhotos.extraBed}
                       size="md"
                       style={{ width: 150 }}
                     />
@@ -372,7 +371,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                     setData((current) => [...current, item]);
                     return item;
                   }}
-                  value={selectedOptions}
+                  value={propertyPhotos.AddExtras}
                   onChange={handleSelectChange}
                   dropdownPosition="bottom"
                   nothingFound="Nothing found"

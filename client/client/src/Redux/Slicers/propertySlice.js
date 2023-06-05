@@ -85,6 +85,12 @@ export const initialState = {
   canInfantsBeHosted: "",
   minNightStay: "",
   },
+  propertyPayments: {
+    paymentMethods: [],
+    bindWallet: "",
+    wallet: "",
+    acceptedTermsAndConditions: "",
+  },
 };
 
 const propertySlice = createSlice({
@@ -106,14 +112,33 @@ const propertySlice = createSlice({
       };
     },
     updatePropertyHouseRules: (state, action) => {
+      const { checktimes, cancellationPolicy, accidentalBookingsGuard, isSmokingAllowed, isPetsAllowed, canInfantsBeHosted, minNightStay } = action.payload;
       return {
         ...state,
         propertyHouseRules: {
           ...state.propertyHouseRules,
-          ...action.payload,
+          checktimes: {
+            ...state.propertyHouseRules.checktimes,
+            guestsArrival: {
+              ...state.propertyHouseRules.checktimes.guestsArrival,
+              ...(checktimes && checktimes.guestsArrival),
+            },
+            guestsDeparture: {
+              ...state.propertyHouseRules.checktimes.guestsDeparture,
+              ...(checktimes && checktimes.guestsDeparture),
+            },
+          },
+          cancellationPolicy: cancellationPolicy !== undefined ? cancellationPolicy : state.propertyHouseRules.cancellationPolicy,
+          accidentalBookingsGuard: accidentalBookingsGuard !== undefined ? accidentalBookingsGuard : state.propertyHouseRules.accidentalBookingsGuard,
+          isSmokingAllowed: isSmokingAllowed !== undefined ? isSmokingAllowed : state.propertyHouseRules.isSmokingAllowed,
+          isPetsAllowed: isPetsAllowed !== undefined ? isPetsAllowed : state.propertyHouseRules.isPetsAllowed,
+          canInfantsBeHosted: canInfantsBeHosted !== undefined ? canInfantsBeHosted : state.propertyHouseRules.canInfantsBeHosted,
+          minNightStay: minNightStay !== undefined ? minNightStay : state.propertyHouseRules.minNightStay,
         },
       };
     },
+    
+    
     updatePropertyLayout: (state, action) => {
       return {
         ...state,
@@ -152,6 +177,17 @@ const propertySlice = createSlice({
           photos: selectedFileUrl !== undefined ? [...state.propertyPhotos.photos, selectedFileUrl] : state.propertyPhotos.photos,
         },
       };
+    },
+
+
+    updatePropertyPayments: (state, action) => {
+      return {
+        ...state,
+        propertyPayments: {
+          ...state.propertyPayments,
+          ...action.payload,
+        },
+      };
     },    
 
     addHotelLayout: (state, action) => {
@@ -187,6 +223,7 @@ export const {
   updatePropertyLayout,
   setCheckboxValue,
   updatePropertyHouseRules,
+  updatePropertyPayments,
   updatePropertyFacilites,
   addHotelLayout,
   addRoomToFloor,

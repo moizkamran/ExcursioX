@@ -19,6 +19,7 @@ import {
     Chip,
     Radio,
     Tooltip,
+    Select,
 } from "@mantine/core";
 import {
     IconAlertCircle,
@@ -29,7 +30,15 @@ import {
 } from "@tabler/icons";
 // Configure marks to match step
 const MARKS = [
-    { value: 0, label: "Nope" },
+    { value: 0, label: "0 Days" },
+    { value: 25, label: "30 Days" },
+    { value: 50, label: "14 Days" },
+    { value: 75, label: "7 Days" },
+    { value: 100, label: "1 Day" },
+];
+
+const cancellationPolicyOptions = [
+    { value: 0, label: "No Free Cancelations" },
     { value: 25, label: "30 Days" },
     { value: 50, label: "14 Days" },
     { value: 75, label: "7 Days" },
@@ -38,23 +47,7 @@ const MARKS = [
 
 export const PropertyHouseRules = () => {
     const dispatch = useDispatch();
-
-    const handleArrivalFrom = (chipNumberFrom, valueFrom) => {
-        dispatch(updatePropertyHouseRules({ chipNumberFrom1: chipNumberFrom, valueFrom1: valueFrom }));
-    };
-
-    const handleArrivalTo = (chipNumberTo, valueTo) => {
-        dispatch(updatePropertyHouseRules({ chipNumberTo1: chipNumberTo, valueTo1: valueTo }));
-    };
-
-    const handleDepartureFrom = (chipNumberFrom, valueFrom) => {
-        dispatch(updatePropertyHouseRules({ chipNumberFrom: chipNumberFrom, valueFrom: valueFrom }));
-    };
-
-    const handleDepartureTo = (chipNumberTo, valueTo) => {
-        dispatch(updatePropertyHouseRules({ chipNumberTo: chipNumberTo, valueTo: valueTo }));
-    };
-
+    const objectState = useSelector( (state) => state.property.propertyHouseRules);
 
     return (
         <>
@@ -64,16 +57,12 @@ export const PropertyHouseRules = () => {
                         <Flex gap="md" direction="column">
                             <Title>Cancellation</Title>
                             <Text>When can your guests cancel their booking for free?</Text>
-                            <NativeSelect
-                                data={[
-                                    "No Free Cancelations",
-                                    "30 Days",
-                                    "14 Days",
-                                    "7 Days",
-                                    "1 Day",
-                                ]}
+                            <Select
+                                data={cancellationPolicyOptions}
                                 radius="md"
                                 size="md"
+                                value={objectState.cancellationPolicy}
+                                onChange={(selection) => { dispatch(updatePropertyHouseRules({ cancellationPolicy: selection })) }}
                                 style={{ width: "max-content" }}
                             />
                             <Text>Don't worry you can make changes later</Text>
@@ -87,12 +76,14 @@ export const PropertyHouseRules = () => {
                                 </div>
                                 <div>
                                     <Slider
-                                        label={(val) =>
-                                            MARKS.find((mark) => mark.value === val).label
-                                        }
-                                        defaultValue={50}
+                                        label={(val) => {
+                                            const match = MARKS.find((mark) => mark.value === val);
+                                            return match ? match.label : '';
+                                        }}
+                                        
                                         step={25}
                                         size={30}
+                                        value={objectState.cancellationPolicy}
                                         marks={MARKS}
                                         styles={{
                                             bar: {
@@ -177,7 +168,8 @@ export const PropertyHouseRules = () => {
                                     <div
                                         style={{ display: "flex", justifyContent: "space-between" }}
                                     >
-                                        <Text>Protect Against Accidental Bookings</Text> <Switch />
+                                        <Text>Protect Against Accidental Bookings</Text> <Switch checked={objectState.accidentalBookingsGuard} onChange={(e) =>
+    dispatch(updatePropertyHouseRules({ accidentalBookingsGuard: e.target.checked }))}/>
                                     </div>
                                     <Text style={{ color: "rgba(0, 0, 0, 0.5)", marginTop: 10 }}>
                                         To save you time handling accidental bookings, we
@@ -235,19 +227,19 @@ export const PropertyHouseRules = () => {
                                         <Flex gap={10}>
                                             <Chip.Group position="center">
                                                 <Chip
-                                                    value="1" onClick={() => handleArrivalFrom("1", "12:00 PM")}>12:00 PM</Chip>
-                                                <Chip value="2" onClick={() => handleArrivalFrom("2", "2:00 PM")}>2:00 PM</Chip>
-                                                <Chip value="3" onClick={() => handleArrivalFrom("3", "3:00 PM")}>3:00 PM</Chip>
-                                                <Chip value="4" onClick={() => handleArrivalFrom("4", "Other")}>Other</Chip>
+                                                    value="1" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { from : "12:00"}}}))}>12:00 PM</Chip>
+                                                <Chip value="2" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { from : "14:00"}}}))}>2:00 PM</Chip>
+                                                <Chip value="3" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { from : "15:00"}}}))}>3:00 PM</Chip>
+                                                <Chip value="4" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { from : "00:00"}}}))}>Other</Chip>
                                             </Chip.Group>
                                         </Flex>
                                         <Text>to</Text>
                                         <Flex gap={10}>
                                             <Chip.Group position="center">
-                                                <Chip value="1" onClick={() => handleArrivalTo("1", "12:00 PM")}>12:00 PM</Chip>
-                                                <Chip value="2" onClick={() => handleArrivalTo("2", "2:00 PM")}>2:00 PM</Chip>
-                                                <Chip value="3" onClick={() => handleArrivalTo("3", "3:00 PM")}>3:00 PM</Chip>
-                                                <Chip value="4" onClick={() => handleArrivalTo("4", "Other")}>Other</Chip>
+                                                <Chip value="1" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { to : "12:00"}}}))}>12:00 PM</Chip>
+                                                <Chip value="2" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { to : "14:00"}}}))}>2:00 PM</Chip>
+                                                <Chip value="3" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { to : "15:00"}}}))}>3:00 PM</Chip>
+                                                <Chip value="4" onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsArrival : { to : "00:00"}}}))}>Other</Chip>
                                             </Chip.Group>
                                         </Flex>
 
@@ -295,27 +287,26 @@ export const PropertyHouseRules = () => {
                                             <Chip.Group position="center">
                                                 <Chip
                                                     value="1"
-                                                    onClick={() => handleDepartureFrom("1", "12:00 PM")}
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { from : "12:00"}}}))}
                                                 >
-                                                    {" "}
                                                     12:00 PM
                                                 </Chip>
 
                                                 <Chip
                                                     value="2"
-                                                    onClick={() => handleDepartureFrom("2", "2:00 PM")}
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { from : "14:00"}}}))}
                                                 >
                                                     2:00 PM
                                                 </Chip>
                                                 <Chip
                                                     value="3"
-                                                    onClick={() => handleDepartureFrom("3", "3:00 PM")}
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { from : "15:00"}}}))}
                                                 >
                                                     3:00 PM
                                                 </Chip>
                                                 <Chip
                                                     value="4"
-                                                    onClick={() => handleDepartureFrom("4", "Other")}>
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { from : "00:00"}}}))}>
                                                     Other
                                                 </Chip>
                                             </Chip.Group>
@@ -323,26 +314,28 @@ export const PropertyHouseRules = () => {
                                         <Text>to</Text>
                                         <Flex gap={10}>
                                             <Chip.Group position="center">
-                                                <Chip
+                                            <Chip
                                                     value="1"
-                                                    onClick={() => handleDepartureTo("1", "12:00 PM")}
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { to : "12:00"}}}))}
                                                 >
-                                                    {" "}
                                                     12:00 PM
                                                 </Chip>
+
                                                 <Chip
                                                     value="2"
-                                                    onClick={() => handleDepartureTo("2", "2:00 PM")}>
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { to : "14:00"}}}))}
+                                                >
                                                     2:00 PM
                                                 </Chip>
                                                 <Chip
                                                     value="3"
-                                                    onClick={() => handleDepartureTo("3", "3:00 PM")}>
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { to : "15:00"}}}))}
+                                                >
                                                     3:00 PM
                                                 </Chip>
                                                 <Chip
                                                     value="4"
-                                                    onClick={() => handleDepartureTo("4", "Other")}>
+                                                    onClick={() => dispatch(updatePropertyHouseRules({ checktimes : { guestsDeparture : { to : "00:00"}}}))}>
                                                     Other
                                                 </Chip>
                                             </Chip.Group>
@@ -375,7 +368,6 @@ export const PropertyHouseRules = () => {
                                             >
                                                 <IconSmoking />
                                                 <Text style={{ fontSize: 18 }}>
-                                                    {" "}
                                                     Do you allow smoking in your apartment?
                                                 </Text>
                                             </div>
@@ -402,8 +394,32 @@ export const PropertyHouseRules = () => {
                                                 marginTop: 10,
                                             }}
                                         >
-                                            <Radio label="Yes" color="dark" value="yes" />
-                                            <Radio label="No" color="dark" value="no" />
+                                            <Radio
+                                                label="Yes"
+                                                value="Yes"
+                                                name="isSmokingAllowed"
+                                                defaultChecked={objectState.isSmokingAllowed === "Yes"}
+                                                onChange={(event) => {
+                                                    dispatch(
+                                                    updatePropertyHouseRules({
+                                                        isSmokingAllowed: event.target.value,
+                                                    })
+                                                    );
+                                                }}
+                                                />
+                                            <Radio
+                                                label="No"
+                                                value="No"
+                                                name="isSmokingAllowed"
+                                                defaultChecked={objectState.isSmokingAllowed === "No"}
+                                                onChange={(event) => {
+                                                    dispatch(
+                                                    updatePropertyHouseRules({
+                                                        isSmokingAllowed: event.target.value,
+                                                    })
+                                                    );
+                                                }}
+                                                />
                                         </div>
                                     </div>
                                     <div>
@@ -429,7 +445,7 @@ export const PropertyHouseRules = () => {
                                                 </Text>
                                             </div>
                                             <Tooltip
-                                                label="Can people smoke in rooms and in the property premises?"
+                                                label="By children we mean guests under 12 years old or under the age of majority in the country where the property is located, whichever is older."
                                                 position="top-end"
                                                 withArrow
                                             >
@@ -451,8 +467,32 @@ export const PropertyHouseRules = () => {
                                                 marginTop: 10,
                                             }}
                                         >
-                                            <Radio label="Yes" color="dark" value="yes" />
-                                            <Radio label="No" color="dark" value="no" />
+                                             <Radio
+                                                label="Yes"
+                                                value="Yes"
+                                                name="canInfantsBeHosted"
+                                                defaultChecked={objectState.canInfantsBeHosted === "Yes"}
+                                                onChange={(event) => {
+                                                    dispatch(
+                                                    updatePropertyHouseRules({
+                                                        canInfantsBeHosted: event.target.value,
+                                                    })
+                                                    );
+                                                }}
+                                                />
+                                            <Radio
+                                                label="No"
+                                                value="No"
+                                                name="canInfantsBeHosted"
+                                                defaultChecked={objectState.canInfantsBeHosted === "No"}
+                                                onChange={(event) => {
+                                                    dispatch(
+                                                    updatePropertyHouseRules({
+                                                        canInfantsBeHosted: event.target.value,
+                                                    })
+                                                    );
+                                                }}
+                                                />
                                         </div>
                                     </div>
                                     <div>
@@ -476,7 +516,7 @@ export const PropertyHouseRules = () => {
                                                 <Text style={{ fontSize: 18 }}>Do you allow pets?</Text>
                                             </div>
                                             <Tooltip
-                                                label="Can people smoke in rooms and in the property premises?"
+                                                label="Can guests bring pets to your property? Emotional support animals are not considered pets."
                                                 position="top-end"
                                                 withArrow
                                             >
@@ -498,15 +538,39 @@ export const PropertyHouseRules = () => {
                                                 marginTop: 10,
                                             }}
                                         >
-                                            <Radio label="Yes" color="dark" value="yes" />
-                                            <Radio label="No" color="dark" value="no" />
+                                            <Radio
+                                                label="Yes"
+                                                value="Yes"
+                                                name="isPetsAllowed"
+                                                defaultChecked={objectState.isPetsAllowed === "Yes"}
+                                                onChange={(event) => {
+                                                    dispatch(
+                                                    updatePropertyHouseRules({
+                                                        isPetsAllowed: event.target.value,
+                                                    })
+                                                    );
+                                                }}
+                                                />
+                                            <Radio
+                                                label="No"
+                                                value="No"
+                                                name="isPetsAllowed"
+                                                defaultChecked={objectState.isPetsAllowed === "No"}
+                                                onChange={(event) => {
+                                                    dispatch(
+                                                    updatePropertyHouseRules({
+                                                        isPetsAllowed: event.target.value,
+                                                    })
+                                                    );
+                                                }}
+                                                />
                                         </div>
                                     </div>
                                 </Flex>
 
                                 <Flex direction="column">
                                     <Text>Do you require a minimum stay for your guests?</Text>
-                                    <NativeSelect
+                                    <Select
                                         data={[
                                             "1 Night",
                                             "2 Nights",
@@ -523,6 +587,8 @@ export const PropertyHouseRules = () => {
                                         ]}
                                         radius="md"
                                         size="md"
+                                        value={objectState.minNightStay}
+                                        onChange={(selection) => { dispatch(updatePropertyHouseRules({ minNightStay: selection })) }}
                                         style={{ width: 150 }}
                                     />
                                     <Text mt={10} c="dimmed">
