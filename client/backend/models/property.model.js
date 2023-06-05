@@ -23,6 +23,25 @@ const propertySchema = new Schema({
             },
         },
     ],
+    propertyIfHotelConfiguration: {
+        ownsMultipleHotels: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
+        starRating: {
+            type: Number,
+            required: false,
+        },
+        hotelChain: {
+            type: String,
+            required: false,
+        },
+        hotelChainWebsite: {
+            type: String,
+            required: false,
+        },
+    },
     propertyHouseRules: {
         cancellationPolicy: {
             type: String,

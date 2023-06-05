@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text } from "@mantine/core";
+import { Button, Progress, Text } from "@mantine/core";
 import { IconUpload } from "@tabler/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePropertyPhotos } from "../../../../../../Redux/Slicers/propertySlice";
+import { storage } from "../../../../../../firebase";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable, deleteObject } from "firebase/storage";
+
 
 const PhotosComponent = () => {
-  const { photos } = useSelector((state) => state.property.propertyPhotos);
   const dispatch = useDispatch();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -31,7 +33,7 @@ const PhotosComponent = () => {
         errors += `${file.name} is not a supported format.\n`;
         return;
       }
-      if (file.size > 1024 * 1024) {
+      if (file.size > 3024 * 3024) {
         errors += `${file.name} is too large, please pick a smaller file.\n`;
         return;
       }
@@ -62,24 +64,66 @@ const PhotosComponent = () => {
   };
 
   const deleteFile = (fileToDelete) => {
-    const filteredFiles = selectedFiles.filter((file) => file !== fileToDelete);
-    setSelectedFiles(filteredFiles);
+    // Delete from Firebase storage
+    const storageRef = ref(storage, fileToDelete);
+    deleteObject(storageRef)
+      .then(() => {
+        console.log(`File ${fileToDelete} deleted from Firebase storage.`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  
+    // Remove from the selectedFiles state
+  const filteredFiles = selectedFiles.filter((file) => file !== fileToDelete);
+  setSelectedFiles(filteredFiles);
+
+  // Remove from the photos state in Redux
+  const filteredPhotos = selectedFilesUrls.filter((photo) => photo !== fileToDelete);
+  dispatch(updatePropertyPhotos({ photos: filteredPhotos }));
   };
+  
+
+  const [updPerc, setPerc] = useState(null);
 
   useEffect(() => {
-    // Create an object URL for each selected file and store in an array
-    const urls = selectedFiles.map((file) => URL.createObjectURL(file));
-    setSelectedFilesUrls(urls);
-
-    // Clean up object URLs when component unmounts or when selected files change
-    return () => {
-      urls.forEach((url) => URL.revokeObjectURL(url));
+    const uploadFile = () => {
+      const name = new Date().getTime() + selectedFiles[0].name;
+  
+      console.log(name);
+      const storageRef = ref(storage, name);
+      const uploadTask = uploadBytesResumable(storageRef, selectedFiles[0]);
+  
+      uploadTask.on(
+        "state_changed",
+        (uploadTask) => {
+          const progress = (uploadTask.bytesTransferred / uploadTask.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          setPerc(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log(downloadURL)
+            // Update selectedFilesUrls state
+          setSelectedFilesUrls((prevUrls) => [...prevUrls, downloadURL]);
+            // Dispatch the URL to the photos state
+            dispatch(updatePropertyPhotos({ selectedFileUrl: downloadURL }));
+          });
+        }
+      );
     };
+  
+    selectedFiles.length > 0 && uploadFile();
   }, [selectedFiles]);
+  
 
-  const handleSubmit = () => {
-    dispatch(updatePropertyPhotos([...photos, ...selectedFilesUrls]));
-  };
+  
+  
+  const photos = useSelector((state) => state.property.propertyPhotos.photos);
+  
 
   const renderPhotos = (photos) => {
     return photos.map((photo) => {
@@ -92,7 +136,7 @@ const PhotosComponent = () => {
             justifyContent: "center",
             width: "100%",
           }}
-          key={photo.name}
+          key={photo}
         >
           <div
             style={{
@@ -107,8 +151,8 @@ const PhotosComponent = () => {
             }}
           >
             <img
-              src={URL.createObjectURL(photo)}
-              alt={photo.name}
+              src={photo}
+              alt={photo}
               style={{
                 maxWidth: "150px",
                 width: "auto",
@@ -120,7 +164,7 @@ const PhotosComponent = () => {
                 objectPosition: "center center",
               }}
             />
-
+  
             <button
               style={{
                 position: "absolute",
@@ -147,6 +191,7 @@ const PhotosComponent = () => {
       );
     });
   };
+  
 
   return (
     <div>
@@ -224,10 +269,11 @@ const PhotosComponent = () => {
             marginTop: 20,
           }}
         >
-          {renderPhotos(selectedFiles)}
+          {renderPhotos(photos)}
         </div>
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <Progress color="dark" radius="xl" size="md" value={updPerc} striped animate />
+      {/* <Button onClick={handleUpload} mt={5}>Submit</Button> */}
     </div>
   );
 };

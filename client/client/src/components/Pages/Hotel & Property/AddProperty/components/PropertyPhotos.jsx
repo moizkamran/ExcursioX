@@ -17,6 +17,7 @@ import {
   Flex,
   TextInput,
   Button,
+  Select,
 } from "@mantine/core";
 import {
   IconApps,
@@ -84,9 +85,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
       label: "Accessible rooms and facilities for guests with disabilities",
     },
   ]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const handleSelectChange = (selected) => {
-    setSelectedOptions(selected);
     dispatch(updatePropertyPhotos({ AddExtras: selected }));
   };
 
@@ -150,14 +149,15 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                 <div>
                   <Text>Can you provide extra beds?</Text>
                   <div style={{ display: "flex", gap: 10, marginTop: 5 }}>
-                    <NativeSelect
-                      onChange={(e) => {
+                    <Select
+                      onChange={(selection) => {
                         dispatch(
-                          updatePropertyPhotos({ extraBed: e.target.value })
+                          updatePropertyPhotos({ extraBed: selection })
                         );
                       }}
                       data={["Yes", "No"]}
                       radius="md"
+                      value={propertyPhotos.extraBed}
                       size="md"
                       style={{ width: 150 }}
                     />
@@ -371,7 +371,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                     setData((current) => [...current, item]);
                     return item;
                   }}
-                  value={selectedOptions}
+                  value={propertyPhotos.AddExtras}
                   onChange={handleSelectChange}
                   dropdownPosition="bottom"
                   nothingFound="Nothing found"
@@ -402,7 +402,7 @@ export const PropertyPhotos = ({ onButtonClick, onBackClick }) => {
                   <br /> represent all your property has to offer.{" "}
                 </Text>
                 {/* BY LINK */}
-                <Flex gap={12}>
+                <Flex gap={12} mt={10}>
                   <TextInput
                     value={photoLink}
                     onChange={(ev) => setPhotoLink(ev.target.value)}

@@ -1,19 +1,39 @@
 import { Checkbox, Flex, ScrollArea, Switch, Text, Title } from '@mantine/core'
 import { IconBrandMastercard, IconCards, IconDoorEnter, IconWallet } from '@tabler/icons'
-import React, { useState } from 'react'
 import CustomCard from '../../widgets/CustomCard/CustomCard'
+import { useDispatch, useSelector } from "react-redux";
 
 // ICONS IMPORT FOR PAYMENT METHODS
 import MastercardIcon from '../../../../../assets/payments/Mastercard.svg'
 import VisaIcon from '../../../../../assets/payments/Visa.svg'
+import { useState } from 'react';
+import { updatePropertyPayments } from '../../../../../Redux/Slicers/propertySlice';
 
 export const PropertyPayments = () => {
-
-    const [creditCards, setCreditCards] = useState(false);
+    const objectState = useSelector(state => state.property.propertyPayments);
+    const [creditCards, setCreditCards] = useState(Array.isArray(objectState.paymentMethods) && objectState.paymentMethods.length > 0);
+    console.log(creditCards);
     const [bindingWallet, setBindingWallet] = useState(false);
     const [agreement, setAgreement] = useState(false);
+    const dispatch = useDispatch();
 
-    console.log(bindingWallet)
+    const handlePaymentMethodChange = (method) => {
+        const updatedPaymentMethods = objectState.paymentMethods.includes(method)
+          ? objectState.paymentMethods.filter((m) => m !== method) // Remove the payment method from the array if it's already present
+          : [...objectState.paymentMethods, method]; // Add the payment method to the array if it's not already present
+      
+        dispatch(
+          updatePropertyPayments({
+            paymentMethods: updatedPaymentMethods,
+          })
+        );
+      };
+
+      const handleCheckboxChange = (event) => {
+        const { checked } = event.target;
+        dispatch(updatePropertyPayments({ acceptedTermsAndConditions: checked }));
+      };
+
   return (
     <>
     <Flex p={20} gap={50}>
@@ -24,7 +44,7 @@ export const PropertyPayments = () => {
                     <Flex justify={'space-between'}>
                         <Text>Do you accept Credit/Debit cards at your property?</Text>
                         <div style={{flex: 1}}></div>
-                        <Switch value='yes' onChange={() => setCreditCards(!creditCards)}/>
+                        <Switch value={creditCards} checked={creditCards} onChange={() => setCreditCards(!creditCards)}/>
                     </Flex>
             
             {creditCards && (
@@ -32,15 +52,25 @@ export const PropertyPayments = () => {
             <CustomCard heading="Payment Methods" icon={<IconCards color='white'/>}>
                 <Flex gap={30}>
                     <Flex direction={'column'} gap={12} justify={'space-between'}>
+                        <Flex gap={10}  align={'center'}> <img src={MastercardIcon} /> <Text>Mastercard</Text> <div style={{flex: 1}}></div> 
+                        <Switch
+  size={'xs'}
+  justify={'flex-end'}
+  checked={objectState.paymentMethods.includes("mastercard")} // Set checked state based on whether "mastercard" is present in the array
+  onChange={() => handlePaymentMethodChange("mastercard")}
+/>
+
+                        </Flex>
+                        <Flex gap={10} align={'center'}> <img src={VisaIcon} /> <Text>VISA</Text> <div style={{flex: 1}}></div> <Switch size={'xs'}
+                        checked={objectState.paymentMethods.includes("visa")} // Set checked state based on whether "mastercard" is present in the array
+                        onChange={() => handlePaymentMethodChange("visa")}/></Flex>
+                        
+                    </Flex>
+                    {/* <Flex direction={'column'} gap={12} justify={'space-between'}>
                         <Flex gap={10}  align={'center'}> <img src={MastercardIcon} /> <Text>Mastercard</Text> <div style={{flex: 1}}></div> <Switch size={'xs'} justify={'flex-end'}/></Flex>
                         <Flex gap={10} align={'center'}> <img src={VisaIcon} /> <Text>VISA</Text> <div style={{flex: 1}}></div> <Switch size={'xs'}/></Flex>
                         
-                    </Flex>
-                    <Flex direction={'column'} gap={12} justify={'space-between'}>
-                        <Flex gap={10}  align={'center'}> <img src={MastercardIcon} /> <Text>Mastercard</Text> <div style={{flex: 1}}></div> <Switch size={'xs'} justify={'flex-end'}/></Flex>
-                        <Flex gap={10} align={'center'}> <img src={VisaIcon} /> <Text>VISA</Text> <div style={{flex: 1}}></div> <Switch size={'xs'}/></Flex>
-                        
-                    </Flex>
+                    </Flex> */}
                 </Flex>
             </CustomCard>
             </Flex>
@@ -142,7 +172,11 @@ export const PropertyPayments = () => {
                         </ScrollArea>                       
                     </div>
                     <Flex gap={10} w={500}>
-                        <Checkbox value='yes' onChange={() => setAgreement(!agreement)}/> <Text>I hereby, have read and agreed to all the licences and agreements mentioned in the above block</Text>
+                    <Checkbox
+  value="yes"
+  checked={objectState.acceptedTermsAndConditions}
+  onChange={handleCheckboxChange}
+/> <Text>I hereby, have read and agreed to all the licences and agreements mentioned in the above block</Text>
                     </Flex>
             </Flex>
         </Flex>

@@ -10,6 +10,7 @@ import {
   ActionIcon,
   NativeSelect,
   Checkbox,
+  UnstyledButton,
 } from "@mantine/core";
 import {
   IconBread,
@@ -30,11 +31,31 @@ import {
 
   IconTrash,
   IconFileDescription,
+  IconHourglass,
 } from "@tabler/icons";
 
 export const PropertyFacilites = () => {
   const dispatch = useDispatch();
   const { propertyFacilites } = useSelector((state) => state.property);
+  const isHotel = useSelector((state) => state.property.propertyDetails.type === "Hotel");
+
+  const Languages = [
+    "English",
+    "Urdu",
+    "Arabic",
+    "Hindi",
+    "Chinese",
+    "Spanish",
+    "French",
+    "German",
+    "Italian",
+    "Japanese",
+    "Korean",
+    "Portuguese",
+    "Russian",
+    "Turkish",
+    "Other",
+  ]
 
   const [checkboxes, setCheckboxes] = useState({
     freeWifi: false,
@@ -112,8 +133,6 @@ export const PropertyFacilites = () => {
     dispatch(updatePropertyFacilites({ language: updatedLanguages }));
   };
 
-  console.log(checkboxes);
-
   return (
     <>
       <Flex gap={50} p={20}>
@@ -148,7 +167,6 @@ export const PropertyFacilites = () => {
                 size="md"
                 defaultValue={propertyFacilites.isParkingAvailable}
                 onChange={(v) => {
-                  console.log(v.target.value);
                   dispatch(
                     updatePropertyFacilites({
                       isParkingAvailable: v.target.value,
@@ -166,7 +184,6 @@ export const PropertyFacilites = () => {
                     size="md"
                     defaultValue={propertyFacilites.parkingType}
                     onChange={(v) => {
-                      console.log(v.target.value);
                       dispatch(
                         updatePropertyFacilites({ parkingType: v.target.value })
                       );
@@ -179,7 +196,6 @@ export const PropertyFacilites = () => {
                     size="md"
                     defaultValue={propertyFacilites.parkingSpace}
                     onChange={(v) => {
-                      console.log(v.target.value);
                       dispatch(
                         updatePropertyFacilites({
                           parkingSpace: v.target.value,
@@ -204,7 +220,6 @@ export const PropertyFacilites = () => {
                     style={{ width: "max-content" }}
                     defaultValue={propertyFacilites.isReservationRequired}
                     onChange={(v) => {
-                      console.log(v.target.value);
                       dispatch(
                         updatePropertyFacilites({
                           isReservationRequired: v.target.value,
@@ -215,7 +230,7 @@ export const PropertyFacilites = () => {
                 </div>
                 {propertyFacilites.isParkingAvailable === "Yes - Paid" && (
                   <div>
-                    <Text>Price for Parking Per Day</Text>
+                    <Text mt={5}>Price for Parking Per Day</Text>
                     <TextInput
                       onChange={(v) => {
                         dispatch(
@@ -349,8 +364,8 @@ export const PropertyFacilites = () => {
                 </Flex>
               </div>
             )}
-            {isBreakfastAvailable !== "No" && breakfastTypes < 3 && (
-              <Flex mt={10} alignItems="center" justifyContent="center" gap={2}>
+            {isBreakfastAvailable !== "No" && (
+              <Flex mt={10} alignItems="center" justifyContent="center" gap={2} component={UnstyledButton} onClick={addBreakfastField}>
                 <div
                   style={{
                     display: "flex",
@@ -367,7 +382,6 @@ export const PropertyFacilites = () => {
                   <IconPlus
                     size={15}
                     className="IconBed"
-                    onClick={addBreakfastField}
                   />
                 </div>
                 <Text ml={10} bold size={"md"}>
@@ -435,23 +449,7 @@ export const PropertyFacilites = () => {
                 {languages.map((language, index) => (
                   <Flex key={index} mt={10} alignItems="center" gap={2}>
                     <NativeSelect
-                      data={[
-                        "English",
-                        "Urdu",
-                        "Arabic",
-                        "Hindi",
-                        "Chinese",
-                        "Spanish",
-                        "French",
-                        "German",
-                        "Italian",
-                        "Japanese",
-                        "Korean",
-                        "Portuguese",
-                        "Russian",
-                        "Turkish",
-                        "Other",
-                      ]}
+                      data={Languages}
                       radius="md"
                       size="md"
                       style={{ width: 150 }}
@@ -483,6 +481,8 @@ export const PropertyFacilites = () => {
                     alignItems="center"
                     justifyContent="center"
                     gap={2}
+                    component={UnstyledButton}
+                    onClick={addLanguageField}
                   >
                     <div
                       style={{
@@ -497,14 +497,13 @@ export const PropertyFacilites = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <IconPlus size={15} onClick={addLanguageField} />
+                      <IconPlus size={15}/>
                     </div>
                     <Text ml={10} bold size={"md"}>
                       Add Another Language
                     </Text>
                   </Flex>
                 )}
-                {console.log(languages)}
               </div>
             </Flex>
             {/* Facilities */}
@@ -640,18 +639,31 @@ export const PropertyFacilites = () => {
         </Flex>
 
         {/* Languages And Facilites */}
-        <Flex direction={"column"}>
-          <Flex>
-            <IconFileDescription size={"50"} />
-            <Title mt={5}>Description</Title>
-          </Flex>
-          <Text mt={10} w={550} c={"dimmed"}>
-            Write an attention-grabbing headline and provide clear, accurate
-            information about location, amenities, and room details. Use
-            descriptive language to highlight unique features and mention any
-            special offers. Proofread your description for accuracy and clarity.
-          </Text>
+        {
+        isHotel
+        ? <Flex direction={"column"}>
+        <Flex>
+          <IconHourglass size={"50"} color="#183898"/>
+          <Title mt={5} ml={5} color="#183898">Just a heads up...</Title>
         </Flex>
+        <Text mt={10} w={400} c={"dimmed"}>
+          This is the information for the whole property itself. <br/>
+          You can add more information about the rooms once you are setup in the dashboard.
+        </Text>
+      </Flex>
+        : <Flex direction={"column"}>
+        <Flex>
+          <IconFileDescription size={"50"} ml={5}/>
+          <Title mt={5}>Description</Title>
+        </Flex>
+        <Text mt={10} w={550} c={"dimmed"}>
+          Write an attention-grabbing headline and provide clear, accurate
+          information about location, amenities, and room details. Use
+          descriptive language to highlight unique features and mention any
+          special offers. Proofread your description for accuracy and clarity.
+        </Text>
+      </Flex>
+        }
       </Flex>
     </>
   );

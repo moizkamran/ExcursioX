@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { IconAlertCircle, IconQuestionCircle, IconSearch } from "@tabler/icons";
+import { IconAlertCircle, IconBook, IconQuestionCircle, IconSearch } from "@tabler/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePropertyDetails } from "../../../../../Redux/Slicers/propertySlice";
 
@@ -14,15 +14,19 @@ import {
   Button,
   NativeSelect,
   Rating,
+  Select,
 } from "@mantine/core";
 
-export const PropertyDetails = ({ type }) => {
+export const PropertyDetails = () => {
   const dispatch = useDispatch();
   const { propertyDetails } = useSelector((state) => state.property);
   const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
   const hasChannelManeger = useSelector(
     (state) => propertyDetails.hasChannelManeger
   );
+  const ownsMultipleHotels = useSelector((state) => propertyDetails.ownsMultipleHotels);
+
+  const type = useSelector((state) => state.property.propertyDetails.type);
 
   const [countryState, setCountryState] = useState({
     loading: false,
@@ -30,7 +34,14 @@ export const PropertyDetails = ({ type }) => {
     errorMessage: "",
   });
 
+  const [cities, setCities] = useState([]);
+
+  
+
+
   const { countries } = countryState;
+
+  const selectedCountry = useSelector(state => state.property.propertyDetails.country);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,9 +73,45 @@ export const PropertyDetails = ({ type }) => {
   }, []);
 
   const countryOptions = countries.map((country) => ({
-    value: country.name.common,
     label: country.name.common,
+    value: country.cca2,
   }));
+  
+  const currentCountry = countryOptions.find((country) => country.value === selectedCountry);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (currentCountry) {
+          const response = await axios.get(
+            `http://api.geonames.org/searchJSON?country=${currentCountry?.value}&maxRows=1000&username=moizkamran`
+          );
+          const data = response.data.geonames;
+            console.log("🌍 %cFETCHING CITIES...", "color: green");
+
+  
+          // Extract unique city names
+          const uniqueCities = Array.from(new Set(data.map((city) => city.name)));
+  
+          setCities(uniqueCities);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  }, [selectedCountry]);
+  
+  
+  
+
+  const cityOptions = cities.map((city, index) => ({
+    label: city,
+    value: city,
+    key: `city-${index}`,
+  }));
+  
 
   return (
     <>
@@ -87,7 +134,6 @@ export const PropertyDetails = ({ type }) => {
               <Input
                 defaultValue={propertyDetails.propertyName}
                 onChange={(v) => {
-                  console.log(v.target.value);
                   dispatch(
                     updatePropertyDetails({ propertyName: v.target.value })
                   );
@@ -114,7 +160,6 @@ export const PropertyDetails = ({ type }) => {
               <Input
                 defaultValue={propertyDetails.propertyContact}
                 onChange={(v) => {
-                  console.log(v.target.value);
                   dispatch(
                     updatePropertyDetails({ propertyContact: v.target.value })
                   );
@@ -146,6 +191,7 @@ export const PropertyDetails = ({ type }) => {
                   );
                 }}
                 radius={"md"}
+                defaultValue={propertyDetails.contactNumber}
                 name="contactName"
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
@@ -161,7 +207,7 @@ export const PropertyDetails = ({ type }) => {
                 }
               />
             </div>
-            <Flex>{type === "Hotel" ? <RatingModule /> : null}</Flex>
+            
 
             <div style={{ marginTop: 10 }}>
               <div
@@ -221,66 +267,189 @@ export const PropertyDetails = ({ type }) => {
                 />
               </div>
             </div>
-            <div style={{ marginTop: 10 }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignContent: "center",
-                  gap: 10,
-                }}
-              >
-                <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
-                  {type === "Hotel"
-                    ? "Do you own multiple hotels?"
-                    : "Do you use a channel manager?"}
-                </Text>
-                <Tooltip label="This is public" position="top-end" withArrow>
-                  <div>
-                    <IconAlertCircle
-                      size="1rem"
-                      style={{ display: "block", opacity: 0.5 }}
-                    />
-                  </div>
-                </Tooltip>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignContent: "center",
-                  gap: 20,
-                  marginTop: 10,
-                }}
-              >
-                <Radio
-                  label="Yes"
-                  value="Yes"
-                  name="hasChannelManeger"
-                  defaultChecked={hasChannelManeger === "Yes"}
-                  onChange={(event) => {
-                    dispatch(
-                      updatePropertyDetails({
-                        hasChannelManeger: event.target.value,
-                      })
-                    );
-                  }}
-                />
-                <Radio
-                  label="No"
-                  value="No"
-                  name="hasChannelManeger"
-                  defaultChecked={hasChannelManeger === "No"}
-                  onChange={(event) => {
-                    dispatch(
-                      updatePropertyDetails({
-                        hasChannelManeger: event.target.value,
-                      })
-                    );
-                  }}
-                />
-              </div>
-            </div>
+            {
+            type != "Hotel"
+            ? <div style={{ marginTop: 10 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignContent: "center",
+                              gap: 10,
+                            }}
+                          >
+                            <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
+                              Do you use a channel manager?
+                            </Text>
+                            <Tooltip label="This is public" position="top-end" withArrow>
+                              <div>
+                                <IconAlertCircle
+                                  size="1rem"
+                                  style={{ display: "block", opacity: 0.5 }}
+                                />
+                              </div>
+                            </Tooltip>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignContent: "center",
+                              gap: 20,
+                              marginTop: 10,
+                            }}
+                          >
+                            <Radio
+                              label="Yes"
+                              value="Yes"
+                              name="hasChannelManeger"
+                              defaultChecked={hasChannelManeger === "Yes"}
+                              onChange={(event) => {
+                                dispatch(
+                                  updatePropertyDetails({
+                                    hasChannelManeger: event.target.value,
+                                  })
+                                );
+                              }}
+                            />
+                            <Radio
+                              label="No"
+                              value="No"
+                              name="hasChannelManeger"
+                              defaultChecked={hasChannelManeger === "No"}
+                              onChange={(event) => {
+                                dispatch(
+                                  updatePropertyDetails({
+                                    hasChannelManeger: event.target.value,
+                                  })
+                                );
+                              }}
+                            />
+                          </div>
+                        </div>
+            : null
+            }
+            {
+            type === "Hotel"
+            ? <div style={{ marginTop: 10 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignContent: "center",
+                              gap: 10,
+                            }}
+                          >
+                            <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
+                              Do you own/manage multiple hotels?
+                            </Text>
+                            <Tooltip label="This is public" position="top-end" withArrow>
+                              <div>
+                                <IconAlertCircle
+                                  size="1rem"
+                                  style={{ display: "block", opacity: 0.5 }}
+                                />
+                              </div>
+                            </Tooltip>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignContent: "center",
+                              gap: 20,
+                              marginTop: 10,
+                            }}
+                          >
+                            <Radio
+                              label="Yes"
+                              value="Yes"
+                              name="ownsMultipleHotels"
+                              defaultChecked={ownsMultipleHotels === "Yes"}
+                              onChange={(event) => {
+                                dispatch(
+                                  updatePropertyDetails({
+                                    ownsMultipleHotels: event.target.value,
+                                  })
+                                );
+                              }}
+                            />
+                            <Radio
+                              label="No"
+                              value="No"
+                              name="ownsMultipleHotels"
+                              defaultChecked={ownsMultipleHotels === "No"}
+                              onChange={(event) => {
+                                dispatch(
+                                  updatePropertyDetails({
+                                    ownsMultipleHotels: event.target.value,
+                                  })
+                                );
+                              }}
+                            />
+                          </div>
+                        </div>
+            : null
+            }
+            {
+            ownsMultipleHotels === "Yes"
+            ? <Flex direction={'column'}>
+                        <div style={{ marginTop: 10 }}>
+                          <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
+                            Hotel Chain
+                          </Text>
+                          <Input
+                            defaultValue={propertyDetails.hotelChain}
+                            onChange={(v) => {
+                              dispatch(
+                                updatePropertyDetails({ hotelChain: v.target.value })
+                              );
+                            }}
+                            radius={"md"}
+                            size="sm"
+                            style={{ width: 300, marginTop: 10 }}
+                            rightSection={
+                              <Tooltip label="What hotel chain are you managing?" position="top-end" withArrow>
+                                <div>
+                                  <IconAlertCircle
+                                    size="1rem"
+                                    style={{ display: "block", opacity: 0.5 }}
+                                  />
+                                </div>
+                              </Tooltip>
+                            }
+                          />
+                        </div>
+                        <div style={{ marginTop: 10 }}>
+                          <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
+                            Hotel Chain Website
+                          </Text>
+                          <Input
+                            type="url"
+                            defaultValue={propertyDetails.hotelChainWebsite}
+                            onChange={(v) => {
+                              dispatch(
+                                updatePropertyDetails({ hotelChainWebsite: v.target.value })
+                              );
+                            }}
+                            radius={"md"}
+                            size="sm"
+                            style={{ width: 300, marginTop: 10 }}
+                            rightSection={
+                              <Tooltip label="The website of the hotel chain you are managing" position="top-end" withArrow>
+                                <div>
+                                  <IconAlertCircle
+                                    size="1rem"
+                                    style={{ display: "block", opacity: 0.5 }}
+                                  />
+                                </div>
+                              </Tooltip>
+                            }
+                          />
+                        </div>
+                        </Flex>
+            : null
+            }
           </div>
         </div>
 
@@ -299,6 +468,7 @@ export const PropertyDetails = ({ type }) => {
                 }}
                 name="streetAddress"
                 radius={"md"}
+                defaultValue={propertyDetails.streetAddress}
                 size="sm"
                 style={{ width: 300, marginTop: 10 }}
                 rightSection={
@@ -326,6 +496,7 @@ export const PropertyDetails = ({ type }) => {
                 name="addressLine2"
                 radius={"md"}
                 size="sm"
+                defaultValue={propertyDetails.addressLine2}
                 style={{ width: 300, marginTop: 10 }}
                 rightSection={
                   <Tooltip label="This is public" position="top-end" withArrow>
@@ -341,30 +512,49 @@ export const PropertyDetails = ({ type }) => {
             </div>
             <div style={{ display: "flex", flexDirection: "row", gap: 10 }}>
               <div style={{ marginTop: 10 }}>
+                <Flex gap={10} w={300}>
+                <Flex gap={10} direction={'column'}>
                 <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
                   Country
                 </Text>
-                <Flex gap={10}>
-                  <NativeSelect
-                    w={200}
+                  <Select
+                  searchable
                     radius={"md"}
-                    onChange={(v) => {
+                    onChange={(selection) => {
                       dispatch(
-                        updatePropertyDetails({ country: v.target.value })
+                        updatePropertyDetails({ country: selection })
                       );
                     }}
                     data={countryOptions}
+                    value = {selectedCountry}
                     name="country"
                   />
+                </Flex>
+                <Flex gap={10} direction={'column'}>
+                <Text style={{ fontFamily: "Fredoka", fontSize: 15 }}>
+                  City
+                </Text>
+                <Select
+                    searchable
+                    radius={"md"}
+                    value={propertyDetails.city}
+                    onChange={(selection) => {
+                      dispatch(updatePropertyDetails({ city: selection}));
+                    }}
+                    data={cityOptions}
+                    name="city"
+                    key={cityOptions.key} // Add the key prop here
+                  />
+                </Flex>
                 </Flex>
               </div>
             </div>
           </div>
-          <div
+          {/* <div
             style={{
               backgroundColor: "#FFFFFF",
               height: 150,
-              width: 400,
+              width: 300,
               borderRadius: 20,
               marginTop: 20,
               display: "flex",
@@ -414,7 +604,8 @@ export const PropertyDetails = ({ type }) => {
                 </Text>
               </div>
             </div>
-          </div>
+          </div> */}
+          <Flex>{type === "Hotel" ? <RatingModule dispatch={dispatch} propertyDetails={propertyDetails}/> : null}</Flex>
         </div>
 
         <div style={{ display: "flex" }}>
@@ -425,13 +616,13 @@ export const PropertyDetails = ({ type }) => {
                 flexDirection: "column",
                 width: "300px",
                 height: "auto",
-                backgroundColor: "#07399E",
+                backgroundColor: "#F4F7FF",
                 borderRadius: 35,
                 color: "white",
                 padding: 45,
               }}
             >
-              <Text style={{ fontSize: 25 }}>Step 1 out of 5</Text>
+              <Text style={{ fontSize: 25, color: 'black' }}>Feeling lost?</Text>
 
               <div
                 style={{
@@ -443,9 +634,9 @@ export const PropertyDetails = ({ type }) => {
                 }}
               >
                 <IconSearch size={100} color={"#00194B"} />
-                <Text align="center" style={{ marginTop: 30 }}>
-                  Let’s get to know a bit more about this amazing property of
-                  yours so that we can understand what we are working with
+                <Text align="center" style={{ marginTop: 30, color: 'black' }}>
+                  Don't worry we got you covered, just click on the button below
+                  and you read out the documentation.
                 </Text>
                 <Button
                   style={{
@@ -456,9 +647,9 @@ export const PropertyDetails = ({ type }) => {
                     width: "100%",
                     marginTop: 30,
                   }}
-                  leftIcon={<IconQuestionCircle />}
+                  leftIcon={<IconBook />}
                 >
-                  Need Help?
+                  View Documentation
                 </Button>
               </div>
             </div>
@@ -472,24 +663,30 @@ export const PropertyDetails = ({ type }) => {
 export default PropertyDetails;
 
 
-function RatingModule({}) {
+function RatingModule({dispatch, propertyDetails}) {
   return (<div style={{
 flexDirection: 'column',
-height: 100,
-width: 400,
+height: 90,
+width: 300,
 paddingTop: 20,
 paddingBottom: 20,
 display: 'flex',
 alignContent: 'center',
 alignItems: 'center',
-backgroundColor: '#EAEAEA',
+backgroundColor: '#F4F7FF',
 borderRadius: 16,
 overflow: 'hidden',
 marginTop: 20,
 position: "relative"
 }}>
 <Text fz={20}>Star Rating</Text>
-<Rating defaultValue={0} color="orange" size="lg" />
+<Rating defaultValue={propertyDetails.starRating} color="orange" size="lg" 
+onChange={(value) => {
+  dispatch(
+    updatePropertyDetails({ starRating: value })
+  );
+}}
+/>
 <div style={{
 marginTop: 10,
 position: "absolute",
@@ -504,7 +701,7 @@ justifyContent: 'center',
 alignContent: 'center',
 alignItems: 'center'
 }}>
-  <Text c={'white'} fz={15} fw={400} w={'60%'} align={'center'}>You’ll be required to submit official documents later</Text>
+  <Text c={'white'} fz={15} fw={400} w={'60%'} align={'center'}>Documents Required</Text>
 </div>
 </div>);
 }

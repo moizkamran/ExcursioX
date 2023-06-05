@@ -67,34 +67,29 @@ export const initialState = {
     photos: [],
   },
   propertyHouseRules: {
-    guestArrivalChipsFrom: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
+   cancellationPolicy: "",
+   accidentalBookingsGuard : "",
+   checktimes: {
+    guestsArrival: {
+      from: "",
+      to: "",
     },
-    guestArrivalChipsTo: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-    guestDepartureChipsFrom: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
-    },
-    guestDepartureChipsTo: {
-      1: "",
-      2: "",
-      3: "",
-      4: "",
+    guestsDeparture: {
+      from: "",
+      to: "",
     },
   },
-  checkboxes: {
-    checkbox1: false,
-    checkbox2: false,
+  isSmokingAllowed: "",
+  isPetsAllowed: "",
+  isEventsAllowed: "",
+  canInfantsBeHosted: "",
+  minNightStay: "",
+  },
+  propertyPayments: {
+    paymentMethods: [],
+    bindWallet: "",
+    wallet: "",
+    acceptedTermsAndConditions: "",
   },
 };
 
@@ -116,6 +111,34 @@ const propertySlice = createSlice({
         },
       };
     },
+    updatePropertyHouseRules: (state, action) => {
+      const { checktimes, cancellationPolicy, accidentalBookingsGuard, isSmokingAllowed, isPetsAllowed, canInfantsBeHosted, minNightStay } = action.payload;
+      return {
+        ...state,
+        propertyHouseRules: {
+          ...state.propertyHouseRules,
+          checktimes: {
+            ...state.propertyHouseRules.checktimes,
+            guestsArrival: {
+              ...state.propertyHouseRules.checktimes.guestsArrival,
+              ...(checktimes && checktimes.guestsArrival),
+            },
+            guestsDeparture: {
+              ...state.propertyHouseRules.checktimes.guestsDeparture,
+              ...(checktimes && checktimes.guestsDeparture),
+            },
+          },
+          cancellationPolicy: cancellationPolicy !== undefined ? cancellationPolicy : state.propertyHouseRules.cancellationPolicy,
+          accidentalBookingsGuard: accidentalBookingsGuard !== undefined ? accidentalBookingsGuard : state.propertyHouseRules.accidentalBookingsGuard,
+          isSmokingAllowed: isSmokingAllowed !== undefined ? isSmokingAllowed : state.propertyHouseRules.isSmokingAllowed,
+          isPetsAllowed: isPetsAllowed !== undefined ? isPetsAllowed : state.propertyHouseRules.isPetsAllowed,
+          canInfantsBeHosted: canInfantsBeHosted !== undefined ? canInfantsBeHosted : state.propertyHouseRules.canInfantsBeHosted,
+          minNightStay: minNightStay !== undefined ? minNightStay : state.propertyHouseRules.minNightStay,
+        },
+      };
+    },
+    
+    
     updatePropertyLayout: (state, action) => {
       return {
         ...state,
@@ -135,7 +158,7 @@ const propertySlice = createSlice({
       };
     },
     updatePropertyPhotos: (state, action) => {
-      const { age, Extras } = action.payload;
+      const { age, Extras, extraBed, extraBedCount, AddExtras, selectedFileUrl } = action.payload;
       return {
         ...state,
         propertyPhotos: {
@@ -148,43 +171,24 @@ const propertySlice = createSlice({
             ...state.propertyPhotos.Extras,
             ...Extras,
           },
+          extraBed: extraBed !== undefined ? extraBed : state.propertyPhotos.extraBed,
+          extraBedCount: extraBedCount !== undefined ? extraBedCount : state.propertyPhotos.extraBedCount,
+          AddExtras: AddExtras !== undefined ? AddExtras : state.propertyPhotos.AddExtras,
+          photos: selectedFileUrl !== undefined ? [...state.propertyPhotos.photos, selectedFileUrl] : state.propertyPhotos.photos,
         },
       };
     },
 
-    updatePropertyHouseRules: (state, action) => {
-      const {
-        chipNumberFrom,
-        valueFrom,
-        chipNumberTo,
-        valueTo,
-        chipNumberFrom1,
-        valueFrom1,
-        chipNumberTo1,
-        valueTo1,
-      } = action.payload;
+
+    updatePropertyPayments: (state, action) => {
       return {
         ...state,
-        propertyHouseRules: {
-          guestArrivalChipsFrom: {
-            ...state.propertyHouseRules.guestArrivalChipsFrom,
-            [chipNumberFrom]: valueFrom,
-          },
-          guestArrivalChipsTo: {
-            ...state.propertyHouseRules.guestArrivalChipsTo,
-            [chipNumberTo]: valueTo,
-          },
-          guestDepartureChipsFrom: {
-            ...state.propertyHouseRules.guestDepartureChipsFrom,
-            [chipNumberFrom1]: valueFrom1,
-          },
-          guestDepartureChipsTo: {
-            ...state.propertyHouseRules.guestDepartureChipsTo,
-            [chipNumberTo1]: valueTo1,
-          },
+        propertyPayments: {
+          ...state.propertyPayments,
+          ...action.payload,
         },
       };
-    },
+    },    
 
     addHotelLayout: (state, action) => {
       return {
@@ -219,6 +223,7 @@ export const {
   updatePropertyLayout,
   setCheckboxValue,
   updatePropertyHouseRules,
+  updatePropertyPayments,
   updatePropertyFacilites,
   addHotelLayout,
   addRoomToFloor,
