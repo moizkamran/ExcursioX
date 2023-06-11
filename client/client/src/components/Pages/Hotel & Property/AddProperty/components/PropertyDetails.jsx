@@ -19,6 +19,13 @@ import {
 
 export const PropertyDetails = () => {
   const dispatch = useDispatch();
+
+  const [cityState, setCityState] = useState({
+    loading: false,
+    cities: [],
+  });
+  
+
   const { propertyDetails } = useSelector((state) => state.property);
   const isCompanyOwned = useSelector((state) => propertyDetails.isCompanyOwned);
   const hasChannelManeger = useSelector(
@@ -83,22 +90,34 @@ export const PropertyDetails = () => {
     const fetchData = async () => {
       try {
         if (currentCountry) {
+          // Show "Loading Cities..." while fetching
+          setCityState({
+            ...cityState,
+            loading: true,
+          });
+    
           const response = await axios.get(
             `http://api.geonames.org/searchJSON?country=${currentCountry?.value}&maxRows=1000&username=moizkamran`
           );
           const data = response.data.geonames;
-            console.log("🌍 %cFETCHING CITIES...", "color: green");
-
-  
+    
           // Extract unique city names
           const uniqueCities = Array.from(new Set(data.map((city) => city.name)));
-  
+    
+          // Set the fetched cities
           setCities(uniqueCities);
+    
+          // Reset the loading state
+          setCityState({
+            ...cityState,
+            loading: false,
+          });
         }
       } catch (error) {
         console.log(error);
       }
     };
+    
   
     fetchData();
   }, [selectedCountry]);
@@ -106,11 +125,14 @@ export const PropertyDetails = () => {
   
   
 
-  const cityOptions = cities.map((city, index) => ({
-    label: city,
-    value: city,
-    key: `city-${index}`,
-  }));
+  const cityOptions = cityState.loading
+  ? [{ label: 'Loading Cities...', value: 'loading', key: 'loading' }]
+  : cities.map((city, index) => ({
+      label: city,
+      value: city,
+      key: `city-${index}`,
+    }));
+
   
 
   return (
