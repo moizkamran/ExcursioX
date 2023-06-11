@@ -15,6 +15,7 @@ import EnterpriseOnboarding from "./components/Pages/FunnelPages/Enterprise Sign
 import AddBooking from "./components/Pages/Hotel & Property/AddBooking/AddBooking";
 import BookingPortal from "./components/Pages/Booking Portal/BookingPortal";
 import SettingsPage from "./components/Pages/ConfigurationPages/SettingsPage/SettingsPage";
+import MyProperties from "./components/Pages/Hotel & Property/MyProperties/MyProperties";
 
 export default function App() {
   return (
@@ -28,10 +29,13 @@ export default function App() {
             <Route path="/hotel" element={<Hotel />} />
             <Route path="/Bookings" element={<BookingPortal />} />
             <Route path="/AddProperty" element={<AddProperty />} />
+            <Route path="/MyProperties" element={<MyProperties />} />
             <Route path="/FindBooking" element={<FindBooking />} />
-            <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
-            <Route path="/new/package-booking" element={<AddBooking />} />
             
+
+            {/* New Request Type Paths */}
+            <Route path="/new/package-booking" element={<AddBooking />} />
+            <Route path="/floors/addFloor" element={<AddRoomForFloor />} />
             
             {/* Configuation Pages */}
             <Route path="/settings" element={<SettingsPage />} />

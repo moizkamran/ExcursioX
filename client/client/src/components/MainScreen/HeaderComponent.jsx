@@ -1,3 +1,10 @@
+// This has been decrapted and is no longer in use
+// This was the header component for the main screen
+// It has been replaced by the new header component
+// The new header component is located at client/client/src/components/MainScreen/Dashboard.jsx
+
+
+
 import "./stylesheets/Dashboard.css";
 import AddBooking from "../Pages/Hotel & Property/AddBooking/AddBooking";
 import AddProperty from "../Pages/Hotel & Property/AddProperty/AddProperty";
@@ -6,7 +13,7 @@ import Hotel from "../../components/Pages/Hotel & Property/Hotel";
 import MenuItems from "./MenuItems";
 import NavbarItems from "./NavbarItems";
 import React from "react";
-import logoImage from "../../assets/Logo1.png";
+import logoImage from "../../assets/BookingSouqFavi.svg";
 import { ScrollArea } from "@mantine/core";
 
 import { AddRoom } from "../Pages/Hotel & Property/AddRoom/AddRoom";

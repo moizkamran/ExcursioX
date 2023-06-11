@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import logoImage from "../../..//assets/Logo1.png";
 import { Button, Card, Text, Title } from "@mantine/core";
 import { Bar, Doughnut } from "react-chartjs-2";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserData } from "../../../FakeData/Data";
 
 import {
@@ -15,6 +15,7 @@ import {
   IconArmchair,
   IconBroadcast,
   IconBucketDroplet,
+  IconBuildingBank,
   IconBuildingEstate,
   IconCurrencyDollar,
   IconGhost2,
@@ -429,11 +430,13 @@ const Hotel = () => {
               </div>
               <div style={{ marginTop: 10, gap: 15, display: "flex" }}>
                 <Button
-                  leftIcon={<IconCurrencyDollar />}
+                  leftIcon={<IconBuildingBank />}
                   size={"md"}
+                  component={Link}
+                  to="/MyProperties"
                   style={{ maxWidth: 200, width: 200 }}
                 >
-                  Manage Prices
+                  My Properties
                 </Button>
                 <Button
                   leftIcon={<IconBroadcast />}
