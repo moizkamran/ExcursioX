@@ -62,7 +62,7 @@ export const PropertyFacilites = () => {
     bar: false,
     sauna: false,
     garden: false,
-    terrance: false,
+    terrace: false,
     noSmokingRooms: false,
     familyRooms: false,
     hotTub: false,

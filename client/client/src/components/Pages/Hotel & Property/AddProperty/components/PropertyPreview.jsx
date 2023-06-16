@@ -1,44 +1,37 @@
-import { Flex, Text, Title } from '@mantine/core'
-import { IconBed, IconBrandSupernova, IconBus, IconChevronRight, IconCornerDownRight, IconGeometry, IconHeart, IconHome2, IconHomeCancel, IconIroning1, IconMapPin, IconPlane, IconPlant, IconPool, IconRulerMeasure, IconSmoking, IconSpace, IconStar, IconSteeringWheel, IconToolsKitchen, IconWalk, IconWashMachine, IconWifi } from '@tabler/icons'
-import React from 'react'
+import { Badge, Flex, Rating, Text, Title } from '@mantine/core'
+import { IconAirConditioning, IconBabyBottle, IconBath, IconBed, IconBrandSupernova, IconBus, IconCampfire, IconChevronRight, IconClothesRack, IconCoffee, IconCornerDownRight, IconEgg, IconFence, IconFlower, IconGeometry, IconGlassFull, IconHeart, IconHome2, IconHomeCancel, IconIroning1, IconMapPin, IconMapPins, IconPlane, IconPlaneArrival, IconPlant, IconPool, IconRulerMeasure, IconSmoking, IconSmokingNo, IconSpace, IconStar, IconSteeringWheel, IconTable, IconToolsKitchen, IconWalk, IconWash, IconWashMachine, IconWifi, IconWindow } from '@tabler/icons'
+
 import { useSelector } from 'react-redux';
+import { getIcon } from '../../../../../utils/getIcon';
 
 export const PropertyPreview = () => {
 
-    const propertyName = useSelector((state) => state.property.propertyDetails.propertyName);
+    const property = useSelector((state) => state.property);
+
+    console.log(property);
     
 
-    const facilities = [
-        { name: 'Free Wi-Fi', icon: <IconWifi /> },
-        { name: 'Swimming Pool', icon: <IconPool /> },
-        { name: 'Gym', icon: <IconGeometry /> },
-        { name: 'Spa', icon: <IconSpace /> },
-        { name: 'Smoking Rooms', icon: <IconSmoking /> },
-        { name: '50m\u00B2 Size', icon: <IconRulerMeasure /> },
-        { name: 'Kitchen', icon: <IconToolsKitchen /> },
-        { name: 'Eco Friendly', icon: <IconPlant /> },
-        { name: 'Free Cancelation', icon: <IconHomeCancel /> },
-      ];
-
+    const facilities_untrimed = property.propertyFacilites.facilities
+    // make each facility captialize first letter of every word and sepeate words with space
+    const facilities = facilities_untrimed.map(facility => facility.charAt(0).toUpperCase() + facility.slice(1).replace(/([A-Z])/g, ' $1').trim())
+    
+    const propertyRating = property.propertyDetails.starRating
 
   return (
     <>
     <Flex p={20} direction={'column'}>
         <Flex gap={10} align='center'>
-            <Title>{propertyName}</Title> <IconHeart cursor={'pointer'}/>
+            <Title>{property.propertyDetails.propertyName}</Title> <IconHeart cursor={'pointer'}/>
         </Flex>
         <Flex gap={10}> 
             <Flex gap={10}>
-                <IconMapPin style={{color: '#07399E'}}/> <Text>London, United Kingdom</Text>
+                <IconMapPin style={{color: '#07399E'}}/> <Text>{property.propertyDetails.streetAddress}, {property.propertyDetails.city}, {property.propertyDetails.country}</Text>
             </Flex>
             <Flex gap={10}>
-                <IconHome2 style={{color: '#07399E'}}/> <Text>Apartment</Text>
+                <IconHome2 style={{color: '#07399E'}}/> <Text>{property.propertyDetails.propertyTypeOf}</Text>
             </Flex>
-            <Flex gap={10}>
-            <div style={{width: 'max-content', backgroundColor: 'black', 
-            justifyContent: 'center', alignItems: 'center',display: 'flex', color: 'white', paddingLeft: 5, paddingRight: 5, 
-            borderRadius: 25, gap: 5,}}><IconBrandSupernova style={{color: 'yellow'}} /> <Text>SouqPlus +</Text></div>
-            </Flex>
+            <Rating readOnly count={propertyRating} value={propertyRating}/>
+            <BookingSouqPlusBadge/>
         </Flex>
         {/* Images */}
         <Flex gap={20}>
@@ -46,7 +39,7 @@ export const PropertyPreview = () => {
         <Flex mt={10}>
                 <div>
                     <div style={{position: 'absolute', width: 'max-content', backgroundColor: '#07399E', justifyContent: 'center', alignItems: 'center',display: 'flex', color: 'white', padding: 10, borderRadius: 25, gap: 10, marginLeft: 10, marginTop: 10}}><IconStar style={{color: 'yellow'}} /> <Text>4.5 Rating Overall</Text></div>
-                    <img alt={'Property image'} style={{cursor: 'pointer', width:'500px', height: '350px', objectFit: 'cover', borderTopLeftRadius: '25px', borderBottomLeftRadius: 25}} src={'https://cf.bstatic.com/xdata/images/hotel/max1024x768/102768316.jpg?k=1256de0d1ca9655d005146bc30f1114901d115ac9fccdd59352dc5b4e4468854&o=&hp=1'}/>
+                    <img alt={'Property image'} style={{cursor: 'pointer', width:'500px', height: '350px', objectFit: 'cover', borderTopLeftRadius: '25px', borderBottomLeftRadius: 25}} src={property.propertyPhotos.photos[0]}/>
                 </div>
             <Flex direction={'column'} ml={5} gap={5}>
                 <img alt={'Property image'} style={{cursor: 'pointer', width:'250px', height: '175px', objectFit: 'cover'}} src={'https://cf.bstatic.com/xdata/images/hotel/max1280x900/241513704.jpg?k=c7e59d9c3f0e963cb835f413b2a90ad09ca1b40d684006cd48e343cd91cc23c5&o=&hp=1'}/>
@@ -73,13 +66,13 @@ export const PropertyPreview = () => {
                             key={index} 
                             className="facilityPill" 
                         >
-                            {facility.icon} 
-                            <Text>{facility.name}</Text>
+                            {getIcon(facility)}
+                            <Text>{facility}</Text>
                         </div>
                         ))}
                     </Flex> 
                     <Flex direction={'column'} gap={8}>
-                    {facilities.slice(4,8).map((facility, index) => (<div className="facilityPill" key={index} >{facility.icon} <Text>{facility.name}</Text></div>))}
+                    {facilities.slice(4,8).map((facility, index) => (<div className="facilityPill" key={index} >{getIcon(facility)} <Text>{facility}</Text></div>))}
                     </Flex> 
                 </Flex>
             
@@ -118,10 +111,22 @@ export const PropertyPreview = () => {
             
             </Flex>
         </Flex>
-
+            <Flex mt={20} direction={'column'}>
+                <Title>Blueprint</Title>
+            </Flex>
     </Flex>
     </>
   )
 }
+
+
+// BookingSouq+ Member Badge 2023 All Rights Reserved
+function BookingSouqPlusBadge({}) {
+    return (
+      <Badge sx={{backgroundColor: 'black', fontFamily: 'Kumbh Sans'}} variant="filled">
+        Booking<span style={{background: 'linear-gradient(to right, #b8860b, #ffd700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>Souq+</span>
+      </Badge>
+    );
+  }
 
 export default PropertyPreview
