@@ -11,6 +11,8 @@ import sofaBedIcon from '../../../../../../assets/icons/sofaBedIcon.svg'
 import styles from "../propertyCustomStyles.module.css";
 import { forwardRef } from "react";
 
+const localCurrency = 'PKR'
+
 export const RoomBox = forwardRef(
     (
       {
@@ -54,7 +56,7 @@ export const RoomBox = forwardRef(
                         justifyItems: 'flex-start',
                         gap: 1,
                         }}>
-                    <Flex gap={5}> <IconDiamond color='yellow' /> <Text>{basePrice} USD / Night</Text></Flex>
+                    <Flex gap={5}> <IconDiamond color='yellow' /> <Text>{basePrice} {localCurrency} / Night</Text></Flex>
                     <Flex gap={5}>  <IconUsers /> <Text>{maxGuests} Max Guests </Text></Flex>
                     <Flex gap={5}> <IconSettings /> <Text>{roomType}</Text></Flex>
                         <Flex gap={5} justify={'center'} align={'center'}> 

@@ -4,7 +4,7 @@ import HeaderComponent from "./HeaderComponent";
 import MenuItems from "./MenuItems";
 import NavbarItems from "./NavbarItems";
 import React from "react";
-import logoImage from "../../assets/Logo1.png";
+import logoImage from "../../assets/BookingSouqFavi.svg";
 import { ScrollArea } from "@mantine/core";
 import { Link, Outlet, useMatch, useResolvedPath } from "react-router-dom";
 
