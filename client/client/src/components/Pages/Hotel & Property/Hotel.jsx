@@ -5,7 +5,8 @@ import MenuItems from "../../MainScreen/MenuItems";
 import NavbarItems from "../../MainScreen/NavbarItems";
 import React, { useState } from "react";
 import logoImage from "../../..//assets/Logo1.png";
-import { Button, Card, Text, Title } from "@mantine/core";
+import SpaceViewIcon from "../../..//assets/SpaceViewIcon.svg";
+import { Button, Card, Flex, Image, Text, Title } from "@mantine/core";
 import { Bar, Doughnut } from "react-chartjs-2";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserData } from "../../../FakeData/Data";
@@ -21,6 +22,7 @@ import {
   IconGhost2,
   IconNewSection,
 } from "@tabler/icons";
+import LiveStatus from "./widgets/LiveStatus/LiveStatus";
 
 const Hotel = () => {
   const navigate = useNavigate();
@@ -149,7 +151,7 @@ const Hotel = () => {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between",
+            gap: 20,
             alignItems: "center",
             marginTop: 20,
           }}
@@ -407,6 +409,7 @@ const Hotel = () => {
           </div>
         </div>
         <div style={{ display: "flex", gap: 50 }}>
+          <Flex direction={'column'}>
           <div>
             <Title>Quick Tasks</Title>
             <div>
@@ -449,6 +452,16 @@ const Hotel = () => {
               </div>
             </div>
           </div>
+            <Flex mt={20} direction={'column'}>
+              <Title>Live Status</Title>
+                <Flex gap={10} mt={10}>
+                    <LiveStatus count="90" title="Rooms Available" color="green"/>
+                    <LiveStatus count="901" title="Single Beds Available" color="green"/>
+                    <LiveStatus count="6" title="Total Properties" color="yellow"/>
+                    <Image src={SpaceViewIcon} alt="Space View Icon" width={150} sx={{cursor: 'pointer'}} component={Link} to="/SpaceView"/>
+                </Flex>
+            </Flex>
+          </Flex>
           <div>
             <Title>Reports</Title>
             <div>

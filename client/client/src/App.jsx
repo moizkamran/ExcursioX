@@ -16,6 +16,7 @@ import AddBooking from "./components/Pages/Hotel & Property/AddBooking/AddBookin
 import BookingPortal from "./components/Pages/Booking Portal/BookingPortal";
 import SettingsPage from "./components/Pages/ConfigurationPages/SettingsPage/SettingsPage";
 import MyProperties from "./components/Pages/Hotel & Property/MyProperties/MyProperties";
+import SpaceView from "./components/Pages/Hotel & Property/SpaceView/Page/SpaceView";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/AddProperty" element={<AddProperty />} />
             <Route path="/MyProperties" element={<MyProperties />} />
             <Route path="/FindBooking" element={<FindBooking />} />
+            <Route path="/SpaceView" element={<SpaceView />} />
             
 
             {/* New Request Type Paths */}
