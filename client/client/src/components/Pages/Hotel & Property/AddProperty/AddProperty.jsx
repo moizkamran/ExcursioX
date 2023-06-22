@@ -9,9 +9,9 @@ import PropertySelection from "./components/PropertySelection";
 import PropertyTypeOf from "./components/PropertyTypeOf";
 import React, { useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { IconArrowLeft, IconArrowRight, IconMessage } from "@tabler/icons";
+import { IconArrowLeft, IconArrowRight, IconDeviceFloppy, IconMessage } from "@tabler/icons";
 
 
 import {
@@ -22,6 +22,7 @@ import {
 } from "@mantine/core";
 import HotelFloors from "./components/HotelFloors";
 import AddRoomForFloor from "./components/AddRoomForFloor";
+import { buildProperty } from "../../../../Redux/Slicers/propertySlice";
 
 //  COMPONENTS IMPORTS
 const AddProperty = () => {
@@ -85,6 +86,66 @@ const AddProperty = () => {
 
   const [active, setActive] = useState(1);
   const [helpToolbar, setHelpToolbar] = useState(false);
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const userInfo = state.user.currentUser
+  const unbakedProperty = state.property
+
+  const handleBuildProperty = () => {
+    // e.preventDefault();
+
+    const propertyData = {
+      companyId : userInfo.companyId,
+      propertyPhotos:unbakedProperty.propertyPhotos.photos,
+      propertyIfHotelConfigurations: {
+        ownsMultipleHotels: unbakedProperty.propertyDetails.ownsMultipleHotels,
+        starRating: unbakedProperty.propertyDetails.starRating,
+        hotelChain: unbakedProperty.propertyDetails.hotelChain,
+        hotelChainWebsite: unbakedProperty.propertyDetails.hotelChainWebsite,
+      },
+      propertyHouseRules: {
+        cancellationPolicy: unbakedProperty.propertyHouseRules.cancellationPolicy,
+        checkInTime: unbakedProperty.propertyHouseRules.checkInTime,
+        checkOutTime: unbakedProperty.propertyHouseRules.checkOutTime,
+        isSmokingAllowed: unbakedProperty.propertyHouseRules.isSmokingAllowed,
+        isPetsAllowed: unbakedProperty.propertyHouseRules.isPetsAllowed,
+        isInfantsAllowed: unbakedProperty.propertyHouseRules.isInfantsAllowed,
+        minNightStay: unbakedProperty.propertyHouseRules.minNightStay,
+      },
+      propertyConfigutation: {
+        accidentalBookingProtection: unbakedProperty.propertyHouseRules.accidentalBookingsGuard,
+        onPropertyCreditCards: unbakedProperty.propertyPayments.paymentMethods,
+        bindPayments: unbakedProperty.propertyPayments.bindWallet,
+        isAcceptedTerms: unbakedProperty.propertyPayments.acceptedTermsAndConditions,
+      },
+      propertyAddedby: userInfo._id,
+      propertyType: unbakedProperty.propertyDetails.type,
+      isCompanyOwned: unbakedProperty.propertyDetails.isCompanyOwned,
+      usesChannelManager: unbakedProperty.propertyDetails.hasChannelManager,
+      propertyTypeOf: unbakedProperty.propertyDetails.propertyTypeOf,
+      propertyName: unbakedProperty.propertyDetails.propertyName,
+      propertyAddress: unbakedProperty.propertyDetails.streetAddress,
+      propertyCity: unbakedProperty.propertyDetails.city,
+      propertyParking: {
+        isParkingAvailable: unbakedProperty.propertyFacilites.isParkingAvailable,
+        parkingType: unbakedProperty.propertyFacilites.parkingType,
+        parkingSpace: unbakedProperty.propertyFacilites.parkingSpace,
+        isReservationRequired: unbakedProperty.propertyFacilites.isReservationRequired,
+        parkingPrice: unbakedProperty.propertyFacilites.parkingPrice,
+      },
+      staffLanguages: unbakedProperty.propertyFacilites.language,
+      propertyCountry: unbakedProperty.propertyDetails.country,
+      propertyZip: unbakedProperty.propertyDetails.zip,
+
+      propertyFloors: unbakedProperty.propertyDetails.floors,
+    };
+
+    console.log(propertyData);
+    dispatch(buildProperty(propertyData));
+  };
+
+
   return (
     <>
       <div
@@ -119,7 +180,7 @@ const AddProperty = () => {
         {PageDisplay()}
       </div>
       {page >= 1 && <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', position: 'fixed', bottom: 0, right: 0, marginRight: 20, marginBottom: 20 }}>
-
+      {page === 8 ? <BuildProperty handleBuildProperty={handleBuildProperty}/> : ''}
         {helpToolbar ? <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -133,15 +194,51 @@ const AddProperty = () => {
           <Text>Step {page} out of 5</Text>
           <Button style={{ backgroundColor: 'black', bottom: 0, position: 'relative', height: '50px', width: '100%', marginTop: 10 }} leftIcon={<IconMessage />}>Need Help?</Button>
         </div> : ''}
-        <div style={{ flexDirection: 'row', display: 'flex' }}>
-          <ActionIcon onClick={handleButtonClickBack} radius="xl" variant="filled" disabled={page === 0} style={{ backgroundColor: 'black', height: '50px', width: '50px', marginRight: 10 }}>
-            <IconArrowLeft size="1.5rem" />
-          </ActionIcon>
-          <Button onClick={handleButtonClick} rightIcon={<IconArrowRight />} disabled={page > 7} style={{ backgroundColor: '#07399E', height: '50px', width: '200px' }}>Next Step</Button>
-        </div>
+        <NavBar   handleButtonClickBack={handleButtonClickBack} page={page} handleButtonClick={handleButtonClick}  />
+      
       </div>}
     </>
   );
 };
 
+
+
 export default AddProperty;
+
+  function NavBar({handleButtonClickBack, page, handleButtonClick}) {
+    return (<div style={{
+flexDirection: 'row',
+display: 'flex'
+}}>
+        <ActionIcon onClick={handleButtonClickBack} radius="xl" variant="filled" disabled={page === 0} style={{
+  backgroundColor: 'black',
+  height: '50px',
+  width: '50px',
+  marginRight: 10
+}}>
+          <IconArrowLeft size="1.5rem" />
+        </ActionIcon>
+        <Button onClick={handleButtonClick} rightIcon={<IconArrowRight />} disabled={page > 7} style={{
+  backgroundColor: '#07399E',
+  height: '50px',
+  width: '200px'
+}}>Next Step</Button>
+      </div>);
+  }
+  
+
+function BuildProperty( {handleBuildProperty}) {
+  return (<>
+    <div style={{ flexDirection: 'row', display: 'flex', marginBottom: 10}}>
+        <Button onClick={handleBuildProperty} leftIcon={<IconDeviceFloppy />} style={{
+            backgroundColor: '#F7B32B',
+            height: '50px',
+            width: '260px',
+            fontFamily: 'Kumbh Sans',
+            fontWeight: 700,
+            color: '#2D1E2F'
+          }}>Build Property</Button>
+      </div>
+  
+  </>);
+}

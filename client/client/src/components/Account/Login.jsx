@@ -77,13 +77,13 @@ const Login = () => {
       dispatch(loginSuccess(res.data));
       navigate("/")
     } catch (err) {
-      setError(err.response.data);
+      setError(err.response?.data);
       notifications.show({
         title: 'Error',
-        message: err.response.data,
+        message: err.response?.data,
         color: 'red',
       });
-      console.log(err.response.data);
+      console.log(err.response?.data);
       dispatch(loginFailure());
     }
   };

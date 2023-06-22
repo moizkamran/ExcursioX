@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import newRequest from "../../utils/newRequest";
 
 export const initialState = {
   propertyDetails: {
@@ -217,6 +218,25 @@ const propertySlice = createSlice({
     },
   },
 });
+
+
+export const buildProperty = (propertyData) => {
+  return async (dispatch) => {
+    try {
+      const response = await newRequest.post('/property/build', propertyData);
+      dispatch({
+        type: 'CREATE_PROPERTY_SUCCESS',
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'CREATE_PROPERTY_FAILURE',
+        payload: error.message,
+      });
+    }
+  };
+};
+
 
 export const {
   updatePropertyDetails,
