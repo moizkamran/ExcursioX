@@ -9,6 +9,8 @@ import PropertySelection from "./components/PropertySelection";
 import PropertyTypeOf from "./components/PropertyTypeOf";
 import React, { useState } from "react";
 
+import { v4 as uuidv4 } from "uuid";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { IconArrowLeft, IconArrowRight, IconDeviceFloppy, IconMessage } from "@tabler/icons";
@@ -23,6 +25,7 @@ import {
 import HotelFloors from "./components/HotelFloors";
 import AddRoomForFloor from "./components/AddRoomForFloor";
 import { buildProperty } from "../../../../Redux/Slicers/propertySlice";
+import axios from "axios";
 
 //  COMPONENTS IMPORTS
 const AddProperty = () => {
@@ -92,12 +95,31 @@ const AddProperty = () => {
   const userInfo = state.user.currentUser
   const unbakedProperty = state.property
 
+
+  // create a function which takes in a string of Yes or No and returns a boolean
+  
+  
   const handleBuildProperty = () => {
     // e.preventDefault();
 
+    // TO CONVERT YES/NO TO BOOLEAN
+    function convertYesNoToBoolean(string) {
+      if (string === "Yes") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    //TO EXTRACT NUMBERS FROM A STRING
+    function extractNumberFromString(string) {
+      const number = string.match(/\d+/g).map(Number)[0];
+      return number;
+    }
+
     const propertyData = {
       companyId : userInfo.companyId,
-      propertyPhotos:unbakedProperty.propertyPhotos.photos,
+      propertyPhotos: unbakedProperty.propertyPhotos.photos.map(photoUrl => ({ photoUrl })),
       propertyIfHotelConfigurations: {
         ownsMultipleHotels: unbakedProperty.propertyDetails.ownsMultipleHotels,
         starRating: unbakedProperty.propertyDetails.starRating,
@@ -106,12 +128,20 @@ const AddProperty = () => {
       },
       propertyHouseRules: {
         cancellationPolicy: unbakedProperty.propertyHouseRules.cancellationPolicy,
-        checkInTime: unbakedProperty.propertyHouseRules.checkInTime,
-        checkOutTime: unbakedProperty.propertyHouseRules.checkOutTime,
-        isSmokingAllowed: unbakedProperty.propertyHouseRules.isSmokingAllowed,
-        isPetsAllowed: unbakedProperty.propertyHouseRules.isPetsAllowed,
-        isInfantsAllowed: unbakedProperty.propertyHouseRules.isInfantsAllowed,
-        minNightStay: unbakedProperty.propertyHouseRules.minNightStay,
+        checktimes: {
+          guestArrival: {
+            from: unbakedProperty.propertyHouseRules.checktimes.guestsArrival.from,
+            to: unbakedProperty.propertyHouseRules.checktimes.guestsArrival.to,
+          },
+          guestDeparture: {
+            from: unbakedProperty.propertyHouseRules.checktimes.guestsDeparture.from,
+            to: unbakedProperty.propertyHouseRules.checktimes.guestsDeparture.to,
+          },
+        },
+        isSmokingAllowed: convertYesNoToBoolean(unbakedProperty.propertyHouseRules.isSmokingAllowed),
+        isPetsAllowed: convertYesNoToBoolean(unbakedProperty.propertyHouseRules.isPetsAllowed),
+        isInfantsAllowed: convertYesNoToBoolean(unbakedProperty.propertyHouseRules.isInfantsAllowed) || false,
+        minNightStay: extractNumberFromString(unbakedProperty.propertyHouseRules.minNightStay),
       },
       propertyConfigutation: {
         accidentalBookingProtection: unbakedProperty.propertyHouseRules.accidentalBookingsGuard,
@@ -119,30 +149,40 @@ const AddProperty = () => {
         bindPayments: unbakedProperty.propertyPayments.bindWallet,
         isAcceptedTerms: unbakedProperty.propertyPayments.acceptedTermsAndConditions,
       },
-      propertyAddedby: userInfo._id,
       propertyType: unbakedProperty.propertyDetails.type,
-      isCompanyOwned: unbakedProperty.propertyDetails.isCompanyOwned,
-      usesChannelManager: unbakedProperty.propertyDetails.hasChannelManager,
+      isCompanyOwned: convertYesNoToBoolean(unbakedProperty.propertyDetails.isCompanyOwned),
+      usesChannelManager: unbakedProperty.propertyDetails.hasChannelManager || false,
       propertyTypeOf: unbakedProperty.propertyDetails.propertyTypeOf,
       propertyName: unbakedProperty.propertyDetails.propertyName,
       propertyAddress: unbakedProperty.propertyDetails.streetAddress,
       propertyCity: unbakedProperty.propertyDetails.city,
       propertyParking: {
-        isParkingAvailable: unbakedProperty.propertyFacilites.isParkingAvailable,
+        isParkingAvailable: convertYesNoToBoolean(unbakedProperty.propertyFacilites.isParkingAvailable),
         parkingType: unbakedProperty.propertyFacilites.parkingType,
         parkingSpace: unbakedProperty.propertyFacilites.parkingSpace,
-        isReservationRequired: unbakedProperty.propertyFacilites.isReservationRequired,
+        isReservationRequired: convertYesNoToBoolean(unbakedProperty.propertyFacilites.isReservationRequired),
         parkingPrice: unbakedProperty.propertyFacilites.parkingPrice,
       },
-      staffLanguages: unbakedProperty.propertyFacilites.language,
+      staffLanguages: unbakedProperty.propertyFacilites.language.map(language => ({ language })),
       propertyCountry: unbakedProperty.propertyDetails.country,
       propertyZip: unbakedProperty.propertyDetails.zip,
 
-      propertyFloors: unbakedProperty.propertyDetails.floors,
+      propertyFloors: unbakedProperty.propertyDetails.floors.map(floor => ({ floor })),
+      propertyAddedBy: userInfo._id,
     };
 
     console.log(propertyData);
-    dispatch(buildProperty(propertyData));
+    console.log(unbakedProperty);
+    axios.post("http://localhost:8080/api/property/build", propertyData)
+  .then((res) => {
+    console.log(res);
+    console.log(res.data);
+  })
+  .catch((error) => {
+    console.error("An error occurred:", error);
+  });
+
+    
   };
 
 
