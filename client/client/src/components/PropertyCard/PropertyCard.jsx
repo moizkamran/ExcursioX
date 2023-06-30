@@ -2,15 +2,15 @@ import { Badge, Flex, Image, Rating, Text, Title } from '@mantine/core'
 import { IconArrowBigDownLines, IconArrowBigUpLines, IconEggCracked, IconMapPin, IconParking, IconPin, IconWifi } from '@tabler/icons'
 import React from 'react'
 
-const PropertyCard = () => {
-  const heroImage = 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-  const propertyTitle = 'Hilton Makkah'
-  const propertyOrigin = 'Internal'
-  const propertyRating = 5
+const PropertyCard = ({propertyTitle, propertyOrigin, propertyRating, heroImage, propertyCity, propertyCountry}) => {
+  // const heroImage = 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+
   const isBookingSouqPlus = true
-  const propertyLocation = 'Makkah, Saudi Arabia'
   const distanceFromEpicenter = '1.2 km'
   const epicenter = 'Haram'
+
+  const propertyLocation = `${propertyCity}, ${propertyCountry}`
+  console.log(propertyLocation)
 
   // Subscription to FOMO based values
   const subscriptionToFOMO = true
