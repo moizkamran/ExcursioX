@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, RecaptchaVerifier, OAuthProvider } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,8 +22,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+
 export const auth = getAuth();
 export const provider = new GoogleAuthProvider();
+export const MicrosoftProvider = new OAuthProvider('microsoft.com');
 export const storage = getStorage();
+
+// window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
 
 export default app;
