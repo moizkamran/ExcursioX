@@ -167,12 +167,28 @@ const AddProperty = () => {
       propertyCountry: unbakedProperty.propertyDetails.country,
       propertyZip: unbakedProperty.propertyDetails.zip,
 
-      propertyFloors: unbakedProperty.propertyDetails.floors.map(floor => ({ floor })),
+      propertyFloors: unbakedProperty.propertyDetails.floors.map(floor => ({
+        floorRooms: floor.rooms.map(room => ({
+          roomNumber: room.roomNumber,
+          roomBasePrice: room.basePrice,
+          roomName: room.roomName, 
+          roomId: room.roomId,
+          roomType: room.type,
+          roomSize: room.roomSize,
+          roomClass: room.roomClass,
+          roomView: room.roomView,
+          roomMaxGuests: room.maxGuests,
+          roomBreakfast: room.breakfast,
+          roomFacilities: room.facilities,
+          roomBedsClassifications: room.bedClassifications,
+          roomBeds: room.beds,
+        })),
+      })),      
       propertyAddedBy: userInfo._id,
     };
 
-    console.log(propertyData);
-    console.log(unbakedProperty);
+    console.log("Published Property :", propertyData);
+    console.log("RAW Porpertday: ", unbakedProperty);
     axios.post("http://localhost:8080/api/property/build", propertyData)
   .then((res) => {
     console.log(res);

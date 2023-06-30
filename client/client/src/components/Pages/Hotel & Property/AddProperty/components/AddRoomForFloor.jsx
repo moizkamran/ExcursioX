@@ -176,6 +176,7 @@ const newRoom = {
   beds: beds,
   maxGuests: guestCount,
   bedClassifications: countOfBedTyped,
+  roomName: roomName,
 };
   newRooms[roomIndex] = newRoom;
 
