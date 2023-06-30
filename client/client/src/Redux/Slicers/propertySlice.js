@@ -103,6 +103,15 @@ const propertySlice = createSlice({
       state.propertyPhotos.age[name] = value;
     },
 
+    resetState: (state) => {
+      state.propertyDetails = initialState.propertyDetails;
+      state.propertyLayout = initialState.propertyLayout;
+      state.propertyFacilites = initialState.propertyFacilites;
+      state.propertyPhotos = initialState.propertyPhotos;
+      state.propertyHouseRules = initialState.propertyHouseRules;
+      state.propertyPayments = initialState.propertyPayments;
+    },
+
     updatePropertyDetails: (state, action) => {
       return {
         ...state,
@@ -248,5 +257,6 @@ export const {
   addHotelLayout,
   addRoomToFloor,
   updatePropertyPhotos,
+  resetState,
 } = propertySlice.actions;
 export default propertySlice.reducer;

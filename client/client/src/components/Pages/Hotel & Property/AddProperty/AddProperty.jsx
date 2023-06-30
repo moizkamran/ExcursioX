@@ -24,8 +24,9 @@ import {
 } from "@mantine/core";
 import HotelFloors from "./components/HotelFloors";
 import AddRoomForFloor from "./components/AddRoomForFloor";
-import { buildProperty } from "../../../../Redux/Slicers/propertySlice";
+import { buildProperty, resetState } from "../../../../Redux/Slicers/propertySlice";
 import axios from "axios";
+import newRequest from "../../../../utils/newRequest";
 
 //  COMPONENTS IMPORTS
 const AddProperty = () => {
@@ -98,10 +99,9 @@ const AddProperty = () => {
 
   // create a function which takes in a string of Yes or No and returns a boolean
   
-  
-  const handleBuildProperty = () => {
-    // e.preventDefault();
 
+  const handleBuildProperty = async () => {
+    try {
     // TO CONVERT YES/NO TO BOOLEAN
     function convertYesNoToBoolean(string) {
       if (string === "Yes") {
@@ -117,9 +117,17 @@ const AddProperty = () => {
       return number;
     }
 
+    function getFirstLettersOfWord(string) {
+      const firstLetters = string.match(/\b(\w)/g).join("");
+      return firstLetters;
+    }
+
+    const today = new Date().toLocaleDateString('en-US');
+
     const propertyData = {
       companyId : userInfo.companyId,
-      propertyPhotos: unbakedProperty.propertyPhotos.photos.map(photoUrl => ({ photoUrl })),
+      internalTrackingId: userInfo.companyId +  getFirstLettersOfWord(unbakedProperty.propertyDetails.propertyName) + today + uuidv4(),
+      propertyPhotos: unbakedProperty.propertyPhotos.photos?.map(photoUrl => ({ photoUrl })),
       propertyIfHotelConfigurations: {
         ownsMultipleHotels: unbakedProperty.propertyDetails.ownsMultipleHotels,
         starRating: unbakedProperty.propertyDetails.starRating,
@@ -140,7 +148,7 @@ const AddProperty = () => {
         },
         isSmokingAllowed: convertYesNoToBoolean(unbakedProperty.propertyHouseRules.isSmokingAllowed),
         isPetsAllowed: convertYesNoToBoolean(unbakedProperty.propertyHouseRules.isPetsAllowed),
-        isInfantsAllowed: convertYesNoToBoolean(unbakedProperty.propertyHouseRules.isInfantsAllowed) || false,
+        isInfantsAllowed: convertYesNoToBoolean(unbakedProperty.propertyHouseRules.canInfantsBeHosted) || false,
         minNightStay: extractNumberFromString(unbakedProperty.propertyHouseRules.minNightStay),
       },
       propertyConfigutation: {
@@ -163,11 +171,11 @@ const AddProperty = () => {
         isReservationRequired: convertYesNoToBoolean(unbakedProperty.propertyFacilites.isReservationRequired),
         parkingPrice: unbakedProperty.propertyFacilites.parkingPrice,
       },
-      staffLanguages: unbakedProperty.propertyFacilites.language.map(language => ({ language })),
+      staffLanguages: unbakedProperty.propertyFacilites.language?.map(language => ({ language })),
       propertyCountry: unbakedProperty.propertyDetails.country,
       propertyZip: unbakedProperty.propertyDetails.zip,
 
-      propertyFloors: unbakedProperty.propertyDetails.floors.map(floor => ({
+      propertyFloors: unbakedProperty.propertyDetails.floors?.map(floor => ({
         floorRooms: floor.rooms.map(room => ({
           roomNumber: room.roomNumber,
           roomBasePrice: room.basePrice,
@@ -186,20 +194,14 @@ const AddProperty = () => {
       })),      
       propertyAddedBy: userInfo._id,
     };
-
-    console.log("Published Property :", propertyData);
-    console.log("RAW Porpertday: ", unbakedProperty);
-    axios.post("http://localhost:8080/api/property/build", propertyData)
-  .then((res) => {
-    console.log(res);
-    console.log(res.data);
-  })
-  .catch((error) => {
-    console.error("An error occurred:", error);
-  });
-
     
-  };
+    const response = await newRequest.post("/property/build", propertyData);
+    dispatch(resetState());
+    console.log("%cProperty Bulit.... 👷", "color: yellow ; font-weight: bold");
+  } catch (error) {
+    console.error("An error occurred:", error);
+  } 
+};
 
 
   return (

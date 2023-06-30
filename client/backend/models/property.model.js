@@ -11,6 +11,10 @@ const propertySchema = new Schema({
         type: String,
         required: true,
     },
+    internalTrackingId: {
+        type: String,
+        required: true,
+    },
     propertyPhotos: [
         {
             photoUrl: {
@@ -203,7 +207,7 @@ const propertySchema = new Schema({
                     },
                     roomSize: {
                         type: String,
-                        required: true,
+                        required: false,
                     },
                     roomClass: {
                         type: String,
