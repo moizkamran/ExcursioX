@@ -157,7 +157,7 @@ const handleAddRoom = (floorIndex) => {
 
       {/* Rooms */}
       <Flex direction={'row'} mt={10} gap={40}> 
-      <AnimatePresence mode="sync">
+      <AnimatePresence mode="popLayout">
       {floor?.rooms?.length > 0 ? floor.rooms.map((room, roomIndex) => (
         <motion.div
         layout

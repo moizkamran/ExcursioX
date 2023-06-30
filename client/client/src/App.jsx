@@ -16,6 +16,8 @@ import AddBooking from "./components/Pages/Hotel & Property/AddBooking/AddBookin
 import BookingPortal from "./components/Pages/Booking Portal/BookingPortal";
 import SettingsPage from "./components/Pages/ConfigurationPages/SettingsPage/SettingsPage";
 import MyProperties from "./components/Pages/Hotel & Property/MyProperties/MyProperties";
+import SpaceView from "./components/Pages/Hotel & Property/SpaceView/Page/SpaceView";
+import LoginWithPhone from "./components/Account/LoginWithPhone";
 
 export default function App() {
   return (
@@ -31,6 +33,7 @@ export default function App() {
             <Route path="/AddProperty" element={<AddProperty />} />
             <Route path="/MyProperties" element={<MyProperties />} />
             <Route path="/FindBooking" element={<FindBooking />} />
+            <Route path="/SpaceView" element={<SpaceView />} />
             
 
             {/* New Request Type Paths */}
@@ -43,6 +46,7 @@ export default function App() {
 
           {/* Public/Non-CRM Routes */}
           <Route path="/login" element={<UnprotectRoute><Login /></UnprotectRoute>}></Route>
+          <Route path="/login/phone" element={<UnprotectRoute><LoginWithPhone /></UnprotectRoute>}></Route>
           <Route path="/register" element={<UnprotectRoute><Register /></UnprotectRoute>}></Route>
           <Route path="/enterprise" element={<EnterpriseLanding />}></Route>
           <Route path="/enterprise/onboarding" element={<EnterpriseOnboarding />}></Route>

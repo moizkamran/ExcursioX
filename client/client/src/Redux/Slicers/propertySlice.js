@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import newRequest from "../../utils/newRequest";
 
 export const initialState = {
   propertyDetails: {
@@ -100,6 +101,15 @@ const propertySlice = createSlice({
     setCheckboxValue: (state, action) => {
       const { name, value } = action.payload;
       state.propertyPhotos.age[name] = value;
+    },
+
+    resetState: (state) => {
+      state.propertyDetails = initialState.propertyDetails;
+      state.propertyLayout = initialState.propertyLayout;
+      state.propertyFacilites = initialState.propertyFacilites;
+      state.propertyPhotos = initialState.propertyPhotos;
+      state.propertyHouseRules = initialState.propertyHouseRules;
+      state.propertyPayments = initialState.propertyPayments;
     },
 
     updatePropertyDetails: (state, action) => {
@@ -218,6 +228,25 @@ const propertySlice = createSlice({
   },
 });
 
+
+export const buildProperty = (propertyData) => {
+  return async (dispatch) => {
+    try {
+      const response = await newRequest.post('/property/build', propertyData);
+      dispatch({
+        type: 'CREATE_PROPERTY_SUCCESS',
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'CREATE_PROPERTY_FAILURE',
+        payload: error.message,
+      });
+    }
+  };
+};
+
+
 export const {
   updatePropertyDetails,
   updatePropertyLayout,
@@ -228,5 +257,6 @@ export const {
   addHotelLayout,
   addRoomToFloor,
   updatePropertyPhotos,
+  resetState,
 } = propertySlice.actions;
 export default propertySlice.reducer;

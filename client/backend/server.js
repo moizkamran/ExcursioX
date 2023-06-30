@@ -10,13 +10,13 @@ import cors from "cors";
 const port = process.env.PORT || "8080";
 
 const app = express();
-dotenv.config();
+dotenv.config();   
 mongoose.set("strictQuery", true);
 
 const connect = async () => {
   try {
     mongoose.connect(process.env.MONGO);
-    console.log("Connected to mongoDB!");
+    console.log("🔗 Established connection to MongoDB.");
   } catch (error) {
     console.log(error);
   }
@@ -48,5 +48,5 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   connect();
-  console.log("Backend server is running!");
+  console.log("🌍 api.bookingsouq is ready to serve...");
 });

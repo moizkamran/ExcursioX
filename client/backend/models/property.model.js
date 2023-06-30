@@ -11,13 +11,13 @@ const propertySchema = new Schema({
         type: String,
         required: true,
     },
+    internalTrackingId: {
+        type: String,
+        required: true,
+    },
     propertyPhotos: [
         {
             photoUrl: {
-                type: String,
-                required: true,
-            },
-            photoDescription: {
                 type: String,
                 required: false,
             },
@@ -47,13 +47,27 @@ const propertySchema = new Schema({
             type: String,
             required: true,
         },
-        checkInTime: {
-            type: String,
-            required: true,
-        },
-        checkOutTime: {
-            type: String,
-            required: true,
+        checktimes: {
+            guestArrival: {
+                from: {
+                    type: String,
+                    required: true,
+                },
+                to: {
+                    type: String,
+                    required: true,
+                },
+            },
+            guestDeparture: {
+                from: {
+                    type: String,
+                    required: true,
+                },
+                to: {
+                    type: String,
+                    required: true,
+                },
+            },
         },
         isSmokingAllowed: {
             type: Boolean,
@@ -169,10 +183,6 @@ const propertySchema = new Schema({
     },
     propertyFloors: [
         {
-            floorIndex: {
-                type: String,
-                required: true,
-            },
             floorRooms: [
                 {
                     roomNumber: {
@@ -197,7 +207,7 @@ const propertySchema = new Schema({
                     },
                     roomSize: {
                         type: String,
-                        required: true,
+                        required: false,
                     },
                     roomClass: {
                         type: String,
@@ -211,20 +221,20 @@ const propertySchema = new Schema({
                         type: Number,
                         required: true,
                     },
-                    roomBreakfast: {
-                        isIncluded: {
-                            type: Boolean,
-                            required: true,
-                        },
-                        type: {
-                            type: String,
-                            required: false,
-                        },
-                        price: {
-                            type: String,
-                            required: false,
-                        },
-                    },
+                    // roomBreakfast: {
+                    //     isIncluded: {
+                    //         type: Boolean,
+                    //         required: true,
+                    //     },
+                    //     type: {
+                    //         type: String,
+                    //         required: false,
+                    //     },
+                    //     price: {
+                    //         type: String,
+                    //         required: false,
+                    //     },
+                    // },
                     roomFacilites: [
                         {
                             facilityName: {
@@ -255,19 +265,19 @@ const propertySchema = new Schema({
                     ],
                     roomBeds: [
                         {
-                            bedType: {
+                            type: {
                                 type: String,
                                 required: true,
                             },
-                            bedIcon: {
+                            icon: {
                                 type: String,
                                 required: false,
                             },
-                            bedOccupancy: {
+                            occupancy: {
                                 type: Number,
                                 required: true,
                             },
-                            bedId: {
+                            id: {
                                 type: String,
                                 required: true,
                             },

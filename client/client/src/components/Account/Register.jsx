@@ -58,7 +58,7 @@ const Register = () => {
 
   const dispatch = useDispatch();
   
-  console.log(companyId, firstName, lastName, email, password, phone);
+  // console.log(companyId, firstName, lastName, email, password, phone);
 
 
   useEffect(() => {

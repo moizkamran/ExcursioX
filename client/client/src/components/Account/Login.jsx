@@ -4,12 +4,12 @@ import AppleIcon from "../../assets/icons/apple.png";
 import GoogleIcon from "../../assets/icons/google.png";
 import MicrosoftIcon from "../../assets/icons/microsoft.png";
 import Popup from "../Popovers/forgot-password";
-import { IconArrowBack, IconBrandGoogle, IconKey } from "@tabler/icons";
+import { IconArrowBack, IconBrandGoogle, IconKey, IconPhone } from "@tabler/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from '@mantine/form' 
 
-import { auth, provider } from "../../firebase";
+import { MicrosoftProvider, auth, provider } from "../../firebase";
 import { signInWithPopup } from "firebase/auth";
 
 
@@ -32,7 +32,7 @@ import {
   Flex,
   LoadingOverlay,
 } from "@mantine/core";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import { loginFailure, loginStart, loginSuccess } from "../../Redux/Slicers/userSlice";
 import { notifications } from "@mantine/notifications";
@@ -77,13 +77,13 @@ const Login = () => {
       dispatch(loginSuccess(res.data));
       navigate("/")
     } catch (err) {
-      setError(err.response.data);
+      setError(err.response?.data);
       notifications.show({
         title: 'Error',
-        message: err.response.data,
+        message: err.response?.data,
         color: 'red',
       });
-      console.log(err.response.data);
+      console.log(err.response?.data);
       dispatch(loginFailure());
     }
   };
@@ -104,6 +104,22 @@ const Login = () => {
     })
   };
   
+  const signInWithMicrosoft = async () => {
+    signInWithPopup(auth, MicrosoftProvider)
+  .then((result) => {
+    // User is signed in.
+    // IdP data available in result.additionalUserInfo.profile.
+
+    // Get the OAuth access token and ID Token
+    const credential = MicrosoftProvider.credentialFromResult(result);
+    const accessToken = credential.accessToken;
+    const idToken = credential.idToken;
+    console.log(result)
+  })
+  .catch((error) => {
+    // Handle error.
+  });
+  };
 
   return (
     <>
@@ -165,8 +181,11 @@ const Login = () => {
                 <Button onClick={signInWithGoogle} sx={{backgroundColor: 'white', border: '1px solid #07399E', width: 50, height: 50, borderRadius: 10, padding: 0}}>
                   <Image src={GoogleIcon}/>
                 </Button>
-                <Button sx={{backgroundColor: 'white', border: '1px solid #07399E', width: 50, height: 50, borderRadius: 10, padding: 0}}>
+                <Button onClick={signInWithMicrosoft} sx={{backgroundColor: 'white', border: '1px solid #07399E', width: 50, height: 50, borderRadius: 10, padding: 0}}>
                   <Image src={MicrosoftIcon}/>
+                </Button>
+                <Button component={NavLink} to="/login/phone" sx={{backgroundColor: 'green', border: '1px solid #07399E', width: 50, height: 50, borderRadius: 10, padding: 0}}>
+                  <IconPhone/>
                 </Button>
               
               </Flex>
