@@ -2,6 +2,8 @@
 
 # ExcursioX - Open Source Travel CRM
 
+### We are working on this, please be patient. For more loops, please visit `Discussions`.
+
 ExcursioX is an open-source Travel CRM with integrated ticketing, booking, and hotel management solutions. It is built on the MERN stack using Redux Toolkit and Mantine for a seamless and efficient travel management experience.
 
 ## Features
